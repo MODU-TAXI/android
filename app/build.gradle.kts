@@ -29,6 +29,7 @@ android {
         buildConfigField("String", "BASE_PROD_URL", getProperty("baseProdUrl"))
         buildConfigField("String", "KAKAO_APP_KEY", getProperty("kakaoAppKey"))
         manifestPlaceholders["KAKAO_APP_KEY"] = getProperty("kakaoAppKeyForManifest")
+        manifestPlaceholders["NAVER_MAP_CLIENT_ID"] = getProperty("naverMapClientId")
     }
 
     buildTypes {
@@ -72,7 +73,4 @@ dependencies {
     val hiltVersion = "2.48"
     implementation("com.google.dagger:hilt-android:${hiltVersion}")
     kapt("com.google.dagger:hilt-android-compiler:${hiltVersion}")
-
-    // kakao login
-    implementation("com.kakao.sdk:v2-all:2.17.0")
 }
