@@ -63,4 +63,7 @@ dependencies {
     val hiltVersion = "2.48"
     implementation("com.google.dagger:hilt-android:${hiltVersion}")
     kapt("com.google.dagger:hilt-android-compiler:${hiltVersion}")
+
+    // kakao login
+    implementation("com.kakao.sdk:v2-all:2.17.0")
 }

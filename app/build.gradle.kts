@@ -27,6 +27,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_DEV_URL", getProperty("baseDevUrl"))
         buildConfigField("String", "BASE_PROD_URL", getProperty("baseProdUrl"))
+        buildConfigField("String", "KAKAO_APP_KEY", getProperty("kakaoAppKey"))
+        manifestPlaceholders["KAKAO_APP_KEY"] = getProperty("kakaoAppKeyForManifest")
     }
 
     buildTypes {
@@ -62,9 +64,15 @@ dependencies {
     implementation(project(":presentation"))
 
     implementation("androidx.core:core-ktx:1.9.0")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // hilt
     val hiltVersion = "2.48"
     implementation("com.google.dagger:hilt-android:${hiltVersion}")
     kapt("com.google.dagger:hilt-android-compiler:${hiltVersion}")
+
+    // kakao login
+    implementation("com.kakao.sdk:v2-all:2.17.0")
 }
