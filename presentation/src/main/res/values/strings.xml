@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">modutaxi</string>
+    <string name="by_everytime">"<b>"에브리타임"</b>"을 통해 알게 되었어요!</string>
+    <string name="by_recommendation">"<b>"지인 추천"</b>"을 통해 알게되었어요!"</string>
+    <string name="by_direct_search">"<b>"직접 검색"</b>해서 알게 되었어요!</string>
+    <string name="by_etc">"<b>"기타"</b>해서 알게 되었어요!</string>
 </resources>
