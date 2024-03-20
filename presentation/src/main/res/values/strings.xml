@@ -9,4 +9,5 @@
     </string>
     <string name="email_sent">적어주신 이메일로 \n인증번호가 전송됐어요!</string>
     <string name="not_recent">"<u>인증번호가 오지 않으셨나요?"</u>"</string>
+    <string name="onboarding_complete">가입완료!\n지금 바로 탑승하러 가볼까요?</string>
 </resources>
