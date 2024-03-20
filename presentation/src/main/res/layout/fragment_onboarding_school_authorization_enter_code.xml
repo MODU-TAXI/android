@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_09_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.09" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_73_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.73" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_81_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.81" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_08_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_92_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.92" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="6dp"
+            android:backgroundTint="#D9D9D9"
+            android:max="5"
+            android:progress="4"
+            android:progressTint="#000000" />
+
+        <TextView
+            android:id="@+id/tv_identification_description"
+            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_09_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="@string/school_authorization_percent_up"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_enter_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toStartOf="@id/guide_92_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_identification_description">
+
+            <TextView
+                android:id="@+id/tv_name_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="학교 이메일"
+                android:textColor="#626262"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_authorization_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@null"
+                android:hint="moduteam@inha.edu"
+                android:textColorHint="#C0C0C0"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_name_label" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="20dp"
+            android:text="올바르지 않은 이메일이에요!"
+            android:textColor="#FF3131"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/layout_enter_email"
+            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"/>
+
+        <Button
+            android:id="@+id/btn_school_authorization_next_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_nofill_greystroke_61radius"
+            android:text="다음에 할래요"
+            android:textSize="16sp"
+            android:textColor="#C0C0C0"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@id/guide_92_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_73_horizontal"
+            app:layout_constraintBottom_toTopOf="@id/btn_school_authorization_check"
+            android:paddingHorizontal="96dp"
+            android:paddingVertical="10dp"/>
+
+        <Button
+            android:id="@+id/btn_school_authorization_check"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_grey1_fill_nostroke_61radius"
+            android:text="확인"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@id/guide_92_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal"
+            android:paddingHorizontal="96dp"
+            android:paddingVertical="10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
