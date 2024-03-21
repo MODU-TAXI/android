@@ -103,7 +103,7 @@
             android:gravity="fill"
             android:paddingVertical="30dp"
             android:paddingLeft="18dp"
-            android:text="@string/by_everytime"
+            android:text="@string/by_recommendation"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
@@ -118,7 +118,7 @@
             android:gravity="fill"
             android:paddingVertical="30dp"
             android:paddingLeft="18dp"
-            android:text="@string/by_everytime"
+            android:text="@string/by_direct_search"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
@@ -133,22 +133,23 @@
             android:gravity="fill"
             android:paddingVertical="30dp"
             android:paddingLeft="18dp"
-            android:text="@string/by_everytime"
+            android:text="@string/by_etc"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
             app:layout_constraintTop_toBottomOf="@id/btn_by_direct_search" />
 
         <Button
+            android:id="@+id/btn_check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/rect_grey1_fill_nostroke_61radius"
             android:paddingHorizontal="96dp"
             android:text="확인"
             android:textColor="#FFFFFF"
-            android:background="@drawable/rect_grey1_fill_nostroke_61radius"
-            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal"
+            app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
-            app:layout_constraintEnd_toStartOf="@id/guide_90_vertical" />
+            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

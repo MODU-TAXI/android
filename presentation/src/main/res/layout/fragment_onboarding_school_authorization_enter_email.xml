@@ -18,6 +18,13 @@
             app:layout_constraintGuide_percent="0.09" />
 
         <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_73_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.73" />
+
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_81_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,6 +37,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_10_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.10" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_90_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.90" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_92_vertical"
@@ -57,14 +78,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="@string/email_sent"
+            android:text="@string/school_authorization_percent_up"
             android:textColor="#000000"
             android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_09_horizontal" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_enter_code"
+            android:id="@+id/layout_enter_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -79,7 +100,7 @@
                 android:id="@+id/tv_name_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="인증번호"
+                android:text="학교 이메일"
                 android:textColor="#626262"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,56 +112,43 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:background="@null"
-                android:hint="인증번호를 입력해주세요"
+                android:hint="moduteam@inha.edu"
                 android:textColorHint="#C0C0C0"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name_label" />
 
-            <TextClock
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="2:59"
-                android:textColor="#FF3131"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/et_authorization_code"
-                app:layout_constraintEnd_toEndOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:paddingVertical="8dp"
+            android:layout_marginTop="8dp"
             android:paddingHorizontal="20dp"
-            android:text="인증번호가 틀렸어요!"
+            android:text="올바르지 않은 이메일이에요!"
             android:textColor="#FF3131"
             android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/layout_enter_code"
-            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"/>
-
-
-        <TextView
-            android:id="@+id/tv_not_recent_authorization_code"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="8dp"
-            android:text="@string/not_recent"
-            android:textColor="#626262"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@id/guide_92_vertical"
-            app:layout_constraintTop_toBottomOf="@id/layout_enter_code"/>
-
-
-
+            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
+            app:layout_constraintTop_toBottomOf="@id/layout_enter_email" />
 
         <Button
-            android:id="@+id/btn_school_authorization_check"
+            android:id="@+id/btn_authorization_next_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_nofill_greystroke_61radius"
+            android:paddingHorizontal="96dp"
+            android:paddingVertical="10dp"
+            android:text="다음에 할래요"
+            android:textAlignment="center"
+            android:textColor="#C0C0C0"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_authorization_check"
+            app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_73_horizontal" />
+
+        <Button
+            android:id="@+id/btn_authorization_check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_grey1_fill_nostroke_61radius"
@@ -150,8 +158,8 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@id/guide_92_vertical"
-            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
+            app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

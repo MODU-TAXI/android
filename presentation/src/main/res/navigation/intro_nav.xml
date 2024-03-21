@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/intro_nav"
+    app:startDestination="@id/login_fragment">
+
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.LoginFragment">
+
+        <action
+            android:id="@+id/action_login_fragment_to_onboard_fragment"
+            app:destination="@+id/authorization_guide_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/authorization_guide_fragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.AuthorizationGuideFragment">
+
+        <action
+            android:id="@+id/action_authorization_guide_fragment_to_identification_fragment"
+            app:destination="@+id/onboarding_identification_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboarding_identification_fragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingIdentificationFragment">
+
+        <action
+            android:id="@+id/action_identification_fragment_to_question_fragment"
+            app:destination="@+id/question_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/question_fragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingQuestionFragment">
+
+        <action
+            android:id="@+id/action_question_fragment_to_school_authorization_enter_email"
+            app:destination="@+id/enter_email_fragment">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/enter_email_fragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingSchoolAuthorizationEnterEmailFragment">
+        <action
+            android:id="@+id/action_enter_email_fragment_to_enter_code_fragment"
+            app:destination="@+id/enter_code_fragment">
+        </action>
+        <action
+            android:id="@+id/action_enter_email_fragment_to_onboarding_complete_fragment"
+            app:destination="@+id/onboarding_complete_fragment">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/enter_code_fragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingSchoolAuthorizationEnterCodeFragment">
+        <action
+            android:id="@+id/action_enter_code_fragment_to_onboarding_complete_fragment"
+            app:destination="@+id/onboarding_complete_fragment">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboarding_complete_fragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingCompleteFragment">
+
+    </fragment>
+
+</navigation>
