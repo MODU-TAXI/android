@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/login_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.login.sociallogin.LoginFragment">
+        android:name="com.motax.modutaxi.presentation.ui.intro.login.LoginFragment">
 
         <action
             android:id="@+id/action_login_fragment_to_onboard_fragment"
