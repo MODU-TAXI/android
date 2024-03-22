@@ -267,7 +267,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_black0_fill_nostroke_61radius"
-            android:paddingVertical="10dp"
+            android:paddingVertical="16dp"
             android:text="확인"
             android:textColor="#FFFFFF"
             android:textSize="16sp"

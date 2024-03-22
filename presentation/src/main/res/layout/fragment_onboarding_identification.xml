@@ -118,11 +118,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_grey1_fill_nostroke_61radius"
-            android:paddingHorizontal="96dp"
             android:text="확인"
             android:textColor="#FFFFFF"
             android:gravity="center"
-            android:paddingVertical="10dp"
+            android:paddingVertical="16dp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />
