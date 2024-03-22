@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.intro.signup.question.OnboardingQuestionViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,8 +89,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:onClick="@{() -> vm.onEveryTimeSelect()}"
             android:gravity="fill"
             android:paddingVertical="30dp"
+            app:onboardQuestionBtnState="@{vm.uiState.everyTimeSelected}"
             android:paddingLeft="18dp"
             android:text="@string/by_everytime"
             android:textSize="16sp"
@@ -99,8 +105,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:onClick="@{() -> vm.onFriendlyRecommendationSelected()}"
             android:background="@drawable/rect_grey0_fill_nostroke_12radius"
             android:gravity="fill"
+            app:onboardQuestionBtnState="@{vm.uiState.friendlyRecommendationSelected}"
             android:paddingVertical="30dp"
             android:paddingLeft="18dp"
             android:text="@string/by_recommendation"
@@ -114,9 +122,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:onClick="@{() -> vm.onDirectSearchSelected()}"
             android:background="@drawable/rect_grey0_fill_nostroke_12radius"
             android:gravity="fill"
             android:paddingVertical="30dp"
+            app:onboardQuestionBtnState="@{vm.uiState.directSearchSelected}"
             android:paddingLeft="18dp"
             android:text="@string/by_direct_search"
             android:textSize="16sp"
@@ -129,9 +139,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:onClick="@{() -> vm.onByEtcSelected()}"
             android:background="@drawable/rect_grey0_fill_nostroke_12radius"
             android:gravity="fill"
             android:paddingVertical="30dp"
+            app:onboardQuestionBtnState="@{vm.uiState.byEtcSelected}"
             android:paddingLeft="18dp"
             android:text="@string/by_etc"
             android:textSize="16sp"
