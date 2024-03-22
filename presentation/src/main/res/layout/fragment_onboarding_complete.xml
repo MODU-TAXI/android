@@ -68,15 +68,25 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_identification_description"
+            android:id="@+id/tv_identification_description_one"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="@string/onboarding_complete"
+            android:text="@string/onboarding_complete_one"
             android:textColor="#000000"
             android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_09_horizontal" />
+        <TextView
+            android:id="@+id/tv_identification_description_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="@string/onboarding_complete_two"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_identification_description_one" />
 
 
         <androidx.appcompat.widget.AppCompatButton
