@@ -57,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@id/guide36" />
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login_kakao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -67,14 +67,14 @@
             android:paddingHorizontal="96dp"
             android:paddingVertical="10dp"
             android:textSize="16sp"
-            android:textAlignment="center"
+            android:gravity="center"
             android:background="@drawable/rect_grey0_fill_nostroke_61radius"
             android:textColor="#FFFFFF"
             app:layout_constraintTop_toBottomOf="@id/iv_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login_apple"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             android:paddingVertical="10dp"
             android:text="애플 로그인"
             android:textSize="16sp"
-            android:textAlignment="center"
+            android:gravity="center"
             android:background="@drawable/rect_grey0_fill_nostroke_61radius"
             android:textColor="#FFFFFF"
             app:layout_constraintTop_toBottomOf="@id/btn_login_kakao"

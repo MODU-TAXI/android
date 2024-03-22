@@ -79,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@id/guide_09_horizontal" />
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_by_everytime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
             app:layout_constraintTop_toBottomOf="@id/tv_identification_description" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_by_friendly_recommendation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
             app:layout_constraintTop_toBottomOf="@id/btn_by_everytime" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_by_direct_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
             app:layout_constraintTop_toBottomOf="@id/btn_by_friendly_recommendation" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_by_etc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -139,14 +139,16 @@
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
             app:layout_constraintTop_toBottomOf="@id/btn_by_direct_search" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_grey1_fill_nostroke_61radius"
             android:paddingHorizontal="96dp"
+            android:paddingVertical="10dp"
             android:text="확인"
             android:textColor="#FFFFFF"
+            android:gravity="center"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />

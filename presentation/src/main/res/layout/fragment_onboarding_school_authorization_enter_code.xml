@@ -151,7 +151,7 @@
             app:layout_constraintTop_toBottomOf="@id/layout_enter_code" />
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_school_authorization_check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
             android:paddingHorizontal="96dp"
             android:paddingVertical="10dp"
             android:text="확인"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"

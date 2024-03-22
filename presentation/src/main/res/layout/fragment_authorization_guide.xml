@@ -262,14 +262,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_black0_fill_nostroke_61radius"
+            android:paddingVertical="10dp"
             android:text="확인"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
+            android:gravity="center"
             app:layout_constraintEnd_toStartOf="@+id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_87_horizontal" />

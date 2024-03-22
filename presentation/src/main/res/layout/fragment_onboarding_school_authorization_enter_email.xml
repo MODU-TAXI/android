@@ -131,7 +131,7 @@
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
             app:layout_constraintTop_toBottomOf="@id/layout_enter_email" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_authorization_next_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
             android:paddingHorizontal="96dp"
             android:paddingVertical="10dp"
             android:text="다음에 할래요"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="#C0C0C0"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/btn_authorization_check"
@@ -147,7 +147,7 @@
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_73_horizontal" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_authorization_check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
             android:paddingHorizontal="96dp"
             android:paddingVertical="10dp"
             android:text="확인"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
