@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.intro
+package com.motax.modutaxi.presentation.ui.intro.login.sociallogin
 
 import android.os.Bundle
 import android.view.View

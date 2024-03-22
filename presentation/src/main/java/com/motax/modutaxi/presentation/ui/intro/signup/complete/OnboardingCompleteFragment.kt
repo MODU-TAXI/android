@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.intro
+package com.motax.modutaxi.presentation.ui.intro.signup.complete
 
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment

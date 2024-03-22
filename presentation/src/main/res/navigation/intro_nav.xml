@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/login_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.LoginFragment">
+        android:name="com.motax.modutaxi.presentation.ui.intro.login.sociallogin.LoginFragment">
 
         <action
             android:id="@+id/action_login_fragment_to_onboard_fragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/authorization_guide_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.AuthorizationGuideFragment">
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.authorization.AuthorizationGuideFragment">
 
         <action
             android:id="@+id/action_authorization_guide_fragment_to_identification_fragment"
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/onboarding_identification_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingIdentificationFragment">
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.identification.OnboardingIdentificationFragment">
 
         <action
             android:id="@+id/action_identification_fragment_to_question_fragment"
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/question_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingQuestionFragment">
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.question.OnboardingQuestionFragment">
 
         <action
             android:id="@+id/action_question_fragment_to_school_authorization_enter_email"
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/enter_email_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingSchoolAuthorizationEnterEmailFragment">
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.authorizationenteremail.OnboardingSchoolAuthorizationEnterEmailFragment">
         <action
             android:id="@+id/action_enter_email_fragment_to_enter_code_fragment"
             app:destination="@+id/enter_code_fragment">
@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/enter_code_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingSchoolAuthorizationEnterCodeFragment">
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.authorizationentercode.OnboardingSchoolAuthorizationEnterCodeFragment">
         <action
             android:id="@+id/action_enter_code_fragment_to_onboarding_complete_fragment"
             app:destination="@+id/onboarding_complete_fragment">
@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/onboarding_complete_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.OnboardingCompleteFragment">
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.complete.OnboardingCompleteFragment">
 
     </fragment>
 
