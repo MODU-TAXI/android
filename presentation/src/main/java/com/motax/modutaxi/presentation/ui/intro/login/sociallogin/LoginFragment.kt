@@ -21,17 +21,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             binding.btnLoginKakao.isEnabled
             findNavController().toLogin()
         }
-
-        binding.btnLoginApple.setOnClickListener {
-            binding.btnLoginApple.isEnabled
-            findNavController().toLogin()
-        }
     }
 
     private fun NavController.toLogin() {
         val action = LoginFragmentDirections.actionLoginFragmentToOnboardFragment()
         navigate(action)
     }
-
 
 }
