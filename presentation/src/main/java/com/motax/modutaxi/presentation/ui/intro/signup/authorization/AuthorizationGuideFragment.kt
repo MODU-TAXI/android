@@ -41,12 +41,11 @@ class AuthorizationGuideFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setBtnListener();
-        onCheckPermissions()
     }
 
     private fun setBtnListener() {
         binding.btnCheck.setOnClickListener {
-            findNavController().toIdentification()
+            onCheckPermissions()
         }
     }
 
@@ -81,8 +80,10 @@ class AuthorizationGuideFragment :
 
         }
 
-        binding.btnCheck.isEnabled = true
-        binding.btnCheck.setBackgroundResource(R.drawable.rect_black0_fill_nostroke_61radius)
+        binding.btnCheck.text = "다음으로"
+        binding.btnCheck.setOnClickListener {
+            findNavController().toIdentification()
+        }
     }
 
 
