@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+<variable
+    name="vm"
+    type="com.motax.modutaxi.presentation.ui.intro.signup.identification.OnboardingIdentificationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,12 +101,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/et_authorization_code"
+                android:id="@+id/et_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:background="@null"
                 android:hint="김모두"
+                android:text="@={vm.name}"
                 android:textColorHint="#C0C0C0"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +127,8 @@
             android:paddingVertical="16dp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />
+            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal"
+            android:enabled="@{vm.uiState.buttonEnabled}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
