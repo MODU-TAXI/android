@@ -29,10 +29,19 @@
         android:id="@+id/onboarding_identification_fragment"
         android:name="com.motax.modutaxi.presentation.ui.intro.signup.identification.OnboardingIdentificationFragment"
         tools:layout="@layout/fragment_onboarding_identification">
-
         <action
-            android:id="@+id/action_identification_fragment_to_question_fragment"
-            app:destination="@+id/question_fragment" />
+            android:id="@+id/action_onboarding_identification_fragment_to_onboardingPhoneAuthorization2"
+            app:destination="@id/onboardingPhoneAuthorization2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboardingPhoneAuthorization2"
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.phoneauth.OnboardingPhoneAuthorization"
+        tools:layout="@layout/fragment_onboarding_phone_authorization"
+        android:label="OnboardingPhoneAuthorization" >
+        <action
+            android:id="@+id/action_onboardingPhoneAuthorization2_to_question_fragment"
+            app:destination="@id/question_fragment" />
     </fragment>
 
     <fragment
@@ -47,7 +56,7 @@
 
     <fragment
         android:id="@+id/enter_email_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.signup.authorizationenteremail.OnboardingSchoolAuthorizationEnterEmailFragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.editemail.OnboardingSchoolAuthorizationEnterEmailFragment"
         tools:layout="@layout/fragment_onboarding_school_authorization_enter_email">
         <action
             android:id="@+id/action_enter_email_fragment_to_enter_code_fragment"
@@ -59,7 +68,7 @@
 
     <fragment
         android:id="@+id/enter_code_fragment"
-        android:name="com.motax.modutaxi.presentation.ui.intro.signup.authorizationentercode.OnboardingSchoolAuthorizationEnterCodeFragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.emailauth.OnboardingSchoolAuthorizationEnterCodeFragment"
         tools:layout="@layout/fragment_onboarding_school_authorization_enter_code">
         <action
             android:id="@+id/action_enter_code_fragment_to_onboarding_complete_fragment"
@@ -72,5 +81,6 @@
         tools:layout="@layout/fragment_onboarding_complete">
 
     </fragment>
+
 
 </navigation>

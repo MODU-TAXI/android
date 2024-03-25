@@ -29,7 +29,7 @@ class OnboardingIdentificationFragment :
 
     private fun NavController.toQuestion() {
         val action =
-            OnboardingIdentificationFragmentDirections.actionIdentificationFragmentToQuestionFragment()
+            OnboardingIdentificationFragmentDirections.actionOnboardingIdentificationFragmentToOnboardingPhoneAuthorization2()
         navigate(action)
     }
 }

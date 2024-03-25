@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.intro.signup.authorizationenteremail
+package com.motax.modutaxi.presentation.ui.intro.signup.editemail
 
 import android.os.Bundle
 import android.view.View
