@@ -109,6 +109,7 @@
                 android:layout_marginTop="6dp"
                 android:background="@null"
                 android:hint="인증번호를 입력해주세요"
+                android:inputType="numberDecimal"
                 android:text="@={vm.authorizationCode}"
                 android:textColorHint="#C0C0C0"
                 android:textSize="16sp"
@@ -116,12 +117,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name_label" />
 
-            <TextClock
+            <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="2:59"
+                android:text="@{vm.uiState.time}"
                 android:textColor="#FF3131"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/et_authorization_code"
@@ -137,10 +138,11 @@
             android:paddingHorizontal="20dp"
             android:paddingVertical="8dp"
             android:text="인증번호가 틀렸어요!"
-            android:textColor="#FF3131"
+            android:textColor="@color/mx_red"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
-            app:layout_constraintTop_toBottomOf="@id/layout_enter_code" />
+            app:layout_constraintTop_toBottomOf="@id/layout_enter_code"
+            app:onboardPhoneAuthHelperText="@{vm.uiState.btnState}" />
 
 
         <TextView
@@ -148,6 +150,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:onClick="@{() -> vm.resendAuthCode()}"
             android:paddingHorizontal="10dp"
             android:paddingVertical="8dp"
             android:text="인증번호 재전송"
@@ -162,15 +165,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_next_btn"
-            android:enabled="@{vm.uiState.buttonEnabled}"
             android:gravity="center"
+            android:onClick="@{() -> vm.checkAuthCode()}"
             android:paddingVertical="16dp"
             android:text="확인"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />
+            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal"
+            app:onboardPhoneAuthBtnState="@{vm.uiState.btnState}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

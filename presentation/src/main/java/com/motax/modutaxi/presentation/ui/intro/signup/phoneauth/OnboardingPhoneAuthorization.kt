@@ -17,6 +17,5 @@ class OnboardingPhoneAuthorization: BaseFragment<FragmentOnboardingPhoneAuthoriz
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-
     }
 }
