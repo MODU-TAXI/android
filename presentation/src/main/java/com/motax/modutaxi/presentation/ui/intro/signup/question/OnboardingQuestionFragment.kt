@@ -32,13 +32,7 @@ class OnboardingQuestionFragment :
     private fun initStateObserve(){
         repeatOnStarted {
             viewModel.uiState.collect{
-                if(it.everyTimeSelected || it.byEtcSelected || it.directSearchSelected || it.friendlyRecommendationSelected){
-                    binding.btnCheck.setBackgroundResource(R.drawable.rect_black0_fill_nostroke_61radius)
-                    binding.btnCheck.isEnabled = true
-                } else {
-                    binding.btnCheck.setBackgroundResource(R.drawable.rect_grey1_fill_nostroke_61radius)
-                    binding.btnCheck.isEnabled = false
-                }
+                binding.btnCheck.isEnabled = it.everyTimeSelected || it.byEtcSelected || it.directSearchSelected || it.friendlyRecommendationSelected
             }
         }
     }

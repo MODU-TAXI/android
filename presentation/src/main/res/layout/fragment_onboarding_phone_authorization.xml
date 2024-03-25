@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.intro.signup.phoneauth.OnboardingPhoneAuthorizationViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -105,6 +109,7 @@
                 android:layout_marginTop="6dp"
                 android:background="@null"
                 android:hint="인증번호를 입력해주세요"
+                android:text="@={vm.authorizationCode}"
                 android:textColorHint="#C0C0C0"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/tv_time"
@@ -156,7 +161,8 @@
             android:id="@+id/btn_school_authorization_check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rect_grey1_fill_nostroke_61radius"
+            android:background="@drawable/selector_next_btn"
+            android:enabled="@{vm.uiState.buttonEnabled}"
             android:gravity="center"
             android:paddingVertical="16dp"
             android:text="확인"

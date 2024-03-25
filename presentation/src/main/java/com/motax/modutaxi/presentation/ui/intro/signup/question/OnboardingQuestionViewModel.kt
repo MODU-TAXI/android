@@ -21,7 +21,6 @@ class OnboardingQuestionViewModel @Inject constructor(): ViewModel() {
     private val _uiState = MutableStateFlow(OnboardQuestionUiState())
     val uiState: StateFlow<OnboardQuestionUiState> = _uiState.asStateFlow()
 
-
     fun onEveryTimeSelect(){
         _uiState.update { state ->
             state.copy(

@@ -159,7 +159,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rect_grey1_fill_nostroke_61radius"
+                android:background="@drawable/selector_next_btn"
                 android:gravity="center"
                 android:paddingVertical="16dp"
                 android:text="확인"

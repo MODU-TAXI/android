@@ -120,7 +120,7 @@
             android:id="@+id/btn_check"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rect_grey1_fill_nostroke_61radius"
+            android:background="@drawable/selector_next_btn"
             android:text="확인"
             android:textColor="#FFFFFF"
             android:gravity="center"
