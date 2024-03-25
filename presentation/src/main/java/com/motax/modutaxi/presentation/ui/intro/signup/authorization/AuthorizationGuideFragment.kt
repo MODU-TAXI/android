@@ -20,8 +20,6 @@ class AuthorizationGuideFragment :
     private val requiredPermissionList =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arrayOf(  // 안드로이드 13 이상 필요한 권한들
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_MEDIA_IMAGES,
                 Manifest.permission.POST_NOTIFICATIONS,
                 Manifest.permission.CAMERA,

@@ -1,9 +1,13 @@
 package com.motax.modutaxi.presentation.ui.intro.login
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -24,6 +28,26 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     private val viewModel : LoginViewModel by viewModels()
 
+    private lateinit var neededPermissionList: ArrayList<String>
+    private val requiredPermissionList =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arrayOf(  // 안드로이드 13 이상 필요한 권한들
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Manifest.permission.POST_NOTIFICATIONS,
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        } else {
+            arrayOf(  // 안드로이드 13 미만 필요한 권한들
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -42,7 +66,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             viewModel.event.collect{
                 when(it){
                     is LoginEvent.NavigateToOnBoard -> {
-                        findNavController().toOnBoarding()
+                        onCheckPermissions()
                     }
                     is LoginEvent.NavigateToMainActivity -> {
                         val intent = Intent(requireContext(), MainActivity::class.java)
@@ -54,6 +78,24 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     }
                 }
             }
+        }
+    }
+
+    private fun onCheckPermissions(){
+        neededPermissionList = arrayListOf()
+
+        requiredPermissionList.forEach { permission ->
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) neededPermissionList.add(permission)
+        }
+
+        if (neededPermissionList.isNotEmpty()) {
+            findNavController().toOnBoarding()
+        } else {
+            findNavController().toSkipPermission()
         }
     }
 
@@ -99,6 +141,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     private fun NavController.toOnBoarding() {
         val action = LoginFragmentDirections.actionLoginFragmentToOnboardFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toSkipPermission(){
+        val action = LoginFragmentDirections.actionLoginFragmentToOnboardingIdentificationFragment()
         navigate(action)
     }
 

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_login_fragment_to_onboard_fragment"
             app:destination="@+id/authorization_guide_fragment" />
+        <action
+            android:id="@+id/action_login_fragment_to_onboarding_identification_fragment"
+            app:destination="@id/onboarding_identification_fragment" />
     </fragment>
 
     <fragment
