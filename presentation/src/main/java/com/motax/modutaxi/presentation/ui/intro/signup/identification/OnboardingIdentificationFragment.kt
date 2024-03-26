@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -27,8 +26,11 @@ class OnboardingIdentificationFragment :
         setListeners()
         setTextChangeListener()
         observeFocusedFieldWithLifeCycleScope()
-
         requestFocusAndShowKeyboard()
+
+        binding.root.setOnClickListener {
+            hideKeyboard()
+        }
     }
 
     private fun setTextChangeListener() {
@@ -38,7 +40,8 @@ class OnboardingIdentificationFragment :
     private fun requestFocusAndShowKeyboard() {
         binding.etName.requestFocus()
 
-        val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.showSoftInput(binding.etName, InputMethodManager.SHOW_IMPLICIT)
     }
 
@@ -109,5 +112,12 @@ class OnboardingIdentificationFragment :
                 }
             }
         }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
+
     }
 }
