@@ -1,7 +1,11 @@
 package com.motax.modutaxi.presentation.ui.intro.signup.identification
 
+import android.content.Context
 import android.os.Bundle
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -21,7 +25,21 @@ class OnboardingIdentificationFragment :
         binding.vm = viewModel
         setCheckBtnListener()
         setListeners()
+        setTextChangeListener()
         observeFocusedFieldWithLifeCycleScope()
+
+        requestFocusAndShowKeyboard()
+    }
+
+    private fun setTextChangeListener() {
+        binding.etPhoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+    }
+
+    private fun requestFocusAndShowKeyboard() {
+        binding.etName.requestFocus()
+
+        val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.showSoftInput(binding.etName, InputMethodManager.SHOW_IMPLICIT)
     }
 
     private fun setListeners() {
@@ -60,7 +78,7 @@ class OnboardingIdentificationFragment :
         navigate(action)
     }
 
-    private fun observeFocusedFieldWithLifeCycleScope() {
+    private fun observeFocusedFieldWithLifeCycleScope() {//TODO 추후 셀렉터로 변경
         lifecycleScope.launch {
             viewModel.focusedField.collect() { it ->
                 when (it) {
