@@ -73,6 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            style="@style/TextTitle1Semibold"
             android:text="모두의 택시 이용을 위해\n본인 인증을 진행새주세요!"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -96,7 +97,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="이름"
-                android:textColor="#626262"
+                style="@style/TextRegularMedium"
+                android:textColor="@color/mx_grey3"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -132,9 +134,10 @@
             <TextView
                 android:id="@+id/tv_gender"
                 android:layout_width="0dp"
+                style="@style/TextRegularMedium"
+                android:textColor="@color/mx_grey3"
                 android:layout_height="wrap_content"
                 android:text="성별"
-                android:textColor="#626262"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -152,6 +155,7 @@
                     android:id="@+id/radioButtonMale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/TextLargeMedium"
                     android:text="남자"/>
 
                 <RadioButton
@@ -159,6 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    style="@style/TextLargeMedium"
                     android:text="여자"/>
 
             </RadioGroup>
@@ -181,9 +186,10 @@
             <TextView
                 android:id="@+id/tv_phone_number"
                 android:layout_width="0dp"
+                style="@style/TextRegularMedium"
+                android:textColor="@color/mx_grey3"
                 android:layout_height="wrap_content"
                 android:text="전화번호"
-                android:textColor="#626262"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -195,6 +201,7 @@
                 android:layout_marginTop="6dp"
                 android:background="@null"
                 android:hint="010-XXXX-XXXX"
+                style="@style/TextLargeMedium"
                 android:text="@={vm.phoneNumber}"
                 android:textColorHint="#C0C0C0"
                 android:textSize="16sp"
@@ -212,6 +219,7 @@
             android:text="확인"
             android:textColor="#FFFFFF"
             android:gravity="center"
+            style="@style/TextLargeSemibold"
             android:paddingVertical="16dp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
