@@ -27,7 +27,7 @@ class OnboardingSchoolAuthorizationEnterCodeFragment :
 
     private fun NavController.toOnboardingComplete() {
         val action =
-            OnboardingSchoolAuthorizationEnterCodeFragmentDirections.actionEnterCodeFragmentToOnboardingCompleteFragment()
+            OnboardingSchoolAuthorizationEnterCodeFragmentDirections.actionEmailAuthFragmentToCompleteFragment()
         navigate(action)
     }
 }

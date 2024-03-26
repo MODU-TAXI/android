@@ -5,8 +5,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -24,11 +27,18 @@ sealed class PhoneAuthBtnState {
     data class AuthFailure(val msg: String) : PhoneAuthBtnState()
 }
 
+sealed class PhoneAuthEvent{
+    data object NavigateToQuestionHowToKnow: PhoneAuthEvent()
+}
+
 @HiltViewModel
-class OnboardingPhoneAuthorizationViewModel @Inject constructor() : ViewModel() {
+class OnboardingPhoneAuthViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(PhoneAuthorizationUiState())
     val uiState: StateFlow<PhoneAuthorizationUiState> = _uiState.asStateFlow()
+
+    private val _event = MutableSharedFlow<PhoneAuthEvent>()
+    val event: SharedFlow<PhoneAuthEvent> = _event.asSharedFlow()
 
     val authorizationCode = MutableStateFlow("")
 
@@ -60,16 +70,21 @@ class OnboardingPhoneAuthorizationViewModel @Inject constructor() : ViewModel() 
 
     fun checkAuthCode() {
 
-        _uiState.update { state ->
-            state.copy(
-                btnState = PhoneAuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
-            )
-        }
+        viewModelScope.launch {
 
-        _uiState.update { state ->
-            state.copy(
-                btnState = PhoneAuthBtnState.AuthSuccess("인증번호 검증 성공")
-            )
+            _uiState.update { state ->
+                state.copy(
+                    btnState = PhoneAuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
+                )
+            }
+
+            _uiState.update { state ->
+                state.copy(
+                    btnState = PhoneAuthBtnState.AuthSuccess("인증번호 검증 성공")
+                )
+            }
+
+            _event.emit(PhoneAuthEvent.NavigateToQuestionHowToKnow)
         }
     }
 
@@ -87,6 +102,4 @@ class OnboardingPhoneAuthorizationViewModel @Inject constructor() : ViewModel() 
             checkTimer()
         }
     }
-
-
 }

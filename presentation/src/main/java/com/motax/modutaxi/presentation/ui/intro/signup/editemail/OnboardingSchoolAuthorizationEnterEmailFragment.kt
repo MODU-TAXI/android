@@ -20,24 +20,22 @@ class OnboardingSchoolAuthorizationEnterEmailFragment :
 
     private fun setBtnListener() {
         binding.btnAuthorizationNextTime.setOnClickListener {
-            binding.btnAuthorizationNextTime.isEnabled
             findNavController().toOnboardingComplete()
         }
         binding.btnAuthorizationCheck.setOnClickListener {
-            binding.btnAuthorizationCheck.isEnabled
-            findNavController().toEnterCode()
+            findNavController().toEmailAuth()
         }
     }
 
     private fun NavController.toOnboardingComplete() {
         val action =
-            OnboardingSchoolAuthorizationEnterEmailFragmentDirections.actionEnterEmailFragmentToOnboardingCompleteFragment()
+            OnboardingSchoolAuthorizationEnterEmailFragmentDirections.actionEnterEmailFragmentToCompleteFragment()
         navigate(action)
     }
 
-    private fun NavController.toEnterCode() {
+    private fun NavController.toEmailAuth() {
         val action =
-            OnboardingSchoolAuthorizationEnterEmailFragmentDirections.actionEnterEmailFragmentToEnterCodeFragment()
+            OnboardingSchoolAuthorizationEnterEmailFragmentDirections.actionEnterEmailFragmentToEmailAuthFragment()
         navigate(action)
     }
 }

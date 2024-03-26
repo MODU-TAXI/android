@@ -8,31 +8,31 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
-data class OnboardQuestionUiState(
-    val everyTimeSelected : Boolean = false,
-    val friendlyRecommendationSelected : Boolean = false,
+data class OnboardQuestionWhenWantTaxiUiState(
+    val whenLateSelected : Boolean = false,
+    val whenBusLineTooLongSelected : Boolean = false,
     val directSearchSelected : Boolean = false,
     val byEtcSelected : Boolean = false
 )
 
 @HiltViewModel
-class OnboardingQuestionViewModel @Inject constructor(): ViewModel() {
+class OnboardingQuestionWhenWantTaxiViewModel @Inject constructor(): ViewModel() {
 
-    private val _uiState = MutableStateFlow(OnboardQuestionUiState())
-    val uiState: StateFlow<OnboardQuestionUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(OnboardQuestionWhenWantTaxiUiState())
+    val uiState: StateFlow<OnboardQuestionWhenWantTaxiUiState> = _uiState.asStateFlow()
 
-    fun onEveryTimeSelect(){
+    fun onWhenLate(){
         _uiState.update { state ->
             state.copy(
-                everyTimeSelected = !uiState.value.everyTimeSelected
+                whenLateSelected = !uiState.value.whenLateSelected
             )
         }
     }
 
-    fun onFriendlyRecommendationSelected(){
+    fun onWhenBusLineTooLong(){
         _uiState.update { state ->
             state.copy(
-                friendlyRecommendationSelected = !uiState.value.friendlyRecommendationSelected
+                whenBusLineTooLongSelected = !uiState.value.whenBusLineTooLongSelected
             )
         }
     }
@@ -52,5 +52,4 @@ class OnboardingQuestionViewModel @Inject constructor(): ViewModel() {
             )
         }
     }
-
 }

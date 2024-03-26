@@ -24,9 +24,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login){
+class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
-    private val viewModel : LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     private lateinit var neededPermissionList: ArrayList<String>
     private val requiredPermissionList =
@@ -61,18 +61,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
     }
 
-    private fun initEventObserve(){
+    private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect{
-                when(it){
+            viewModel.event.collect {
+                when (it) {
                     is LoginEvent.NavigateToOnBoard -> {
                         onCheckPermissions()
                     }
+
                     is LoginEvent.NavigateToMainActivity -> {
                         val intent = Intent(requireContext(), MainActivity::class.java)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     }
+
                     is LoginEvent.ShowToastMessage -> {
                         showToastMessage(it.msg)
                     }
@@ -81,7 +83,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
     }
 
-    private fun onCheckPermissions(){
+    private fun onCheckPermissions() {
         neededPermissionList = arrayListOf()
 
         requiredPermissionList.forEach { permission ->
@@ -93,13 +95,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
 
         if (neededPermissionList.isNotEmpty()) {
-            findNavController().toOnBoarding()
+            findNavController().toPermission()
         } else {
-            findNavController().toSkipPermission()
+            findNavController().toIdentification()
         }
     }
 
-    private fun kakaoLogin(){
+    private fun kakaoLogin() {
         // 카카오톡 설치 확인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
             // 카카오톡 로그인
@@ -108,12 +110,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 if (error != null) {
                     Log.e(TAG, "앱 로그인 실패 $error")
                     // 사용자가 취소
-                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled ) {
+                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                         return@loginWithKakaoTalk
                     }
                     // 다른 오류
                     else {
-                        UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoEmailCb) // 카카오 이메일 로그인
+                        UserApiClient.instance.loginWithKakaoAccount(
+                            requireContext(),
+                            callback = kakaoEmailCb
+                        ) // 카카오 이메일 로그인
                     }
                 }
                 // 로그인 성공 부분
@@ -123,10 +128,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 }
             }
         } else {
-            UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoEmailCb) // 카카오 이메일 로그인
+            UserApiClient.instance.loginWithKakaoAccount(
+                requireContext(),
+                callback = kakaoEmailCb
+            ) // 카카오 이메일 로그인
         }
     }
-
 
 
     // 카카오톡 이메일 로그인 콜백
@@ -139,13 +146,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
     }
 
-    private fun NavController.toOnBoarding() {
-        val action = LoginFragmentDirections.actionLoginFragmentToOnboardFragment()
+    private fun NavController.toPermission() {
+        val action = LoginFragmentDirections.actionLoginFragmentToPermissionFragment()
         navigate(action)
     }
 
-    private fun NavController.toSkipPermission(){
-        val action = LoginFragmentDirections.actionLoginFragmentToOnboardingIdentificationFragment()
+    private fun NavController.toIdentification() {
+        val action = LoginFragmentDirections.actionLoginFragmentToIdentificationFragment()
         navigate(action)
     }
 

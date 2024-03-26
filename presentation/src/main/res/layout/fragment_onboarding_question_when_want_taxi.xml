@@ -7,9 +7,10 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.intro.signup.question.OnboardingQuestionHowToKnowViewModel" />
+            type="com.motax.modutaxi.presentation.ui.intro.signup.question.OnboardingQuestionWhenWantTaxiViewModel" />
 
     </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,7 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="모두의 택시,\n어떻게 이용하게 되셨나요?"
+                android:text="택시를 가장 타고싶었던\n순간이 있으신가요?"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
@@ -95,15 +96,15 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/rect_grey0_fill_nostroke_12radius"
                 android:gravity="fill"
-                android:onClick="@{() -> vm.onEveryTimeSelect()}"
+                android:onClick="@{() -> vm.onWhenLate()}"
                 android:paddingVertical="30dp"
                 android:paddingLeft="18dp"
-                android:text="@string/by_everytime"
+                android:text="지각할 거 같을 때"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                 app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                 app:layout_constraintTop_toBottomOf="@id/tv_identification_description"
-                app:onboardQuestionBtnState="@{vm.uiState.everyTimeSelected}" />
+                app:onboardQuestionBtnState="@{vm.uiState.whenLateSelected}" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_by_friendly_recommendation"
@@ -112,15 +113,15 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/rect_grey0_fill_nostroke_12radius"
                 android:gravity="fill"
-                android:onClick="@{() -> vm.onFriendlyRecommendationSelected()}"
+                android:onClick="@{() -> vm.onWhenBusLineTooLong()}"
                 android:paddingVertical="30dp"
                 android:paddingLeft="18dp"
-                android:text="@string/by_recommendation"
+                android:text="버스 줄이 너무 길 때"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                 app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                 app:layout_constraintTop_toBottomOf="@id/btn_by_everytime"
-                app:onboardQuestionBtnState="@{vm.uiState.friendlyRecommendationSelected}" />
+                app:onboardQuestionBtnState="@{vm.uiState.whenBusLineTooLongSelected}" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_by_direct_search"
@@ -132,7 +133,7 @@
                 android:onClick="@{() -> vm.onDirectSearchSelected()}"
                 android:paddingVertical="30dp"
                 android:paddingLeft="18dp"
-                android:text="@string/by_direct_search"
+                android:text="직접 검색해서 알게 되었어요!"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                 app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
@@ -149,7 +150,7 @@
                 android:onClick="@{() -> vm.onByEtcSelected()}"
                 android:paddingVertical="30dp"
                 android:paddingLeft="18dp"
-                android:text="@string/by_etc"
+                android:text="기타"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                 app:layout_constraintStart_toEndOf="@id/guide_04_vertical"

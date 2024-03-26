@@ -32,13 +32,13 @@ class OnboardingIdentificationFragment :
     private fun setCheckBtnListener() {
         binding.btnCheck.setOnClickListener {
             binding.btnCheck.isEnabled
-            findNavController().toQuestion()
+            findNavController().toPhoneAuth()
         }
     }
 
-    private fun NavController.toQuestion() {
+    private fun NavController.toPhoneAuth() {
         val action =
-            OnboardingIdentificationFragmentDirections.actionOnboardingIdentificationFragmentToOnboardingPhoneAuthorization2()
+            OnboardingIdentificationFragmentDirections.actionIdentificationFragmentToPhoneAuthFragment()
         navigate(action)
     }
 }

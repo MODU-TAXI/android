@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.intro.signup.authorization
+package com.motax.modutaxi.presentation.ui.intro.signup.permission
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -11,10 +11,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
-import com.motax.modutaxi.presentation.databinding.FragmentAuthorizationGuideBinding
+import com.motax.modutaxi.presentation.databinding.FragmentOnboardingPermissionBinding
 
 class AuthorizationGuideFragment :
-    BaseFragment<FragmentAuthorizationGuideBinding>(R.layout.fragment_authorization_guide) {
+    BaseFragment<FragmentOnboardingPermissionBinding>(R.layout.fragment_onboarding_permission) {
 
     private lateinit var neededPermissionList: ArrayList<String>
     private val requiredPermissionList =
@@ -47,7 +47,7 @@ class AuthorizationGuideFragment :
         }
     }
 
-    private fun onCheckPermissions(){
+    private fun onCheckPermissions() {
         neededPermissionList = arrayListOf()
 
         requiredPermissionList.forEach { permission ->
@@ -68,11 +68,11 @@ class AuthorizationGuideFragment :
 
     private val contract = ActivityResultContracts.RequestMultiplePermissions()
 
-    private val activityResultLauncher = registerForActivityResult(contract){ resultMap ->
-        val isAllGranted = requiredPermissionList.all{ e-> resultMap[e] == true}
+    private val activityResultLauncher = registerForActivityResult(contract) { resultMap ->
+        val isAllGranted = requiredPermissionList.all { e -> resultMap[e] == true }
 
         // todo 분기처리 필요하면 하기
-        if(isAllGranted){
+        if (isAllGranted) {
 
         } else {
 
@@ -85,10 +85,9 @@ class AuthorizationGuideFragment :
     }
 
 
-
     private fun NavController.toIdentification() {
         val action =
-            AuthorizationGuideFragmentDirections.actionAuthorizationGuideFragmentToIdentificationFragment()
+            AuthorizationGuideFragmentDirections.actionPermissionFragmentToIdentificationFragment()
         navigate(action)
     }
 }

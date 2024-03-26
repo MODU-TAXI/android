@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.intro.signup.phoneauth.OnboardingPhoneAuthorizationViewModel" />
+            type="com.motax.modutaxi.presentation.ui.intro.signup.phoneauth.OnboardingPhoneAuthViewModel" />
 
     </data>
 
