@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_10_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.10" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_31_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.31" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_41_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.41" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_51_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.51" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_61_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.61" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_81_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.81" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_10_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.10" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_16_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.16" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_79_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.79" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_84_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.84" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_90_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.90" />
+
+
+        <TextView
+            android:id="@+id/tv_authorization_guide"
+            style="@style/TextHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="앱 서비스 접근 권한 안내"
+            android:textColor="#000000"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@id/guide_84_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_16_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_10_horizontal" />
+
+        <TextView
+            android:id="@+id/tv_authorization_guide_description"
+            style="@style/TextSmallLight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="권한을 허용하지 않아도 모두의 택시를 이용할 수 있지만 일부 서비스가 제한될 수 있어요"
+            android:textColor="@color/sub"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/guide_84_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_16_vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_authorization_guide" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/guide_16_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_31_horizontal">
+
+            <ImageView
+                android:id="@+id/iv_authorization_device"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_authorization_device"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_authorization_device"
+                style="@style/TextTitle3Semibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="기기 및 앱 기록"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/iv_authorization_device"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/TextRegularRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="서비스 개선 및 오류 확인"
+                android:textColor="@color/mx_grey3"
+                app:layout_constraintStart_toEndOf="@id/iv_authorization_device"
+                app:layout_constraintTop_toBottomOf="@id/tv_authorization_device" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/guide_16_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_41_horizontal">
+
+            <ImageView
+                android:id="@+id/iv_authorization_notification"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_authorization_notification"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_authorization_notification"
+                style="@style/TextTitle3Semibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="알림"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/iv_authorization_notification"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <TextView
+                style="@style/TextRegularRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="푸시 알림 및 메세지 수신 안내"
+                android:textColor="@color/mx_grey3"
+                app:layout_constraintStart_toEndOf="@id/iv_authorization_notification"
+                app:layout_constraintTop_toBottomOf="@id/tv_authorization_notification" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/guide_16_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_51_horizontal">
+
+            <ImageView
+                android:id="@+id/iv_authorization_camera"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_authorization_device"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_authorization_camera"
+                style="@style/TextTitle3Semibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="사진/카메라"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/iv_authorization_camera"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/TextRegularRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="카풀팟에서 사진 업로드"
+                android:textColor="@color/mx_grey3"
+                app:layout_constraintStart_toEndOf="@id/iv_authorization_camera"
+                app:layout_constraintTop_toBottomOf="@id/tv_authorization_camera" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/guide_16_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_61_horizontal">
+
+            <ImageView
+                android:id="@+id/iv_authorization_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_authorization_location"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_authorization_location"
+                style="@style/TextTitle3Semibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="위치"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/iv_authorization_location"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/TextRegularRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="현재 위치 주변의 카풀팟 찾기 가능"
+                android:textColor="@color/mx_grey3"
+                app:layout_constraintStart_toEndOf="@id/iv_authorization_location"
+                app:layout_constraintTop_toBottomOf="@id/tv_authorization_location" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_check"
+            style="@style/TextLargeSemibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_black0_fill_nostroke_61radius"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            android:text="모두 허용"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guide_90_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

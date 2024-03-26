@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.intro.signup.question.OnboardingQuestionWhenWantTaxiViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="50dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_09_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.09" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_81_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.81" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_04_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.04" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_96_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.96" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_10_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.1" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_90_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.9" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="#D9D9D9"
+                android:max="5"
+                android:progress="2"
+                android:progressTint="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_identification_description"
+                style="@style/TextTitle1Semibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="택시를 가장 타고싶었던\n순간이 있으신가요?"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/guide_09_horizontal" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_by_everytime"
+                style="@style/TextLargeRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+                android:gravity="fill"
+                android:onClick="@{() -> vm.onWhenLate()}"
+                android:paddingVertical="30dp"
+                android:paddingLeft="18dp"
+                android:text="지각할 거 같을 때"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/tv_identification_description"
+                app:onboardQuestionBtnState="@{vm.uiState.whenLateSelected}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_by_friendly_recommendation"
+                style="@style/TextLargeRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+                android:gravity="fill"
+                android:onClick="@{() -> vm.onWhenBusLineTooLong()}"
+                android:paddingVertical="30dp"
+                android:paddingLeft="18dp"
+                android:text="버스 줄이 너무 길 때"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/btn_by_everytime"
+                app:onboardQuestionBtnState="@{vm.uiState.whenBusLineTooLongSelected}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_by_direct_search"
+                style="@style/TextLargeRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+                android:gravity="fill"
+                android:onClick="@{() -> vm.onDirectSearchSelected()}"
+                android:paddingVertical="30dp"
+                android:paddingLeft="18dp"
+                android:text="직접 검색해서 알게 되었어요!"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/btn_by_friendly_recommendation"
+                app:onboardQuestionBtnState="@{vm.uiState.directSearchSelected}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_by_etc"
+                style="@style/TextLargeRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+                android:gravity="fill"
+                android:onClick="@{() -> vm.onByEtcSelected()}"
+                android:paddingVertical="30dp"
+                android:paddingLeft="18dp"
+                android:text="기타"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/btn_by_direct_search"
+                app:onboardQuestionBtnState="@{vm.uiState.byEtcSelected}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_check"
+                style="@style/TextLargeSemibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/selector_next_btn"
+                android:gravity="center"
+                android:paddingVertical="16dp"
+                android:text="확인"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
+                app:layout_constraintTop_toBottomOf="@id/btn_by_etc" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</layout>

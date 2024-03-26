@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">modutaxi</string>
+    <string name="by_everytime">"<b>"에브리타임"</b>"을 통해 알게 되었어요!</string>
+    <string name="by_recommendation">"<b>"지인 추천"</b>"을 통해 알게되었어요!"</string>
+    <string name="by_direct_search">"<b>"직접 검색"</b>해서 알게 되었어요!</string>
+    <string name="by_etc">"<b>"기타"</b>해서 알게 되었어요!</string>
+    <string name="school_authorization_percent_up">"학교 인증을 하면\n매칭률이"
+        <font color='#FF7A00'>"72%</font>이상 올라가요"
+    </string>
+    <string name="email_sent">적어주신 이메일로 \n인증번호가 전송됐어요!</string>
+    <string name="not_recent">"<u>인증번호가 오지 않으셨나요?"</u>"</string>
+    <string name="onboarding_complete_one">"<font color='#FF7A00'>"가입완료!"</font>"</string>
+    <string name="onboarding_complete_two">지금 바로 탑승하러 가볼까요?</string>
 </resources>

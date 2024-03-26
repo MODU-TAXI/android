@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.intro.signup.question.OnboardingQuestionHowToKnowViewModel" />
+
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="50dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_09_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.09" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_81_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.81" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_04_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.04" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_96_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.96" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_10_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.1" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_90_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.9" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="#D9D9D9"
+                android:max="5"
+                android:progress="2"
+                android:progressTint="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_identification_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                style="@style/TextTitle1Semibold"
+                android:text="모두의 택시,\n어떻게 이용하게 되셨나요?"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/guide_09_horizontal" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_by_everytime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+                android:gravity="fill"
+                android:onClick="@{() -> vm.onEveryTimeSelect()}"
+                android:paddingVertical="30dp"
+                android:paddingLeft="18dp"
+                android:text="@string/by_everytime"
+                android:textSize="16sp"
+                style="@style/TextLargeRegular"
+                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/tv_identification_description"
+                app:onboardQuestionBtnState="@{vm.uiState.everyTimeSelected}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_by_friendly_recommendation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+                android:gravity="fill"
+                android:onClick="@{() -> vm.onFriendlyRecommendationSelected()}"
+                android:paddingVertical="30dp"
+                android:paddingLeft="18dp"
+                style="@style/TextLargeRegular"
+                android:text="@string/by_recommendation"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/btn_by_everytime"
+                app:onboardQuestionBtnState="@{vm.uiState.friendlyRecommendationSelected}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_by_direct_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+                android:gravity="fill"
+                android:onClick="@{() -> vm.onDirectSearchSelected()}"
+                android:paddingVertical="30dp"
+                android:paddingLeft="18dp"
+                style="@style/TextLargeRegular"
+                android:text="@string/by_direct_search"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/btn_by_friendly_recommendation"
+                app:onboardQuestionBtnState="@{vm.uiState.directSearchSelected}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_by_etc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+                android:gravity="fill"
+                style="@style/TextLargeRegular"
+                android:onClick="@{() -> vm.onByEtcSelected()}"
+                android:paddingVertical="30dp"
+                android:paddingLeft="18dp"
+                android:text="@string/by_etc"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                app:layout_constraintTop_toBottomOf="@id/btn_by_direct_search"
+                app:onboardQuestionBtnState="@{vm.uiState.byEtcSelected}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_check"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/selector_next_btn"
+                android:gravity="center"
+                style="@style/TextLargeSemibold"
+                android:paddingVertical="16dp"
+                android:text="확인"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
+                app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
+                app:layout_constraintTop_toBottomOf="@id/btn_by_etc" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</layout>
