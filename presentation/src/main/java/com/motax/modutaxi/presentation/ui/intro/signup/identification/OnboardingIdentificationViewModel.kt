@@ -23,28 +23,41 @@ class OnboardingIdentificationViewModel @Inject constructor() : ViewModel() {
     val uiState: StateFlow<OnboardingIdentificationUiState> = _uiState.asStateFlow()
 
     val name = MutableStateFlow("")
+    val gender = MutableStateFlow("")
+    val phoneNumber = MutableStateFlow("")
 
     init{
-        onNicknameObserve()
+        onNameObserve()
+        onGenderObserve()
+        onPhoneNumberObserve()
     }
 
-    private fun onNicknameObserve(){
+    private fun onNameObserve() {
         name.onEach {
-            Log.d("debugging", it)
-            if(it.isBlank()){
-                _uiState.update { state ->
-
-                    state.copy(
-                        isButtonEnabled = false
-                    )
-                }
-            } else {
-                _uiState.update { state ->
-                    state.copy(
-                        isButtonEnabled = true
-                    )
-                }
-            }
+            updateButtonEnabledState()
         }.launchIn(viewModelScope)
+    }
+    private fun onGenderObserve() {
+        gender.onEach {
+            updateButtonEnabledState()
+        }.launchIn(viewModelScope)
+    }
+
+    private fun onPhoneNumberObserve() {
+        phoneNumber.onEach {
+            updateButtonEnabledState()
+        }.launchIn(viewModelScope)
+    }
+
+    private fun updateButtonEnabledState() {
+        val isEnabled = name.value.isNotBlank() && gender.value.isNotBlank() && phoneNumber.value.isNotBlank()
+        Log.d("debugging", gender.value);
+        _uiState.update {
+            it.copy(isButtonEnabled = isEnabled)
+        }
+    }
+
+    fun updateGender(gender: String) {
+        this.gender.value = gender
     }
 }

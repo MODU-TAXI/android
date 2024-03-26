@@ -80,6 +80,7 @@
             app:layout_constraintTop_toBottomOf="@id/guide_09_horizontal" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -112,6 +113,93 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name_label" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_gender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+            app:layout_constraintTop_toBottomOf="@id/layout_name">
+
+            <TextView
+                android:id="@+id/tv_gender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="성별"
+                android:textColor="#626262"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            
+            <RadioGroup
+                android:id="@+id/rg_gender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="-5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_gender">
+
+                <RadioButton
+                    android:id="@+id/radioButtonMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="남자"/>
+
+                <RadioButton
+                    android:id="@+id/radioButtonFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="여자"/>
+
+            </RadioGroup>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_phone_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+            app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+            app:layout_constraintTop_toBottomOf="@id/layout_gender">
+
+            <TextView
+                android:id="@+id/tv_phone_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="전화번호"
+                android:textColor="#626262"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_phone_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@null"
+                android:hint="010-XXXX-XXXX"
+                android:text="@={vm.phoneNumber}"
+                android:textColorHint="#C0C0C0"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_phone_number" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,10 +17,19 @@ class OnboardingIdentificationFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
-        setBtnListener();
+        setCheckBtnListener()
+        setRadioGroupListener()
     }
 
-    private fun setBtnListener() {
+    private fun setRadioGroupListener() {
+        binding.rgGender.setOnCheckedChangeListener{ _, checkedId ->
+            when(checkedId) {
+                R.id.radioButtonMale -> viewModel.updateGender("Male")
+                R.id.radioButtonFemale -> viewModel.updateGender("Female")
+            }
+        }
+    }
+    private fun setCheckBtnListener() {
         binding.btnCheck.setOnClickListener {
             binding.btnCheck.isEnabled
             findNavController().toQuestion()
