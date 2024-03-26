@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="TextCaption" parent="Widget.AppCompat.TextView">
+    <style name="TextCaptionSemibold" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/pretendard_semi_bold</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextCaptionMedium" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextCaptionRegular" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/black</item>

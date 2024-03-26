@@ -90,6 +90,7 @@
 
         <TextView
             android:id="@+id/tv_authorization_guide"
+            style="@style/TextHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -102,6 +103,7 @@
 
         <TextView
             android:id="@+id/tv_authorization_guide_description"
+            style="@style/TextSmallLight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -131,6 +133,7 @@
 
             <TextView
                 android:id="@+id/tv_authorization_device"
+                style="@style/TextTitle3Semibold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -141,10 +144,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                style="@style/TextRegularRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="서비스 개선 및 오류 확인"
+                android:textColor="@color/mx_grey3"
                 app:layout_constraintStart_toEndOf="@id/iv_authorization_device"
                 app:layout_constraintTop_toBottomOf="@id/tv_authorization_device" />
 
@@ -167,6 +172,7 @@
 
             <TextView
                 android:id="@+id/tv_authorization_notification"
+                style="@style/TextTitle3Semibold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -179,10 +185,12 @@
                 />
 
             <TextView
+                style="@style/TextRegularRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="푸시 알림 및 메세지 수신 안내"
+                android:textColor="@color/mx_grey3"
                 app:layout_constraintStart_toEndOf="@id/iv_authorization_notification"
                 app:layout_constraintTop_toBottomOf="@id/tv_authorization_notification" />
 
@@ -206,6 +214,7 @@
 
             <TextView
                 android:id="@+id/tv_authorization_camera"
+                style="@style/TextTitle3Semibold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -216,10 +225,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                style="@style/TextRegularRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="카풀팟에서 사진 업로드"
+                android:textColor="@color/mx_grey3"
                 app:layout_constraintStart_toEndOf="@id/iv_authorization_camera"
                 app:layout_constraintTop_toBottomOf="@id/tv_authorization_camera" />
 
@@ -243,6 +254,7 @@
 
             <TextView
                 android:id="@+id/tv_authorization_location"
+                style="@style/TextTitle3Semibold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -253,10 +265,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                style="@style/TextRegularRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="현재 위치 주변의 카풀팟 찾기 가능"
+                android:textColor="@color/mx_grey3"
                 app:layout_constraintStart_toEndOf="@id/iv_authorization_location"
                 app:layout_constraintTop_toBottomOf="@id/tv_authorization_location" />
 
@@ -264,14 +278,15 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_check"
+            style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_black0_fill_nostroke_61radius"
+            android:gravity="center"
             android:paddingVertical="16dp"
             android:text="모두 허용"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:gravity="center"
             app:layout_constraintEnd_toStartOf="@+id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />
