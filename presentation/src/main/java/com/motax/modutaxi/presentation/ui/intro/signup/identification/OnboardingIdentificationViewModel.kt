@@ -1,6 +1,5 @@
 package com.motax.modutaxi.presentation.ui.intro.signup.identification
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +25,13 @@ class OnboardingIdentificationViewModel @Inject constructor() : ViewModel() {
     val gender = MutableStateFlow("")
     val phoneNumber = MutableStateFlow("")
 
-    init{
+    enum class FocusedField {
+        NONE, NAME, GENDER, PHONE
+    }
+
+    val focusedField = MutableStateFlow(FocusedField.NONE)
+
+    init {
         onNameObserve()
         onGenderObserve()
         onPhoneNumberObserve()
@@ -37,6 +42,7 @@ class OnboardingIdentificationViewModel @Inject constructor() : ViewModel() {
             updateButtonEnabledState()
         }.launchIn(viewModelScope)
     }
+
     private fun onGenderObserve() {
         gender.onEach {
             updateButtonEnabledState()
@@ -50,8 +56,8 @@ class OnboardingIdentificationViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun updateButtonEnabledState() {
-        val isEnabled = name.value.isNotBlank() && gender.value.isNotBlank() && phoneNumber.value.isNotBlank()
-        Log.d("debugging", gender.value);
+        val isEnabled =
+            name.value.isNotBlank() && gender.value.isNotBlank() && phoneNumber.value.isNotBlank()
         _uiState.update {
             it.copy(isButtonEnabled = isEnabled)
         }
@@ -59,5 +65,17 @@ class OnboardingIdentificationViewModel @Inject constructor() : ViewModel() {
 
     fun updateGender(gender: String) {
         this.gender.value = gender
+    }
+
+    fun focusOnGender() {
+        focusedField.value = FocusedField.GENDER
+    }
+
+    fun focusOnName() {
+        focusedField.value = FocusedField.NAME
+    }
+
+    fun focusOnPhoneNumber() {
+        focusedField.value = FocusedField.PHONE
     }
 }
