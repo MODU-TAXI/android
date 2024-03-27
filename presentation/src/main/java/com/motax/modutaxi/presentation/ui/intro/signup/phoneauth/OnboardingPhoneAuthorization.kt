@@ -24,6 +24,10 @@ class OnboardingPhoneAuthorization :
         binding.vm = viewModel
         initEventObserve()
         requestFocusAndShowKeyboard()
+
+        binding.root.setOnClickListener {
+            hideKeyboard()
+        }
     }
 
     private fun initEventObserve(){
@@ -47,5 +51,12 @@ class OnboardingPhoneAuthorization :
         val inputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.showSoftInput(binding.etAuthorizationCode, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
+
     }
 }

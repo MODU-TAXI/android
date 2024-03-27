@@ -19,6 +19,10 @@ class OnboardingSchoolAuthorizationEnterEmailFragment :
         super.onViewCreated(view, savedInstanceState)
         setBtnListener()
         requestFocusAndShowKeyboard()
+
+        binding.root.setOnClickListener {
+            hideKeyboard()
+        }
     }
 
     private fun setBtnListener() {
@@ -48,5 +52,12 @@ class OnboardingSchoolAuthorizationEnterEmailFragment :
         val inputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.showSoftInput(binding.etAuthorizationCode, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
+
     }
 }
