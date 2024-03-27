@@ -1,7 +1,9 @@
 package com.motax.modutaxi.presentation.ui.intro.signup.phoneauth
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -21,6 +23,7 @@ class OnboardingPhoneAuthorization :
 
         binding.vm = viewModel
         initEventObserve()
+        requestFocusAndShowKeyboard()
     }
 
     private fun initEventObserve(){
@@ -36,5 +39,13 @@ class OnboardingPhoneAuthorization :
     private fun NavController.toQuestionHowToKnow(){
         val action = OnboardingPhoneAuthorizationDirections.actionPhoneAuthFragmentToQuestionHowToKnowFragment()
         navigate(action)
+    }
+
+    private fun requestFocusAndShowKeyboard() {
+        binding.etAuthorizationCode.requestFocus()
+
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.showSoftInput(binding.etAuthorizationCode, InputMethodManager.SHOW_IMPLICIT)
     }
 }
