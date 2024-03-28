@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
@@ -12,12 +13,17 @@ import com.motax.modutaxi.presentation.databinding.FragmentOnboardingSchoolAutho
 
 class OnboardingSchoolAuthorizationEnterCodeFragment :
     BaseFragment<FragmentOnboardingSchoolAuthorizationEnterCodeBinding>(
-        R.layout.fragment_onboarding_school_authorization_enter_code
-    ) {
+        R.layout.fragment_onboarding_school_authorization_enter_code) {
+
+    private val viewModel: OnboardingSchoolAuthorizationEnterCodeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBtnListener()
+
+        binding.vm = viewModel
+
+        //setBtnListener()
+        initEventObserve()
         requestFocusAndShowKeyboard()
 
         binding.root.setOnClickListener {
@@ -25,6 +31,15 @@ class OnboardingSchoolAuthorizationEnterCodeFragment :
         }
     }
 
+    private fun initEventObserve() {
+        repeatOnStarted {
+            viewModel.event.collect{
+                when(it) {
+                    is EmailAuthEvent.NavigateToComplete -> findNavController().toOnboardingComplete()
+                }
+            }
+        }
+    }
 
 
     private fun requestFocusAndShowKeyboard() {
@@ -32,7 +47,9 @@ class OnboardingSchoolAuthorizationEnterCodeFragment :
 
         val inputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        inputMethodManager?.showSoftInput(binding.etAuthorizationCode, InputMethodManager.SHOW_IMPLICIT)
+        inputMethodManager?.showSoftInput(
+            binding.etAuthorizationCode, InputMethodManager.SHOW_IMPLICIT
+        )
     }
 
     private fun setBtnListener() {
@@ -52,6 +69,5 @@ class OnboardingSchoolAuthorizationEnterCodeFragment :
         val inputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
-
     }
 }
