@@ -167,7 +167,7 @@
                 style="@style/TextLargeSemibold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/selector_next_btn"
                 android:gravity="center"
                 android:paddingVertical="16dp"
