@@ -109,7 +109,7 @@
 
             <EditText
                 android:id="@+id/et_authorization_code"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:background="@null"
