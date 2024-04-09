@@ -1,14 +1,13 @@
 package com.motax.modutaxi.presentation.adapters
 
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.chip.Chip
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.databinding.ItemTaxipotBinding
 
@@ -16,32 +15,34 @@ class TaxipotAdapter() : ListAdapter<Taxipot, TaxipotAdapter.ViewHolder>(Taxipot
 
     class ViewHolder(private val binding: ItemTaxipotBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(taxipot: Taxipot) {
             binding.apply {
                 chipGroupClassification.removeAllViews()
                 taxipot.categories.forEach { category ->
-                    val chip = Chip(chipGroupClassification.context)
-                    chip.isClickable = false
-                    chip.isCheckable = false
+                    val textView = TextView(chipGroupClassification.context).apply {
+                        text = getTextForCategory(category)
 
-                    chip.text = getTextForCategory(category)
+                        //배경
+                        val backgroundResId = getBackgroundDrawableForCategory(category)
+                        background = ContextCompat.getDrawable(context, backgroundResId)
 
-                    val backgroundColor = getBackgroundColorForCategory(category)
-                    chip.chipBackgroundColor = ColorStateList.valueOf(backgroundColor)
+                        //스타일
+                        setTextAppearance(R.style.TextSmallMedium)
+                        setTextColor(getColorForCategory(category))
 
-                    val chipDrawable = chip.chipDrawable
-                    chipDrawable?.setBounds(Rect(4, 4, 4, 4))
+                        //패딩 설정
+                        //dp -> px 변환
+                        val context = chipGroupClassification.context
+                        val density = context.resources.displayMetrics.density
 
+                        val leftRightPaddingInPx = (8 * density).toInt()
+                        val topBottomPaddingInPx = (4 * density).toInt()
 
-                    chip.setTextAppearanceResource(R.style.TextSmallMedium)
-                    chip.setTextColor(getColorForCategory(category))
+                        setPadding(leftRightPaddingInPx, topBottomPaddingInPx, leftRightPaddingInPx, topBottomPaddingInPx)
 
-
-                    chip.chipStartPadding = 8f
-                    chip.chipEndPadding = 8f
-                    chip.chipStrokeWidth = 0f
-
-                    chipGroupClassification.addView(chip)
+                    }
+                    chipGroupClassification.addView(textView)
                 }
             }
 
@@ -53,12 +54,12 @@ class TaxipotAdapter() : ListAdapter<Taxipot, TaxipotAdapter.ViewHolder>(Taxipot
             binding.tvDepartureDatetime.setText(taxipot.departureDatetime)
         }
 
-        private fun getBackgroundColorForCategory(category: Category): Int {
+        private fun getBackgroundDrawableForCategory(category: Category): Int {
             return when (category) {
-                Category.DEADLINE -> Color.parseColor("#FCE6E6")
-                Category.STUDENT_VERIFICATION -> Color.parseColor("#EBFBF7")
-                Category.FEMALES_ONLY -> Color.parseColor("#EBEBEB")
-                Category.QUIET -> Color.parseColor("#EBEBEB")
+                Category.DEADLINE -> R.drawable.rect_red_fill_nostroke_4radius
+                Category.STUDENT_VERIFICATION -> R.drawable.rect_mint_fill_nostroke_4radius
+                Category.FEMALES_ONLY -> R.drawable.rect_grey0_fill_nostroke_4radius
+                Category.QUIET -> R.drawable.rect_grey0_fill_nostroke_4radius
             }
         }
 
