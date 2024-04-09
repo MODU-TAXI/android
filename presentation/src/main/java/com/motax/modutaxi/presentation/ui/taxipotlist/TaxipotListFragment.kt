@@ -1,8 +1,12 @@
 package com.motax.modutaxi.presentation.ui.taxipotlist
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,7 +36,7 @@ class TaxipotListFragment :
 
         val taxipotAdapter = TaxipotAdapter()
         binding.taxipotList.adapter = taxipotAdapter
-        
+
         viewModel.taxipotList.observe(viewLifecycleOwner) { taxipots ->
             taxipotAdapter.submitList(taxipots)
         }
@@ -42,36 +46,30 @@ class TaxipotListFragment :
         binding.tvSortingOption.setOnClickListener { showSortingPopup(it) }
     }
 
-    private fun showSortingPopup(view: View) {
-        val popup = PopupMenu(view.context, view)
 
-        when (currentSortOption) {
-            SortOption.LATEST -> {
-                popup.menu.add(Menu.NONE, R.id.action_deadline, Menu.NONE, "마감임박순")
-            }
-            SortOption.DEADLINE -> {
-                popup.menu.add(Menu.NONE, R.id.action_latest, Menu.NONE, "최신순")
-            }
+    private fun showSortingPopup(anchorView: View) {
+        val inflater = LayoutInflater.from(context)
+        val popupView = inflater.inflate(R.layout.popup_sorting_menu, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupView.findViewById<TextView>(R.id.tv_latest).setOnClickListener {
+
+            binding.tvSortingOption.text = "최신순"
+            //Todo 최신순 조회 API
+            popupWindow.dismiss()
+        }
+        popupView.findViewById<TextView>(R.id.tv_deadline).setOnClickListener {
+
+            binding.tvSortingOption.text = "마감임박순"
+            //Todo 마감임박순 조회 API
+            popupWindow.dismiss()
         }
 
-        popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_latest -> {
-                    binding.tvSortingOption.text = "최신순"
-                    currentSortOption = SortOption.LATEST
-                    //Todo "최신순" 정렬 로직
-                    true
-                }
-                R.id.action_deadline -> {
-                    binding.tvSortingOption.text = "마감임박순"
-                    currentSortOption = SortOption.DEADLINE
-
-                    //Todo 마감임박순 정렬 로직
-                    true
-                }
-                else -> false
-            }
-        }
-        popup.show()
+        popupWindow.showAsDropDown(anchorView, 0, 0)
     }
 }
