@@ -2,12 +2,10 @@ package com.motax.modutaxi.presentation.ui.taxipotlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.motax.modutaxi.presentation.R
@@ -22,6 +20,10 @@ class TaxipotListFragment :
 
     private val viewModel: TaxipotListViewModel by viewModels()
 
+    //필터링 - 마감임박
+    private var isDeadlineFiltered = false;
+
+    //정렬 기준 - 최신순, 마감임박순
     private var currentSortOption: SortOption = SortOption.LATEST
 
     enum class SortOption {
@@ -41,9 +43,50 @@ class TaxipotListFragment :
             taxipotAdapter.submitList(taxipots)
         }
 
-        viewModel.loadTaxipots()
 
+        //팝업메뉴
         binding.tvSortingOption.setOnClickListener { showSortingPopup(it) }
+
+        //스와이프 리프레시
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            //Todo sorting option enum 값따라서 해당 분류 api로 조회
+            viewModel.loadTaxipots()
+
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+
+        //마감임박 리스너
+        binding.btnDeadlineImminent.setOnClickListener {
+            //필터 상태 변경
+            isDeadlineFiltered = !isDeadlineFiltered
+
+            //도형 이미지 업데이트
+            updateDeadlineIcon()
+
+            //마감임박 택시팟만 필터링
+            filterDeadlineTaxipots()
+        }
+
+        viewModel.loadTaxipots()
+    }
+
+    private fun updateDeadlineIcon() {
+        if (isDeadlineFiltered) {
+            binding.btnDeadlineImminent.setImageResource(R.drawable.btn_eclipse_red_fill)
+        } else {
+            binding.btnDeadlineImminent.setImageResource(R.drawable.btn_ellipse_no_fill)
+
+        }
+    }
+
+    private fun filterDeadlineTaxipots() {
+        if (isDeadlineFiltered) {
+            // 마감임박 택시팟만 필터링하여 표시하는 로직
+            viewModel.filterDeadlineTaxipots()
+        } else {
+            // 모든 택시팟을 표시하는 로직
+            viewModel.loadTaxipots()
+        }
     }
 
 
