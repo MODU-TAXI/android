@@ -3,8 +3,8 @@ package com.motax.modutaxi.presentation.ui.intro.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.data.model.request.MemberLoginRequest
-import com.motax.modutaxi.data.repository.IntroRepository
+import com.motax.modutaxi.data.model.request.LoginRequest
+import com.motax.modutaxi.domain.repository.IntroRepository
 import com.motax.modutaxi.domain.model.BaseState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,7 +34,7 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            val loginRequest = MemberLoginRequest(accessToken = token)
+            val loginRequest = LoginRequest(accessToken = token)
             repository.memberLogin("KAKAO", loginRequest).let {
                 Log.d("debugging", "뷰모델 진입 성공")
                 when(it) {

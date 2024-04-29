@@ -2,7 +2,7 @@ package com.motax.modutaxi.data.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MemberLoginAndSignupResponse(
+data class AuthResponse(
     @SerializedName("accessToken")
     val accessToken: String,
     @SerializedName("refreshToken")

@@ -1,9 +1,8 @@
 package com.motax.modutaxi.di
 
 import com.motax.modutaxi.data.remote.IntroApi
-import com.motax.modutaxi.data.repository.IntroRepository
+import com.motax.modutaxi.domain.repository.IntroRepository
 import com.motax.modutaxi.data.repository.IntroRepositoryImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
