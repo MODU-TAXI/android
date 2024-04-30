@@ -13,8 +13,9 @@ suspend fun <T> runRemote(block: suspend () -> Response<T>): BaseState<T> {
                 BaseState.Success(it)
             } ?: BaseState.Error(StatusCode.EMPTY, "응답이 비어있습니다")
         } else {
-            val errorData = Gson().fromJson(response.errorBody()?.string(), BaseState.Error::class.java)
-            when(response.code()){
+            val errorData =
+                Gson().fromJson(response.errorBody()?.string(), BaseState.Error::class.java)
+            when (response.code()) {
                 401 -> BaseState.Error(StatusCode.ERROR_AUTH, errorData.message)
                 404 -> BaseState.Error(StatusCode.ERROR_NONE, errorData.message)
                 else -> BaseState.Error(StatusCode.ERROR, errorData.message)

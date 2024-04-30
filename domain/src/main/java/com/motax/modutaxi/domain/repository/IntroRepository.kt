@@ -8,5 +8,5 @@ interface IntroRepository {
     suspend fun memberLogin(
         type: String,
         accessToken: String
-    ): BaseState<AuthData>
+    ): Result<AuthData>
 }

@@ -1,5 +1,6 @@
 package com.motax.modutaxi.data.repository
 
+import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.LoginRequest
 import com.motax.modutaxi.data.model.runRemote
 import com.motax.modutaxi.data.remote.IntroApi
@@ -10,11 +11,10 @@ import javax.inject.Inject
 
 class IntroRepositoryImpl @Inject constructor(
     private val api: IntroApi
-): IntroRepository {
+) : IntroRepository {
 
-    override suspend fun memberLogin(type: String, accessToken: String): BaseState<AuthData> {
-        val response = runRemote { api.memberLogin(type, LoginRequest(accessToken)) }
+    override suspend fun memberLogin(type: String, accessToken: String): Result<AuthData> =
+        api.memberLogin(type, LoginRequest(accessToken)).mapCatching { it.toDomain() }
 
-    }
 
 }
