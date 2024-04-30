@@ -3,6 +3,7 @@ package com.motax.modutaxi.di
 import com.motax.modutaxi.BuildConfig
 import com.motax.modutaxi.data.config.AccessTokenInterceptor
 import com.motax.modutaxi.data.config.DataStoreManager
+import com.motax.modutaxi.data.remote.IntroApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,4 +53,8 @@ object NetworkModule {
             .build()
     }
 
+    @Provides
+    fun provideIntroApi(retrofit: Retrofit): IntroApi {
+        return retrofit.create(IntroApi::class.java)
+    }
 }
