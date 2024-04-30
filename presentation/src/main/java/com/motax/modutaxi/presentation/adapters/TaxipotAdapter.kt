@@ -54,30 +54,30 @@ class TaxipotAdapter() : ListAdapter<Taxipot, TaxipotAdapter.ViewHolder>(Taxipot
             binding.tvDepartureDatetime.setText(taxipot.departureDatetime)
         }
 
-        private fun getBackgroundDrawableForCategory(category: Category): Int {
-            return when (category) {
-                Category.DEADLINE -> R.drawable.rect_red_fill_nostroke_4radius
-                Category.STUDENT_VERIFICATION -> R.drawable.rect_mint_fill_nostroke_4radius
-                Category.FEMALES_ONLY -> R.drawable.rect_grey0_fill_nostroke_4radius
-                Category.QUIET -> R.drawable.rect_grey0_fill_nostroke_4radius
+        private fun getBackgroundDrawableForCategory(taxipotCategory: TaxipotCategory): Int {
+            return when (taxipotCategory) {
+                TaxipotCategory.DEADLINE -> R.drawable.rect_red_fill_nostroke_4radius
+                TaxipotCategory.STUDENT_VERIFICATION -> R.drawable.rect_mint_fill_nostroke_4radius
+                TaxipotCategory.FEMALES_ONLY -> R.drawable.rect_grey0_fill_nostroke_4radius
+                TaxipotCategory.QUIET -> R.drawable.rect_grey0_fill_nostroke_4radius
             }
         }
 
-        private fun getTextForCategory(category: Category): String {
-            return when(category) {
-                Category.DEADLINE -> "마감임박"
-                Category.STUDENT_VERIFICATION -> "학생인증"
-                Category.FEMALES_ONLY -> "여자만"
-                Category.QUIET -> "조용히"
+        private fun getTextForCategory(taxipotCategory: TaxipotCategory): String {
+            return when(taxipotCategory) {
+                TaxipotCategory.DEADLINE -> "마감임박"
+                TaxipotCategory.STUDENT_VERIFICATION -> "학생인증"
+                TaxipotCategory.FEMALES_ONLY -> "여자만"
+                TaxipotCategory.QUIET -> "조용히"
             }
         }
 
-        private fun getColorForCategory(category: Category): Int {
-            return when (category) {
-                Category.DEADLINE -> Color.parseColor("#FF4949")
-                Category.STUDENT_VERIFICATION -> Color.parseColor("#40CEAC")
-                Category.FEMALES_ONLY -> Color.parseColor("#9C9C9C")
-                Category.QUIET -> Color.parseColor("#9C9C9C")
+        private fun getColorForCategory(taxipotCategory: TaxipotCategory): Int {
+            return when (taxipotCategory) {
+                TaxipotCategory.DEADLINE -> Color.parseColor("#FF4949")
+                TaxipotCategory.STUDENT_VERIFICATION -> Color.parseColor("#40CEAC")
+                TaxipotCategory.FEMALES_ONLY -> Color.parseColor("#9C9C9C")
+                TaxipotCategory.QUIET -> Color.parseColor("#9C9C9C")
             }
         }
 

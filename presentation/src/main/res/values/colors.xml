@@ -12,4 +12,8 @@
     <color name="chip_student_verification">#EBFBF7</color>
     <color name="chip_females_only">#9C9C9C</color>
     <color name="chip_quiet">#9C9C9C</color>
+
+    <color name="taxipot_list_selected_category">#40CEAC</color>
+    <color name="taxipot_list_unselected_category">#000000</color>
+
 </resources>

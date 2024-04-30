@@ -9,10 +9,10 @@ data class Taxipot(
     val minutesAgoChat: Int,
     val departureDatetime: String,
     val route: String,
-    val categories: List<Category>
+    val categories: List<TaxipotCategory>
 )
 
-enum class Category {
+enum class TaxipotCategory {
     DEADLINE,
     STUDENT_VERIFICATION,
     FEMALES_ONLY,

@@ -6,10 +6,12 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.adapters.TaxipotAdapter
+import com.motax.modutaxi.presentation.adapters.TaxipotCategory
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentTaxipotListBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,42 +53,57 @@ class TaxipotListFragment :
         binding.swipeRefreshLayout.setOnRefreshListener {
             //Todo sorting option enum 값따라서 해당 분류 api로 조회
             viewModel.loadTaxipots()
-
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
-        //마감임박 리스너
-        binding.btnDeadlineImminent.setOnClickListener {
-            //필터 상태 변경
-            isDeadlineFiltered = !isDeadlineFiltered
-
-            //도형 이미지 업데이트
-            updateDeadlineIcon()
-
-            //마감임박 택시팟만 필터링
-            filterDeadlineTaxipots()
-        }
-
+        setupCategoryFilters()
         viewModel.loadTaxipots()
     }
 
-    private fun updateDeadlineIcon() {
-        if (isDeadlineFiltered) {
-            binding.btnDeadlineImminent.setImageResource(R.drawable.btn_eclipse_red_fill)
-        } else {
-            binding.btnDeadlineImminent.setImageResource(R.drawable.btn_ellipse_no_fill)
+    private fun setupCategoryFilters() {
+        binding.tvStudentVerification.setOnClickListener {
+            viewModel.toggleCategorySelection(TaxipotCategory.STUDENT_VERIFICATION)
+            updateCategoryUI()
+        }
 
+        binding.tvWomenOnly.setOnClickListener {
+            viewModel.toggleCategorySelection(TaxipotCategory.FEMALES_ONLY)
+            updateCategoryUI()
+        }
+
+        binding.tvMannersBoarding.setOnClickListener {
+            viewModel.toggleCategorySelection(TaxipotCategory.QUIET)
+            updateCategoryUI()
+        }
+
+        binding.btnDeadlineImminent.setOnClickListener {
+            viewModel.toggleCategorySelection(TaxipotCategory.DEADLINE)
+            updateCategoryUI()
         }
     }
+    private fun updateCategoryUI() {
+        val selectedColor = ContextCompat.getColor(requireContext(), R.color.taxipot_list_selected_category)
+        val unselectedColor = ContextCompat.getColor(requireContext(), R.color.taxipot_list_unselected_category)
 
-    private fun filterDeadlineTaxipots() {
-        if (isDeadlineFiltered) {
-            // 마감임박 택시팟만 필터링하여 표시하는 로직
-            viewModel.filterDeadlineTaxipots()
-        } else {
-            // 모든 택시팟을 표시하는 로직
-            viewModel.loadTaxipots()
+        binding.tvStudentVerification.apply {
+            isSelected = viewModel.isCategorySelected(TaxipotCategory.STUDENT_VERIFICATION)
+            setTextColor(if (isSelected) selectedColor else unselectedColor)
         }
+
+        binding.tvWomenOnly.apply {
+            isSelected = viewModel.isCategorySelected(TaxipotCategory.FEMALES_ONLY)
+            setTextColor(if (isSelected) selectedColor else unselectedColor)
+        }
+
+        binding.tvMannersBoarding.apply {
+            isSelected = viewModel.isCategorySelected(TaxipotCategory.QUIET)
+            setTextColor(if (isSelected) selectedColor else unselectedColor)
+        }
+
+        binding.btnDeadlineImminent.setImageResource(
+            if (viewModel.isCategorySelected(TaxipotCategory.DEADLINE)) R.drawable.btn_eclipse_red_fill
+            else R.drawable.btn_ellipse_no_fill
+        )
     }
 
 
