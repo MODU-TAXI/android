@@ -3,12 +3,13 @@ package com.motax.modutaxi.domain.usecase
 import com.motax.modutaxi.domain.repository.IntroRepository
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(
+class SignUpUseCase @Inject constructor(
     private val repository: IntroRepository
 ) {
     suspend operator fun invoke(
-        type: String,
-        accessToken: String
-    ) = runCatching { repository.login(type, accessToken) }
-
+        key: String,
+        name: String,
+        gender: String,
+        phoneNumber: String
+    ) = runCatching { repository.signUp(key, name, gender, phoneNumber) }
 }
