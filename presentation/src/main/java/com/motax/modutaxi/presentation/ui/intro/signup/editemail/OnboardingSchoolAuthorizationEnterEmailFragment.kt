@@ -4,20 +4,27 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentOnboardingSchoolAuthorizationEnterEmailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnboardingSchoolAuthorizationEnterEmailFragment :
     BaseFragment<FragmentOnboardingSchoolAuthorizationEnterEmailBinding>(
         R.layout.fragment_onboarding_school_authorization_enter_email
     ) {
 
+        private val viewModel : OnboardingSchoolAuthorizationEnterEmailViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBtnListener()
+
+        binding.vm = viewModel
+        initEventObserve()
         requestFocusAndShowKeyboard()
 
         binding.root.setOnClickListener {
@@ -25,12 +32,14 @@ class OnboardingSchoolAuthorizationEnterEmailFragment :
         }
     }
 
-    private fun setBtnListener() {
-        binding.btnAuthorizationNextTime.setOnClickListener {
-            findNavController().toOnboardingComplete()
-        }
-        binding.btnAuthorizationCheck.setOnClickListener {
-            findNavController().toEmailAuth()
+    private fun initEventObserve(){
+        repeatOnStarted {
+            viewModel.event.collect{
+                when(it){
+                    is OnboardingSchoolAuthorizationEnterEmailEvent.NavigateToOnboardingComplete -> findNavController().toOnboardingComplete()
+                    is OnboardingSchoolAuthorizationEnterEmailEvent.NavigateToEnterCode -> findNavController().toEmailAuth()
+                }
+            }
         }
     }
 

@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.intro.signup.editemail.OnboardingSchoolAuthorizationEnterEmailViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,11 +22,11 @@
             app:layout_constraintGuide_percent="0.09" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_73_horizontal"
+            android:id="@+id/guide_72_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.73" />
+            app:layout_constraintGuide_percent="0.72" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_81_horizontal"
@@ -75,9 +79,9 @@
 
         <TextView
             android:id="@+id/tv_identification_description"
+            style="@style/TextTitle1Semibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/TextTitle1Semibold"
             android:layout_marginLeft="8dp"
             android:text="@string/school_authorization_percent_up"
             android:textColor="#000000"
@@ -114,6 +118,7 @@
                 android:layout_marginTop="6dp"
                 android:background="@null"
                 android:hint="moduteam@inha.edu"
+                android:text="@={vm.email}"
                 android:textColorHint="#C0C0C0"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:paddingHorizontal="20dp"
-            android:text="올바르지 않은 이메일이에요!"
+            android:text="@={vm.helperText}"
             android:textColor="#FF3131"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
@@ -134,30 +139,32 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_authorization_next_time"
+            style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_nofill_greystroke_61radius"
+            android:gravity="center"
+            android:onClick="@{() -> vm.navigateToOnboardingComplete()}"
             android:paddingVertical="16dp"
             android:text="다음에 할래요"
-            android:gravity="center"
             android:textColor="#C0C0C0"
-            style="@style/TextLargeSemibold"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@id/btn_authorization_check"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_73_horizontal" />
+            app:layout_constraintTop_toBottomOf="@id/guide_72_horizontal" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_authorization_check"
+            style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rect_grey1_fill_nostroke_61radius"
+            android:background="@drawable/selector_next_btn"
+            android:enabled="@{vm.isDataReady ? false : true}"
+            android:gravity="center"
+            android:onClick="@{() -> vm.emailCertificate()}"
             android:paddingVertical="16dp"
             android:text="확인"
-            android:gravity="center"
             android:textColor="#FFFFFF"
-            style="@style/TextLargeSemibold"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"

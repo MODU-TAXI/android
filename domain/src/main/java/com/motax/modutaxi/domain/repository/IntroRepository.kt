@@ -2,7 +2,7 @@ package com.motax.modutaxi.domain.repository
 
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.MemberCheckData
-import com.motax.modutaxi.domain.model.SmsData
+import com.motax.modutaxi.domain.model.CertificateData
 
 interface IntroRepository {
 
@@ -27,10 +27,18 @@ interface IntroRepository {
         key: String,
         phoneNumber: String,
         certificationCode: String
-    ): Result<SmsData>
+    ): Result<CertificateData>
 
     suspend fun smsCertificate(
         key: String,
         phoneNumber: String
-    ): Result<SmsData>
+    ): Result<CertificateData>
+
+    suspend fun emailConfirm(
+        certCode: String
+    ): Result<CertificateData>
+
+    suspend fun emailCertificate(
+        mailAddress: String
+    ): Result<CertificateData>
 }

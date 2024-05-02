@@ -2,10 +2,10 @@ package com.motax.modutaxi.data.model.mapper
 
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
-import com.motax.modutaxi.data.model.response.SmsResponse
+import com.motax.modutaxi.data.model.response.CertificateResponse
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.MemberCheckData
-import com.motax.modutaxi.domain.model.SmsData
+import com.motax.modutaxi.domain.model.CertificateData
 
 fun AuthResponse.toDomain() = AuthData(
     accessToken = accessToken,
@@ -17,6 +17,6 @@ fun MemberCheckResponse.toDomain() = MemberCheckData(
     existent = existent
 )
 
-fun SmsResponse.toDomain() = SmsData(
+fun CertificateResponse.toDomain() = CertificateData(
     isConfirm = isConfirm
 )

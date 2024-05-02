@@ -1,5 +1,5 @@
 package com.motax.modutaxi.domain.model
 
-data class SmsData(
+data class CertificateData(
     val isConfirm: Boolean
 )
