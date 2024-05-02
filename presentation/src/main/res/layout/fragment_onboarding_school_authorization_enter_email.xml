@@ -159,7 +159,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_next_btn"
-            android:enabled="@{vm.isDataReady ? false : true}"
+            android:enabled="@{vm.isDataReady ? true : false}"
             android:gravity="center"
             android:onClick="@{() -> vm.emailCertificate()}"
             android:paddingVertical="16dp"

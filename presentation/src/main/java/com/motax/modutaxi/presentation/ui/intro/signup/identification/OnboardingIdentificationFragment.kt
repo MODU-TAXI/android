@@ -66,8 +66,8 @@ class OnboardingIdentificationFragment :
 
         binding.rgGender.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.radioButtonMale -> viewModel.updateGender("Male")
-                R.id.radioButtonFemale -> viewModel.updateGender("Female")
+                R.id.radioButtonMale -> viewModel.updateGender("MALE")
+                R.id.radioButtonFemale -> viewModel.updateGender("FEMALE")
             }
         }
 

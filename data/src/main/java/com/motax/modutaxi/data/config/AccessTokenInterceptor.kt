@@ -11,20 +11,20 @@ import okhttp3.Response
 import java.io.IOException
 import javax.inject.Inject
 
-class AccessTokenInterceptor @Inject constructor(private val dataStoreManager: DataStoreManager):
+class AccessTokenInterceptor @Inject constructor(private val dataStoreManager: DataStoreManager) :
     Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        val accessToken =  runBlocking {
+        val accessToken = runBlocking {
             dataStoreManager.getAccessToken().first()
         }
 
-        Log.d("token",accessToken.toString())
+        Log.d("token", accessToken.toString())
         val builder: Request.Builder = chain.request().newBuilder()
         accessToken?.takeIf { it.isNotEmpty() }?.let {
-            builder.addHeader(AUTHORIZATION, "$BEARER $it")
+            builder.addHeader(AUTHORIZATION, it)
         }
         return chain.proceed(builder.build())
     }

@@ -2,7 +2,10 @@ package com.motax.modutaxi.presentation.ui.intro.signup.editemail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.domain.repository.IntroRepository
+import com.motax.modutaxi.domain.usecase.SignUpUseCase
+import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,11 +22,15 @@ import javax.inject.Inject
 sealed class OnboardingSchoolAuthorizationEnterEmailEvent {
     data object NavigateToEnterCode : OnboardingSchoolAuthorizationEnterEmailEvent()
     data object NavigateToOnboardingComplete : OnboardingSchoolAuthorizationEnterEmailEvent()
+    data object GoBackToInit : OnboardingSchoolAuthorizationEnterEmailEvent()
+    data class ShowToastMessage(val msg: String) : OnboardingSchoolAuthorizationEnterEmailEvent()
 }
 
 @HiltViewModel
 class OnboardingSchoolAuthorizationEnterEmailViewModel @Inject constructor(
-    private val repository: IntroRepository
+    private val repository: IntroRepository,
+    private val signUpUseCase: SignUpUseCase,
+    private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<OnboardingSchoolAuthorizationEnterEmailEvent>()
@@ -31,15 +38,36 @@ class OnboardingSchoolAuthorizationEnterEmailViewModel @Inject constructor(
 
     val email = MutableStateFlow("")
     val helperText = MutableStateFlow("")
+    private val isSignUpSuccess = MutableStateFlow(false)
 
-    val isDataReady = combine(email, helperText) { email, helperText ->
-        email.isNotBlank() && helperText.isBlank()
-    }.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(), false
-    )
+    val isDataReady =
+        combine(email, helperText, isSignUpSuccess) { email, helperText, isSignUpSuccess ->
+            email.isNotBlank() && helperText.isBlank() && isSignUpSuccess
+        }.stateIn(
+            viewModelScope, SharingStarted.WhileSubscribed(), false
+        )
 
     init {
+        signUp()
         observeEmail()
+    }
+
+    private fun signUp() {
+        viewModelScope.launch {
+            signUpUseCase(
+                SignUpData.key,
+                SignUpData.name,
+                SignUpData.gender,
+                SignUpData.phoneNumber
+            ).onSuccess {
+                dataStoreManager.putAccessToken(it.accessToken)
+                dataStoreManager.putRefreshToken(it.refreshToken)
+                isSignUpSuccess.value = true
+            }.onFailure {
+                _event.emit(OnboardingSchoolAuthorizationEnterEmailEvent.ShowToastMessage("회원가입 실패!"))
+                _event.emit(OnboardingSchoolAuthorizationEnterEmailEvent.GoBackToInit)
+            }
+        }
     }
 
     private fun observeEmail() {
@@ -62,7 +90,7 @@ class OnboardingSchoolAuthorizationEnterEmailViewModel @Inject constructor(
         }
     }
 
-    fun navigateToOnboardingComplete(){
+    fun navigateToOnboardingComplete() {
         viewModelScope.launch {
             _event.emit(OnboardingSchoolAuthorizationEnterEmailEvent.NavigateToOnboardingComplete)
         }
