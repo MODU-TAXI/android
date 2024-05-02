@@ -25,7 +25,7 @@ class SplashActivity: BaseActivity<ActivitySplashBinding>(ActivitySplashBinding:
         repeatOnStarted {
             viewModel.events.collect {
                 when (it) {
-                    is SplashUiEvent.NavigateToIntro -> toIntroActivity()
+                    is SplashUiEvent.NavigateToIntro -> toMainActivity()
                     is SplashUiEvent.NavigateToMain -> toMainActivity()
                 }
             }
