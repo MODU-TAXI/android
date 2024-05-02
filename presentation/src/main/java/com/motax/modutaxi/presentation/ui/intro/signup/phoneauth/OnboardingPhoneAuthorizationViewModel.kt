@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.intro.signup.phoneauth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.IntroRepository
+import com.motax.modutaxi.presentation.ui.intro.signup.AuthBtnState
 import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -18,16 +19,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class PhoneAuthorizationUiState(
-    val btnState: PhoneAuthBtnState = PhoneAuthBtnState.Able,
+    val btnState: AuthBtnState = AuthBtnState.Able,
     val time: String = "",
 )
 
-sealed class PhoneAuthBtnState {
-    data object Able : PhoneAuthBtnState()
-    data class Disable(val msg: String) : PhoneAuthBtnState()
-    data class AuthSuccess(val msg: String) : PhoneAuthBtnState()
-    data class AuthFailure(val msg: String) : PhoneAuthBtnState()
-}
+
 
 sealed class PhoneAuthEvent {
     data object NavigateToQuestionHowToKnow : PhoneAuthEvent()
@@ -52,7 +48,7 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
         curJob = viewModelScope.launch {
             _uiState.update { state ->
                 state.copy(
-                    btnState = PhoneAuthBtnState.Able
+                    btnState = AuthBtnState.Able
                 )
             }
 
@@ -69,7 +65,7 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
                 }
                 _uiState.update { state ->
                     state.copy(
-                        btnState = PhoneAuthBtnState.Disable("인증번호 시간 만료"),
+                        btnState = AuthBtnState.Disable("인증번호 시간 만료"),
                     )
                 }
             }.onFailure {

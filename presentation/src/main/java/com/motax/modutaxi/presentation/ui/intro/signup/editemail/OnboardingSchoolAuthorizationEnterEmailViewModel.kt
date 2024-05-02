@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class OnboardingSchoolAuthorizationEnterEmailEvent {
-    data object NavigateToEnterCode : OnboardingSchoolAuthorizationEnterEmailEvent()
+    data class NavigateToEnterCode(val email : String) : OnboardingSchoolAuthorizationEnterEmailEvent()
     data object NavigateToOnboardingComplete : OnboardingSchoolAuthorizationEnterEmailEvent()
     data object GoBackToInit : OnboardingSchoolAuthorizationEnterEmailEvent()
     data class ShowToastMessage(val msg: String) : OnboardingSchoolAuthorizationEnterEmailEvent()
@@ -80,7 +80,11 @@ class OnboardingSchoolAuthorizationEnterEmailViewModel @Inject constructor(
         viewModelScope.launch {
             repository.emailCertificate(email.value).onSuccess {
                 if (it.isConfirm) {
-                    _event.emit(OnboardingSchoolAuthorizationEnterEmailEvent.NavigateToEnterCode)
+                    _event.emit(
+                        OnboardingSchoolAuthorizationEnterEmailEvent.NavigateToEnterCode(
+                            email.value
+                        )
+                    )
                 } else {
                     helperText.value = "올바르지 않은 이메일이에요!"
                 }

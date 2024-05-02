@@ -6,11 +6,11 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.motax.modutaxi.presentation.R
-import com.motax.modutaxi.presentation.ui.intro.signup.phoneauth.PhoneAuthBtnState
+import com.motax.modutaxi.presentation.ui.intro.signup.AuthBtnState
 
 @BindingAdapter("onboardQuestionBtnState")
-fun bindOnboardQuestionBtnState(btn: AppCompatButton, isSelected : Boolean) {
-    if(isSelected){
+fun bindOnboardQuestionBtnState(btn: AppCompatButton, isSelected: Boolean) {
+    if (isSelected) {
         btn.setBackgroundResource(R.drawable.rect_black_fill_nostroke_12radius)
         btn.setTextColor(ContextCompat.getColor(btn.context, R.color.white))
     } else {
@@ -20,28 +20,30 @@ fun bindOnboardQuestionBtnState(btn: AppCompatButton, isSelected : Boolean) {
 }
 
 @BindingAdapter("onboardPhoneAuthBtnState")
-fun bindOnboardPhoneBtnState(btn : AppCompatButton, state: PhoneAuthBtnState){
-    when(state){
-        is PhoneAuthBtnState.Disable -> btn.isEnabled = false
+fun bindOnboardPhoneBtnState(btn: AppCompatButton, state: AuthBtnState) {
+    when (state) {
+        is AuthBtnState.Disable -> btn.isEnabled = false
         else -> btn.isEnabled = true
     }
 }
 
 @BindingAdapter("onboardPhoneAuthHelperText")
-fun bindOnboardPhoneAuthHelperText(tv : TextView, state: PhoneAuthBtnState){
-    when(state){
-        is PhoneAuthBtnState.Able -> tv.visibility = View.GONE
-        is PhoneAuthBtnState.AuthSuccess -> {
+fun bindOnboardPhoneAuthHelperText(tv: TextView, state: AuthBtnState) {
+    when (state) {
+        is AuthBtnState.Able -> tv.visibility = View.GONE
+        is AuthBtnState.AuthSuccess -> {
             tv.visibility = View.VISIBLE
             tv.text = state.msg
             tv.setTextColor(ContextCompat.getColor(tv.context, R.color.mx_blue2))
         }
-        is PhoneAuthBtnState.AuthFailure -> {
+
+        is AuthBtnState.AuthFailure -> {
             tv.visibility = View.VISIBLE
             tv.text = state.msg
             tv.setTextColor(ContextCompat.getColor(tv.context, R.color.mx_red))
         }
-        is PhoneAuthBtnState.Disable -> {
+
+        is AuthBtnState.Disable -> {
             tv.visibility = View.VISIBLE
             tv.text = state.msg
             tv.setTextColor(ContextCompat.getColor(tv.context, R.color.mx_red))

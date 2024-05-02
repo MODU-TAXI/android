@@ -39,7 +39,7 @@ class OnboardingSchoolAuthorizationEnterEmailFragment :
             viewModel.event.collect {
                 when (it) {
                     is OnboardingSchoolAuthorizationEnterEmailEvent.NavigateToOnboardingComplete -> findNavController().toOnboardingComplete()
-                    is OnboardingSchoolAuthorizationEnterEmailEvent.NavigateToEnterCode -> findNavController().toEmailAuth()
+                    is OnboardingSchoolAuthorizationEnterEmailEvent.NavigateToEnterCode -> findNavController().toEmailAuth(it.email)
                     is OnboardingSchoolAuthorizationEnterEmailEvent.ShowToastMessage -> showToastMessage(
                         it.msg
                     )
@@ -60,9 +60,9 @@ class OnboardingSchoolAuthorizationEnterEmailFragment :
         navigate(action)
     }
 
-    private fun NavController.toEmailAuth() {
+    private fun NavController.toEmailAuth(email : String) {
         val action =
-            OnboardingSchoolAuthorizationEnterEmailFragmentDirections.actionEnterEmailFragmentToEmailAuthFragment()
+            OnboardingSchoolAuthorizationEnterEmailFragmentDirections.actionEnterEmailFragmentToEmailAuthFragment(email)
         navigate(action)
     }
 

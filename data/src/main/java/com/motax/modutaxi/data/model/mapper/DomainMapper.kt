@@ -13,7 +13,7 @@ fun AuthResponse.toDomain() = AuthData(
 )
 
 fun MemberCheckResponse.toDomain() = MemberCheckData(
-    key = key,
+    key = key ?: "",
     existent = existent
 )
 

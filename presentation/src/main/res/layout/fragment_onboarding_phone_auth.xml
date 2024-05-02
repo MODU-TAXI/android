@@ -72,9 +72,9 @@
 
         <TextView
             android:id="@+id/tv_identification_description"
+            style="@style/TextTitle1Semibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/TextTitle1Semibold"
             android:text="적어주신 번호로\n인증번호가 전송됐어요!"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -160,6 +160,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_school_authorization_check"
+            style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_next_btn"
@@ -167,7 +168,6 @@
             android:onClick="@{() -> vm.checkAuthCode()}"
             android:paddingVertical="16dp"
             android:text="확인"
-            style="@style/TextLargeSemibold"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
