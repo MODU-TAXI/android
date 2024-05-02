@@ -13,12 +13,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
+    @Singleton
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         accessTokenInterceptor: AccessTokenInterceptor,
@@ -33,6 +35,7 @@ object NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level =
@@ -40,10 +43,12 @@ object NetworkModule {
         }
     }
     @Provides
+    @Singleton
     fun provideAccessTokenInterceptor(dataStoreManager: DataStoreManager): AccessTokenInterceptor =
         AccessTokenInterceptor(dataStoreManager)
 
     @Provides
+    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
 
         return Retrofit.Builder()
@@ -53,8 +58,4 @@ object NetworkModule {
             .build()
     }
 
-    @Provides
-    fun provideIntroApi(retrofit: Retrofit): IntroApi {
-        return retrofit.create(IntroApi::class.java)
-    }
 }

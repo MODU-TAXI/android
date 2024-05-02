@@ -32,12 +32,6 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
         }
     }
 
-    fun getAutoLogin() : Flow<Boolean?> {
-        return dataStore.data.map { prefs ->
-            prefs[AUTO_LOGIN_KEY] ?: false
-        }
-    }
-
     suspend fun putAccessToken(token : String){
         dataStore.edit { prefs ->
             prefs[ACCESS_TOKEN_KEY] = token
@@ -50,12 +44,6 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
         }
     }
 
-    suspend fun putAutoLogin(isAuto : Boolean){
-        dataStore.edit { prefs ->
-            prefs[AUTO_LOGIN_KEY] = isAuto
-        }
-    }
-
     suspend fun deleteAccessToken(){
         dataStore.edit { prefs ->
             prefs.remove(ACCESS_TOKEN_KEY)
@@ -65,12 +53,6 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
     suspend fun deleteRefreshToken(){
         dataStore.edit { prefs ->
             prefs.remove(REFRESH_TOKEN_KEY)
-        }
-    }
-
-    suspend fun deleteAutoLogin(){
-        dataStore.edit { prefs ->
-            prefs.remove(AUTO_LOGIN_KEY)
         }
     }
 

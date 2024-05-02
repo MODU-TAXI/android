@@ -1,5 +1,5 @@
 package com.motax.modutaxi.data.model.request
 
-data class MemberLoginRequest(
+data class LoginRequest(
     val accessToken: String
 )

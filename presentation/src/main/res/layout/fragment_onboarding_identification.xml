@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="com.motax.modutaxi.presentation.ui.intro.signup.identification.FocusedField" />
 
         <variable
             name="vm"
@@ -12,7 +13,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:onClick="@{() -> vm.focusNone()}">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_09_horizontal"
@@ -87,7 +89,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:background="@{vm.uiState.focusedField == FocusedField.NAME ? @drawable/rect_nofill_blackstroke_12radius : @drawable/rect_grey0_fill_nostroke_12radius}"
             android:onClick="@{() -> vm.focusOnName()}"
             android:paddingHorizontal="22dp"
             android:paddingVertical="16dp"
@@ -130,7 +132,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:background="@{vm.uiState.focusedField == FocusedField.GENDER ? @drawable/rect_nofill_blackstroke_12radius : @drawable/rect_grey0_fill_nostroke_12radius}"
             android:onClick="@{() -> vm.focusOnGender()}"
             android:paddingHorizontal="22dp"
             android:paddingVertical="16dp"
@@ -183,7 +185,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:background="@{vm.uiState.focusedField == FocusedField.PHONE ? @drawable/rect_nofill_blackstroke_12radius : @drawable/rect_grey0_fill_nostroke_12radius}"
             android:onClick="@{() -> vm.focusOnPhoneNumber()}"
             android:paddingHorizontal="22dp"
             android:paddingVertical="16dp"
@@ -228,8 +230,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_next_btn"
-            android:enabled="@{vm.uiState.buttonEnabled}"
+            android:enabled="@{vm.isDataReady()}"
             android:gravity="center"
+            android:onClick="@{() -> vm.navigateToPhoneAuth()}"
             android:paddingVertical="16dp"
             android:text="확인"
             android:textColor="#FFFFFF"

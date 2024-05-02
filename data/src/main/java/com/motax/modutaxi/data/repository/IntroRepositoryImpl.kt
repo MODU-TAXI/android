@@ -1,20 +1,45 @@
 package com.motax.modutaxi.data.repository
 
-import com.motax.modutaxi.data.model.request.MemberLoginRequest
-import com.motax.modutaxi.data.model.response.MemberLoginAndSignupResponse
-import com.motax.modutaxi.data.model.runRemote
+import com.motax.modutaxi.data.model.mapper.toDomain
+import com.motax.modutaxi.data.model.request.LoginRequest
+import com.motax.modutaxi.data.model.request.SignUpRequest
 import com.motax.modutaxi.data.remote.IntroApi
-import com.motax.modutaxi.domain.model.BaseState
+import com.motax.modutaxi.domain.model.AuthData
+import com.motax.modutaxi.domain.model.MemberCheckData
+import com.motax.modutaxi.domain.repository.IntroRepository
 import javax.inject.Inject
 
 class IntroRepositoryImpl @Inject constructor(
     private val api: IntroApi
-): IntroRepository {
-    override suspend fun memberLogin(
-        type: String,
-        body: MemberLoginRequest
-    ): BaseState<MemberLoginAndSignupResponse> = runRemote {
-        api.memberLogin(type, body)
-    }
+) : IntroRepository {
+
+    override suspend fun login(type: String, accessToken: String): Result<AuthData> =
+        runCatching { api.login(type, LoginRequest(accessToken)) }.mapCatching { it.toDomain() }
+
+    override suspend fun memberCheck(type: String, accessToken: String): Result<MemberCheckData> =
+        runCatching {
+            api.memberCheck(
+                type,
+                LoginRequest(accessToken)
+            )
+        }.mapCatching { it.toDomain() }
+
+    override suspend fun signUp(
+        key: String,
+        name: String,
+        gender: String,
+        phoneNumber: String
+    ): Result<AuthData> =
+        runCatching {
+            api.signUp(
+                SignUpRequest(
+                    key,
+                    name,
+                    gender,
+                    phoneNumber
+                )
+            )
+        }.mapCatching { it.toDomain() }
+
 
 }
