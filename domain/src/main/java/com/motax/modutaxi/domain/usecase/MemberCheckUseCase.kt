@@ -10,5 +10,5 @@ class MemberCheckUseCase @Inject constructor(
     suspend operator fun invoke(
         type: String,
         accessToken: String
-    ) = runCatching { repository.memberCheck(type, accessToken) }
+    ) = repository.memberCheck(type, accessToken)
 }

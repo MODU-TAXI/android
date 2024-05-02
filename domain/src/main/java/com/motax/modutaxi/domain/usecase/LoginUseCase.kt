@@ -9,6 +9,6 @@ class LoginUseCase @Inject constructor(
     suspend operator fun invoke(
         type: String,
         accessToken: String
-    ) = runCatching { repository.login(type, accessToken) }
+    ) = repository.login(type, accessToken)
 
 }

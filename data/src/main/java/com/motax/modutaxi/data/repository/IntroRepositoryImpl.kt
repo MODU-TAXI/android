@@ -14,10 +14,15 @@ class IntroRepositoryImpl @Inject constructor(
 ) : IntroRepository {
 
     override suspend fun login(type: String, accessToken: String): Result<AuthData> =
-        api.login(type, LoginRequest(accessToken)).mapCatching { it.toDomain() }
+        runCatching { api.login(type, LoginRequest(accessToken)) }.mapCatching { it.toDomain() }
 
     override suspend fun memberCheck(type: String, accessToken: String): Result<MemberCheckData> =
-        api.memberCheck(type, LoginRequest(accessToken)).mapCatching { it.toDomain() }
+        runCatching {
+            api.memberCheck(
+                type,
+                LoginRequest(accessToken)
+            )
+        }.mapCatching { it.toDomain() }
 
     override suspend fun signUp(
         key: String,
@@ -25,6 +30,16 @@ class IntroRepositoryImpl @Inject constructor(
         gender: String,
         phoneNumber: String
     ): Result<AuthData> =
-        api.signUp(SignUpRequest(key, name, gender, phoneNumber)).mapCatching { it.toDomain() }
+        runCatching {
+            api.signUp(
+                SignUpRequest(
+                    key,
+                    name,
+                    gender,
+                    phoneNumber
+                )
+            )
+        }.mapCatching { it.toDomain() }
+
 
 }

@@ -11,5 +11,5 @@ class SignUpUseCase @Inject constructor(
         name: String,
         gender: String,
         phoneNumber: String
-    ) = runCatching { repository.signUp(key, name, gender, phoneNumber) }
+    ) = repository.signUp(key, name, gender, phoneNumber)
 }

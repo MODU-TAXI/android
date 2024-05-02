@@ -14,16 +14,16 @@ interface IntroApi {
     suspend fun login(
         @Path("type") type: String,
         @Body body: LoginRequest
-    ): Result<AuthResponse>
+    ): AuthResponse
 
     @POST("/api/members/{type}/membership")
     suspend fun memberCheck(
         @Path("type") type: String,
         @Body body: LoginRequest
-    ): Result<MemberCheckResponse>
+    ): MemberCheckResponse
 
     @POST("/api/members/sign-up")
     suspend fun signUp(
         @Body body: SignUpRequest
-    ): Result<AuthResponse>
+    ): AuthResponse
 }

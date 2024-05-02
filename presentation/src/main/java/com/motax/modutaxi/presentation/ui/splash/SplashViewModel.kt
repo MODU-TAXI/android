@@ -24,13 +24,11 @@ class SplashViewModel @Inject constructor(
 
     fun getAutoLogin() {
         viewModelScope.launch {
-            dataStoreManager.getAutoLogin().collect { autoLogin ->
-                dataStoreManager.getAccessToken().collect { accessToken ->
-                    if (autoLogin == true && accessToken != "") {
-                        _events.emit(SplashUiEvent.NavigateToMain)
-                    } else {
-                        _events.emit(SplashUiEvent.NavigateToIntro)
-                    }
+            dataStoreManager.getAccessToken().collect { accessToken ->
+                if (accessToken != "") {
+                    _events.emit(SplashUiEvent.NavigateToMain)
+                } else {
+                    _events.emit(SplashUiEvent.NavigateToIntro)
                 }
             }
         }
