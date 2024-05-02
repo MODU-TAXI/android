@@ -11,7 +11,9 @@ import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentOnboardingSchoolAuthorizationEnterCodeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnboardingSchoolAuthorizationEnterCodeFragment :
     BaseFragment<FragmentOnboardingSchoolAuthorizationEnterCodeBinding>(
         R.layout.fragment_onboarding_school_authorization_enter_code

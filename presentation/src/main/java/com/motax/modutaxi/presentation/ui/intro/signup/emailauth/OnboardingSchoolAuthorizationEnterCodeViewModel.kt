@@ -22,7 +22,6 @@ data class EmailAuthorizationUiState(
     val time: String = "",
 )
 
-
 sealed class EmailAuthEvent {
     data object NavigateToComplete : EmailAuthEvent()
 }
