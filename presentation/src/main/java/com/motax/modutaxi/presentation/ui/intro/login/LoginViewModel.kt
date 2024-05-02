@@ -50,7 +50,7 @@ class LoginViewModel @Inject constructor(
                 _event.emit(LoginEvent.ShowToastMessage("로그인 성공"))
                 dataStoreManager.putAccessToken(it.accessToken)
                 dataStoreManager.putRefreshToken(it.refreshToken)
-                _event.emit(LoginEvent.NavigateToOnBoard)
+                _event.emit(LoginEvent.NavigateToMainActivity)
             }.onFailure {
                 _event.emit(LoginEvent.ShowToastMessage(it.message.toString()))
             }

@@ -83,6 +83,11 @@
         android:id="@+id/emailAuthFragment"
         android:name="com.motax.modutaxi.presentation.ui.intro.signup.emailauth.OnboardingSchoolAuthorizationEnterCodeFragment"
         tools:layout="@layout/fragment_onboarding_school_authorization_enter_code">
+
+        <argument
+            android:name="email"
+            app:argType="string"/>
+
         <action
             android:id="@+id/action_emailAuthFragment_to_completeFragment"
             app:destination="@id/completeFragment" />

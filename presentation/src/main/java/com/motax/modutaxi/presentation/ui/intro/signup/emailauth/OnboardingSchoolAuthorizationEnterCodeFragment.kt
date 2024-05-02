@@ -7,25 +7,31 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentOnboardingSchoolAuthorizationEnterCodeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnboardingSchoolAuthorizationEnterCodeFragment :
     BaseFragment<FragmentOnboardingSchoolAuthorizationEnterCodeBinding>(
-        R.layout.fragment_onboarding_school_authorization_enter_code) {
+        R.layout.fragment_onboarding_school_authorization_enter_code
+    ) {
 
     private val viewModel: OnboardingSchoolAuthorizationEnterCodeViewModel by viewModels()
+
+    private val args: OnboardingSchoolAuthorizationEnterCodeFragmentArgs by navArgs()
+    private val email by lazy { args.email }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-
-        //setBtnListener()
+        viewModel.setEmailData(email)
         initEventObserve()
-        requestFocusAndShowKeyboard()
 
+        requestFocusAndShowKeyboard()
         binding.root.setOnClickListener {
             hideKeyboard()
         }
@@ -33,14 +39,13 @@ class OnboardingSchoolAuthorizationEnterCodeFragment :
 
     private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect{
-                when(it) {
+            viewModel.event.collect {
+                when (it) {
                     is EmailAuthEvent.NavigateToComplete -> findNavController().toOnboardingComplete()
                 }
             }
         }
     }
-
 
     private fun requestFocusAndShowKeyboard() {
         binding.etAuthorizationCode.requestFocus()
@@ -50,13 +55,6 @@ class OnboardingSchoolAuthorizationEnterCodeFragment :
         inputMethodManager?.showSoftInput(
             binding.etAuthorizationCode, InputMethodManager.SHOW_IMPLICIT
         )
-    }
-
-    private fun setBtnListener() {
-        binding.btnSchoolAuthorizationCheck.setOnClickListener {
-            binding.btnSchoolAuthorizationCheck.isEnabled
-            findNavController().toOnboardingComplete()
-        }
     }
 
     private fun NavController.toOnboardingComplete() {

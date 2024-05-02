@@ -22,6 +22,7 @@ class OnboardingPhoneAuthorization :
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
+        viewModel.sendAuthCode()
         initEventObserve()
         requestFocusAndShowKeyboard()
 

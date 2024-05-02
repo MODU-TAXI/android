@@ -17,7 +17,6 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
     companion object {
         private val ACCESS_TOKEN_KEY = stringPreferencesKey(ACCESS_TOKEN)
         private val REFRESH_TOKEN_KEY = stringPreferencesKey(REFRESH_TOKEN)
-        private val AUTO_LOGIN_KEY = booleanPreferencesKey(AUTO_LOGIN)
     }
 
     fun getAccessToken(): Flow<String?> {
