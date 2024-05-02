@@ -2,8 +2,11 @@ package com.motax.modutaxi.data.remote
 
 import com.motax.modutaxi.data.model.request.LoginRequest
 import com.motax.modutaxi.data.model.request.SignUpRequest
+import com.motax.modutaxi.data.model.request.SmsCertificateRequest
+import com.motax.modutaxi.data.model.request.SmsConfirmRequest
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
+import com.motax.modutaxi.data.model.response.SmsResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -26,4 +29,14 @@ interface IntroApi {
     suspend fun signUp(
         @Body body: SignUpRequest
     ): AuthResponse
+
+    @POST("/api/members/sms/confirm")
+    suspend fun smsConfirm(
+        @Body body: SmsConfirmRequest
+    ): SmsResponse
+
+    @POST("/api/members/sms/certificate")
+    suspend fun smsCertificate(
+        @Body body: SmsCertificateRequest
+    ): SmsResponse
 }

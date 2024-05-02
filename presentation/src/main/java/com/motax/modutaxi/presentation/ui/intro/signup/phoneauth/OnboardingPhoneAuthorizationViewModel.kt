@@ -2,6 +2,8 @@ package com.motax.modutaxi.presentation.ui.intro.signup.phoneauth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.repository.IntroRepository
+import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -27,12 +29,14 @@ sealed class PhoneAuthBtnState {
     data class AuthFailure(val msg: String) : PhoneAuthBtnState()
 }
 
-sealed class PhoneAuthEvent{
-    data object NavigateToQuestionHowToKnow: PhoneAuthEvent()
+sealed class PhoneAuthEvent {
+    data object NavigateToQuestionHowToKnow : PhoneAuthEvent()
 }
 
 @HiltViewModel
-class OnboardingPhoneAuthViewModel @Inject constructor() : ViewModel() {
+class OnboardingPhoneAuthViewModel @Inject constructor(
+    private val repository: IntroRepository
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PhoneAuthorizationUiState())
     val uiState: StateFlow<PhoneAuthorizationUiState> = _uiState.asStateFlow()
@@ -42,29 +46,36 @@ class OnboardingPhoneAuthViewModel @Inject constructor() : ViewModel() {
 
     val authorizationCode = MutableStateFlow("")
 
-  var curJob : Job ?= null
+    var curJob: Job? = null
 
-    init {
-        checkTimer()
-    }
-
-    private fun checkTimer() {
+    fun sendAuthCode() {
         curJob = viewModelScope.launch {
-            var time = 180
-            while (time != 0) {
-                delay(1000)
-                time--
-                _uiState.update { state ->
-                    state.copy(
-                        time = "${time / 60}:" + if (time % 60 >= 10) "${time % 60}" else "0${time % 60}"
-                    )
-                }
-            }
             _uiState.update { state ->
                 state.copy(
-                    btnState = PhoneAuthBtnState.Disable("인증번호 시간 만료."),
+                    btnState = PhoneAuthBtnState.Able
                 )
             }
+
+            repository.smsCertificate(SignUpData.key, SignUpData.phoneNumber).onSuccess {
+                var time = 180
+                while (time != 0) {
+                    delay(1000)
+                    time--
+                    _uiState.update { state ->
+                        state.copy(
+                            time = "${time / 60}:" + if (time % 60 >= 10) "${time % 60}" else "0${time % 60}"
+                        )
+                    }
+                }
+                _uiState.update { state ->
+                    state.copy(
+                        btnState = PhoneAuthBtnState.Disable("인증번호 시간 만료"),
+                    )
+                }
+            }.onFailure {
+
+            }
+
         }
     }
 
@@ -72,34 +83,40 @@ class OnboardingPhoneAuthViewModel @Inject constructor() : ViewModel() {
 
         viewModelScope.launch {
 
-            _uiState.update { state ->
-                state.copy(
-                    btnState = PhoneAuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
-                )
-            }
-
-            _uiState.update { state ->
-                state.copy(
-                    btnState = PhoneAuthBtnState.AuthSuccess("인증번호 검증 성공")
-                )
-            }
-
             _event.emit(PhoneAuthEvent.NavigateToQuestionHowToKnow)
+
+//            repository.smsConfirm(
+//                SignUpData.key,
+//                SignUpData.phoneNumber,
+//                authorizationCode.value
+//            ).onSuccess {
+//                if(it.isConfirm){
+//                    _uiState.update { state ->
+//                        state.copy(
+//                            btnState = PhoneAuthBtnState.AuthSuccess("인증번호 검증 성공")
+//                        )
+//                    }
+//
+//                    _event.emit(PhoneAuthEvent.NavigateToQuestionHowToKnow)
+//                } else {
+//                    _uiState.update { state ->
+//                        state.copy(
+//                            btnState = PhoneAuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
+//                        )
+//                    }
+//                }
+//            }.onFailure {
+//                _uiState.update { state ->
+//                    state.copy(
+//                        btnState = PhoneAuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
+//                    )
+//                }
+//            }
         }
     }
 
     fun resendAuthCode() {
-        viewModelScope.launch {
-
-            // todo 인증번호 재전송
-
-            _uiState.update { state ->
-                state.copy(
-                    btnState = PhoneAuthBtnState.Able
-                )
-            }
-            curJob?.cancel()
-            checkTimer()
-        }
+        curJob?.cancel()
+        sendAuthCode()
     }
 }
