@@ -15,4 +15,8 @@ class MainRepositoryImpl @Inject constructor(
             api.getTaxiPotList(page, size)
         }.mapCatching { it.toDomain() }
 
+    override suspend fun enterPot(roomId: Long): Result<Unit> = runCatching {
+        api.enterPot(roomId)
+    }
+
 }

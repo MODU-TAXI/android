@@ -30,7 +30,7 @@ class TaxiPotListViewModel @Inject constructor(
             repository.getTaxiPotList(0, 20).onSuccess {
                 _uiState.update { state ->
                     state.copy(
-                        taxiPotList = it.result.map { data -> data.toUiTaxiPotItem(::enterPot) }
+                        taxiPotList = it.result.map { data -> data.toUiTaxiPotItem(::navigateToMatchDetail) }
                     )
                 }
             }.onFailure {
@@ -39,8 +39,14 @@ class TaxiPotListViewModel @Inject constructor(
         }
     }
 
-    private fun enterPot(id: Long) {
+    private fun navigateToMatchDetail(id: Long) {
+        viewModelScope.launch {
+            repository.enterPot(id).onSuccess {
 
+            }.onFailure {
+
+            }
+        }
     }
 
 //    fun isCategorySelected(category: TaxiPotCategory): Boolean {

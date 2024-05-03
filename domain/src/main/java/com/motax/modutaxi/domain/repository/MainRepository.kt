@@ -8,4 +8,8 @@ interface MainRepository {
         page: Int,
         size : Int
     ): Result<TaxiPotListData>
+
+    suspend fun enterPot(
+        roomId : Long
+    ): Result<Unit>
 }

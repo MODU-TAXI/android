@@ -6,7 +6,7 @@ import com.motax.modutaxi.presentation.ui.main.taxipotlist.model.UiTaxiPotItem
 
 
 fun TaxiPotData.toUiTaxiPotItem(
-    enterPot: (Long) -> Unit
+    navigateToMatchDetail: (Long) -> Unit
 ) = UiTaxiPotItem(
     roomId = roomId,
     curHeadCount = 1,
@@ -15,5 +15,5 @@ fun TaxiPotData.toUiTaxiPotItem(
     recentChatTime = "3분전",
     departureDatetime = departureTime,
     categories = listOf(TaxiPotCategory.DEADLINE, TaxiPotCategory.FEMALES_ONLY),
-    enterPot = enterPot
+    navigateToMatchDetail = navigateToMatchDetail
 )

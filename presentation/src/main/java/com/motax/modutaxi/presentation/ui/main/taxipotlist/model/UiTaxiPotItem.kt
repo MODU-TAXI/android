@@ -10,7 +10,7 @@ data class UiTaxiPotItem(
     val departureSpot: String = "",
     val arrivalSpot: String = "",
     val categories: List<TaxiPotCategory> = emptyList(),
-    val enterPot: (Long) -> Unit
+    val navigateToMatchDetail: (Long) -> Unit
 )
 
 enum class TaxiPotCategory {

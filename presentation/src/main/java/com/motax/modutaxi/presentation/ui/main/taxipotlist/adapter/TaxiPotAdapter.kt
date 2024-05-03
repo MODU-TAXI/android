@@ -34,7 +34,7 @@ class TaxiPotViewHolder(private val binding: ItemTaxipotBinding) :
     fun bind(item: UiTaxiPotItem) {
         binding.item = item
         binding.root.setOnClickListener {
-            item.enterPot(item.roomId)
+            item.navigateToMatchDetail(item.roomId)
         }
     }
 }
