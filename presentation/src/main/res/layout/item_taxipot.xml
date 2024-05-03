@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="com.motax.modutaxi.presentation.ui.main.taxipotlist.model.UiTaxiPotItem" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="2dp"
+            android:text="@{item.recentChatTime}"
             android:textColor="#9C9C9C"
             app:layout_constraintBottom_toBottomOf="@id/chip_group_classification"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +53,7 @@
             style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@{item.departureDatetime}"
             app:layout_constraintBottom_toBottomOf="@id/iv_clock_fill"
             app:layout_constraintStart_toEndOf="@id/iv_clock_fill"
             app:layout_constraintTop_toTopOf="@id/iv_clock_fill" />
@@ -66,6 +72,7 @@
             style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@{item.departureSpot}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_location_fill"
             app:layout_constraintStart_toEndOf="@id/iv_location_fill"
             app:layout_constraintTop_toTopOf="@id/iv_location_fill" />

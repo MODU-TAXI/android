@@ -1,15 +1,16 @@
 package com.motax.modutaxi.presentation.ui.main.taxipotlist.model
 
 data class UiTaxiPotItem(
-    val id: String = "",
-    val title: String = "",
-    val currentParticipantCount: Int = 0,
-    val maxParticipantsLimit: Int = 0,
-    val feePerPerson: Int = 0,
-    val minutesAgoChat: Int = 0,
+    val roomId: Long = -1L,
+    val curHeadCount: Int = 0,
+    val wishHeadCount: Int = 0,
+    val feePerPerson: String = "",
+    val recentChatTime: String = "",
     val departureDatetime: String = "",
-    val route: String = "",
-    val categories: List<TaxiPotCategory> = emptyList()
+    val departureSpot: String = "",
+    val arrivalSpot: String = "",
+    val categories: List<TaxiPotCategory> = emptyList(),
+    val enterPot: (Long) -> Unit
 )
 
 enum class TaxiPotCategory {
