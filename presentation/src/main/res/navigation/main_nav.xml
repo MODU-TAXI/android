@@ -2,11 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@id/mapFragment">
+    app:startDestination="@id/taxiPotListFragment">
 
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.map.TestMapFragment"
         android:label="MapFragment" />
+
+    <fragment
+        android:id="@+id/taxiPotListFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.taxipotlist.TaxiPotListFragment"
+        android:label="TaxiPotListFragment" />
 
 </navigation>

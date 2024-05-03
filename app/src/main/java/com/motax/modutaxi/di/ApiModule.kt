@@ -1,6 +1,7 @@
 package com.motax.modutaxi.di
 
 import com.motax.modutaxi.data.remote.IntroApi
+import com.motax.modutaxi.data.remote.MainApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,4 +17,8 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideIntroApi(retrofit: Retrofit): IntroApi = retrofit.create(IntroApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideMainApi(retrofit: Retrofit): MainApi = retrofit.create(MainApi::class.java)
 }

@@ -7,4 +7,13 @@
     <color name="mx_red">#FF3131</color>
     <color name="mx_blue2">#5487b0</color>
     <color name="mx_grey3">#626262</color>
+    
+    <color name="chip_deadline">#FF4949</color>
+    <color name="chip_student_verification">#EBFBF7</color>
+    <color name="chip_females_only">#9C9C9C</color>
+    <color name="chip_quiet">#9C9C9C</color>
+
+    <color name="taxipot_list_selected_category">#40CEAC</color>
+    <color name="taxipot_list_unselected_category">#000000</color>
+
 </resources>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.motax.modutaxi.presentation.ui.main.taxipotlist.model.UiTaxiPotItem" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rect_nofill_greystroke_12radius"
+        android:padding="16dp">
+
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_classification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:chipSpacing="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:singleLine="true"></com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/tv_minutesAgo"
+            style="@style/TextSmallRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:text="@{item.recentChatTime}"
+            android:textColor="#9C9C9C"
+            app:layout_constraintBottom_toBottomOf="@id/chip_group_classification"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/chip_group_classification" />
+
+        <ImageView
+            android:id="@+id/iv_clock_fill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/btn_clock_fill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chip_group_classification" />
+
+        <TextView
+            android:id="@+id/tv_departure_datetime"
+            style="@style/TextLargeSemibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{item.departureDatetime}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_clock_fill"
+            app:layout_constraintStart_toEndOf="@id/iv_clock_fill"
+            app:layout_constraintTop_toTopOf="@id/iv_clock_fill" />
+
+        <ImageView
+            android:id="@+id/iv_location_fill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/btn_location_fill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_clock_fill" />
+
+        <TextView
+            android:id="@+id/tv_route"
+            style="@style/TextLargeSemibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{item.departureSpot}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_location_fill"
+            app:layout_constraintStart_toEndOf="@id/iv_location_fill"
+            app:layout_constraintTop_toTopOf="@id/iv_location_fill" />
+
+        <ImageView
+            android:id="@+id/iv_person_fill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="12dp"
+            android:paddingHorizontal="2dp"
+            android:paddingVertical="6dp"
+            android:src="@drawable/btn_person_fill"
+            app:layout_constraintStart_toStartOf="@id/iv_location_fill"
+            app:layout_constraintTop_toBottomOf="@id/iv_location_fill" />
+
+        <TextView
+            android:id="@+id/tv_participants"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintStart_toEndOf="@id/iv_person_fill"
+            app:layout_constraintTop_toTopOf="@+id/iv_person_fill" />
+
+        <TextView
+            android:id="@+id/tv_fee_per_person"
+            style="@style/TextSmallRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:textColor="#9C9C9C"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_person_fill" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
