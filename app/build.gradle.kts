@@ -25,6 +25,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String","BASE_TEST_URL", getProperty("baseTestUrl"))
         buildConfigField("String", "BASE_DEV_URL", getProperty("baseDevUrl"))
         buildConfigField("String", "BASE_PROD_URL", getProperty("baseProdUrl"))
         buildConfigField("String", "KAKAO_APP_KEY", getProperty("kakaoAppKey"))

@@ -42,6 +42,7 @@ object NetworkModule {
                 if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         }
     }
+
     @Provides
     @Singleton
     fun provideAccessTokenInterceptor(dataStoreManager: DataStoreManager): AccessTokenInterceptor =
@@ -52,7 +53,7 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_DEV_URL)
+            .baseUrl(BuildConfig.BASE_TEST_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
