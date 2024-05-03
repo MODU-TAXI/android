@@ -1,28 +1,28 @@
-package com.motax.modutaxi.presentation.ui.taxipotlist
+package com.motax.modutaxi.presentation.ui.main.taxipotlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.motax.modutaxi.presentation.adapters.TaxipotCategory
-import com.motax.modutaxi.presentation.adapters.Taxipot
+import com.motax.modutaxi.presentation.ui.main.taxipotlist.model.UiTaxiPotItem
+import com.motax.modutaxi.presentation.ui.main.taxipotlist.model.TaxiPotCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TaxipotListViewModel @Inject constructor() : ViewModel() {
-    private val _taxipots = MutableLiveData<List<Taxipot>>()
-    val taxipotList: LiveData<List<Taxipot>> = _taxipots
+class TaxiPotListViewModel @Inject constructor() : ViewModel() {
+    private val _taxipots = MutableLiveData<List<UiTaxiPotItem>>()
+    val uiTaxiPotItemList: LiveData<List<UiTaxiPotItem>> = _taxipots
 
-    private var allTaxipots: List<Taxipot> = emptyList()
-    private val selectedCategories = mutableSetOf<TaxipotCategory>()
+    private var allUiTaxiPotItems: List<UiTaxiPotItem> = emptyList()
+    private val selectedCategories = mutableSetOf<TaxiPotCategory>()
 
     init {
         loadTaxipots()
     }
 
     fun loadTaxipots() {
-        allTaxipots = listOf(
-            Taxipot(
+        allUiTaxiPotItems = listOf(
+            UiTaxiPotItem(
                 "1",
                 "Taxipot 1",
                 2,
@@ -32,12 +32,12 @@ class TaxipotListViewModel @Inject constructor() : ViewModel() {
                 "3월 25일 (월) 14:45 출발",
                 "인하대학교 후문 -> 주안역",
                 listOf(
-                    TaxipotCategory.STUDENT_VERIFICATION,
-                    TaxipotCategory.FEMALES_ONLY,
-                    TaxipotCategory.QUIET
+                    TaxiPotCategory.STUDENT_VERIFICATION,
+                    TaxiPotCategory.FEMALES_ONLY,
+                    TaxiPotCategory.QUIET
                 )
             ),
-            Taxipot(
+            UiTaxiPotItem(
                 "2",
                 "Taxipot 2",
                 2,
@@ -46,9 +46,9 @@ class TaxipotListViewModel @Inject constructor() : ViewModel() {
                 3,
                 "3월 25일 (월) 14:45 출발",
                 "인하대학교 후문 -> 주안역",
-                listOf(TaxipotCategory.STUDENT_VERIFICATION, TaxipotCategory.FEMALES_ONLY)
+                listOf(TaxiPotCategory.STUDENT_VERIFICATION, TaxiPotCategory.FEMALES_ONLY)
             ),
-            Taxipot(
+            UiTaxiPotItem(
                 "3",
                 "Taxipot 3",
                 2,
@@ -58,13 +58,13 @@ class TaxipotListViewModel @Inject constructor() : ViewModel() {
                 "3월 25일 (월) 14:45 출발",
                 "인하대학교 후문 -> 주안역",
                 listOf(
-                    TaxipotCategory.DEADLINE,
-                    TaxipotCategory.STUDENT_VERIFICATION,
-                    TaxipotCategory.FEMALES_ONLY,
-                    TaxipotCategory.QUIET
+                    TaxiPotCategory.DEADLINE,
+                    TaxiPotCategory.STUDENT_VERIFICATION,
+                    TaxiPotCategory.FEMALES_ONLY,
+                    TaxiPotCategory.QUIET
                 )
             ),
-            Taxipot(
+            UiTaxiPotItem(
                 "4",
                 "Taxipot 4",
                 2,
@@ -73,9 +73,9 @@ class TaxipotListViewModel @Inject constructor() : ViewModel() {
                 3,
                 "3월 25일 (월) 14:45 출발",
                 "인하대학교 후문 -> 주안역",
-                listOf(TaxipotCategory.QUIET)
+                listOf(TaxiPotCategory.QUIET)
             ),
-            Taxipot(
+            UiTaxiPotItem(
                 "5",
                 "Taxipot 4",
                 2,
@@ -84,9 +84,9 @@ class TaxipotListViewModel @Inject constructor() : ViewModel() {
                 3,
                 "3월 25일 (월) 14:45 출발",
                 "인하대학교 후문 -> 주안역",
-                listOf(TaxipotCategory.QUIET)
+                listOf(TaxiPotCategory.QUIET)
             ),
-            Taxipot(
+            UiTaxiPotItem(
                 "6",
                 "Taxipot 4",
                 2,
@@ -95,18 +95,18 @@ class TaxipotListViewModel @Inject constructor() : ViewModel() {
                 3,
                 "3월 25일 (월) 14:45 출발",
                 "인하대학교 후문 -> 주안역",
-                listOf(TaxipotCategory.QUIET)
+                listOf(TaxiPotCategory.QUIET)
             ),
         )
         filterTaxipots()
     }
 
-    fun isCategorySelected(category: TaxipotCategory): Boolean {
+    fun isCategorySelected(category: TaxiPotCategory): Boolean {
         return selectedCategories.contains(category)
     }
 
     //카테고리 리스트에 만약 존재하면 지우고 아니라면 추가
-    fun toggleCategorySelection(category: TaxipotCategory) {
+    fun toggleCategorySelection(category: TaxiPotCategory) {
         if (selectedCategories.contains(category)) {
             selectedCategories.remove(category)
         } else {
@@ -118,10 +118,10 @@ class TaxipotListViewModel @Inject constructor() : ViewModel() {
     //현재 선택된 카테고리에 따라 택시팟 목록 필터링
     private fun filterTaxipots() {
         _taxipots.value = if (selectedCategories.isEmpty()) {
-            allTaxipots
+            allUiTaxiPotItems
         } else {
-            allTaxipots.filter { taxipot ->
-                selectedCategories.all {taxipotCategory ->
+            allUiTaxiPotItems.filter { taxipot ->
+                selectedCategories.all { taxipotCategory ->
                     taxipot.categories.contains(taxipotCategory)
                 }
             }

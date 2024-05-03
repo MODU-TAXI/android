@@ -98,14 +98,7 @@
         android:name="com.motax.modutaxi.presentation.ui.intro.signup.complete.OnboardingCompleteFragment"
         tools:layout="@layout/fragment_onboarding_complete">
 
-        <action
-            android:id="@+id/action_completeFragment_to_taxipotListFragment"
-            app:destination="@id/taxipotListFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/taxipotListFragment"
-        android:name="com.motax.modutaxi.presentation.ui.taxipotlist.TaxipotListFragment"
-        android:label="TaxipotListFragment" />
 
 
 </navigation>

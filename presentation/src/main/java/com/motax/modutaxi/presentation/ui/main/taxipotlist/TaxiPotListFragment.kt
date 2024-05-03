@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.taxipotlist
+package com.motax.modutaxi.presentation.ui.main.taxipotlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,17 +10,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.motax.modutaxi.presentation.R
-import com.motax.modutaxi.presentation.adapters.TaxipotAdapter
-import com.motax.modutaxi.presentation.adapters.TaxipotCategory
+import com.motax.modutaxi.presentation.ui.main.taxipotlist.adapter.TaxipotAdapter
+import com.motax.modutaxi.presentation.ui.main.taxipotlist.model.TaxiPotCategory
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentTaxipotListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TaxipotListFragment :
+class TaxiPotListFragment :
     BaseFragment<FragmentTaxipotListBinding>(R.layout.fragment_taxipot_list) {
 
-    private val viewModel: TaxipotListViewModel by viewModels()
+    private val viewModel: TaxiPotListViewModel by viewModels()
 
     //필터링 - 마감임박
     private var isDeadlineFiltered = false;
@@ -41,7 +41,7 @@ class TaxipotListFragment :
         val taxipotAdapter = TaxipotAdapter()
         binding.taxipotList.adapter = taxipotAdapter
 
-        viewModel.taxipotList.observe(viewLifecycleOwner) { taxipots ->
+        viewModel.uiTaxiPotItemList.observe(viewLifecycleOwner) { taxipots ->
             taxipotAdapter.submitList(taxipots)
         }
 
@@ -62,46 +62,49 @@ class TaxipotListFragment :
 
     private fun setupCategoryFilters() {
         binding.tvStudentVerification.setOnClickListener {
-            viewModel.toggleCategorySelection(TaxipotCategory.STUDENT_VERIFICATION)
+            viewModel.toggleCategorySelection(TaxiPotCategory.STUDENT_VERIFICATION)
             updateCategoryUI()
         }
 
         binding.tvWomenOnly.setOnClickListener {
-            viewModel.toggleCategorySelection(TaxipotCategory.FEMALES_ONLY)
+            viewModel.toggleCategorySelection(TaxiPotCategory.FEMALES_ONLY)
             updateCategoryUI()
         }
 
         binding.tvMannersBoarding.setOnClickListener {
-            viewModel.toggleCategorySelection(TaxipotCategory.QUIET)
+            viewModel.toggleCategorySelection(TaxiPotCategory.QUIET)
             updateCategoryUI()
         }
 
         binding.btnDeadlineImminent.setOnClickListener {
-            viewModel.toggleCategorySelection(TaxipotCategory.DEADLINE)
+            viewModel.toggleCategorySelection(TaxiPotCategory.DEADLINE)
             updateCategoryUI()
         }
     }
+
     private fun updateCategoryUI() {
-        val selectedColor = ContextCompat.getColor(requireContext(), R.color.taxipot_list_selected_category)
-        val unselectedColor = ContextCompat.getColor(requireContext(), R.color.taxipot_list_unselected_category)
+        val selectedColor =
+            ContextCompat.getColor(requireContext(), R.color.taxipot_list_selected_category)
+        val unselectedColor =
+            ContextCompat.getColor(requireContext(), R.color.taxipot_list_unselected_category)
 
         binding.tvStudentVerification.apply {
-            isSelected = viewModel.isCategorySelected(TaxipotCategory.STUDENT_VERIFICATION)
+            isSelected = viewModel.isCategorySelected(TaxiPotCategory.STUDENT_VERIFICATION)
             setTextColor(if (isSelected) selectedColor else unselectedColor)
         }
 
         binding.tvWomenOnly.apply {
-            isSelected = viewModel.isCategorySelected(TaxipotCategory.FEMALES_ONLY)
+            isSelected = viewModel.isCategorySelected(TaxiPotCategory.FEMALES_ONLY)
             setTextColor(if (isSelected) selectedColor else unselectedColor)
         }
 
         binding.tvMannersBoarding.apply {
-            isSelected = viewModel.isCategorySelected(TaxipotCategory.QUIET)
+            isSelected = viewModel.isCategorySelected(TaxiPotCategory.QUIET)
             setTextColor(if (isSelected) selectedColor else unselectedColor)
         }
 
         binding.btnDeadlineImminent.setImageResource(
-            if (viewModel.isCategorySelected(TaxipotCategory.DEADLINE)) R.drawable.btn_eclipse_red_fill
+            if (viewModel.isCategorySelected(TaxiPotCategory.DEADLINE)) R.drawable.btn_eclipse_red_fill
             else R.drawable.btn_ellipse_no_fill
         )
     }

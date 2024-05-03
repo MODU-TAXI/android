@@ -1,109 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/rect_nofill_greystroke_12radius"
-    android:layout_marginTop="16dp"
-    android:padding="16dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chip_group_classification"
-        android:layout_width="0dp"
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:singleLine="true"
-        app:chipSpacing="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </com.google.android.material.chip.ChipGroup>
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rect_nofill_greystroke_12radius"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tv_minutesAgo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        style="@style/TextSmallRegular"
-        android:textColor="#9C9C9C"
-        android:paddingTop="2dp"
-        app:layout_constraintTop_toTopOf="@id/chip_group_classification"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/chip_group_classification">
-    </TextView>
 
-    <ImageView
-        android:id="@+id/iv_clock_fill"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/btn_clock_fill"
-        android:layout_marginTop="14dp"
-        app:layout_constraintTop_toBottomOf="@id/chip_group_classification"
-        app:layout_constraintStart_toStartOf="parent">
-    </ImageView>
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_classification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:chipSpacing="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:singleLine="true"></com.google.android.material.chip.ChipGroup>
 
-    <TextView
-        android:id="@+id/tv_departure_datetime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        style="@style/TextLargeSemibold"
-        app:layout_constraintTop_toTopOf="@id/iv_clock_fill"
-        app:layout_constraintStart_toEndOf="@id/iv_clock_fill"
-        app:layout_constraintBottom_toBottomOf="@id/iv_clock_fill">
-    </TextView>
+        <TextView
+            android:id="@+id/tv_minutesAgo"
+            style="@style/TextSmallRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:textColor="#9C9C9C"
+            app:layout_constraintBottom_toBottomOf="@id/chip_group_classification"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/chip_group_classification" />
 
-    <ImageView
-        android:id="@+id/iv_location_fill"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/btn_location_fill"
-        android:layout_marginTop="6dp"
-        app:layout_constraintTop_toBottomOf="@id/iv_clock_fill"
-        app:layout_constraintStart_toStartOf="parent">
-    </ImageView>
+        <ImageView
+            android:id="@+id/iv_clock_fill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/btn_clock_fill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chip_group_classification" />
 
-    <TextView
-        android:id="@+id/tv_route"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        style="@style/TextLargeSemibold"
-        app:layout_constraintTop_toTopOf="@id/iv_location_fill"
-        app:layout_constraintStart_toEndOf="@id/iv_location_fill"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_location_fill"
-        >
-    </TextView>
+        <TextView
+            android:id="@+id/tv_departure_datetime"
+            style="@style/TextLargeSemibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/iv_clock_fill"
+            app:layout_constraintStart_toEndOf="@id/iv_clock_fill"
+            app:layout_constraintTop_toTopOf="@id/iv_clock_fill" />
 
-    <ImageView
-        android:id="@+id/iv_person_fill"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/btn_person_fill"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="4dp"
-        android:paddingHorizontal="2dp"
-        android:paddingVertical="6dp"
-        app:layout_constraintTop_toBottomOf="@id/iv_location_fill"
-        app:layout_constraintStart_toStartOf="@id/iv_location_fill">
-    </ImageView>
+        <ImageView
+            android:id="@+id/iv_location_fill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/btn_location_fill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_clock_fill" />
 
-    <TextView
-        android:id="@+id/tv_participants"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        app:layout_constraintStart_toEndOf="@id/iv_person_fill"
-        app:layout_constraintTop_toTopOf="@+id/iv_person_fill"
-        app:layout_constraintBottom_toBottomOf="@id/iv_person_fill">
-    </TextView>
+        <TextView
+            android:id="@+id/tv_route"
+            style="@style/TextLargeSemibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_location_fill"
+            app:layout_constraintStart_toEndOf="@id/iv_location_fill"
+            app:layout_constraintTop_toTopOf="@id/iv_location_fill" />
 
-    <TextView
-        android:id="@+id/tv_fee_per_person"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        style="@style/TextSmallRegular"
-        android:textColor="#9C9C9C"
-        android:paddingTop="2dp"
-        app:layout_constraintTop_toTopOf="@id/iv_person_fill"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/iv_person_fill">
-    </TextView>
+        <ImageView
+            android:id="@+id/iv_person_fill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="12dp"
+            android:paddingHorizontal="2dp"
+            android:paddingVertical="6dp"
+            android:src="@drawable/btn_person_fill"
+            app:layout_constraintStart_toStartOf="@id/iv_location_fill"
+            app:layout_constraintTop_toBottomOf="@id/iv_location_fill" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_participants"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintStart_toEndOf="@id/iv_person_fill"
+            app:layout_constraintTop_toTopOf="@+id/iv_person_fill" />
+
+        <TextView
+            android:id="@+id/tv_fee_per_person"
+            style="@style/TextSmallRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:textColor="#9C9C9C"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_person_fill" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

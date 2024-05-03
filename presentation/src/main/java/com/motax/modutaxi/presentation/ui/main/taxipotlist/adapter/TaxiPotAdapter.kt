@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.adapters
+package com.motax.modutaxi.presentation.ui.main.taxipotlist.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -9,17 +9,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.R
+import com.motax.modutaxi.presentation.ui.main.taxipotlist.model.UiTaxiPotItem
+import com.motax.modutaxi.presentation.ui.main.taxipotlist.model.TaxiPotCategory
 import com.motax.modutaxi.presentation.databinding.ItemTaxipotBinding
 
-class TaxipotAdapter() : ListAdapter<Taxipot, TaxipotAdapter.ViewHolder>(TaxipotDiffCallback()) {
+class TaxipotAdapter() : ListAdapter<UiTaxiPotItem, TaxipotAdapter.ViewHolder>(TaxipotDiffCallback()) {
 
     class ViewHolder(private val binding: ItemTaxipotBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(taxipot: Taxipot) {
+        fun bind(uiTaxiPotItem: UiTaxiPotItem) {
             binding.apply {
                 chipGroupClassification.removeAllViews()
-                taxipot.categories.forEach { category ->
+                uiTaxiPotItem.categories.forEach { category ->
                     val textView = TextView(chipGroupClassification.context).apply {
                         text = getTextForCategory(category)
 
@@ -47,37 +49,37 @@ class TaxipotAdapter() : ListAdapter<Taxipot, TaxipotAdapter.ViewHolder>(Taxipot
             }
 
             //플레이스 홀더로 변경...?
-            binding.tvMinutesAgo.setText("${taxipot.minutesAgoChat}분 전 채팅")
-            binding.tvParticipants.setText("${taxipot.currentParticipantCount}/${taxipot.maxParticipantsLimit}")
-            binding.tvFeePerPerson.setText("인당 ${taxipot.feePerPerson}원")
-            binding.tvRoute.setText(taxipot.route)
-            binding.tvDepartureDatetime.setText(taxipot.departureDatetime)
+            binding.tvMinutesAgo.setText("${uiTaxiPotItem.minutesAgoChat}분 전 채팅")
+            binding.tvParticipants.setText("${uiTaxiPotItem.currentParticipantCount}/${uiTaxiPotItem.maxParticipantsLimit}")
+            binding.tvFeePerPerson.setText("인당 ${uiTaxiPotItem.feePerPerson}원")
+            binding.tvRoute.setText(uiTaxiPotItem.route)
+            binding.tvDepartureDatetime.setText(uiTaxiPotItem.departureDatetime)
         }
 
-        private fun getBackgroundDrawableForCategory(taxipotCategory: TaxipotCategory): Int {
+        private fun getBackgroundDrawableForCategory(taxipotCategory: TaxiPotCategory): Int {
             return when (taxipotCategory) {
-                TaxipotCategory.DEADLINE -> R.drawable.rect_red_fill_nostroke_4radius
-                TaxipotCategory.STUDENT_VERIFICATION -> R.drawable.rect_mint_fill_nostroke_4radius
-                TaxipotCategory.FEMALES_ONLY -> R.drawable.rect_grey0_fill_nostroke_4radius
-                TaxipotCategory.QUIET -> R.drawable.rect_grey0_fill_nostroke_4radius
+                TaxiPotCategory.DEADLINE -> R.drawable.rect_red_fill_nostroke_4radius
+                TaxiPotCategory.STUDENT_VERIFICATION -> R.drawable.rect_mint_fill_nostroke_4radius
+                TaxiPotCategory.FEMALES_ONLY -> R.drawable.rect_grey0_fill_nostroke_4radius
+                TaxiPotCategory.QUIET -> R.drawable.rect_grey0_fill_nostroke_4radius
             }
         }
 
-        private fun getTextForCategory(taxipotCategory: TaxipotCategory): String {
+        private fun getTextForCategory(taxipotCategory: TaxiPotCategory): String {
             return when(taxipotCategory) {
-                TaxipotCategory.DEADLINE -> "마감임박"
-                TaxipotCategory.STUDENT_VERIFICATION -> "학생인증"
-                TaxipotCategory.FEMALES_ONLY -> "여자만"
-                TaxipotCategory.QUIET -> "조용히"
+                TaxiPotCategory.DEADLINE -> "마감임박"
+                TaxiPotCategory.STUDENT_VERIFICATION -> "학생인증"
+                TaxiPotCategory.FEMALES_ONLY -> "여자만"
+                TaxiPotCategory.QUIET -> "조용히"
             }
         }
 
-        private fun getColorForCategory(taxipotCategory: TaxipotCategory): Int {
+        private fun getColorForCategory(taxipotCategory: TaxiPotCategory): Int {
             return when (taxipotCategory) {
-                TaxipotCategory.DEADLINE -> Color.parseColor("#FF4949")
-                TaxipotCategory.STUDENT_VERIFICATION -> Color.parseColor("#40CEAC")
-                TaxipotCategory.FEMALES_ONLY -> Color.parseColor("#9C9C9C")
-                TaxipotCategory.QUIET -> Color.parseColor("#9C9C9C")
+                TaxiPotCategory.DEADLINE -> Color.parseColor("#FF4949")
+                TaxiPotCategory.STUDENT_VERIFICATION -> Color.parseColor("#40CEAC")
+                TaxiPotCategory.FEMALES_ONLY -> Color.parseColor("#9C9C9C")
+                TaxiPotCategory.QUIET -> Color.parseColor("#9C9C9C")
             }
         }
 
@@ -95,12 +97,12 @@ class TaxipotAdapter() : ListAdapter<Taxipot, TaxipotAdapter.ViewHolder>(Taxipot
     }
 }
 
-class TaxipotDiffCallback : DiffUtil.ItemCallback<Taxipot>() {
-    override fun areItemsTheSame(oldItem: Taxipot, newItem: Taxipot): Boolean {
+class TaxipotDiffCallback : DiffUtil.ItemCallback<UiTaxiPotItem>() {
+    override fun areItemsTheSame(oldItem: UiTaxiPotItem, newItem: UiTaxiPotItem): Boolean {
         return oldItem.id == newItem.id // id가 같으면 같은 아이템으로 간주
     }
 
-    override fun areContentsTheSame(oldItem: Taxipot, newItem: Taxipot): Boolean {
+    override fun areContentsTheSame(oldItem: UiTaxiPotItem, newItem: UiTaxiPotItem): Boolean {
         return oldItem == newItem // 데이터 클래스이므로, equals를 사용해 내용이 같은지 비교
     }
 }
