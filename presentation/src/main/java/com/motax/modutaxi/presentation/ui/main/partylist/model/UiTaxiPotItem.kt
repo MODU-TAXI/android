@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.taxipotlist.model
+package com.motax.modutaxi.presentation.ui.main.partylist.model
 
 data class UiTaxiPotItem(
     val roomId: Long = -1L,
