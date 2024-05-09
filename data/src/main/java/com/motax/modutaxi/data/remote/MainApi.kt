@@ -19,8 +19,5 @@ interface MainApi {
         @Path("roomId") roomId: Long
     ): Unit
 
-    @GET("/v1/search/local.json")
-    suspend fun getAddressInfo(
 
-    )
 }
