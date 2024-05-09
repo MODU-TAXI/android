@@ -16,4 +16,9 @@
     <color name="taxipot_list_selected_category">#40CEAC</color>
     <color name="taxipot_list_unselected_category">#000000</color>
 
+    <color name="search_result_normal">#3E3E3E</color>
+    <color name="search_result_match">#40CEAC</color>
+    <color name="search_result_address_distance">#7C7C7C</color>
+    <color name="search_divider">#EBEBEB</color>
+
 </resources>

@@ -60,7 +60,7 @@
             android:id="@+id/btn_backward"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/btn_backward"
+            android:src="@drawable/ic_backward"
             app:layout_constraintBottom_toTopOf="@id/guide_07_horizontal"
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_02_horizontal"></ImageView>
@@ -80,7 +80,7 @@
             android:id="@+id/btn_xmark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/btn_xmark"
+            android:src="@drawable/ic_xmark"
             app:layout_constraintBottom_toTopOf="@id/guide_07_horizontal"
             app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
             app:layout_constraintTop_toBottomOf="@id/guide_02_horizontal"></ImageView>
@@ -101,7 +101,7 @@
                 android:id="@+id/iv_magnifying_glass"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/btn_magnifying_glass"
+                android:src="@drawable/ic_magnifying_glass"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></ImageView>
@@ -121,7 +121,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:src="@drawable/btn_xmark_circle_fill"
+                android:src="@drawable/ic_xmark_circle_fill"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_destination"
                 app:layout_constraintTop_toTopOf="parent"></ImageView>
@@ -219,7 +219,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:src="@drawable/btn_ellipse_no_fill"
+                android:src="@drawable/ic_ellipse_no_fill"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></ImageView>
@@ -250,7 +250,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="2dp"
                 android:paddingVertical="6dp"
-                android:src="@drawable/btn_chevron_down"
+                android:src="@drawable/ic_chevron_down"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></ImageView>

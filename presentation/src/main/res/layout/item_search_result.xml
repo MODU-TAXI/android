@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.motax.modutaxi.presentation.ui.main.taxipotsearch.model.UiSearchResultItem"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+
+        <View
+            android:id="@+id/search_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/search_divider"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+        </View>
+
+        <TextView
+            android:id="@+id/tv_place_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{item.placeName}"
+            app:keyword="@{item.keyword}"
+            app:searchResult="@{item.placeName}"
+            tools:text = "주안역"
+            android:textColor="@color/search_result_normal"
+            style="@style/TextLargeMedium"
+            android:layout_marginTop="12dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_divider">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_place_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{item.placeAddress}"
+            style="@style/TextRegularRegular"
+            android:paddingLeft="8dp"
+            android:textColor="@color/search_result_address_distance"
+            app:layout_constraintTop_toBottomOf="@id/tv_place_name"
+            app:layout_constraintStart_toStartOf="parent"
+
+            tools:text = "인천 미추홀구 주안로 41번길">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_distance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{item.distance}"
+            android:textColor="@color/search_result_address_distance"
+            style="@style/TextRegularRegular"
+            tools:text="500m"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_place_name">
+        </TextView>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

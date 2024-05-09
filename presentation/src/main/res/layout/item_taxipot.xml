@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:src="@drawable/btn_clock_fill"
+            android:src="@drawable/ic_clock_fill"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/chip_group_classification" />
 
@@ -63,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:src="@drawable/btn_location_fill"
+            android:src="@drawable/ic_location_fill"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_clock_fill" />
 
@@ -85,7 +85,7 @@
             android:layout_marginTop="12dp"
             android:paddingHorizontal="2dp"
             android:paddingVertical="6dp"
-            android:src="@drawable/btn_person_fill"
+            android:src="@drawable/ic_person_fill"
             app:layout_constraintStart_toStartOf="@id/iv_location_fill"
             app:layout_constraintTop_toBottomOf="@id/iv_location_fill" />
 
