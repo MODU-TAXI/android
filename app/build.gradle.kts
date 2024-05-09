@@ -25,10 +25,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String","BASE_TEST_URL", getProperty("baseTestUrl"))
+        buildConfigField("String", "NAVER_BASE_URL", getProperty("naverBaseUrl"))
+        buildConfigField("String", "BASE_TEST_URL", getProperty("baseTestUrl"))
         buildConfigField("String", "BASE_DEV_URL", getProperty("baseDevUrl"))
         buildConfigField("String", "BASE_PROD_URL", getProperty("baseProdUrl"))
         buildConfigField("String", "KAKAO_APP_KEY", getProperty("kakaoAppKey"))
+        buildConfigField("String", "NAVER_CLIENT_ID", getProperty("naverClientId"))
+        buildConfigField("String", "NAVER_CLIENT_SECRET", getProperty("naverClientSecret"))
         manifestPlaceholders["KAKAO_APP_KEY"] = getProperty("kakaoAppKeyForManifest")
         manifestPlaceholders["NAVER_MAP_CLIENT_ID"] = getProperty("naverMapClientId")
     }

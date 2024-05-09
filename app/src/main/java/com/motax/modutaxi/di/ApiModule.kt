@@ -16,9 +16,9 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideIntroApi(retrofit: Retrofit): IntroApi = retrofit.create(IntroApi::class.java)
+    fun provideIntroApi(@NetworkModule.BaseRetrofit retrofit: Retrofit): IntroApi = retrofit.create(IntroApi::class.java)
 
     @Singleton
     @Provides
-    fun provideMainApi(retrofit: Retrofit): MainApi = retrofit.create(MainApi::class.java)
+    fun provideMainApi(@NetworkModule.BaseRetrofit retrofit: Retrofit): MainApi = retrofit.create(MainApi::class.java)
 }
