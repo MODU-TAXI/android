@@ -19,6 +19,8 @@ class App: Application() {
 
     companion object{
         private const val APP_NAME = "ModuTaxi"
+        val naverClientId = BuildConfig.NAVER_CLIENT_ID
+        val naverClientSecret = BuildConfig.NAVER_CLIENT_SECRET
         lateinit var instance : App
         val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = APP_NAME)
         fun getContext(): Context = instance.applicationContext

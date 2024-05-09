@@ -1,8 +1,8 @@
-package com.motax.modutaxi.presentation.ui.main.taxipotlist.mapper
+package com.motax.modutaxi.presentation.ui.main.partylist.mapper
 
 import com.motax.modutaxi.domain.model.TaxiPotData
-import com.motax.modutaxi.presentation.ui.main.taxipotlist.model.TaxiPotCategory
-import com.motax.modutaxi.presentation.ui.main.taxipotlist.model.UiTaxiPotItem
+import com.motax.modutaxi.presentation.ui.main.partylist.model.TaxiPotCategory
+import com.motax.modutaxi.presentation.ui.main.partylist.model.UiTaxiPotItem
 
 
 fun TaxiPotData.toUiTaxiPotItem(

@@ -1,11 +1,11 @@
-package com.motax.modutaxi.presentation.ui.main.taxipotlist.adapter
+package com.motax.modutaxi.presentation.ui.main.partylist.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.databinding.ItemTaxipotBinding
-import com.motax.modutaxi.presentation.ui.main.taxipotlist.model.UiTaxiPotItem
+import com.motax.modutaxi.presentation.ui.main.partylist.model.UiTaxiPotItem
 import com.motax.modutaxi.presentation.util.DefaultDiffUtil
 
 

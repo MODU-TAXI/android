@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.taxipotlist
+package com.motax.modutaxi.presentation.ui.main.partylist
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentTaxipotListBinding
-import com.motax.modutaxi.presentation.ui.main.taxipotlist.adapter.TaxiPotAdapter
+import com.motax.modutaxi.presentation.ui.main.partylist.adapter.TaxiPotAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
