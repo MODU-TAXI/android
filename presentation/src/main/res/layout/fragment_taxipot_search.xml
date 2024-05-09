@@ -47,15 +47,14 @@
             android:id="@+id/layout_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:onClick="@{() -> vm.focusOnSearch()}"
             android:paddingHorizontal="12dp"
             android:paddingVertical="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/guide_08_horizontal"
             app:layout_constraintEnd_toStartOf="@id/tv_cancel"
             app:layout_constraintStart_toStartOf="@id/guide_04_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_02_horizontal"
-            android:onClick="@{() -> vm.focusOnSearch()}"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_magnifying_glass"
@@ -74,6 +73,7 @@
                 android:layout_marginLeft="4dp"
                 android:background="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_magnifying_glass"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="주안역" />
@@ -83,13 +83,14 @@
         <TextView
             android:id="@+id/tv_cancel"
             style="@style/TextLargeRegular"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="취소"
-            app:layout_constraintBottom_toTopOf="@id/guide_08_horizontal"
-            app:layout_constraintEnd_toEndOf="@id/guide_96_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_02_horizontal" />
+            app:layout_constraintBottom_toBottomOf="@id/layout_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/layout_search"
+            app:layout_constraintTop_toTopOf="@id/layout_search" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_result"
@@ -100,9 +101,9 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_08_horizontal"
-            tools:listitem="@layout/item_search_result"
-            app:list="@{vm.uiState.searchResult}"/>
+            app:layout_constraintTop_toBottomOf="@id/layout_search"
+            app:list="@{vm.uiState.searchResult}"
+            tools:listitem="@layout/item_search_result" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
