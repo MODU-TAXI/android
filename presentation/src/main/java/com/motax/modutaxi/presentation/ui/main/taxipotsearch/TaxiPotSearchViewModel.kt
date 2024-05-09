@@ -8,11 +8,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class TaxiPotSearchResultUiState(
-    val searchResult: List<UiSearchResultItem> = emptyList()
+    val searchResult: List<UiSearchResultItem> = emptyList(),
+    val focusedField: FocusedField = FocusedField.NONE
+
 )
 
 @HiltViewModel
@@ -38,4 +41,24 @@ class TaxipotSearchViewModel @Inject constructor(
             _uiState.value = TaxiPotSearchResultUiState(searchResult = dummyResults)
         }
     }
+
+    fun focusNone() {
+        _uiState.update { state ->
+            state.copy(
+                focusedField = FocusedField.NONE
+            )
+        }
+    }
+
+    fun focusOnSearch() {
+        _uiState.update { state ->
+            state.copy(
+                focusedField = FocusedField.Search
+            )
+        }
+    }
+}
+
+enum class FocusedField {
+    NONE, Search
 }
