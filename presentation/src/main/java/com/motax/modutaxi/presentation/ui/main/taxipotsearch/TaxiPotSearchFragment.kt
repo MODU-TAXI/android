@@ -13,10 +13,10 @@ import com.motax.modutaxi.presentation.ui.main.taxipotsearch.adapter.TaxiPotSear
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TaxipotSearchFragment :
+class TaxiPotSearchFragment :
     BaseFragment<FragmentTaxipotSearchBinding>(R.layout.fragment_taxipot_search) {
 
-    private val viewModel: TaxipotSearchViewModel by viewModels()
+    private val viewModel: TaxiPotSearchViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
@@ -34,19 +34,19 @@ class TaxipotSearchFragment :
 
     private fun initStateObserve() {
         repeatOnStarted {
-            viewModel.uiState.collect {
-                when (it.focusedField) {
-                    FocusedField.Search -> {
-                        binding.etSearch.requestFocus()
-                        showKeyboard(binding.etSearch)
-                    }
-
-                    FocusedField.NONE -> {
-                        binding.etSearch.clearFocus()
-                        hideKeyboard()
-                    }
-                }
-            }
+//            viewModel.uiState.collect {
+//                when (it.focusedField) {
+//                    FocusedField.Search -> {
+//                        binding.etSearch.requestFocus()
+//                        showKeyboard(binding.etSearch)
+//                    }
+//
+//                    FocusedField.NONE -> {
+//                        binding.etSearch.clearFocus()
+//                        hideKeyboard()
+//                    }
+//                }
+//            }
         }
     }
 

@@ -21,7 +21,7 @@ data class TaxiPotSearchResultUiState(
 )
 
 @HiltViewModel
-class TaxipotSearchViewModel @Inject constructor(
+class TaxiPotSearchViewModel @Inject constructor(
     private val repository: MainRepository
 ) : ViewModel() {
 
@@ -37,7 +37,7 @@ class TaxipotSearchViewModel @Inject constructor(
         observeKeyword()
     }
 
-    fun observeKeyword(){
+    private fun observeKeyword(){
         keyword.onEach {
             _uiState.update { state ->
                 state.copy(

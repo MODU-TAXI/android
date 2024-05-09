@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.taxipotsearch.TaxipotSearchViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.taxipotsearch.TaxiPotSearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
