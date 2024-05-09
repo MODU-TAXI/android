@@ -3,17 +3,31 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="sub">#747474</color>
+
+    <color name="mx_base">#B3EBDE</color>
+
+    <color name="mx_sub100">#EBFBF7</color>
+    <color name="mx_sub200">#B3EBDE</color>
+    <color name="mx_sub300">#8CE2CD</color>
+    <color name="mx_sub400">#66D8BD</color>
+    <color name="mx_sub500">#40CEAC</color>
+    <color name="mx_sub600">#33A58A</color>
+    <color name="mx_sub700">#267C67</color>
+    <color name="mx_sub800">#1A5245</color>
+    <color name="mx_sub900">#0D2922</color>
+    
+    <color name="mx_gray100">#EBEBEB</color>
+    <color name="mx_gray200">#D7D7D7</color>
+    <color name="mx_gray300">#C3C3C3</color>
+    <color name="mx_gray400">#AFAFAF</color>
+    <color name="mx_gray500">#9C9C9C</color>
+    <color name="mx_gray600">#7C7C7C</color>
+    <color name="mx_gray700">#5D5D5D</color>
+    <color name="mx_gray800">#3E3E3E</color>
+    <color name="mx_gray900">#1F1F1F</color>
     
     <color name="mx_red">#FF3131</color>
     <color name="mx_blue2">#5487b0</color>
     <color name="mx_grey3">#626262</color>
-    
-    <color name="chip_deadline">#FF4949</color>
-    <color name="chip_student_verification">#EBFBF7</color>
-    <color name="chip_females_only">#9C9C9C</color>
-    <color name="chip_quiet">#9C9C9C</color>
-
-    <color name="taxipot_list_selected_category">#40CEAC</color>
-    <color name="taxipot_list_unselected_category">#000000</color>
 
 </resources>
