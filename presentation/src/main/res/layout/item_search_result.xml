@@ -33,12 +33,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{item.placeName}"
+            app:keyword="@{item.keyword}"
+            app:searchResult="@{item.placeName}"
             tools:text = "주안역"
-            android:textColor="@color/search_result_match"
+            android:textColor="@color/search_result_normal"
             style="@style/TextLargeMedium"
             android:layout_marginTop="12dp"
             android:paddingBottom="4dp"
             android:paddingLeft="8dp"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_divider">
         </TextView>

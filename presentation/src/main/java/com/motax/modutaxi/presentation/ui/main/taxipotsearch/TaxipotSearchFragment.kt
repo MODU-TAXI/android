@@ -17,11 +17,12 @@ class TaxipotSearchFragment :
     BaseFragment<FragmentTaxipotSearchBinding>(R.layout.fragment_taxipot_search) {
 
     private val viewModel: TaxipotSearchViewModel by viewModels()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
+
         binding.rvSearchResult.adapter = TaxiPotSearchResultAdapter()
+        binding.rvSearchResult.itemAnimator = null
         initStateObserve()
 
         viewModel.focusOnSearch()

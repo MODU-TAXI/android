@@ -8,6 +8,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,8 +28,28 @@ class TaxipotSearchViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(TaxiPotSearchResultUiState())
     val uiState: StateFlow<TaxiPotSearchResultUiState> = _uiState.asStateFlow()
 
+    val keyword = MutableStateFlow("")
     fun getSearchResults() {
         TODO("repository에서 호출")
+    }
+
+    init {
+        observeKeyword()
+    }
+
+    fun observeKeyword(){
+        keyword.onEach {
+            _uiState.update { state ->
+                state.copy(
+                    searchResult = uiState.value.searchResult.map { data ->
+                        data.copy(
+                            keyword = it
+                        )
+                    }
+                )
+            }
+
+        }.launchIn(viewModelScope)
     }
 
     fun loadDummyData() {
