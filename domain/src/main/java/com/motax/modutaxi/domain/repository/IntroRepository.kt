@@ -16,6 +16,7 @@ interface IntroRepository {
         accessToken: String
     ): Result<MemberCheckData>
 
+
     suspend fun signUp(
         key: String,
         name: String,

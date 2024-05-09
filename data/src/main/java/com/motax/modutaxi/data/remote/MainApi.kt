@@ -18,4 +18,9 @@ interface MainApi {
     suspend fun enterPot(
         @Path("roomId") roomId: Long
     ): Unit
+
+    @GET("/v1/search/local.json")
+    suspend fun getAddressInfo(
+
+    )
 }
