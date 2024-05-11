@@ -3,11 +3,15 @@ package com.motax.modutaxi.data.model.mapper
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
+import com.motax.modutaxi.data.model.response.SearchResultItem
+import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotItem
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
 import com.motax.modutaxi.domain.model.MemberCheckData
+import com.motax.modutaxi.domain.model.SearchResultData
+import com.motax.modutaxi.domain.model.SearchResultListData
 import com.motax.modutaxi.domain.model.TaxiPotData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 
@@ -40,5 +44,16 @@ fun TaxiPotItem.toDomain() = TaxiPotData(
 fun TaxiPotListResponse.toDomain() = TaxiPotListData(
     page = page,
     haxNext = haxNext,
+    result = result.map { it.toDomain() }
+)
+
+fun SearchResultItem.toDomain() = SearchResultData(
+    title = title,
+    roadAddress = roadAddress,
+    mapX = mapX,
+    mapY = mapY
+)
+
+fun SearchResultListResponse.toDomain() = SearchResultListData(
     result = result.map { it.toDomain() }
 )

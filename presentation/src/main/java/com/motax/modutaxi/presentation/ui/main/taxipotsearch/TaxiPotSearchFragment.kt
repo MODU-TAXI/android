@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
@@ -27,10 +28,18 @@ class TaxiPotSearchFragment :
 
         viewModel.focusOnSearch()
 
-        //TODO api 연결
-        //viewModel.getSearchResults()
+        viewModel.getSearchResults("")
+
+        setupSearchEditText()
         viewModel.loadDummyData()
     }
+
+    private fun setupSearchEditText() {
+        binding.etSearch.addTextChangedListener { text ->
+            viewModel.getSearchResults(text.toString())
+        }
+    }
+
 
     private fun initStateObserve() {
         repeatOnStarted {

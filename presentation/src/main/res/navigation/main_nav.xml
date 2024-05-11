@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/taxiPotSearchFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_homeFragment_to_showPartyFragment"
             app:destination="@id/showPartyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_taxiPotSearchFragment"
+            app:destination="@id/taxiPotSearchFragment" />
     </fragment>
 
     <fragment

@@ -1,8 +1,9 @@
 package com.motax.modutaxi.presentation.ui.main.taxipotsearch
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.domain.repository.MainRepository
+import com.motax.modutaxi.domain.repository.NaverRepository
 import com.motax.modutaxi.presentation.ui.main.taxipotsearch.model.UiSearchResultItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,16 +23,13 @@ data class TaxiPotSearchResultUiState(
 
 @HiltViewModel
 class TaxiPotSearchViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: NaverRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TaxiPotSearchResultUiState())
     val uiState: StateFlow<TaxiPotSearchResultUiState> = _uiState.asStateFlow()
 
     val keyword = MutableStateFlow("")
-    fun getSearchResults() {
-        TODO("repository에서 호출")
-    }
 
     init {
         observeKeyword()
@@ -51,6 +49,27 @@ class TaxiPotSearchViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
+
+    fun getSearchResults(keyword: String) {
+        viewModelScope.launch {
+
+            Log.d("SearchVM", "searching keyword : $keyword")
+
+            repository.getSearchResultList(keyword, 5).onSuccess { it ->
+
+                Log.d("SearchVM", "Search results received: ${it.result}")
+
+                _uiState.update { state ->
+                    state.copy(
+                        searchResult = it.result.map { UiSearchResultItem(it.title, it.roadAddress, "500m") }
+                    )
+                }
+            }. onFailure {
+                Log.e("SearchVM", "Failed to fetch search results", it)
+            }
+        }
+    }
+
 
     fun loadDummyData() {
         viewModelScope.launch {
