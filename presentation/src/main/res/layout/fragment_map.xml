@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.motax.modutaxi.presentation.ui.main.createparty.map.MapViewModel" />
@@ -36,21 +38,10 @@
             android:drawableStart="@drawable/ic_magnifying_glass_mint"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
-            android:paddingHorizontal="10dp"
             android:onClick="@{() -> vm.navigateToSearch()}"
+            android:paddingHorizontal="10dp"
             android:text="출발지를 입력하세요"
             android:textColor="@color/mx_gray600"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_center_marker_moving"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_car_marker_moving"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +50,7 @@
             android:id="@+id/iv_center_marker_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_car_marker_stop"
+            android:src="@{vm.uiState.isMoving ? @drawable/ic_car_marker_moving : @drawable/ic_car_marker_stop}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/icon_small_flag"
+                android:visibility="@{vm.uiState.isPosition ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_cur_location_label" />
 
@@ -103,9 +95,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_marginTop="14dp"
+                android:text="@{vm.uiState.landMark}"
                 android:textColor="@color/mx_sub500"
-                app:layout_constraintBottom_toBottomOf="@id/iv_flag"
+                android:visibility="@{vm.uiState.landMark.empty ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toEndOf="@id/iv_flag"
+                app:layout_constraintTop_toBottomOf="@id/tv_cur_location_label"
                 tools:text="부평역" />
 
             <TextView
@@ -114,9 +109,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="@{vm.uiState.address}"
                 android:textColor="@color/mx_gray600"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_flag"
+                app:layout_constraintTop_toBottomOf="@id/tv_location_name"
                 tools:text="인천광역시 부평구 광장로 16 부평민자역사" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -125,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/selector_map_select_btn"
+                android:enabled="@{vm.uiState.isMoving ? false : true}"
                 android:gravity="center"
                 android:outlineProvider="none"
                 android:paddingVertical="16dp"

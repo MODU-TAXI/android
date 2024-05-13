@@ -67,14 +67,12 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
         naverMap.addOnCameraChangeListener { _, isStop ->
             if (!isStop) {
-                binding.ivCenterMarkerMoving.visibility = View.VISIBLE
-                binding.ivCenterMarkerStop.visibility = View.INVISIBLE
+                viewModel.changeMovingState(true)
             }
         }
 
         naverMap.addOnCameraIdleListener {
-            binding.ivCenterMarkerMoving.visibility = View.INVISIBLE
-            binding.ivCenterMarkerStop.visibility = View.VISIBLE
+            viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
             viewModel.getAddressFromGeo(
                 cameraPosition.latitude.toString(),

@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.model.BaseState
 import com.motax.modutaxi.domain.repository.NaverMapRepository
+import com.motax.modutaxi.presentation.ui.toAddressString
+import com.motax.modutaxi.presentation.ui.toBuildingName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,21 +13,25 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class MapUiState(
-    val address: String = ""
+    val address: String = "",
+    val landMark: String = "",
+    val isPosition: Boolean = false,
+    val isMoving: Boolean = false
 )
 
-sealed class MapEvent{
-    data object NavigateToSearch: MapEvent()
+sealed class MapEvent {
+    data object NavigateToSearch : MapEvent()
 }
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
     private val naverMapRepository: NaverMapRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _event = MutableSharedFlow<MapEvent>()
     val event: SharedFlow<MapEvent> = _event.asSharedFlow()
@@ -33,7 +39,7 @@ class MapViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MapUiState())
     val uiState: StateFlow<MapUiState> = _uiState.asStateFlow()
 
-    fun getAddressFromGeo(latitude: String, longitude: String){
+    fun getAddressFromGeo(latitude: String, longitude: String) {
         viewModelScope.launch {
             naverMapRepository.getAddressFromGeo(
                 "coordsToaddr",
@@ -41,14 +47,31 @@ class MapViewModel @Inject constructor(
                 "json",
                 "roadaddr",
             ).onSuccess {
-
+                val response = it.results
+                if (response.isNotEmpty()) {
+                    _uiState.update { state ->
+                        state.copy(
+                            address = response[0].toAddressString(),
+                            landMark = response[0].toBuildingName(),
+                            isPosition = false
+                        )
+                    }
+                }
             }.onFailure {
 
             }
         }
     }
 
-    fun navigateToSearch(){
+    fun changeMovingState(movingState : Boolean){
+        _uiState.update { state ->
+            state.copy(
+                isMoving = movingState
+            )
+        }
+    }
+
+    fun navigateToSearch() {
         viewModelScope.launch {
             _event.emit(MapEvent.NavigateToSearch)
         }
