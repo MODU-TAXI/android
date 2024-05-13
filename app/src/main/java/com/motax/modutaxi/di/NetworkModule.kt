@@ -128,6 +128,7 @@ object NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl(BuildConfig.NAVER_BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

@@ -1,6 +1,5 @@
 package com.motax.modutaxi.presentation.ui.main.taxipotsearch
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.NaverRepository
@@ -32,56 +31,32 @@ class TaxiPotSearchViewModel @Inject constructor(
     val keyword = MutableStateFlow("")
 
     init {
-        observeKeyword()
-    }
-
-    private fun observeKeyword(){
-        keyword.onEach {
-            _uiState.update { state ->
-                state.copy(
-                    searchResult = uiState.value.searchResult.map { data ->
-                        data.copy(
-                            keyword = it
-                        )
-                    }
-                )
+        keyword.onEach { newKeyword ->
+            if (newKeyword.isNotBlank()) {
+                getSearchResults(newKeyword)
             }
-
         }.launchIn(viewModelScope)
     }
 
-    fun getSearchResults(keyword: String) {
-        viewModelScope.launch {
-
-            Log.d("SearchVM", "searching keyword : $keyword")
-
-            repository.getSearchResultList(keyword, 5).onSuccess { it ->
-
-                Log.d("SearchVM", "Search results received: ${it.result}")
-
-                _uiState.update { state ->
-                    state.copy(
-                        searchResult = it.result.map { UiSearchResultItem(it.title, it.roadAddress, "500m") }
-                    )
-                }
-            }. onFailure {
-                Log.e("SearchVM", "Failed to fetch search results", it)
-            }
-        }
+    fun updateKeyword(newKeyword: String) {
+        keyword.value = newKeyword
     }
 
+     private fun getSearchResults(keyword: String) {
+         viewModelScope.launch {
+             repository.getSearchResultList(keyword, 5).onSuccess { searchResultData ->
+                 _uiState.update { state ->
+                     state.copy(
+                         searchResult = searchResultData.results.map { dataItem ->
+                             UiSearchResultItem(dataItem.title, dataItem.roadAddress, "500m", keyword)
+                         }
+                     )
+                 }
+             }.onFailure {
 
-    fun loadDummyData() {
-        viewModelScope.launch {
-            val dummyResults = listOf(
-                UiSearchResultItem("주안역", "인천 미추홀구 주안로 41번길", "500m"),
-                UiSearchResultItem("주안역 센트리빌", "인천 미추홀구 주안로 41번길", "500m"),
-                UiSearchResultItem("주안역 3동 성모마리아 성당", "인천 미추홀구 경남서로 23-4", "3.0km")
-            )
-
-            _uiState.value = TaxiPotSearchResultUiState(searchResult = dummyResults)
-        }
-    }
+             }
+         }
+     }
 
     fun focusNone() {
         _uiState.update { state ->

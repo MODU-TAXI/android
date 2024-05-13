@@ -1,12 +1,21 @@
 package com.motax.modutaxi.data.model.response
 
 data class SearchResultListResponse(
-    val result: List<SearchResultItem>
+    val lastBuildDate: String,
+    val total: Int,
+    val start: Int,
+    val display: Int,
+    val items: List<SearchResultItem>
 )
 
 data class SearchResultItem(
     val title: String,
+    val link: String,
+    val category: String,
+    val description: String,
+    val telephone: String,
+    val address: String,
     val roadAddress: String,
-    val mapX: String,
-    val mapY: String
+    val mapx: Long,
+    val mapy: Long
 )
