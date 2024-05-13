@@ -36,17 +36,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_create_taxipot" />
 
-        <Button
-            android:id="@+id/btn_keyword_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:onClick="@{() -> vm.navigateToShowParty()}"
-            android:text="출발지 검색"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_taxipot_map" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -28,7 +28,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 when (it) {
                     is HomeEvent.NavigateToShowParty -> findNavController().toShowParty()
                     is HomeEvent.NavigateToCreateParty -> findNavController().toCreateParty()
-                    is HomeEvent.NavigateToSearch -> findNavController().toTaxiPotSearch()
+                    is HomeEvent.NavigateToSearch -> {}
                 }
             }
         }
@@ -44,8 +44,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         navigate(action)
     }
 
-    private fun NavController.toTaxiPotSearch() {
-        val action = HomeFragmentDirections.actionHomeFragmentToTaxiPotSearchFragment()
-        navigate(action)
-    }
 }

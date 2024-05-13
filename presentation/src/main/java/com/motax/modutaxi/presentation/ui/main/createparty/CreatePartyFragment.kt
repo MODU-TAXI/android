@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.createparty
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
@@ -13,6 +14,7 @@ import com.motax.modutaxi.presentation.ui.main.MainViewModel
 class CreatePartyFragment: BaseFragment<FragmentCreatePartyBinding>(R.layout.fragment_create_party) {
 
     private val parentViewModel: MainViewModel by activityViewModels()
+    private val viewModel: CreatePartyViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,11 +26,8 @@ class CreatePartyFragment: BaseFragment<FragmentCreatePartyBinding>(R.layout.fra
         }
     }
 
-
     private fun NavController.toMap(){
         val action = CreatePartyFragmentDirections.actionCreatePartyFragmentToMapFragment()
         navigate(action)
     }
-
-
 }

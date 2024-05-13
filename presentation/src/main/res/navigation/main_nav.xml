@@ -14,15 +14,16 @@
         <action
             android:id="@+id/action_homeFragment_to_showPartyFragment"
             app:destination="@id/showPartyFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_taxiPotSearchFragment"
-            app:destination="@id/taxiPotSearchFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.map.MapFragment"
-        android:label="MapFragment" />
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.map.MapFragment"
+        android:label="MapFragment" >
+        <action
+            android:id="@+id/action_mapFragment_to_taxiPotSearchFragment"
+            app:destination="@id/taxiPotSearchFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/taxiPotListFragment"
@@ -45,7 +46,7 @@
 
     <fragment
         android:id="@+id/taxiPotSearchFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.taxipotsearch.TaxiPotSearchFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.AddressSearchFragment"
         android:label="TaxiPotSearchFragment" />
 
 

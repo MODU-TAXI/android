@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.taxipotsearch.adapter
+package com.motax.modutaxi.presentation.ui.main.createparty.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.databinding.ItemSearchResultBinding
-import com.motax.modutaxi.presentation.ui.main.taxipotsearch.model.UiSearchResultItem
+import com.motax.modutaxi.presentation.ui.main.createparty.search.model.UiSearchResultItem
 
-class TaxiPotSearchResultAdapter :
-    ListAdapter<UiSearchResultItem, TaxiPotSearchResultViewHolder>(diffCallback) {
+class AddressSearchResultAdapter :
+    ListAdapter<UiSearchResultItem, AddressSearchResultViewHolder>(diffCallback) {
 
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<UiSearchResultItem>() {
@@ -29,14 +29,14 @@ class TaxiPotSearchResultAdapter :
         }
     }
 
-    override fun onBindViewHolder(holder: TaxiPotSearchResultViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AddressSearchResultViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): TaxiPotSearchResultViewHolder = TaxiPotSearchResultViewHolder(
+    ): AddressSearchResultViewHolder = AddressSearchResultViewHolder(
         ItemSearchResultBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -45,7 +45,7 @@ class TaxiPotSearchResultAdapter :
     )
 }
 
-class TaxiPotSearchResultViewHolder(private val binding: ItemSearchResultBinding) :
+class AddressSearchResultViewHolder(private val binding: ItemSearchResultBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: UiSearchResultItem) {
