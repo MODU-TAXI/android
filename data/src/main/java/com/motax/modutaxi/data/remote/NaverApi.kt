@@ -6,9 +6,9 @@ import retrofit2.http.Query
 
 interface NaverApi {
 
-    @GET("/v1/search/local")
+    @GET("/v1/search/local.json")
     suspend fun getSearchResultList(
-        @Query("keyword") keyword: String,
+        @Query("query") keyword: String,
         @Query("display") display: Int,
     ): SearchResultListResponse
 }

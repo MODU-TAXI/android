@@ -1,5 +1,6 @@
 package com.motax.modutaxi.data.model.mapper
 
+import android.text.Html
 import com.motax.modutaxi.data.model.response.AddressFromGeoResponse
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
@@ -56,14 +57,12 @@ fun TaxiPotListResponse.toDomain() = TaxiPotListData(
 )
 
 fun SearchResultItem.toDomain() = SearchResultData(
-    title = title,
-    roadAddress = roadAddress,
-    mapX = mapX,
-    mapY = mapY
+    title = Html.fromHtml(title).toString(),
+    roadAddress = roadAddress
 )
 
 fun SearchResultListResponse.toDomain() = SearchResultListData(
-    result = result.map { it.toDomain() }
+    results = items.map { it.toDomain() }
 )
 
 fun AddressFromGeoResponse.toDomain() = AddressFromGeoData(

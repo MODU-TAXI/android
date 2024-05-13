@@ -27,16 +27,13 @@ class TaxiPotSearchFragment :
         initStateObserve()
 
         viewModel.focusOnSearch()
-
-        viewModel.getSearchResults("")
-
         setupSearchEditText()
-        viewModel.loadDummyData()
+
     }
 
     private fun setupSearchEditText() {
         binding.etSearch.addTextChangedListener { text ->
-            viewModel.getSearchResults(text.toString())
+            viewModel.updateKeyword(text.toString())
         }
     }
 
