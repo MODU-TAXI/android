@@ -12,6 +12,8 @@ import javax.inject.Inject
 sealed class HomeEvent {
     data object NavigateToCreateParty : HomeEvent()
     data object NavigateToShowParty : HomeEvent()
+
+    data object NavigateToSearch : HomeEvent()
 }
 
 @HiltViewModel
@@ -29,6 +31,12 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     fun navigateToShowParty() {
         viewModelScope.launch {
             _event.emit(HomeEvent.NavigateToShowParty)
+        }
+    }
+
+    fun navigateToSearch() {
+        viewModelScope.launch {
+            _event.emit(HomeEvent.NavigateToSearch)
         }
     }
 }

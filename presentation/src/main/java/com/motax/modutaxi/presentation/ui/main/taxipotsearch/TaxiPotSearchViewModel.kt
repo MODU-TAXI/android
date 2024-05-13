@@ -2,7 +2,7 @@ package com.motax.modutaxi.presentation.ui.main.taxipotsearch
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.domain.repository.MainRepository
+import com.motax.modutaxi.domain.repository.NaverRepository
 import com.motax.modutaxi.presentation.ui.main.taxipotsearch.model.UiSearchResultItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,47 +22,41 @@ data class TaxiPotSearchResultUiState(
 
 @HiltViewModel
 class TaxiPotSearchViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: NaverRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TaxiPotSearchResultUiState())
     val uiState: StateFlow<TaxiPotSearchResultUiState> = _uiState.asStateFlow()
 
     val keyword = MutableStateFlow("")
-    fun getSearchResults() {
-        TODO("repository에서 호출")
-    }
 
     init {
-        observeKeyword()
-    }
-
-    private fun observeKeyword(){
-        keyword.onEach {
-            _uiState.update { state ->
-                state.copy(
-                    searchResult = uiState.value.searchResult.map { data ->
-                        data.copy(
-                            keyword = it
-                        )
-                    }
-                )
+        keyword.onEach { newKeyword ->
+            if (newKeyword.isNotBlank()) {
+                getSearchResults(newKeyword)
             }
-
         }.launchIn(viewModelScope)
     }
 
-    fun loadDummyData() {
-        viewModelScope.launch {
-            val dummyResults = listOf(
-                UiSearchResultItem("주안역", "인천 미추홀구 주안로 41번길", "500m"),
-                UiSearchResultItem("주안역 센트리빌", "인천 미추홀구 주안로 41번길", "500m"),
-                UiSearchResultItem("주안역 3동 성모마리아 성당", "인천 미추홀구 경남서로 23-4", "3.0km")
-            )
-
-            _uiState.value = TaxiPotSearchResultUiState(searchResult = dummyResults)
-        }
+    fun updateKeyword(newKeyword: String) {
+        keyword.value = newKeyword
     }
+
+     private fun getSearchResults(keyword: String) {
+         viewModelScope.launch {
+             repository.getSearchResultList(keyword, 5).onSuccess { searchResultData ->
+                 _uiState.update { state ->
+                     state.copy(
+                         searchResult = searchResultData.results.map { dataItem ->
+                             UiSearchResultItem(dataItem.title, dataItem.roadAddress, "500m", keyword)
+                         }
+                     )
+                 }
+             }.onFailure {
+
+             }
+         }
+     }
 
     fun focusNone() {
         _uiState.update { state ->

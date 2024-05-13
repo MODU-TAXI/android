@@ -37,6 +37,14 @@ object NetworkModule {
     @Retention(AnnotationRetention.BINARY)
     annotation class NaverOkHttpClient
 
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class NaverClientId
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class NaverClientSecret
+
     @Provides
     @Singleton
     @BaseOkHttpClient
@@ -80,10 +88,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @NaverClientId
     fun provideNaverClientId(): String = BuildConfig.NAVER_CLIENT_ID
 
     @Provides
     @Singleton
+    @NaverClientSecret
     fun provideNaverClientSecret(): String = BuildConfig.NAVER_CLIENT_SECRET
 
     @Provides
@@ -94,8 +104,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideNaverKeyInterceptor(
-        naverClientId : String,
-        naverClientSecret : String
+        @NaverClientId naverClientId : String,
+        @NaverClientSecret naverClientSecret : String
     ): NaverKeyInterceptor =
         NaverKeyInterceptor(naverClientId, naverClientSecret)
 
@@ -118,6 +128,7 @@ object NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl(BuildConfig.NAVER_BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
