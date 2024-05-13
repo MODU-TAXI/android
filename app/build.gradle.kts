@@ -25,6 +25,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "NAVER_MAP_BASE_URL", getProperty("naverMapBaseUrl"))
         buildConfigField("String", "NAVER_BASE_URL", getProperty("naverBaseUrl"))
         buildConfigField("String", "BASE_TEST_URL", getProperty("baseTestUrl"))
         buildConfigField("String", "BASE_DEV_URL", getProperty("baseDevUrl"))
@@ -32,8 +33,10 @@ android {
         buildConfigField("String", "KAKAO_APP_KEY", getProperty("kakaoAppKey"))
         buildConfigField("String", "NAVER_CLIENT_ID", getProperty("naverClientId"))
         buildConfigField("String", "NAVER_CLIENT_SECRET", getProperty("naverClientSecret"))
+        buildConfigField("String", "NAVER_MAP_CLIENT_SECRET", getProperty("naverMapClientSecret"))
+        buildConfigField("String", "NAVER_MAP_CLIENT_ID", getProperty("naverMapClientId"))
         manifestPlaceholders["KAKAO_APP_KEY"] = getProperty("kakaoAppKeyForManifest")
-        manifestPlaceholders["NAVER_MAP_CLIENT_ID"] = getProperty("naverMapClientId")
+        manifestPlaceholders["NAVER_MAP_CLIENT_ID_FOR_MANIFEST"] = getProperty("naverMapClientIdForManifest")
     }
 
     buildTypes {

@@ -13,7 +13,7 @@
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="${NAVER_MAP_CLIENT_ID}" />
+            android:value="${NAVER_MAP_CLIENT_ID_FOR_MANIFEST}" />
 
         <activity android:name=".presentation.ui.splash.SplashActivity"
             android:exported="true">

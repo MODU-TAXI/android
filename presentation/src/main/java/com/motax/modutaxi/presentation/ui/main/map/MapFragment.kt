@@ -2,29 +2,40 @@ package com.motax.modutaxi.presentation.ui.main.map
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.google.gson.Gson
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMapBinding
+import com.motax.modutaxi.presentation.ui.main.MainViewModel
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.PathOverlay
+import dagger.hilt.android.AndroidEntryPoint
 
-class TestMapFragment: BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnMapReadyCallback {
+@AndroidEntryPoint
+class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnMapReadyCallback {
 
     private lateinit var naverMap: NaverMap
     private val pathList = mutableListOf<PathOverlay>()
 
+    private val parentViewModel: MainViewModel by activityViewModels()
+    private val viewModel : MapViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        parentViewModel.setFullScreenMode()
         initMapView()
     }
 
-    private fun initMapView(){
+    private fun initMapView() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
             ?: MapFragment.newInstance().also {
                 childFragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
@@ -39,18 +50,37 @@ class TestMapFragment: BaseFragment<FragmentMapBinding>(R.layout.fragment_map), 
             isCompassEnabled = false
             isZoomControlEnabled = false
         }
-
+        setMapListener()
         setPath()
     }
 
-    private fun setPath(){
+    private fun setMapListener() {
+        // todo 화면 이동시 리스너
+
+        naverMap.addOnCameraChangeListener { _, isStop ->
+            if (!isStop) {
+                binding.ivCenterMarkerMoving.visibility = View.VISIBLE
+                binding.ivCenterMarkerStop.visibility = View.INVISIBLE
+            }
+        }
+
+        naverMap.addOnCameraIdleListener {
+            binding.ivCenterMarkerMoving.visibility = View.INVISIBLE
+            binding.ivCenterMarkerStop.visibility = View.VISIBLE
+            val cameraPosition = naverMap.cameraPosition.target
+            viewModel.getAddressFromGeo(cameraPosition.latitude.toString(),cameraPosition.longitude.toString())
+        }
+
+    }
+
+    private fun setPath() {
         val path = PathOverlay()
         val manager = resources.assets
         val inputStream = manager.open("test.json")
-        val jsonString = inputStream.bufferedReader().use{ it.readText() }
+        val jsonString = inputStream.bufferedReader().use { it.readText() }
 
         val gson = Gson()
-        val data : TestMapData = gson.fromJson(jsonString, TestMapData::class.java)
+        val data: TestMapData = gson.fromJson(jsonString, TestMapData::class.java)
 
         val list = data.route.traoptimal[0].path.map {
             LatLng(it[1], it[0])

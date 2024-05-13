@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@id/taxiPotSearchFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.map.TestMapFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.map.MapFragment"
         android:label="MapFragment" />
 
     <fragment
@@ -32,7 +32,11 @@
     <fragment
         android:id="@+id/createPartyFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyFragment"
-        android:label="CreatePartyFragment" />
+        android:label="CreatePartyFragment" >
+        <action
+            android:id="@+id/action_createPartyFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/showPartyFragment"

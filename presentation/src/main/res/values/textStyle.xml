@@ -49,6 +49,12 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="TextRegularSemibold" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/pretendard_semi_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="TextLargeRegular" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="android:textSize">16sp</item>
