@@ -4,6 +4,7 @@ import com.motax.modutaxi.BuildConfig
 import com.motax.modutaxi.data.config.AccessTokenInterceptor
 import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.data.config.NaverKeyInterceptor
+import com.motax.modutaxi.data.config.NaverMapKeyInterceptor
 import com.motax.modutaxi.data.remote.IntroApi
 import dagger.Module
 import dagger.Provides
@@ -31,6 +32,10 @@ object NetworkModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
+    annotation class NaverMapRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
     annotation class BaseOkHttpClient
 
     @Qualifier
@@ -39,11 +44,23 @@ object NetworkModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
+    annotation class NaverMapOkHttpClient
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
     annotation class NaverClientId
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class NaverClientSecret
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class NaverMapClientId
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class NaverMapClientSecret
 
     @Provides
     @Singleton
@@ -79,6 +96,22 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @NaverMapOkHttpClient
+    fun provideNaverMapOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        naverMapKeyInterceptor: NaverMapKeyInterceptor
+    ): OkHttpClient {
+
+        return OkHttpClient.Builder()
+            .readTimeout(10000, TimeUnit.MILLISECONDS)
+            .connectTimeout(10000, TimeUnit.MILLISECONDS)
+            .addInterceptor(httpLoggingInterceptor)
+            .addNetworkInterceptor(naverMapKeyInterceptor)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level =
@@ -98,6 +131,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @NaverMapClientId
+    fun provideNaverMapClientId(): String = BuildConfig.NAVER_MAP_CLIENT_ID
+
+    @Provides
+    @Singleton
+    @NaverMapClientSecret
+    fun provideNaverMapClientSecret(): String = BuildConfig.NAVER_MAP_CLIENT_SECRET
+
+    @Provides
+    @Singleton
     fun provideAccessTokenInterceptor(dataStoreManager: DataStoreManager): AccessTokenInterceptor =
         AccessTokenInterceptor(dataStoreManager)
 
@@ -108,6 +151,14 @@ object NetworkModule {
         @NaverClientSecret naverClientSecret : String
     ): NaverKeyInterceptor =
         NaverKeyInterceptor(naverClientId, naverClientSecret)
+
+    @Provides
+    @Singleton
+    fun provideNaverMapKeyInterceptor(
+        @NaverMapClientId naverMapClientId : String,
+        @NaverMapClientSecret naverMapClientSecret : String
+    ): NaverMapKeyInterceptor =
+        NaverMapKeyInterceptor(naverMapClientId, naverMapClientSecret)
 
     @Provides
     @Singleton
@@ -128,6 +179,18 @@ object NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl(BuildConfig.NAVER_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @NaverMapRetrofit
+    fun provideNaverMapRetrofit(@NaverMapOkHttpClient okHttpClient: OkHttpClient): Retrofit {
+
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.NAVER_MAP_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

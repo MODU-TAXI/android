@@ -3,6 +3,7 @@ package com.motax.modutaxi.di
 import com.motax.modutaxi.data.remote.IntroApi
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.data.remote.NaverApi
+import com.motax.modutaxi.data.remote.NaverMapApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,4 +30,9 @@ object ApiModule {
     @Provides
     fun provideNaverApi(@NetworkModule.NaverRetrofit retrofit: Retrofit): NaverApi =
         retrofit.create(NaverApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideNaverMapApi(@NetworkModule.NaverMapRetrofit retrofit: Retrofit): NaverMapApi =
+        retrofit.create(NaverMapApi::class.java)
 }

@@ -7,20 +7,13 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.taxipotsearch.TaxiPotSearchViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.createparty.search.AddressSearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:onClick="@{() -> vm.focusNone()}">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_02_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.02" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_08_horizontal"
@@ -47,9 +40,8 @@
             android:id="@+id/layout_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/rect_grey0_fill_nostroke_12radius"
-            android:onClick="@{() -> vm.focusOnSearch()}"
             android:paddingHorizontal="12dp"
             android:paddingVertical="8dp"
             app:layout_constraintEnd_toStartOf="@id/tv_cancel"
@@ -71,8 +63,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:text="@={vm.keyword}"
                 android:background="@null"
+                android:text="@={vm.keyword}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_magnifying_glass"
@@ -87,6 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:onClick="@{() -> vm.navigateToBack()}"
             android:text="취소"
             app:layout_constraintBottom_toBottomOf="@id/layout_search"
             app:layout_constraintEnd_toEndOf="parent"

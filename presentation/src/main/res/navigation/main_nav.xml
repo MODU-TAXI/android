@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@id/taxiPotSearchFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -14,15 +14,16 @@
         <action
             android:id="@+id/action_homeFragment_to_showPartyFragment"
             app:destination="@id/showPartyFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_taxiPotSearchFragment"
-            app:destination="@id/taxiPotSearchFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.map.TestMapFragment"
-        android:label="MapFragment" />
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.map.MapFragment"
+        android:label="MapFragment" >
+        <action
+            android:id="@+id/action_mapFragment_to_addressSearchFragment"
+            app:destination="@id/addressSearchFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/taxiPotListFragment"
@@ -32,17 +33,20 @@
     <fragment
         android:id="@+id/createPartyFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyFragment"
-        android:label="CreatePartyFragment" />
+        android:label="CreatePartyFragment" >
+        <action
+            android:id="@+id/action_createPartyFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/showPartyFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyFragment"
         android:label="ShowPartyFragment" />
-
     <fragment
-        android:id="@+id/taxiPotSearchFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.taxipotsearch.TaxiPotSearchFragment"
-        android:label="TaxiPotSearchFragment" />
+        android:id="@+id/addressSearchFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.AddressSearchFragment"
+        android:label="AddressSearchFragment" />
 
 
 </navigation>

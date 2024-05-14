@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.taxipotsearch.model
+package com.motax.modutaxi.presentation.ui.main.createparty.search.model
 
 data class UiSearchResultItem(
     val placeName: String="",
