@@ -10,7 +10,9 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentCreatePartyBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreatePartyFragment: BaseFragment<FragmentCreatePartyBinding>(R.layout.fragment_create_party) {
 
     private val parentViewModel: MainViewModel by activityViewModels()

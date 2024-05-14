@@ -5,6 +5,12 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel" />
+
+        <import type="com.motax.modutaxi.presentation.ui.main.createparty.WishHeadCount" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="출발지를 입력해주세요"
+                    android:text="@{vm.uiState.departureName.empty ? `출발지를 선택해주세요` : vm.uiState.departureName}"
                     android:textColor="@color/mx_gray300"
                     app:layout_constraintStart_toStartOf="@id/tv_departure_label"
                     app:layout_constraintTop_toBottomOf="@id/tv_departure_label" />
@@ -146,7 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="도착지를 입력해주세요"
+                    android:text="@{vm.uiState.arrivalName.empty ? `도착지를 선택해주세요` : vm.uiState.arrivalName}"
                     android:textColor="@color/mx_gray300"
                     app:layout_constraintStart_toStartOf="@id/tv_arrival_label"
                     app:layout_constraintTop_toBottomOf="@id/tv_arrival_label" />
@@ -264,7 +270,8 @@
                     android:layout_width="88dp"
                     android:layout_height="88dp"
                     android:layout_marginTop="28dp"
-                    android:background="@drawable/oval_nofill_gray200stroke"
+                    android:background="@{vm.uiState.wishHeadCount == WishHeadCount.ONE ? @drawable/oval_nofill_gray200stroke : @drawable/oval_nofill_sub500stroke}"
+                    android:onClick="@{() -> vm.selectWishHeadCount(WishHeadCount.ONE)}"
                     app:layout_constraintEnd_toStartOf="@id/layout_two_person"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
@@ -299,7 +306,8 @@
                     android:layout_width="88dp"
                     android:layout_height="88dp"
                     android:layout_marginTop="28dp"
-                    android:background="@drawable/oval_nofill_gray200stroke"
+                    android:background="@{vm.uiState.wishHeadCount == WishHeadCount.TWO ? @drawable/oval_nofill_gray200stroke : @drawable/oval_nofill_sub500stroke}"
+                    android:onClick="@{() -> vm.selectWishHeadCount(WishHeadCount.TWO)}"
                     app:layout_constraintEnd_toStartOf="@id/layout_three_person"
                     app:layout_constraintStart_toEndOf="@id/layout_one_person"
                     app:layout_constraintTop_toBottomOf="@id/tv_description_set_min_people">
@@ -333,7 +341,8 @@
                     android:layout_width="88dp"
                     android:layout_height="88dp"
                     android:layout_marginTop="28dp"
-                    android:background="@drawable/oval_nofill_gray200stroke"
+                    android:background="@{vm.uiState.wishHeadCount == WishHeadCount.THREE ? @drawable/oval_nofill_gray200stroke : @drawable/oval_nofill_sub500stroke}"
+                    android:onClick="@{() -> vm.selectWishHeadCount(WishHeadCount.THREE)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/layout_two_person"
                     app:layout_constraintTop_toBottomOf="@id/tv_description_set_min_people">

@@ -18,6 +18,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class MapUiState(
+    val longitude: Double = 0.0,
+    val latitude: Double = 0.0,
     val address: String = "",
     val landMark: String = "",
     val isPosition: Boolean = false,
@@ -26,6 +28,8 @@ data class MapUiState(
 
 sealed class MapEvent {
     data object NavigateToSearch : MapEvent()
+    data class SelectDeparture(val latitude: Double, val longitude: Double, val name: String) :
+        MapEvent()
 }
 
 @HiltViewModel
@@ -39,7 +43,7 @@ class MapViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MapUiState())
     val uiState: StateFlow<MapUiState> = _uiState.asStateFlow()
 
-    fun getAddressFromGeo(latitude: String, longitude: String) {
+    fun getAddressFromGeo(latitude: Double, longitude: Double) {
         viewModelScope.launch {
             naverMapRepository.getAddressFromGeo(
                 "coordsToaddr",
@@ -63,7 +67,7 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    fun changeMovingState(movingState : Boolean){
+    fun changeMovingState(movingState: Boolean) {
         _uiState.update { state ->
             state.copy(
                 isMoving = movingState
@@ -74,6 +78,18 @@ class MapViewModel @Inject constructor(
     fun navigateToSearch() {
         viewModelScope.launch {
             _event.emit(MapEvent.NavigateToSearch)
+        }
+    }
+
+    fun selectDeparture() {
+        viewModelScope.launch {
+            _event.emit(
+                MapEvent.SelectDeparture(
+                    uiState.value.longitude,
+                    uiState.value.latitude,
+                    uiState.value.landMark
+                )
+            )
         }
     }
 }

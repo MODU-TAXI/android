@@ -21,8 +21,8 @@
         android:name="com.motax.modutaxi.presentation.ui.main.createparty.map.MapFragment"
         android:label="MapFragment" >
         <action
-            android:id="@+id/action_mapFragment_to_taxiPotSearchFragment"
-            app:destination="@id/taxiPotSearchFragment" />
+            android:id="@+id/action_mapFragment_to_addressSearchFragment"
+            app:destination="@id/addressSearchFragment" />
     </fragment>
 
     <fragment
@@ -43,11 +43,10 @@
         android:id="@+id/showPartyFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyFragment"
         android:label="ShowPartyFragment" />
-
     <fragment
-        android:id="@+id/taxiPotSearchFragment"
+        android:id="@+id/addressSearchFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.AddressSearchFragment"
-        android:label="TaxiPotSearchFragment" />
+        android:label="AddressSearchFragment" />
 
 
 </navigation>

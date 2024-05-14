@@ -124,6 +124,7 @@
                 android:enabled="@{vm.uiState.isMoving ? false : true}"
                 android:gravity="center"
                 android:outlineProvider="none"
+                android:onClick="@{() -> vm.selectDeparture()}"
                 android:paddingVertical="16dp"
                 android:text="출발지로 설정"
                 android:textColor="@color/white"

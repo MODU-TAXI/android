@@ -10,6 +10,7 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMapBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
+import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -24,6 +25,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: MapViewModel by viewModels()
+    private val createPartyViewModel: CreatePartyViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,6 +41,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             viewModel.event.collect {
                 when (it) {
                     is MapEvent.NavigateToSearch -> findNavController().toAddressSearch()
+                    is MapEvent.SelectDeparture -> {
+                        createPartyViewModel.setDepartureInfo(
+                            it.longitude,
+                            it.latitude,
+                            it.name
+                        )
+                        findNavController().navigateUp()
+                    }
                 }
             }
         }
@@ -75,8 +85,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
             viewModel.getAddressFromGeo(
-                cameraPosition.latitude.toString(),
-                cameraPosition.longitude.toString()
+                cameraPosition.latitude,
+                cameraPosition.longitude
             )
         }
 
@@ -102,7 +112,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 //    }
 
     private fun NavController.toAddressSearch() {
-        val action = MapFragmentDirections.actionMapFragmentToTaxiPotSearchFragment()
+        val action = MapFragmentDirections.actionMapFragmentToAddressSearchFragment()
         navigate(action)
     }
 
