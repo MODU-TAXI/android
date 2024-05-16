@@ -42,6 +42,10 @@ class AddressSearchViewModel @Inject constructor(
         keyword.onEach { newKeyword ->
             if (newKeyword.isNotBlank()) {
                 getSearchResults(newKeyword)
+            } else {
+                _uiState.update { state ->
+                    state.copy(searchResult = emptyList())
+                }
             }
         }.launchIn(viewModelScope)
     }
