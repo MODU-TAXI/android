@@ -16,14 +16,22 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.PI
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 data class AddressSearchUiState(
     val searchResult: List<UiSearchResultItem> = emptyList(),
 )
 
-sealed class AddressSearchEvent{
+sealed class AddressSearchEvent {
     data object NavigateToBack : AddressSearchEvent()
 }
+
+data class Location(val x: Double, val y: Double)
 
 @HiltViewModel
 class AddressSearchViewModel @Inject constructor(
@@ -56,14 +64,30 @@ class AddressSearchViewModel @Inject constructor(
 
     private fun getSearchResults(keyword: String) {
         viewModelScope.launch {
+
+            //TODO("현재 위치 좌표 불러오기 - 현재는 인하대 기준")
+            val currentLocation = Location(126.6538126, 37.4507292)
+
             repository.getSearchResultList(keyword, 5).onSuccess { searchResultData ->
                 _uiState.update { state ->
                     state.copy(
                         searchResult = searchResultData.results.map { dataItem ->
+
+                            val location = Location(
+                                dataItem.mapx.toDouble() / 1e7,
+                                dataItem.mapy.toDouble() / 1e7
+                            )
+                            val distance = calculateDistance(
+                                currentLocation.x,
+                                currentLocation.y,
+                                location.x,
+                                location.y
+                            )
+
                             UiSearchResultItem(
                                 dataItem.title,
                                 dataItem.roadAddress,
-                                "500m",
+                                formatDistance(distance),
                                 keyword
                             )
                         }
@@ -75,10 +99,31 @@ class AddressSearchViewModel @Inject constructor(
         }
     }
 
-    fun navigateToBack(){
+    fun navigateToBack() {
         viewModelScope.launch {
             _event.emit(AddressSearchEvent.NavigateToBack)
         }
+    }
+
+    private fun formatDistance(distance: Double): String {
+        return if (distance < 1000) {
+            "${distance.toInt()} m"
+        } else {
+            "${String.format("%.2f", distance / 1000)} km"
+        }
+    }
+
+    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val R = 6371e3 // 지구 반지름 (미터)
+        val phi1 = lat1 * (PI / 180)
+        val phi2 = lat2 * (PI / 180)
+        val deltaPhi = (lat2 - lat1) * (PI / 180)
+        val deltaLambda = (lon2 - lon1) * (PI / 180)
+
+        val a = sin(deltaPhi / 2).pow(2) + cos(phi1) * cos(phi2) * sin(deltaLambda / 2).pow(2)
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+        return R * c // 미터 단위의 거리
     }
 
 }
