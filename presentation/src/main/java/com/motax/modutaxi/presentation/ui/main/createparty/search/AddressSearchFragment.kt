@@ -32,7 +32,9 @@ class AddressSearchFragment :
         binding.rvSearchResult.adapter = AddressSearchResultAdapter()
         binding.rvSearchResult.itemAnimator = null
 
+        binding.etSearch.requestFocus()
         showKeyboard(binding.etSearch)
+
         setupSearchEditText()
     }
 
@@ -56,11 +58,5 @@ class AddressSearchFragment :
         val inputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-    }
-
-    private fun hideKeyboard() {
-        val inputMethodManager =
-            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }
