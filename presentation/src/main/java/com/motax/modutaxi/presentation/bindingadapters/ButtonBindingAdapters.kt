@@ -1,12 +1,14 @@
 package com.motax.modutaxi.presentation.bindingadapters
 
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.ui.intro.signup.AuthBtnState
+import com.motax.modutaxi.presentation.ui.main.createparty.map.TrackingState
 
 @BindingAdapter("onboardQuestionBtnState")
 fun bindOnboardQuestionBtnState(btn: AppCompatButton, isSelected: Boolean) {
@@ -48,5 +50,14 @@ fun bindOnboardPhoneAuthHelperText(tv: TextView, state: AuthBtnState) {
             tv.text = state.msg
             tv.setTextColor(ContextCompat.getColor(tv.context, R.color.mx_red))
         }
+    }
+}
+
+@BindingAdapter("trackingBtnDrawable")
+fun bindTrackingBtnDrawable(btn: ImageButton, state: TrackingState) {
+    when (state) {
+        is TrackingState.On -> btn.setImageResource(R.drawable.ic_location_on)
+        is TrackingState.Off -> btn.setImageResource(R.drawable.ic_location_off)
+        else -> {}
     }
 }

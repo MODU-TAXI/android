@@ -17,18 +17,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class MapUiState(
-    val longitude: Double = 0.0,
-    val latitude: Double = 0.0,
+    val longitude: Double = 126.6538126,
+    val latitude: Double = 37.4507292,
     val address: String = "",
     val landMark: String = "",
     val isPosition: Boolean = false,
-    val isMoving: Boolean = false
+    val isMoving: Boolean = false,
+    val isSelectBtnEnable: Boolean = false
 )
 
 sealed class MapEvent {
     data object NavigateToSearch : MapEvent()
-    data class SelectDeparture(val latitude: Double, val longitude: Double, val name: String) :
+    data class SelectDeparture(val latitude: Double, val longitude: Double, val name: String, val address: String) :
         MapEvent()
+}
+
+sealed class TrackingState {
+    data object TryOn : TrackingState()
+    data object On : TrackingState()
+    data object Off : TrackingState()
 }
 
 @HiltViewModel
@@ -41,6 +48,9 @@ class MapViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(MapUiState())
     val uiState: StateFlow<MapUiState> = _uiState.asStateFlow()
+
+    private val _trackingState = MutableStateFlow<TrackingState>(TrackingState.TryOn)
+    val trackingState: StateFlow<TrackingState> = _trackingState.asStateFlow()
 
     fun getAddressFromGeo(latitude: Double, longitude: Double) {
         viewModelScope.launch {
@@ -56,7 +66,17 @@ class MapViewModel @Inject constructor(
                         state.copy(
                             address = response[0].toAddressString(),
                             landMark = response[0].toBuildingName(),
-                            isPosition = false
+                            isPosition = false,
+                            isSelectBtnEnable = true
+                        )
+                    }
+                } else {
+                    _uiState.update { state ->
+                        state.copy(
+                            address = "위치정보 없음",
+                            landMark = "",
+                            isPosition = false,
+                            isSelectBtnEnable = false
                         )
                     }
                 }
@@ -71,6 +91,14 @@ class MapViewModel @Inject constructor(
             state.copy(
                 isMoving = movingState
             )
+        }
+
+        if(movingState){
+            _uiState.update { state ->
+                state.copy(
+                    isSelectBtnEnable = false
+                )
+            }
         }
     }
 
@@ -98,9 +126,29 @@ class MapViewModel @Inject constructor(
                 MapEvent.SelectDeparture(
                     uiState.value.longitude,
                     uiState.value.latitude,
-                    uiState.value.landMark
+                    uiState.value.landMark,
+                    uiState.value.address
                 )
             )
+        }
+    }
+
+    fun locationBtnClicked() {
+        _trackingState.update {
+            if (trackingState.value == TrackingState.Off) TrackingState.TryOn
+            else TrackingState.Off
+        }
+    }
+
+    fun trackingOn() {
+        _trackingState.update {
+            TrackingState.On
+        }
+    }
+
+    fun trackingOff() {
+        _trackingState.update {
+            TrackingState.Off
         }
     }
 }

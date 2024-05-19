@@ -56,6 +56,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/btn_location"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/transparent"
+            android:onClick="@{() -> vm.locationBtnClicked()}"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_location_off"
+            app:layout_constraintBottom_toTopOf="@id/layout_departure_setting"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:trackingBtnDrawable="@{vm.trackingState}" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_departure_setting"
             android:layout_width="0dp"
@@ -121,10 +135,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/selector_map_select_btn"
-                android:enabled="@{vm.uiState.isMoving ? false : true}"
+                android:enabled="@{vm.uiState.isSelectBtnEnable}"
                 android:gravity="center"
-                android:outlineProvider="none"
                 android:onClick="@{() -> vm.selectDeparture()}"
+                android:outlineProvider="none"
                 android:paddingVertical="16dp"
                 android:text="출발지로 설정"
                 android:textColor="@color/white"
