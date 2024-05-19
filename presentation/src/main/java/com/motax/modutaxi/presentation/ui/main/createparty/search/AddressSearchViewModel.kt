@@ -1,9 +1,12 @@
 package com.motax.modutaxi.presentation.ui.main.createparty.search
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.NaverRepository
+import com.motax.modutaxi.presentation.ui.calculateDistance
 import com.motax.modutaxi.presentation.ui.main.createparty.search.model.UiSearchResultItem
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +32,7 @@ data class AddressSearchUiState(
 
 sealed class AddressSearchEvent {
     data object NavigateToBack : AddressSearchEvent()
+    data class SelectLocation(val latitude: Double, val longitude: Double) : AddressSearchEvent()
 }
 
 data class Location(val x: Double, val y: Double)
@@ -84,11 +88,15 @@ class AddressSearchViewModel @Inject constructor(
                                 location.y
                             )
 
+
                             UiSearchResultItem(
                                 dataItem.title,
                                 dataItem.roadAddress,
                                 formatDistance(distance),
-                                keyword
+                                keyword,
+                                location.y,
+                                location.x,
+                                ::selectLocation
                             )
                         }
                     )
@@ -96,6 +104,12 @@ class AddressSearchViewModel @Inject constructor(
             }.onFailure {
 
             }
+        }
+    }
+
+    private fun selectLocation(latitude: Double, longitude: Double) {
+        viewModelScope.launch {
+            _event.emit(AddressSearchEvent.SelectLocation(latitude, longitude))
         }
     }
 
@@ -113,17 +127,6 @@ class AddressSearchViewModel @Inject constructor(
         }
     }
 
-    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val R = 6371e3 // 지구 반지름 (미터)
-        val phi1 = lat1 * (PI / 180)
-        val phi2 = lat2 * (PI / 180)
-        val deltaPhi = (lat2 - lat1) * (PI / 180)
-        val deltaLambda = (lon2 - lon1) * (PI / 180)
 
-        val a = sin(deltaPhi / 2).pow(2) + cos(phi1) * cos(phi2) * sin(deltaLambda / 2).pow(2)
-        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-        return R * c // 미터 단위의 거리
-    }
 
 }

@@ -3,7 +3,6 @@ package com.motax.modutaxi.presentation.ui.main.createparty.map
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
@@ -11,6 +10,8 @@ import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMapBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -24,7 +25,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     private val pathList = mutableListOf<PathOverlay>()
 
     private val parentViewModel: MainViewModel by activityViewModels()
-    private val viewModel: MapViewModel by viewModels()
+    private val viewModel: MapViewModel by activityViewModels()
     private val createPartyViewModel: CreatePartyViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,6 +71,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             isZoomControlEnabled = false
         }
         setMapListener()
+        setInitCamera()
     }
 
     private fun setMapListener() {
@@ -89,8 +91,18 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                 cameraPosition.longitude
             )
         }
-
     }
+
+    private fun setInitCamera() {
+        val locate = CameraUpdate.scrollTo(
+            LatLng(
+                viewModel.uiState.value.latitude,
+                viewModel.uiState.value.longitude
+            )
+        )
+        naverMap.moveCamera(locate)
+    }
+
 
 //    private fun setPath() {
 //        val path = PathOverlay()

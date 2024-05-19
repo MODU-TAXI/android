@@ -2,6 +2,7 @@ package com.motax.modutaxi.presentation.ui.main.createparty.search
 
 import android.content.Context
 import android.os.Bundle
+import android.provider.Telephony.Mms.Addr
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -13,6 +14,7 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentAddressSearchBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
+import com.motax.modutaxi.presentation.ui.main.createparty.map.MapViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AddressSearchResultAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +24,7 @@ class AddressSearchFragment :
 
     private val viewModel: AddressSearchViewModel by viewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
+    private val mapViewModel: MapViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +46,10 @@ class AddressSearchFragment :
             viewModel.event.collect {
                 when (it) {
                     is AddressSearchEvent.NavigateToBack -> findNavController().navigateUp()
+                    is AddressSearchEvent.SelectLocation -> {
+                        findNavController().navigateUp()
+                        mapViewModel.selectLocationFromSearch(it.latitude, it.longitude)
+                    }
                 }
             }
         }

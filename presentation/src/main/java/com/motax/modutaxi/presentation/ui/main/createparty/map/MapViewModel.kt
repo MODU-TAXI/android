@@ -2,7 +2,6 @@ package com.motax.modutaxi.presentation.ui.main.createparty.map
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.domain.model.BaseState
 import com.motax.modutaxi.domain.repository.NaverMapRepository
 import com.motax.modutaxi.presentation.ui.toAddressString
 import com.motax.modutaxi.presentation.ui.toBuildingName
@@ -78,6 +77,18 @@ class MapViewModel @Inject constructor(
     fun navigateToSearch() {
         viewModelScope.launch {
             _event.emit(MapEvent.NavigateToSearch)
+        }
+    }
+
+    fun selectLocationFromSearch(
+        latitude: Double,
+        longitude: Double
+    ){
+        _uiState.update { state ->
+            state.copy(
+                latitude = latitude,
+                longitude = longitude
+            )
         }
     }
 

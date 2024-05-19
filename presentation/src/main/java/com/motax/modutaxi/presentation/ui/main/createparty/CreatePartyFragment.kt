@@ -23,7 +23,7 @@ class CreatePartyFragment :
     BaseFragment<FragmentCreatePartyBinding>(R.layout.fragment_create_party) {
 
     private val parentViewModel: MainViewModel by activityViewModels()
-    private val viewModel: CreatePartyViewModel by viewModels()
+    private val viewModel: CreatePartyViewModel by activityViewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

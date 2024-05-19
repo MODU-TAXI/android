@@ -4,5 +4,8 @@ data class UiSearchResultItem(
     val placeName: String="",
     val placeAddress: String="",
     val distance: String="",
-    val keyword: String=""
+    val keyword: String="",
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
+    val selectLocation: (Double, Double) -> Unit
 )
