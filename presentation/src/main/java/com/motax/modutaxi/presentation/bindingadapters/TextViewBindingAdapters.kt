@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.bindingadapters
 
+import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -14,9 +15,9 @@ fun bindSearchResult(tv: TextView, keyword: String?, searchResult: String?) {
     Log.d("debugging", "$keyword,$searchResult")
     keyword?.let {
         searchResult?.let {
-            if(keyword.isNotBlank()) {
+            if (keyword.isNotBlank()) {
                 val sIndex = searchResult.indexOf(keyword)
-                if(sIndex != -1) {
+                if (sIndex != -1) {
                     val spannable = SpannableString(searchResult)
                         .apply {
                             setSpan(
@@ -30,5 +31,14 @@ fun bindSearchResult(tv: TextView, keyword: String?, searchResult: String?) {
                 }
             }
         }
+    }
+}
+
+@BindingAdapter("departureTimeTextStyle")
+fun bindDepartureTimeTextStyle(tv: TextView, departureTime: String) {
+    if (departureTime.isBlank()) {
+        tv.typeface = Typeface.DEFAULT
+    } else {
+        tv.typeface = Typeface.DEFAULT_BOLD
     }
 }
