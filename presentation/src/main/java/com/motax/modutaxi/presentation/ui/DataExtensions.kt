@@ -48,3 +48,11 @@ fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): D
     return R * c // 미터 단위의 거리
 }
 
+fun Double.toDistanceString(): String {
+    return if (this < 1000) {
+        "${this.toInt()} m"
+    } else {
+        "${String.format("%.2f", this / 1000)} km"
+    }
+}
+

@@ -1,12 +1,11 @@
 package com.motax.modutaxi.presentation.ui.main.createparty.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.NaverRepository
 import com.motax.modutaxi.presentation.ui.calculateDistance
 import com.motax.modutaxi.presentation.ui.main.createparty.search.model.UiSearchResultItem
-import com.motax.modutaxi.presentation.util.Constants.TAG
+import com.motax.modutaxi.presentation.ui.toDistanceString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,12 +18,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.PI
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
 
 data class AddressSearchUiState(
     val searchResult: List<UiSearchResultItem> = emptyList(),
@@ -88,11 +81,10 @@ class AddressSearchViewModel @Inject constructor(
                                 location.y
                             )
 
-
                             UiSearchResultItem(
                                 dataItem.title,
                                 dataItem.roadAddress,
-                                formatDistance(distance),
+                                distance.toDistanceString(),
                                 keyword,
                                 location.y,
                                 location.x,
@@ -118,15 +110,4 @@ class AddressSearchViewModel @Inject constructor(
             _event.emit(AddressSearchEvent.NavigateToBack)
         }
     }
-
-    private fun formatDistance(distance: Double): String {
-        return if (distance < 1000) {
-            "${distance.toInt()} m"
-        } else {
-            "${String.format("%.2f", distance / 1000)} km"
-        }
-    }
-
-
-
 }

@@ -9,13 +9,17 @@ import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentAddressSearchBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.map.MapViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AddressSearchResultAdapter
+import com.motax.modutaxi.presentation.util.Constants.ARRIVAL_SEARCH
+import com.motax.modutaxi.presentation.util.Constants.DEPARTURE_SEARCH
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +29,9 @@ class AddressSearchFragment :
     private val viewModel: AddressSearchViewModel by viewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
     private val mapViewModel: MapViewModel by activityViewModels()
+
+    private val args : AddressSearchFragmentArgs by navArgs()
+    private val type by lazy{args.type}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,8 +54,16 @@ class AddressSearchFragment :
                 when (it) {
                     is AddressSearchEvent.NavigateToBack -> findNavController().navigateUp()
                     is AddressSearchEvent.SelectLocation -> {
-                        findNavController().navigateUp()
-                        mapViewModel.selectLocationFromSearch(it.latitude, it.longitude)
+                        when(type){
+                            DEPARTURE_SEARCH -> {
+                                findNavController().navigateUp()
+                                mapViewModel.selectLocationFromSearch(it.latitude, it.longitude)
+                            }
+
+                            ARRIVAL_SEARCH -> {
+                                findNavController().toArrivalMap()
+                            }
+                        }
                     }
                 }
             }
@@ -65,5 +80,10 @@ class AddressSearchFragment :
         val inputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    private fun NavController.toArrivalMap(){
+        val action = AddressSearchFragmentDirections.actionAddressSearchFragmentToArrivalMapFragment()
+        navigate(action)
     }
 }

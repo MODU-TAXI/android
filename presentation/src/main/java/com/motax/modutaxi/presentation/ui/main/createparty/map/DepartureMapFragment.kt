@@ -3,7 +3,6 @@ package com.motax.modutaxi.presentation.ui.main.createparty.map
 import android.Manifest
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
@@ -11,11 +10,12 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
-import com.motax.modutaxi.presentation.databinding.FragmentMapBinding
+import com.motax.modutaxi.presentation.databinding.FragmentDepartureMapBinding
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
+import com.motax.modutaxi.presentation.util.Constants.DEPARTURE_SEARCH
 import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -28,7 +28,8 @@ import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnMapReadyCallback {
+class DepartureMapFragment :
+    BaseFragment<FragmentDepartureMapBinding>(R.layout.fragment_departure_map), OnMapReadyCallback {
 
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
@@ -60,8 +61,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is MapEvent.NavigateToSearch -> findNavController().toAddressSearch()
-                    is MapEvent.SelectDeparture -> {
+                    is DepartureMapEvent.NavigateToSearch -> findNavController().toAddressSearch()
+                    is DepartureMapEvent.SelectDeparture -> {
                         createPartyViewModel.setDepartureInfo(
                             it.longitude,
                             it.latitude,
@@ -99,9 +100,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     private fun initStateObserve() {
         repeatOnStarted {
             viewModel.trackingState.collect {
+                Log.d(TAG,it.toString())
                 when (it) {
                     is TrackingState.TryOn -> {
-                        Log.d(TAG,"tryon")
                         requireContext().requestLocationPermission(
                             locationPermissionList,
                             ::startPermissionLauncher,
@@ -120,6 +121,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             }
         }
     }
+
     private fun startPermissionLauncher() {
         requestPermissionLauncher.launch(locationPermissionList)
     }
@@ -157,13 +159,17 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     }
 
     private fun setInitCamera() {
-        val locate = CameraUpdate.scrollTo(
-            LatLng(
-                viewModel.uiState.value.latitude,
-                viewModel.uiState.value.longitude
+        if(viewModel.uiState.value.isFromSearch){
+            val locate = CameraUpdate.scrollTo(
+                LatLng(
+                    viewModel.uiState.value.latitude,
+                    viewModel.uiState.value.longitude
+                )
             )
-        )
-        naverMap.moveCamera(locate)
+            naverMap.moveCamera(locate)
+        } else {
+            viewModel.locationBtnClicked()
+        }
     }
 
 
@@ -187,9 +193,13 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 //    }
 
     private fun NavController.toAddressSearch() {
-        val action = MapFragmentDirections.actionMapFragmentToAddressSearchFragment()
+        val action = DepartureMapFragmentDirections.actionDepartureMapFragmentToAddressSearchFragment(DEPARTURE_SEARCH)
         navigate(action)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.clear()
+    }
 
 }

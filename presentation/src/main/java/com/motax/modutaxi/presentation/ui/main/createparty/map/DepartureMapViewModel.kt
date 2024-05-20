@@ -16,9 +16,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class MapUiState(
+data class DepartureMapUiState(
     val longitude: Double = 126.6538126,
     val latitude: Double = 37.4507292,
+    val isFromSearch: Boolean = false,
     val address: String = "",
     val landMark: String = "",
     val isPosition: Boolean = false,
@@ -26,10 +27,10 @@ data class MapUiState(
     val isSelectBtnEnable: Boolean = false
 )
 
-sealed class MapEvent {
-    data object NavigateToSearch : MapEvent()
+sealed class DepartureMapEvent {
+    data object NavigateToSearch : DepartureMapEvent()
     data class SelectDeparture(val latitude: Double, val longitude: Double, val name: String, val address: String) :
-        MapEvent()
+        DepartureMapEvent()
 }
 
 sealed class TrackingState {
@@ -43,13 +44,13 @@ class MapViewModel @Inject constructor(
     private val naverMapRepository: NaverMapRepository
 ) : ViewModel() {
 
-    private val _event = MutableSharedFlow<MapEvent>()
-    val event: SharedFlow<MapEvent> = _event.asSharedFlow()
+    private val _event = MutableSharedFlow<DepartureMapEvent>()
+    val event: SharedFlow<DepartureMapEvent> = _event.asSharedFlow()
 
-    private val _uiState = MutableStateFlow(MapUiState())
-    val uiState: StateFlow<MapUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(DepartureMapUiState())
+    val uiState: StateFlow<DepartureMapUiState> = _uiState.asStateFlow()
 
-    private val _trackingState = MutableStateFlow<TrackingState>(TrackingState.TryOn)
+    private val _trackingState = MutableStateFlow<TrackingState>(TrackingState.Off)
     val trackingState: StateFlow<TrackingState> = _trackingState.asStateFlow()
 
     fun getAddressFromGeo(latitude: Double, longitude: Double) {
@@ -104,7 +105,7 @@ class MapViewModel @Inject constructor(
 
     fun navigateToSearch() {
         viewModelScope.launch {
-            _event.emit(MapEvent.NavigateToSearch)
+            _event.emit(DepartureMapEvent.NavigateToSearch)
         }
     }
 
@@ -112,10 +113,15 @@ class MapViewModel @Inject constructor(
         latitude: Double,
         longitude: Double
     ){
+        _trackingState.update {
+            TrackingState.Off
+        }
+
         _uiState.update { state ->
             state.copy(
                 latitude = latitude,
-                longitude = longitude
+                longitude = longitude,
+                isFromSearch = true
             )
         }
     }
@@ -123,7 +129,7 @@ class MapViewModel @Inject constructor(
     fun selectDeparture() {
         viewModelScope.launch {
             _event.emit(
-                MapEvent.SelectDeparture(
+                DepartureMapEvent.SelectDeparture(
                     uiState.value.longitude,
                     uiState.value.latitude,
                     uiState.value.landMark,
@@ -149,6 +155,16 @@ class MapViewModel @Inject constructor(
     fun trackingOff() {
         _trackingState.update {
             TrackingState.Off
+        }
+    }
+
+    fun clear(){
+        _trackingState.update {
+            TrackingState.Off
+        }
+
+        _uiState.update {
+            DepartureMapUiState()
         }
     }
 }

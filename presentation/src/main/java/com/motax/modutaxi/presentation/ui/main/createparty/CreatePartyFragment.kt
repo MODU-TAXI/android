@@ -15,6 +15,8 @@ import com.motax.modutaxi.presentation.databinding.FragmentCreatePartyBinding
 import com.motax.modutaxi.presentation.ui.getCurHour
 import com.motax.modutaxi.presentation.ui.getCurMinute
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
+import com.motax.modutaxi.presentation.ui.main.createparty.map.DepartureMapFragmentDirections
+import com.motax.modutaxi.presentation.util.Constants
 import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,7 +41,7 @@ class CreatePartyFragment :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is CreatePartyEvent.NavigateToArrivalMap -> {}
+                    is CreatePartyEvent.NavigateToArrivalMap -> findNavController().toAddressSearch()
                     is CreatePartyEvent.NavigateToDepartureMap -> findNavController().toDepartureMap()
                     is CreatePartyEvent.ShowTimePicker -> showTimePicker(it.hour, it.minute)
                 }
@@ -62,7 +64,14 @@ class CreatePartyFragment :
     }
 
     private fun NavController.toDepartureMap() {
-        val action = CreatePartyFragmentDirections.actionCreatePartyFragmentToMapFragment()
+        val action = CreatePartyFragmentDirections.actionCreatePartyFragmentToDepartureMapFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toAddressSearch() {
+        val action = CreatePartyFragmentDirections.actionCreatePartyFragmentToAddressSearchFragment(
+            Constants.ARRIVAL_SEARCH
+        )
         navigate(action)
     }
 }
