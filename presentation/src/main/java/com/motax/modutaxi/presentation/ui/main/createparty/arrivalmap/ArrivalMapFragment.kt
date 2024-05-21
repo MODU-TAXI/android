@@ -1,9 +1,8 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.map
+package com.motax.modutaxi.presentation.ui.main.createparty.arrivalmap
 
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentArrivalMapBinding
@@ -15,9 +14,6 @@ class ArrivalMapFragment: BaseFragment<FragmentArrivalMapBinding>(R.layout.fragm
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnSelect.setOnClickListener {
-            findNavController().toCreateParty()
-        }
     }
 
     private fun NavController.toCreateParty(){

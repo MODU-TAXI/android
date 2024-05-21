@@ -20,7 +20,7 @@ import com.motax.modutaxi.presentation.databinding.FragmentAddressSearchBinding
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.map.DepartureMapViewModel
+import com.motax.modutaxi.presentation.ui.main.createparty.departuremap.DepartureMapViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AddressSearchResultAdapter
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import com.motax.modutaxi.presentation.util.Constants.ARRIVAL_SEARCH

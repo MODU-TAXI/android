@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.createparty.map.DepartureMapViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.createparty.departuremap.DepartureMapViewModel" />
 
     </data>
 
@@ -94,7 +94,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/tv_cur_location_label"
+                android:id="@+id/tv_position_label"
                 style="@style/TextLargeMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                 android:src="@drawable/icon_small_flag"
                 android:visibility="@{vm.uiState.isPosition ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_cur_location_label" />
+                app:layout_constraintTop_toBottomOf="@id/tv_position_label" />
 
             <TextView
                 android:id="@+id/tv_location_name"
@@ -124,7 +124,7 @@
                 android:textColor="@color/mx_sub500"
                 android:visibility="@{vm.uiState.landMark.empty ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toEndOf="@id/iv_flag"
-                app:layout_constraintTop_toBottomOf="@id/tv_cur_location_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_position_label"
                 tools:text="부평역" />
 
             <TextView

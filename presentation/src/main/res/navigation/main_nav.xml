@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/departureMapFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.map.DepartureMapFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.departuremap.DepartureMapFragment"
         android:label="MapFragment">
         <action
             android:id="@+id/action_departureMapFragment_to_addressSearchFragment"
@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/arrivalMapFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.map.ArrivalMapFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.arrivalmap.ArrivalMapFragment"
         android:label="ArrivalMapFragment">
         <action
             android:id="@+id/action_arrivalMapFragment_to_createPartyFragment"

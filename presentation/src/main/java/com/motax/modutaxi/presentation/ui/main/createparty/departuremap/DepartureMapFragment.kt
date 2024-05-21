@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.map
+package com.motax.modutaxi.presentation.ui.main.createparty.departuremap
 
 import android.Manifest
 import android.location.Location
@@ -24,7 +24,6 @@ import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.PathOverlay
-import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

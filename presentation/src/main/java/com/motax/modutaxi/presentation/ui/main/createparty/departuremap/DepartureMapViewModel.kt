@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.map
+package com.motax.modutaxi.presentation.ui.main.createparty.departuremap
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

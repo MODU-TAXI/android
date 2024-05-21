@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.map
+package com.motax.modutaxi.presentation.ui.main.createparty.departuremap
 
 data class TestMapData(
     val code: Int,
