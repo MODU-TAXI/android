@@ -82,9 +82,9 @@ class DepartureMapFragment :
     }
 
     private fun initMapView() {
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
+        val mapFragment = childFragmentManager.findFragmentById(R.id.departure_map_fragment) as MapFragment?
             ?: MapFragment.newInstance().also {
-                childFragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
+                childFragmentManager.beginTransaction().add(R.id.departure_map_fragment, it).commit()
             }
 
         mapFragment.getMapAsync(this)

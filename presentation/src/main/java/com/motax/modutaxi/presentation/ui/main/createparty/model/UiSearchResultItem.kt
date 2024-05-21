@@ -1,9 +1,9 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.search.model
+package com.motax.modutaxi.presentation.ui.main.createparty.model
 
 data class UiSearchResultItem(
     val placeName: String="",
     val placeAddress: String="",
-    val distance: String="",
+    val distance: Double = 0.0,
     val keyword: String="",
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,

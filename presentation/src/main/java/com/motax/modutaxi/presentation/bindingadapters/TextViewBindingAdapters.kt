@@ -21,7 +21,7 @@ fun bindSearchResult(tv: TextView, keyword: String?, searchResult: String?) {
                     val spannable = SpannableString(searchResult)
                         .apply {
                             setSpan(
-                                ForegroundColorSpan(tv.context.getColor(R.color.search_result_match)),
+                                ForegroundColorSpan(tv.context.getColor(R.color.mx_sub500)),
                                 sIndex,
                                 sIndex + keyword.length,
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

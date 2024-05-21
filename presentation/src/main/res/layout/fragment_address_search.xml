@@ -80,24 +80,47 @@
             style="@style/TextLargeRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:onClick="@{() -> vm.navigateToBack()}"
+            android:padding="10dp"
             android:text="취소"
             app:layout_constraintBottom_toBottomOf="@id/layout_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/layout_search"
             app:layout_constraintTop_toTopOf="@id/layout_search" />
 
+        <ImageView
+            android:id="@+id/iv_position_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_search_flag"
+            app:layout_constraintStart_toStartOf="@id/layout_search"
+            app:layout_constraintTop_toBottomOf="@id/layout_search" />
+
+        <TextView
+            android:id="@+id/tv_position"
+            style="@style/TextLargeMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/mx_sub500"
+            app:layout_constraintBottom_toBottomOf="@id/iv_position_flag"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_position_flag"
+            app:layout_constraintTop_toTopOf="@id/iv_position_flag"
+            tools:text="주안역" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_result"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-            app:layout_constraintTop_toBottomOf="@id/layout_search"
+            app:layout_constraintTop_toBottomOf="@id/iv_position_flag"
             app:list="@{vm.uiState.searchResult}"
             tools:listitem="@layout/item_search_result" />
 

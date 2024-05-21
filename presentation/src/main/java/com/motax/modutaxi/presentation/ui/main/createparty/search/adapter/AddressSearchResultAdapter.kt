@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.databinding.ItemSearchResultBinding
-import com.motax.modutaxi.presentation.ui.main.createparty.search.model.UiSearchResultItem
+import com.motax.modutaxi.presentation.ui.main.createparty.model.UiSearchResultItem
+import com.motax.modutaxi.presentation.ui.toDistanceString
 
 class AddressSearchResultAdapter :
     ListAdapter<UiSearchResultItem, AddressSearchResultViewHolder>(diffCallback) {
@@ -53,5 +54,6 @@ class AddressSearchResultViewHolder(private val binding: ItemSearchResultBinding
         binding.root.setOnClickListener {
             item.selectLocation(item.latitude, item.longitude, item.placeName)
         }
+        binding.tvDistance.text = item.distance.toDistanceString()
     }
 }

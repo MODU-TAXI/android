@@ -1,11 +1,14 @@
 package com.motax.modutaxi.presentation.ui.main.createparty.search
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.NaverRepository
 import com.motax.modutaxi.presentation.ui.calculateDistance
-import com.motax.modutaxi.presentation.ui.main.createparty.search.model.UiSearchResultItem
+import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiSearchResultItem
+import com.motax.modutaxi.presentation.ui.main.createparty.model.UiSearchResultItem
 import com.motax.modutaxi.presentation.ui.toDistanceString
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +24,8 @@ import javax.inject.Inject
 
 data class AddressSearchUiState(
     val searchResult: List<UiSearchResultItem> = emptyList(),
-    val curLocation: Location = Location(126.6538126, 37.4507292)
+    val curLatitude: Double = 37.4507292,
+    val curLongitude: Double = 126.6538126
 )
 
 sealed class AddressSearchEvent {
@@ -29,8 +33,6 @@ sealed class AddressSearchEvent {
     data class SelectLocation(val latitude: Double, val longitude: Double, val landMark: String) :
         AddressSearchEvent()
 }
-
-data class Location(val x: Double, val y: Double)
 
 @HiltViewModel
 class AddressSearchViewModel @Inject constructor(
@@ -60,7 +62,8 @@ class AddressSearchViewModel @Inject constructor(
     fun setCurLocation(latitude: Double, longitude: Double) {
         _uiState.update { state ->
             state.copy(
-                curLocation = Location(longitude, latitude)
+                curLongitude = longitude,
+                curLatitude = latitude
             )
         }
     }
@@ -69,31 +72,17 @@ class AddressSearchViewModel @Inject constructor(
         viewModelScope.launch {
 
             repository.getSearchResultList(keyword, 5).onSuccess { searchResultData ->
+
                 _uiState.update { state ->
                     state.copy(
                         searchResult = searchResultData.results.map { dataItem ->
-
-                            val location = Location(
-                                dataItem.mapx.toDouble() / 1e7,
-                                dataItem.mapy.toDouble() / 1e7
-                            )
-                            val distance = calculateDistance(
-                                uiState.value.curLocation.x,
-                                uiState.value.curLocation.y,
-                                location.x,
-                                location.y
-                            )
-
-                            UiSearchResultItem(
-                                dataItem.title,
-                                dataItem.roadAddress,
-                                distance.toDistanceString(),
+                            dataItem.toUiSearchResultItem(
+                                uiState.value.curLatitude,
+                                uiState.value.curLongitude,
                                 keyword,
-                                location.y,
-                                location.x,
                                 ::selectLocation
                             )
-                        }
+                        }.sortedBy { it.distance }
                     )
                 }
             }.onFailure {
