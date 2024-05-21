@@ -58,7 +58,9 @@ fun TaxiPotListResponse.toDomain() = TaxiPotListData(
 
 fun SearchResultItem.toDomain() = SearchResultData(
     title = Html.fromHtml(title).toString(),
-    roadAddress = roadAddress
+    roadAddress = roadAddress,
+    mapx = mapx,
+    mapy = mapy
 )
 
 fun SearchResultListResponse.toDomain() = SearchResultListData(

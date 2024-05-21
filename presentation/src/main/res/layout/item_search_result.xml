@@ -56,20 +56,22 @@
             android:textColor="@color/search_result_address_distance"
             app:layout_constraintTop_toBottomOf="@id/tv_place_name"
             app:layout_constraintStart_toStartOf="parent"
-
+            app:layout_constraintEnd_toStartOf="@+id/tv_distance"
             tools:text = "인천 미추홀구 주안로 41번길">
         </TextView>
 
         <TextView
             android:id="@+id/tv_distance"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{item.distance}"
             android:textColor="@color/search_result_address_distance"
             style="@style/TextRegularRegular"
             tools:text="500m"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_place_name">
+            app:layout_constraintTop_toBottomOf="@id/tv_place_name"
+            android:layout_marginEnd="8dp"
+            >
         </TextView>
 
 

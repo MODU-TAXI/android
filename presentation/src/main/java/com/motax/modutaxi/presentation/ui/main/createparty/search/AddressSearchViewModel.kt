@@ -3,7 +3,9 @@ package com.motax.modutaxi.presentation.ui.main.createparty.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.NaverRepository
+import com.motax.modutaxi.presentation.ui.calculateDistance
 import com.motax.modutaxi.presentation.ui.main.createparty.search.model.UiSearchResultItem
+import com.motax.modutaxi.presentation.ui.toDistanceString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,11 +21,16 @@ import javax.inject.Inject
 
 data class AddressSearchUiState(
     val searchResult: List<UiSearchResultItem> = emptyList(),
+    val curLocation: Location = Location(126.6538126, 37.4507292)
 )
 
-sealed class AddressSearchEvent{
+sealed class AddressSearchEvent {
     data object NavigateToBack : AddressSearchEvent()
+    data class SelectLocation(val latitude: Double, val longitude: Double, val landMark: String) :
+        AddressSearchEvent()
 }
+
+data class Location(val x: Double, val y: Double)
 
 @HiltViewModel
 class AddressSearchViewModel @Inject constructor(
@@ -42,25 +49,49 @@ class AddressSearchViewModel @Inject constructor(
         keyword.onEach { newKeyword ->
             if (newKeyword.isNotBlank()) {
                 getSearchResults(newKeyword)
+            } else {
+                _uiState.update { state ->
+                    state.copy(searchResult = emptyList())
+                }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun updateKeyword(newKeyword: String) {
-        keyword.value = newKeyword
+    fun setCurLocation(latitude: Double, longitude: Double) {
+        _uiState.update { state ->
+            state.copy(
+                curLocation = Location(longitude, latitude)
+            )
+        }
     }
 
     private fun getSearchResults(keyword: String) {
         viewModelScope.launch {
+
             repository.getSearchResultList(keyword, 5).onSuccess { searchResultData ->
                 _uiState.update { state ->
                     state.copy(
                         searchResult = searchResultData.results.map { dataItem ->
+
+                            val location = Location(
+                                dataItem.mapx.toDouble() / 1e7,
+                                dataItem.mapy.toDouble() / 1e7
+                            )
+                            val distance = calculateDistance(
+                                uiState.value.curLocation.x,
+                                uiState.value.curLocation.y,
+                                location.x,
+                                location.y
+                            )
+
                             UiSearchResultItem(
                                 dataItem.title,
                                 dataItem.roadAddress,
-                                "500m",
-                                keyword
+                                distance.toDistanceString(),
+                                keyword,
+                                location.y,
+                                location.x,
+                                ::selectLocation
                             )
                         }
                     )
@@ -71,10 +102,15 @@ class AddressSearchViewModel @Inject constructor(
         }
     }
 
-    fun navigateToBack(){
+    private fun selectLocation(latitude: Double, longitude: Double, landMark: String) {
+        viewModelScope.launch {
+            _event.emit(AddressSearchEvent.SelectLocation(latitude, longitude, landMark))
+        }
+    }
+
+    fun navigateToBack() {
         viewModelScope.launch {
             _event.emit(AddressSearchEvent.NavigateToBack)
         }
     }
-
 }

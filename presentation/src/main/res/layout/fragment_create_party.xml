@@ -9,7 +9,11 @@
             name="vm"
             type="com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel" />
 
+        <import type="android.view.View" />
+
         <import type="com.motax.modutaxi.presentation.ui.main.createparty.WishHeadCount" />
+
+        <import type="com.motax.modutaxi.presentation.ui.main.createparty.RoomTag" />
 
     </data>
 
@@ -129,8 +133,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@{vm.uiState.departureName.empty ? `출발지를 선택해주세요` : vm.uiState.departureName}"
-                    android:textColor="@color/mx_gray300"
+                    android:onClick="@{() -> vm.navigateToDepartureMap()}"
+                    android:text="@{vm.uiState.departureName.empty ? `출발지를 입력해주세요` : vm.uiState.departureName}"
+                    android:textColor="@{vm.uiState.departureName.empty ? @color/mx_gray300 : @color/mx_gray900 }"
                     app:layout_constraintStart_toStartOf="@id/tv_departure_label"
                     app:layout_constraintTop_toBottomOf="@id/tv_departure_label" />
 
@@ -152,8 +157,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@{vm.uiState.arrivalName.empty ? `도착지를 선택해주세요` : vm.uiState.arrivalName}"
-                    android:textColor="@color/mx_gray300"
+                    android:onClick="@{() -> vm.navigateToArrivalMap()}"
+                    android:text="@{vm.uiState.arrivalName.empty ? `도착지를 입력해주세요` : vm.uiState.arrivalName}"
+                    android:textColor="@{vm.uiState.arrivalName.empty ? @color/mx_gray300 : @color/mx_gray900 }"
                     app:layout_constraintStart_toStartOf="@id/tv_arrival_label"
                     app:layout_constraintTop_toBottomOf="@id/tv_arrival_label" />
 
@@ -183,7 +189,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/rect_nofill_gray300stroke_12radius"
+                    android:background="@{vm.uiState.departureTime.empty ? @drawable/rect_nofill_gray300stroke_12radius : @drawable/rect_nofill_sub500strokethick_12radius}"
+                    android:onClick="@{() -> vm.showTimePicker()}"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -195,6 +202,7 @@
                         style="@style/TextLargeMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{vm.uiState.todayDate}"
                         android:textColor="@color/mx_gray700"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -206,8 +214,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="출발시간을 설정해주세요"
-                        android:textColor="@color/mx_gray300"
+                        android:text="@{ vm.uiState.departureTime.empty ? `출발시간을 설정해주세요` : vm.uiState.departureTime}"
+                        android:textColor="@{ vm.uiState.departureTime.empty ? @color/mx_gray300 : @color/mx_sub500 }"
+                        app:departureTimeTextStyle="@{vm.uiState.departureTime}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
@@ -217,6 +226,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
                         android:src="@drawable/ic_gray_next"
+                        android:visibility="@{ vm.uiState.departureTime.empty ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/btn_edit_departure_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit_btn"
+                        android:visibility="@{ vm.uiState.departureTime.empty ? View.GONE : View.VISIBLE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -270,7 +290,7 @@
                     android:layout_width="88dp"
                     android:layout_height="88dp"
                     android:layout_marginTop="28dp"
-                    android:background="@{vm.uiState.wishHeadCount == WishHeadCount.ONE ? @drawable/oval_nofill_gray200stroke : @drawable/oval_nofill_sub500stroke}"
+                    android:background="@{vm.uiState.wishHeadCount == WishHeadCount.ONE ? @drawable/oval_nofill_sub500stroke : @drawable/oval_nofill_gray200stroke }"
                     android:onClick="@{() -> vm.selectWishHeadCount(WishHeadCount.ONE)}"
                     app:layout_constraintEnd_toStartOf="@id/layout_two_person"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -306,7 +326,7 @@
                     android:layout_width="88dp"
                     android:layout_height="88dp"
                     android:layout_marginTop="28dp"
-                    android:background="@{vm.uiState.wishHeadCount == WishHeadCount.TWO ? @drawable/oval_nofill_gray200stroke : @drawable/oval_nofill_sub500stroke}"
+                    android:background="@{vm.uiState.wishHeadCount == WishHeadCount.TWO ? @drawable/oval_nofill_sub500stroke : @drawable/oval_nofill_gray200stroke}"
                     android:onClick="@{() -> vm.selectWishHeadCount(WishHeadCount.TWO)}"
                     app:layout_constraintEnd_toStartOf="@id/layout_three_person"
                     app:layout_constraintStart_toEndOf="@id/layout_one_person"
@@ -341,7 +361,7 @@
                     android:layout_width="88dp"
                     android:layout_height="88dp"
                     android:layout_marginTop="28dp"
-                    android:background="@{vm.uiState.wishHeadCount == WishHeadCount.THREE ? @drawable/oval_nofill_gray200stroke : @drawable/oval_nofill_sub500stroke}"
+                    android:background="@{vm.uiState.wishHeadCount == WishHeadCount.THREE ? @drawable/oval_nofill_sub500stroke : @drawable/oval_nofill_gray200stroke}"
                     android:onClick="@{() -> vm.selectWishHeadCount(WishHeadCount.THREE)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/layout_two_person"
@@ -397,7 +417,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/rect_nofill_gray300stroke_12radius"
+                    android:background="@{vm.uiState.roomTag == RoomTag.STUDENT_CERTIFICATION ? @drawable/rect_nofill_sub500stroke_12radius : @drawable/rect_nofill_gray300stroke_12radius}"
+                    android:onClick="@{() -> vm.selectRoomTag(RoomTag.STUDENT_CERTIFICATION)}"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
                     app:layout_constraintEnd_toStartOf="@id/layout_only_female"
@@ -409,7 +430,7 @@
                         android:id="@+id/iv_student_certification_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_checkbox_off"
+                        android:src="@{vm.uiState.roomTag == RoomTag.STUDENT_CERTIFICATION ? @drawable/ic_checkbox_on : @drawable/ic_checkbox_off}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -420,6 +441,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="학생인증"
+                        android:textColor="@{vm.uiState.roomTag == RoomTag.STUDENT_CERTIFICATION ? @color/mx_sub500 : @color/mx_gray700}"
                         app:layout_constraintBottom_toBottomOf="@id/iv_student_certification_checkbox"
                         app:layout_constraintStart_toEndOf="@id/iv_student_certification_checkbox"
                         app:layout_constraintTop_toTopOf="@id/iv_student_certification_checkbox" />
@@ -431,7 +453,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/rect_nofill_gray300stroke_12radius"
+                    android:background="@{vm.uiState.roomTag == RoomTag.ONLY_WOMAN ? @drawable/rect_nofill_sub500stroke_12radius : @drawable/rect_nofill_gray300stroke_12radius}"
+                    android:onClick="@{() -> vm.selectRoomTag(RoomTag.ONLY_WOMAN)}"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
                     app:layout_constraintEnd_toStartOf="@id/layout_manner"
@@ -442,7 +465,7 @@
                         android:id="@+id/iv_only_female_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_checkbox_off"
+                        android:src="@{vm.uiState.roomTag == RoomTag.ONLY_WOMAN ? @drawable/ic_checkbox_on : @drawable/ic_checkbox_off}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -453,6 +476,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="여자만"
+                        android:textColor="@{vm.uiState.roomTag == RoomTag.ONLY_WOMAN ? @color/mx_sub500 : @color/mx_gray700}"
                         app:layout_constraintBottom_toBottomOf="@id/iv_only_female_checkbox"
                         app:layout_constraintStart_toEndOf="@id/iv_only_female_checkbox"
                         app:layout_constraintTop_toTopOf="@id/iv_only_female_checkbox" />
@@ -464,7 +488,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/rect_nofill_gray300stroke_12radius"
+                    android:background="@{vm.uiState.roomTag == RoomTag.MANNER ? @drawable/rect_nofill_sub500stroke_12radius : @drawable/rect_nofill_gray300stroke_12radius}"
+                    android:onClick="@{() -> vm.selectRoomTag(RoomTag.MANNER)}"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -475,7 +500,7 @@
                         android:id="@+id/iv_manner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_checkbox_off"
+                        android:src="@{vm.uiState.roomTag == RoomTag.MANNER ? @drawable/ic_checkbox_on : @drawable/ic_checkbox_off}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -486,6 +511,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="매너탑승"
+                        android:textColor="@{vm.uiState.roomTag == RoomTag.MANNER ? @color/mx_sub500 : @color/mx_gray700}"
                         app:layout_constraintBottom_toBottomOf="@id/iv_manner"
                         app:layout_constraintStart_toEndOf="@id/iv_manner"
                         app:layout_constraintTop_toTopOf="@id/iv_manner" />
