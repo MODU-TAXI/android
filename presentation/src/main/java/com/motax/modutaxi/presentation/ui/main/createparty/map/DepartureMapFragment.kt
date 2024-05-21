@@ -32,7 +32,6 @@ class DepartureMapFragment :
     BaseFragment<FragmentDepartureMapBinding>(R.layout.fragment_departure_map), OnMapReadyCallback {
 
     private lateinit var naverMap: NaverMap
-    private lateinit var locationSource: FusedLocationSource
     private val pathList = mutableListOf<PathOverlay>()
 
     private val locationPermissionList = arrayOf(
@@ -43,10 +42,6 @@ class DepartureMapFragment :
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: DepartureMapViewModel by activityViewModels()
     private val createPartyViewModel: CreatePartyViewModel by activityViewModels()
-
-    companion object {
-        const val LOCATION_PERMISSION_REQUEST_CODE = 1000
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -94,7 +89,6 @@ class DepartureMapFragment :
             }
 
         mapFragment.getMapAsync(this)
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
     }
 
     override fun onMapReady(nM: NaverMap) {
@@ -103,7 +97,6 @@ class DepartureMapFragment :
             isCompassEnabled = false
             isZoomControlEnabled = false
         }
-        naverMap.locationSource = locationSource
         setMapListener()
         setInitCamera()
     }

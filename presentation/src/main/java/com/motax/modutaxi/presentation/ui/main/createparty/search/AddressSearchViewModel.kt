@@ -21,11 +21,13 @@ import javax.inject.Inject
 
 data class AddressSearchUiState(
     val searchResult: List<UiSearchResultItem> = emptyList(),
+    val curLocation: Location = Location(126.6538126, 37.4507292)
 )
 
 sealed class AddressSearchEvent {
     data object NavigateToBack : AddressSearchEvent()
-    data class SelectLocation(val latitude: Double, val longitude: Double, val landMark: String) : AddressSearchEvent()
+    data class SelectLocation(val latitude: Double, val longitude: Double, val landMark: String) :
+        AddressSearchEvent()
 }
 
 data class Location(val x: Double, val y: Double)
@@ -55,15 +57,16 @@ class AddressSearchViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun updateKeyword(newKeyword: String) {
-        keyword.value = newKeyword
+    fun setCurLocation(latitude: Double, longitude: Double) {
+        _uiState.update { state ->
+            state.copy(
+                curLocation = Location(longitude, latitude)
+            )
+        }
     }
 
     private fun getSearchResults(keyword: String) {
         viewModelScope.launch {
-
-            //TODO("현재 위치 좌표 불러오기 - 현재는 인하대 기준")
-            val currentLocation = Location(126.6538126, 37.4507292)
 
             repository.getSearchResultList(keyword, 5).onSuccess { searchResultData ->
                 _uiState.update { state ->
@@ -75,8 +78,8 @@ class AddressSearchViewModel @Inject constructor(
                                 dataItem.mapy.toDouble() / 1e7
                             )
                             val distance = calculateDistance(
-                                currentLocation.x,
-                                currentLocation.y,
+                                uiState.value.curLocation.x,
+                                uiState.value.curLocation.y,
                                 location.x,
                                 location.y
                             )
