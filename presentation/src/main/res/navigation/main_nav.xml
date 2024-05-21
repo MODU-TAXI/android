@@ -46,25 +46,31 @@
         android:id="@+id/showPartyFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyFragment"
         android:label="ShowPartyFragment" />
-    <fragment
-        android:id="@+id/addressSearchFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.AddressSearchFragment"
-        android:label="AddressSearchFragment">
-        <action
-            android:id="@+id/action_addressSearchFragment_to_arrivalMapFragment"
-            app:destination="@id/arrivalMapFragment" />
 
-        <argument
-            android:name="type"
-            app:argType="string" />
-    </fragment>
     <fragment
         android:id="@+id/arrivalMapFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.createparty.map.ArrivalMapFragment"
         android:label="ArrivalMapFragment">
         <action
             android:id="@+id/action_arrivalMapFragment_to_createPartyFragment"
-            app:destination="@id/createPartyFragment" />
+            app:destination="@id/createPartyFragment"
+            app:popUpTo="@id/createPartyFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressSearchFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.AddressSearchFragment"
+        android:label="AddressSearchFragment">
+
+        <argument
+            app:argType="string"
+            android:name="type"/>
+
+        <action
+            android:id="@+id/action_addressSearchFragment_to_arrivalMapFragment"
+            app:destination="@id/arrivalMapFragment"
+            app:popUpTo="@id/createPartyFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 

@@ -1,25 +1,25 @@
 package com.motax.modutaxi.presentation.ui.main.createparty.map
 
 import android.Manifest
+import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.LocationServices
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentDepartureMapBinding
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
+import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import com.motax.modutaxi.presentation.util.Constants.DEPARTURE_SEARCH
-import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
-import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -41,7 +41,7 @@ class DepartureMapFragment :
     )
 
     private val parentViewModel: MainViewModel by activityViewModels()
-    private val viewModel: MapViewModel by activityViewModels()
+    private val viewModel: DepartureMapViewModel by activityViewModels()
     private val createPartyViewModel: CreatePartyViewModel by activityViewModels()
 
     companion object {
@@ -70,6 +70,18 @@ class DepartureMapFragment :
                         )
                         findNavController().navigateUp()
                     }
+
+                    is DepartureMapEvent.MoveToCurLocation -> {
+                        requireContext().requestLocationPermission(
+                            locationPermissionList,
+                            ::startPermissionLauncher,
+                            ::moveToCurLocation,
+                        )
+                    }
+
+                    is DepartureMapEvent.NavigateToBack -> {
+                        findNavController().navigateUp()
+                    }
                 }
             }
         }
@@ -92,51 +104,31 @@ class DepartureMapFragment :
             isZoomControlEnabled = false
         }
         naverMap.locationSource = locationSource
-        initStateObserve()
         setMapListener()
         setInitCamera()
-    }
-
-    private fun initStateObserve() {
-        repeatOnStarted {
-            viewModel.trackingState.collect {
-                Log.d(TAG,it.toString())
-                when (it) {
-                    is TrackingState.TryOn -> {
-                        requireContext().requestLocationPermission(
-                            locationPermissionList,
-                            ::startPermissionLauncher,
-                            ::onTrackingChangeListener,
-                        )
-                    }
-
-                    is TrackingState.On -> {
-                        naverMap.locationTrackingMode =
-                            LocationTrackingMode.Follow
-                    }
-
-                    is TrackingState.Off -> naverMap.locationTrackingMode =
-                        LocationTrackingMode.None
-                }
-            }
-        }
     }
 
     private fun startPermissionLauncher() {
         requestPermissionLauncher.launch(locationPermissionList)
     }
 
-    private fun onTrackingChangeListener(state: Boolean) {
-        if (state) viewModel.trackingOn()
-        else viewModel.trackingOff()
-    }
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { resultMap ->
         val isAllGranted = locationPermissionList.all { resultMap[it] == true }
-        if (isAllGranted) requireContext().checkLocationIsOn(::onTrackingChangeListener)
-        else viewModel.trackingOff()
+        if (isAllGranted) requireContext().checkLocationIsOn(::moveToCurLocation)
+    }
+
+    private fun moveToCurLocation(state: Boolean) {
+        if (state) {
+            LocationServices.getFusedLocationProviderClient(activity as MainActivity).apply {
+                lastLocation.addOnSuccessListener { location: Location? ->
+                    location?.let {
+                        moveCamera(it.latitude, it.longitude)
+                    }
+                }
+            }
+        }
     }
 
     private fun setMapListener() {
@@ -151,7 +143,7 @@ class DepartureMapFragment :
         naverMap.addOnCameraIdleListener {
             viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
-            viewModel.getAddressFromGeo(
+            viewModel.getAddress(
                 cameraPosition.latitude,
                 cameraPosition.longitude
             )
@@ -159,17 +151,18 @@ class DepartureMapFragment :
     }
 
     private fun setInitCamera() {
-        if(viewModel.uiState.value.isFromSearch){
-            val locate = CameraUpdate.scrollTo(
-                LatLng(
-                    viewModel.uiState.value.latitude,
-                    viewModel.uiState.value.longitude
-                )
-            )
-            naverMap.moveCamera(locate)
+        if (viewModel.uiState.value.isFromSearch) {
+            moveCamera(viewModel.uiState.value.latitude, viewModel.uiState.value.longitude)
         } else {
             viewModel.locationBtnClicked()
         }
+    }
+
+    private fun moveCamera(latitude: Double, longitude: Double) {
+        val locate = CameraUpdate.scrollTo(
+            LatLng(latitude, longitude)
+        )
+        naverMap.moveCamera(locate)
     }
 
 
@@ -193,7 +186,10 @@ class DepartureMapFragment :
 //    }
 
     private fun NavController.toAddressSearch() {
-        val action = DepartureMapFragmentDirections.actionDepartureMapFragmentToAddressSearchFragment(DEPARTURE_SEARCH)
+        val action =
+            DepartureMapFragmentDirections.actionDepartureMapFragmentToAddressSearchFragment(
+                DEPARTURE_SEARCH
+            )
         navigate(action)
     }
 

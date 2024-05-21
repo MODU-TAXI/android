@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 internal fun Context.requestLocationPermission(
     permissionList: Array<String>,
     onLauncherStart: () -> Unit,
-    onTrackingChangeListener: (Boolean) -> Unit
+    moveToCurLocation: (Boolean) -> Unit
 ) {
     var permissionFlag = false
     permissionList.forEach { permission ->
@@ -23,7 +23,7 @@ internal fun Context.requestLocationPermission(
 
     if (permissionFlag) {
         checkLocationIsOn() {
-            onTrackingChangeListener(it)
+            moveToCurLocation(it)
         }
     } else {
         onLauncherStart()
@@ -33,15 +33,15 @@ internal fun Context.requestLocationPermission(
 
 
 internal fun Context.checkLocationIsOn(
-    onTrackingChangeListener: (Boolean) -> Unit
+    moveToCurLocation: (Boolean) -> Unit
 ) {
     val locationManager =
         getSystemService(Context.LOCATION_SERVICE) as LocationManager
     if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-        onTrackingChangeListener(true)
+        moveToCurLocation(true)
     } else {
         startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
         Toast.makeText(this, "휴대폰 GPS를 켜주세요", Toast.LENGTH_SHORT).show()
-        onTrackingChangeListener(false)
+        moveToCurLocation(false)
     }
 }

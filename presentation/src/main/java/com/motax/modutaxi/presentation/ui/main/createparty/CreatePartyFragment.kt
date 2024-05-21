@@ -1,10 +1,8 @@
 package com.motax.modutaxi.presentation.ui.main.createparty
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -12,12 +10,8 @@ import com.google.android.material.timepicker.TimeFormat
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentCreatePartyBinding
-import com.motax.modutaxi.presentation.ui.getCurHour
-import com.motax.modutaxi.presentation.ui.getCurMinute
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.map.DepartureMapFragmentDirections
-import com.motax.modutaxi.presentation.util.Constants
-import com.motax.modutaxi.presentation.util.Constants.TAG
+import com.motax.modutaxi.presentation.util.Constants.ARRIVAL_SEARCH
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -69,9 +63,7 @@ class CreatePartyFragment :
     }
 
     private fun NavController.toAddressSearch() {
-        val action = CreatePartyFragmentDirections.actionCreatePartyFragmentToAddressSearchFragment(
-            Constants.ARRIVAL_SEARCH
-        )
+        val action = CreatePartyFragmentDirections.actionCreatePartyFragmentToAddressSearchFragment(ARRIVAL_SEARCH)
         navigate(action)
     }
 }

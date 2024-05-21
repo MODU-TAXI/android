@@ -25,7 +25,7 @@ data class AddressSearchUiState(
 
 sealed class AddressSearchEvent {
     data object NavigateToBack : AddressSearchEvent()
-    data class SelectLocation(val latitude: Double, val longitude: Double) : AddressSearchEvent()
+    data class SelectLocation(val latitude: Double, val longitude: Double, val landMark: String) : AddressSearchEvent()
 }
 
 data class Location(val x: Double, val y: Double)
@@ -99,9 +99,9 @@ class AddressSearchViewModel @Inject constructor(
         }
     }
 
-    private fun selectLocation(latitude: Double, longitude: Double) {
+    private fun selectLocation(latitude: Double, longitude: Double, landMark: String) {
         viewModelScope.launch {
-            _event.emit(AddressSearchEvent.SelectLocation(latitude, longitude))
+            _event.emit(AddressSearchEvent.SelectLocation(latitude, longitude, landMark))
         }
     }
 

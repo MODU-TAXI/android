@@ -24,7 +24,6 @@ class TaxiPotAdapter :
                 false
             )
         )
-
 }
 
 

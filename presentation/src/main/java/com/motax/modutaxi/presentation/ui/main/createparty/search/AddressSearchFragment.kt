@@ -2,7 +2,6 @@ package com.motax.modutaxi.presentation.ui.main.createparty.search
 
 import android.content.Context
 import android.os.Bundle
-import android.provider.Telephony.Mms.Addr
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -16,7 +15,7 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentAddressSearchBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.map.MapViewModel
+import com.motax.modutaxi.presentation.ui.main.createparty.map.DepartureMapViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AddressSearchResultAdapter
 import com.motax.modutaxi.presentation.util.Constants.ARRIVAL_SEARCH
 import com.motax.modutaxi.presentation.util.Constants.DEPARTURE_SEARCH
@@ -28,7 +27,7 @@ class AddressSearchFragment :
 
     private val viewModel: AddressSearchViewModel by viewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
-    private val mapViewModel: MapViewModel by activityViewModels()
+    private val departureMapViewModel: DepartureMapViewModel by activityViewModels()
 
     private val args : AddressSearchFragmentArgs by navArgs()
     private val type by lazy{args.type}
@@ -57,7 +56,7 @@ class AddressSearchFragment :
                         when(type){
                             DEPARTURE_SEARCH -> {
                                 findNavController().navigateUp()
-                                mapViewModel.selectLocationFromSearch(it.latitude, it.longitude)
+                                departureMapViewModel.selectLocationFromSearch(it.latitude, it.longitude, it.landMark)
                             }
 
                             ARRIVAL_SEARCH -> {

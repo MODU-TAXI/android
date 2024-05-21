@@ -29,18 +29,19 @@ data class DepartureMapUiState(
 
 sealed class DepartureMapEvent {
     data object NavigateToSearch : DepartureMapEvent()
-    data class SelectDeparture(val latitude: Double, val longitude: Double, val name: String, val address: String) :
-        DepartureMapEvent()
+    data class SelectDeparture(
+        val latitude: Double,
+        val longitude: Double,
+        val name: String,
+        val address: String
+    ) : DepartureMapEvent()
+    data object MoveToCurLocation : DepartureMapEvent()
+    data object NavigateToBack : DepartureMapEvent()
 }
 
-sealed class TrackingState {
-    data object TryOn : TrackingState()
-    data object On : TrackingState()
-    data object Off : TrackingState()
-}
 
 @HiltViewModel
-class MapViewModel @Inject constructor(
+class DepartureMapViewModel @Inject constructor(
     private val naverMapRepository: NaverMapRepository
 ) : ViewModel() {
 
@@ -50,10 +51,12 @@ class MapViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(DepartureMapUiState())
     val uiState: StateFlow<DepartureMapUiState> = _uiState.asStateFlow()
 
-    private val _trackingState = MutableStateFlow<TrackingState>(TrackingState.Off)
-    val trackingState: StateFlow<TrackingState> = _trackingState.asStateFlow()
+    fun getAddress(latitude: Double, longitude: Double){
+        getAddressFromGeo(latitude, longitude)
+        getAddressFromServer(latitude, longitude)
+    }
 
-    fun getAddressFromGeo(latitude: Double, longitude: Double) {
+    private fun getAddressFromGeo(latitude: Double, longitude: Double) {
         viewModelScope.launch {
             naverMapRepository.getAddressFromGeo(
                 "coordsToaddr",
@@ -62,28 +65,47 @@ class MapViewModel @Inject constructor(
                 "roadaddr",
             ).onSuccess {
                 val response = it.results
-                if (response.isNotEmpty()) {
+                if(uiState.value.isFromSearch){
                     _uiState.update { state ->
                         state.copy(
                             address = response[0].toAddressString(),
-                            landMark = response[0].toBuildingName(),
                             isPosition = false,
+                            isFromSearch = false,
                             isSelectBtnEnable = true
                         )
                     }
                 } else {
-                    _uiState.update { state ->
-                        state.copy(
-                            address = "위치정보 없음",
-                            landMark = "",
-                            isPosition = false,
-                            isSelectBtnEnable = false
-                        )
+                    if (response.isNotEmpty()) {
+                        _uiState.update { state ->
+                            state.copy(
+                                address = response[0].toAddressString(),
+                                landMark = response[0].toBuildingName(),
+                                isPosition = false,
+                                isSelectBtnEnable = true
+                            )
+                        }
+                    } else {
+                        _uiState.update { state ->
+                            state.copy(
+                                address = "위치정보 없음",
+                                landMark = "",
+                                isPosition = false,
+                                isSelectBtnEnable = false
+                            )
+                        }
                     }
                 }
+
             }.onFailure {
 
             }
+        }
+    }
+
+    private fun getAddressFromServer(latitude: Double, longitude: Double) {
+        viewModelScope.launch {
+
+
         }
     }
 
@@ -94,7 +116,7 @@ class MapViewModel @Inject constructor(
             )
         }
 
-        if(movingState){
+        if (movingState) {
             _uiState.update { state ->
                 state.copy(
                     isSelectBtnEnable = false
@@ -111,16 +133,14 @@ class MapViewModel @Inject constructor(
 
     fun selectLocationFromSearch(
         latitude: Double,
-        longitude: Double
-    ){
-        _trackingState.update {
-            TrackingState.Off
-        }
-
+        longitude: Double,
+        landMark: String
+    ) {
         _uiState.update { state ->
             state.copy(
                 latitude = latitude,
                 longitude = longitude,
+                landMark = landMark,
                 isFromSearch = true
             )
         }
@@ -140,29 +160,18 @@ class MapViewModel @Inject constructor(
     }
 
     fun locationBtnClicked() {
-        _trackingState.update {
-            if (trackingState.value == TrackingState.Off) TrackingState.TryOn
-            else TrackingState.Off
+        viewModelScope.launch {
+            _event.emit(DepartureMapEvent.MoveToCurLocation)
         }
     }
 
-    fun trackingOn() {
-        _trackingState.update {
-            TrackingState.On
+    fun navigateToBack(){
+        viewModelScope.launch {
+            _event.emit(DepartureMapEvent.NavigateToBack)
         }
     }
 
-    fun trackingOff() {
-        _trackingState.update {
-            TrackingState.Off
-        }
-    }
-
-    fun clear(){
-        _trackingState.update {
-            TrackingState.Off
-        }
-
+    fun clear() {
         _uiState.update {
             DepartureMapUiState()
         }
