@@ -51,6 +51,11 @@
         android:id="@+id/arrivalMapFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.createparty.arrivalmap.ArrivalMapFragment"
         android:label="ArrivalMapFragment">
+
+        <argument
+            app:argType="com.motax.modutaxi.presentation.ui.MtLocation"
+            android:name="selectLocation"/>
+
         <action
             android:id="@+id/action_arrivalMapFragment_to_createPartyFragment"
             app:destination="@id/createPartyFragment"
@@ -69,8 +74,7 @@
         <action
             android:id="@+id/action_addressSearchFragment_to_arrivalMapFragment"
             app:destination="@id/arrivalMapFragment"
-            app:popUpTo="@id/createPartyFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/createPartyFragment" />
     </fragment>
 
 

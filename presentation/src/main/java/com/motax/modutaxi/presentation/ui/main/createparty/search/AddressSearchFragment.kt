@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.Context
 import android.location.Location
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -17,6 +19,7 @@ import com.google.android.gms.location.LocationServices
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentAddressSearchBinding
+import com.motax.modutaxi.presentation.ui.MtLocation
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
@@ -73,7 +76,7 @@ class AddressSearchFragment :
                             }
 
                             ARRIVAL_SEARCH -> {
-                                findNavController().toArrivalMap()
+                                findNavController().toArrivalMap(it.latitude, it.longitude)
                             }
                         }
                     }
@@ -119,9 +122,12 @@ class AddressSearchFragment :
         inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    private fun NavController.toArrivalMap() {
+    private fun NavController.toArrivalMap(latitude: Double, longitude: Double) {
         val action =
-            AddressSearchFragmentDirections.actionAddressSearchFragmentToArrivalMapFragment()
+            AddressSearchFragmentDirections.actionAddressSearchFragmentToArrivalMapFragment(
+                MtLocation(latitude, longitude)
+            )
         navigate(action)
     }
 }
+
