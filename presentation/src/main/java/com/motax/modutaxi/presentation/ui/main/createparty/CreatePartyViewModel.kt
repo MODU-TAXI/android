@@ -88,7 +88,7 @@ class CreatePartyViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun navigateToArrivalMap() {
+    fun navigateToArrivalSearch() {
         viewModelScope.launch {
             _event.emit(CreatePartyEvent.NavigateToArrivalSearch)
         }

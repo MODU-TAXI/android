@@ -6,11 +6,13 @@ import android.os.Parcelable
 data class MtLocation(
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
-    val landMark: String? = ""
+    val landMark: String? = "",
+    val address: String? = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readDouble(),
         parcel.readDouble(),
+        parcel.readString(),
         parcel.readString()
     ) {
     }
@@ -19,6 +21,7 @@ data class MtLocation(
         parcel.writeDouble(latitude)
         parcel.writeDouble(longitude)
         parcel.writeString(landMark)
+        parcel.writeString(address)
     }
 
     override fun describeContents(): Int {

@@ -157,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:onClick="@{() -> vm.navigateToArrivalMap()}"
+                    android:onClick="@{() -> vm.navigateToArrivalSearch()}"
                     android:text="@{vm.uiState.arrivalName.empty ? `도착지를 입력해주세요` : vm.uiState.arrivalName}"
                     android:textColor="@{vm.uiState.arrivalName.empty ? @color/mx_gray300 : @color/mx_gray900 }"
                     app:layout_constraintStart_toStartOf="@id/tv_arrival_label"

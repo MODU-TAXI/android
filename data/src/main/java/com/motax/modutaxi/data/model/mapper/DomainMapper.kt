@@ -4,6 +4,8 @@ import android.text.Html
 import com.motax.modutaxi.data.model.response.AddressFromGeoResponse
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
+import com.motax.modutaxi.data.model.response.GetSpotListItem
+import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
@@ -18,6 +20,8 @@ import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
+import com.motax.modutaxi.domain.model.GetSpotListData
+import com.motax.modutaxi.domain.model.GetSpotListItemData
 import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.domain.model.SearchResultListData
@@ -112,3 +116,12 @@ fun AddressFromGeoResponse.toDomain() = AddressFromGeoData(
         )
     }
 )
+
+fun GetSpotListResponse.toDomain() = GetSpotListData(spots.map {
+    GetSpotListItemData(
+        it.id,
+        it.longitude,
+        it.latitude,
+        it.spotName
+    )
+})

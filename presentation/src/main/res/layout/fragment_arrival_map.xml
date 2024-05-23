@@ -17,6 +17,66 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/marker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_marker_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_whitefill_gray200stroke_87radius"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="주안역" />
+
+            <ImageView
+                android:id="@+id/iv_marker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_marker"
+                app:layout_constraintBottom_toBottomOf="@id/tv_marker_text"
+                app:layout_constraintEnd_toEndOf="@id/tv_marker_text"
+                app:layout_constraintStart_toStartOf="@id/tv_marker_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/marker_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_selected_marker_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_whitefill_sub500stroke_87radius"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="6dp"
+                android:textColor="@color/mx_sub500"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="주안역" />
+
+            <ImageView
+                android:id="@+id/iv_selected_marker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_selected_marker"
+                app:layout_constraintBottom_toBottomOf="@id/tv_selected_marker_text"
+                app:layout_constraintEnd_toEndOf="@id/tv_selected_marker_text"
+                app:layout_constraintStart_toStartOf="@id/tv_selected_marker_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/arrival_map_fragment"
             android:name="com.naver.maps.map.MapFragment"
@@ -72,7 +132,7 @@
                 style="@style/TextLargeMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="현재 위치"
+                android:text="도착지"
                 android:textColor="@color/mx_box"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -94,6 +154,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="14dp"
                 android:textColor="@color/mx_sub500"
+                android:text="@{vm.uiState.selectedMarkerData.landMark}"
                 app:layout_constraintStart_toEndOf="@id/iv_flag"
                 app:layout_constraintTop_toBottomOf="@id/tv_position_label"
                 tools:text="부평역" />
@@ -104,6 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="@{vm.uiState.selectedMarkerData.address}"
                 android:textColor="@color/mx_gray600"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_location_name"
