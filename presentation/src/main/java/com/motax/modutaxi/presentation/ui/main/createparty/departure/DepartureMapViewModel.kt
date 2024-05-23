@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.departuremap
+package com.motax.modutaxi.presentation.ui.main.createparty.departure
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,6 +35,7 @@ sealed class DepartureMapEvent {
         val name: String,
         val address: String
     ) : DepartureMapEvent()
+
     data object MoveToCurLocation : DepartureMapEvent()
     data object NavigateToBack : DepartureMapEvent()
 }
@@ -51,7 +52,7 @@ class DepartureMapViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(DepartureMapUiState())
     val uiState: StateFlow<DepartureMapUiState> = _uiState.asStateFlow()
 
-    fun getAddress(latitude: Double, longitude: Double){
+    fun getAddress(latitude: Double, longitude: Double) {
         getAddressFromGeo(latitude, longitude)
         getAddressFromServer(latitude, longitude)
     }
@@ -65,34 +66,28 @@ class DepartureMapViewModel @Inject constructor(
                 "roadaddr",
             ).onSuccess {
                 val response = it.results
-                if(uiState.value.isFromSearch){
+
+                if (response.isNotEmpty()) {
                     _uiState.update { state ->
                         state.copy(
+                            latitude = latitude,
+                            longitude = longitude,
                             address = response[0].toAddressString(),
+                            landMark = response[0].toBuildingName(),
                             isPosition = false,
-                            isFromSearch = false,
                             isSelectBtnEnable = true
                         )
                     }
                 } else {
-                    if (response.isNotEmpty()) {
-                        _uiState.update { state ->
-                            state.copy(
-                                address = response[0].toAddressString(),
-                                landMark = response[0].toBuildingName(),
-                                isPosition = false,
-                                isSelectBtnEnable = true
-                            )
-                        }
-                    } else {
-                        _uiState.update { state ->
-                            state.copy(
-                                address = "위치정보 없음",
-                                landMark = "",
-                                isPosition = false,
-                                isSelectBtnEnable = false
-                            )
-                        }
+                    _uiState.update { state ->
+                        state.copy(
+                            latitude = latitude,
+                            longitude = longitude,
+                            address = "위치정보 없음",
+                            landMark = "",
+                            isPosition = false,
+                            isSelectBtnEnable = false
+                        )
                     }
                 }
 
@@ -134,13 +129,15 @@ class DepartureMapViewModel @Inject constructor(
     fun selectLocationFromSearch(
         latitude: Double,
         longitude: Double,
-        landMark: String
+        landMark: String,
+        address: String
     ) {
         _uiState.update { state ->
             state.copy(
                 latitude = latitude,
                 longitude = longitude,
                 landMark = landMark,
+                address = address,
                 isFromSearch = true
             )
         }
@@ -165,7 +162,7 @@ class DepartureMapViewModel @Inject constructor(
         }
     }
 
-    fun navigateToBack(){
+    fun navigateToBack() {
         viewModelScope.launch {
             _event.emit(DepartureMapEvent.NavigateToBack)
         }

@@ -34,7 +34,7 @@ data class CreatePartyUiState(
 sealed class CreatePartyEvent {
     data class ShowTimePicker(val hour: Int, val minute: Int) : CreatePartyEvent()
     data object NavigateToDepartureMap : CreatePartyEvent()
-    data object NavigateToArrivalMap : CreatePartyEvent()
+    data object NavigateToArrivalSearch : CreatePartyEvent()
 }
 
 @HiltViewModel
@@ -90,7 +90,7 @@ class CreatePartyViewModel @Inject constructor() : ViewModel() {
 
     fun navigateToArrivalMap() {
         viewModelScope.launch {
-            _event.emit(CreatePartyEvent.NavigateToArrivalMap)
+            _event.emit(CreatePartyEvent.NavigateToArrivalSearch)
         }
     }
 

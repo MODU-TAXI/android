@@ -7,13 +7,12 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.createparty.search.AddressSearchViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.createparty.search.DepartureSearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_08_horizontal"

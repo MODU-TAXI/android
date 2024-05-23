@@ -11,7 +11,7 @@ fun SearchResultData.toUiSearchResultItem(
     curLatitude: Double,
     curLongitude: Double,
     keyword: String,
-    selectLocation: (Double, Double, String) -> Unit
+    selectLocation: (Double, Double, String, String) -> Unit
 ): UiSearchResultItem {
 
     val distance = calculateDistance(

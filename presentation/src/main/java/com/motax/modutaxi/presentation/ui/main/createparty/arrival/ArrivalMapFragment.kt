@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.arrivalmap
+package com.motax.modutaxi.presentation.ui.main.createparty.arrival
 
 import android.os.Bundle
 import android.view.View

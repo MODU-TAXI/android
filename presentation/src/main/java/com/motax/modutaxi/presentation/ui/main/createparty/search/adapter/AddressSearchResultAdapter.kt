@@ -52,7 +52,7 @@ class AddressSearchResultViewHolder(private val binding: ItemSearchResultBinding
     fun bind(item: UiSearchResultItem) {
         binding.item = item
         binding.root.setOnClickListener {
-            item.selectLocation(item.latitude, item.longitude, item.placeName)
+            item.selectLocation(item.latitude, item.longitude, item.placeName, item.placeAddress)
         }
         binding.tvDistance.text = item.distance.toDistanceString()
     }

@@ -1,8 +1,9 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.departuremap
+package com.motax.modutaxi.presentation.ui.main.createparty.departure
 
 import android.Manifest
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
@@ -17,7 +18,8 @@ import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
-import com.motax.modutaxi.presentation.util.Constants.DEPARTURE_SEARCH
+import com.motax.modutaxi.presentation.ui.to8Round
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -55,7 +57,7 @@ class DepartureMapFragment :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is DepartureMapEvent.NavigateToSearch -> findNavController().toAddressSearch()
+                    is DepartureMapEvent.NavigateToSearch -> findNavController().toDepartureSearch()
                     is DepartureMapEvent.SelectDeparture -> {
                         createPartyViewModel.setDepartureInfo(
                             it.longitude,
@@ -82,10 +84,12 @@ class DepartureMapFragment :
     }
 
     private fun initMapView() {
-        val mapFragment = childFragmentManager.findFragmentById(R.id.departure_map_fragment) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                childFragmentManager.beginTransaction().add(R.id.departure_map_fragment, it).commit()
-            }
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.departure_map_fragment) as MapFragment?
+                ?: MapFragment.newInstance().also {
+                    childFragmentManager.beginTransaction().add(R.id.departure_map_fragment, it)
+                        .commit()
+                }
 
         mapFragment.getMapAsync(this)
     }
@@ -135,14 +139,17 @@ class DepartureMapFragment :
         naverMap.addOnCameraIdleListener {
             viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
-            viewModel.getAddress(
-                cameraPosition.latitude,
-                cameraPosition.longitude
-            )
+            if(viewModel.uiState.value.latitude != cameraPosition.latitude.to8Round() || viewModel.uiState.value.longitude != cameraPosition.longitude.to8Round()){
+                viewModel.getAddress(
+                    cameraPosition.latitude,
+                    cameraPosition.longitude
+                )
+            }
         }
     }
 
     private fun setInitCamera() {
+        Log.d(TAG,viewModel.uiState.value.isFromSearch.toString())
         if (viewModel.uiState.value.isFromSearch) {
             moveCamera(viewModel.uiState.value.latitude, viewModel.uiState.value.longitude)
         } else {
@@ -156,7 +163,6 @@ class DepartureMapFragment :
         )
         naverMap.moveCamera(locate)
     }
-
 
 //    private fun setPath() {
 //        val path = PathOverlay()
@@ -177,11 +183,9 @@ class DepartureMapFragment :
 //        path.map = naverMap
 //    }
 
-    private fun NavController.toAddressSearch() {
+    private fun NavController.toDepartureSearch() {
         val action =
-            DepartureMapFragmentDirections.actionDepartureMapFragmentToAddressSearchFragment(
-                DEPARTURE_SEARCH
-            )
+            DepartureMapFragmentDirections.actionDepartureMapFragmentToDepartureSearchFragment()
         navigate(action)
     }
 

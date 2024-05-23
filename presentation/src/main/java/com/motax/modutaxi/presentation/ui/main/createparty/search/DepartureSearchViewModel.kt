@@ -18,28 +18,28 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class AddressSearchUiState(
+data class DepartureSearchUiState(
     val searchResult: List<UiSearchResultItem> = emptyList(),
     val curLatitude: Double = 37.4507292,
     val curLongitude: Double = 126.6538126
 )
 
-sealed class AddressSearchEvent {
-    data object NavigateToBack : AddressSearchEvent()
-    data class SelectLocation(val latitude: Double, val longitude: Double, val landMark: String) :
-        AddressSearchEvent()
+sealed class DepartureSearchEvent {
+    data object NavigateToBack : DepartureSearchEvent()
+    data class SelectLocation(val latitude: Double, val longitude: Double, val landMark: String, val address: String) :
+        DepartureSearchEvent()
 }
 
 @HiltViewModel
-class AddressSearchViewModel @Inject constructor(
+class DepartureSearchViewModel @Inject constructor(
     private val repository: NaverRepository
 ) : ViewModel() {
 
-    private val _event = MutableSharedFlow<AddressSearchEvent>()
-    val event: SharedFlow<AddressSearchEvent> = _event.asSharedFlow()
+    private val _event = MutableSharedFlow<DepartureSearchEvent>()
+    val event: SharedFlow<DepartureSearchEvent> = _event.asSharedFlow()
 
-    private val _uiState = MutableStateFlow(AddressSearchUiState())
-    val uiState: StateFlow<AddressSearchUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(DepartureSearchUiState())
+    val uiState: StateFlow<DepartureSearchUiState> = _uiState.asStateFlow()
 
     val keyword = MutableStateFlow("")
 
@@ -87,15 +87,15 @@ class AddressSearchViewModel @Inject constructor(
         }
     }
 
-    private fun selectLocation(latitude: Double, longitude: Double, landMark: String) {
+    private fun selectLocation(latitude: Double, longitude: Double, landMark: String, address: String) {
         viewModelScope.launch {
-            _event.emit(AddressSearchEvent.SelectLocation(latitude, longitude, landMark))
+            _event.emit(DepartureSearchEvent.SelectLocation(latitude, longitude, landMark, address))
         }
     }
 
     fun navigateToBack() {
         viewModelScope.launch {
-            _event.emit(AddressSearchEvent.NavigateToBack)
+            _event.emit(DepartureSearchEvent.NavigateToBack)
         }
     }
 }

@@ -4,7 +4,6 @@ import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.motax.modutaxi.presentation.R
@@ -12,7 +11,6 @@ import com.motax.modutaxi.presentation.R
 @BindingAdapter("keyword", "searchResult")
 fun bindSearchResult(tv: TextView, keyword: String?, searchResult: String?) {
 
-    Log.d("debugging", "$keyword,$searchResult")
     keyword?.let {
         searchResult?.let {
             if (keyword.isNotBlank()) {
