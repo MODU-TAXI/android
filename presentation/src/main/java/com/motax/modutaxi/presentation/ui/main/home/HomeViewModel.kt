@@ -1,5 +1,7 @@
 package com.motax.modutaxi.presentation.ui.main.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem
@@ -32,6 +34,13 @@ class HomeViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+
+    private val _isParticipating = MutableLiveData(false)
+    val isParticipating: LiveData<Boolean> = _isParticipating
+
+    fun setParticipating(value: Boolean) {
+        _isParticipating.value = value
+    }
 
     init {
         loadDummyData()
