@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.motax.modutaxi.presentation.R
@@ -31,7 +32,17 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
     private fun setBnv() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        binding.bottomNavigationView.setupWithNavController(navController)
+        with(binding) {
+            bottomNavigationView.apply {
+                itemIconTintList = null
+                setupWithNavController(navController)
+                setOnItemSelectedListener { item ->
+                    NavigationUI.onNavDestinationSelected(item, navController)
+                    navController.popBackStack(item.itemId, inclusive = false)
+                    true
+                }
+            }
+        }
     }
 
     private fun initEventObserve(){
