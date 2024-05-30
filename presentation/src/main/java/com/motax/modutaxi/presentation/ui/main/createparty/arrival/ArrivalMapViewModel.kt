@@ -1,14 +1,11 @@
 package com.motax.modutaxi.presentation.ui.main.createparty.arrival
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiMarkerItem
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
-import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -21,12 +18,18 @@ import javax.inject.Inject
 
 data class ArrivalMapUiState(
     val markerDataList: List<UiMarkerItem> = emptyList(),
-    val selectedMarkerData: UiMarkerItem = UiMarkerItem()
+    val selectedMarkerData: UiMarkerItem = UiMarkerItem(),
+    val searchKeyWord: String = ""
 )
 
 sealed class ArrivalMapEvent {
     data object SetMarkers : ArrivalMapEvent()
-    data class SelectMarker(val latitude: Double, val longitude: Double): ArrivalMapEvent()
+    data class SelectMarker(val latitude: Double, val longitude: Double) : ArrivalMapEvent()
+    data class SelectArrival(
+        val spotId: Long,
+        val name: String
+    ) : ArrivalMapEvent()
+    data object NavigateToBack: ArrivalMapEvent()
 }
 
 @HiltViewModel
@@ -43,7 +46,6 @@ class ArrivalMapViewModel @Inject constructor(
     fun getMarkerData(latitude: Double, longitude: Double) {
         viewModelScope.launch {
             repository.getSpot(2000, latitude, longitude).onSuccess {
-                Log.d(TAG,it.toString())
                 _uiState.update { state ->
                     state.copy(
                         markerDataList = uiState.value.markerDataList + it.spots.map { data ->
@@ -53,8 +55,16 @@ class ArrivalMapViewModel @Inject constructor(
                 }
                 _event.emit(ArrivalMapEvent.SetMarkers)
             }.onFailure {
-                Log.d(TAG,it.message.toString())
+
             }
+        }
+    }
+
+    fun setSearchKeyWord(keyword: String){
+        _uiState.update { state ->
+            state.copy(
+                searchKeyWord = keyword
+            )
         }
     }
 
@@ -67,6 +77,21 @@ class ArrivalMapViewModel @Inject constructor(
 
         viewModelScope.launch {
             _event.emit(ArrivalMapEvent.SelectMarker(marker.latitude, marker.longitude))
+        }
+    }
+
+    fun selectArrival() {
+        viewModelScope.launch {
+            _event.emit(ArrivalMapEvent.SelectArrival(
+                uiState.value.selectedMarkerData.spotId,
+                uiState.value.selectedMarkerData.landMark.ifBlank { uiState.value.selectedMarkerData.address }
+            ))
+        }
+    }
+
+    fun navigateToBack(){
+        viewModelScope.launch {
+            _event.emit(ArrivalMapEvent.NavigateToBack)
         }
     }
 }

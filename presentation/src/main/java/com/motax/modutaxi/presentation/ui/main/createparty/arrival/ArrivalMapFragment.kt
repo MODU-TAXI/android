@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentArrivalMapBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
+import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
 import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
@@ -31,6 +33,7 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
     private lateinit var naverMap: NaverMap
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: ArrivalMapViewModel by activityViewModels()
+    private val createPartyViewModel: CreatePartyViewModel by activityViewModels()
     private val args: ArrivalMapFragmentArgs by navArgs()
 
     private val selectedLocation by lazy { args.selectLocation }
@@ -39,6 +42,7 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
+        viewModel.setSearchKeyWord(selectedLocation.landMark.toString())
         initEventObserve()
         parentViewModel.setFullScreenMode()
         initMapView()
@@ -87,6 +91,17 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
                     }
                     is ArrivalMapEvent.SelectMarker -> {
                         moveCamera(it.latitude, it.longitude)
+                    }
+                    is ArrivalMapEvent.SelectArrival -> {
+                        createPartyViewModel.setArrivalInfo(
+                            it.spotId,
+                            it.name
+                        )
+                        findNavController().toCreateParty()
+                    }
+
+                    is ArrivalMapEvent.NavigateToBack -> {
+                        findNavController().navigateUp()
                     }
                 }
             }

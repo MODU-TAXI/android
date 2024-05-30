@@ -3,7 +3,6 @@ package com.motax.modutaxi.presentation.ui.main.createparty.departure
 import android.Manifest
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
@@ -19,7 +18,6 @@ import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import com.motax.modutaxi.presentation.ui.to8Round
-import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -149,7 +147,6 @@ class DepartureMapFragment :
     }
 
     private fun setInitCamera() {
-        Log.d(TAG,viewModel.uiState.value.isFromSearch.toString())
         if (viewModel.uiState.value.isFromSearch) {
             moveCamera(viewModel.uiState.value.latitude, viewModel.uiState.value.longitude)
         } else {

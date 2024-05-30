@@ -63,6 +63,18 @@ class CreatePartyViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun setArrivalInfo(
+        spotId: Long,
+        name: String
+    ) {
+        _uiState.update { state ->
+            state.copy(
+                spotId = spotId,
+                arrivalName = name
+            )
+        }
+    }
+
     fun showTimePicker() {
         viewModelScope.launch {
             _event.emit(
