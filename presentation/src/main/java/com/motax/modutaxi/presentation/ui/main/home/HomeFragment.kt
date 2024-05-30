@@ -36,30 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.rvRealtimeTaxipotList.adapter = adapter
         parentViewModel.setFullScreenMode()
 
-        setupObservers()
         initEventObserve()
-        //viewModel.getRealtimeTaxiPots()
-    }
-
-    private fun setupObservers() {
-//        viewModel.isParticipating.observe(viewLifecycleOwner, Observer { isParticipating ->
-//            val themeId = if (isParticipating) {
-//                R.style.Theme_Modutaxi
-//            } else {
-//                R.style.Theme_Modutaxi_NotParticipating
-//            }
-//            activity?.setTheme(themeId)
-//            updateStatusBarColor(isParticipating)
-//        })
-    }
-
-    private fun updateStatusBarColor(isParticipating: Boolean) {
-        val statusBarColor = if (isParticipating) {
-            R.color.mx_sub500
-        } else {
-            R.color.gray_4F4F4F
-        }
-        activity?.window?.statusBarColor = resources.getColor(statusBarColor, null)
     }
 
     private fun initEventObserve() {
