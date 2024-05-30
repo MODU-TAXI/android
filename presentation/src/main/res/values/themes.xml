@@ -2,13 +2,15 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Modutaxi" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/mx_sub500</item>
         <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme.Modutaxi" parent="Base.Theme.Modutaxi" />
 
     <style name="Theme.Modutaxi.NotParticipating" parent="Base.Theme.Modutaxi">
-        <item name="android:statusBarColor">#4F4F4F</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>
