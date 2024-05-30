@@ -27,7 +27,9 @@ data class CreatePartyUiState(
     val departureHour: Int = getCurHour(),
     val departureMinute: Int = getCurMinute(),
     val wishHeadCount: WishHeadCount = WishHeadCount.EMPTY,
-    val roomTag: RoomTag = RoomTag.EMPTY,
+    val studentCertificationRoomTag: Boolean = false,
+    val onlyWomanRoomTag: Boolean = false,
+    val mannerRoomTag: Boolean = false,
     val todayDate: String = getTodayDate()
 )
 
@@ -103,10 +105,22 @@ class CreatePartyViewModel @Inject constructor() : ViewModel() {
     }
 
     fun selectRoomTag(tag: RoomTag) {
-        _uiState.update { state ->
-            state.copy(
-                roomTag = tag
-            )
+        when (tag) {
+            RoomTag.STUDENT_CERTIFICATION -> _uiState.update { state ->
+                state.copy(studentCertificationRoomTag = !uiState.value.studentCertificationRoomTag)
+            }
+
+            RoomTag.ONLY_WOMAN -> _uiState.update { state ->
+                state.copy(onlyWomanRoomTag = !uiState.value.onlyWomanRoomTag)
+            }
+
+            RoomTag.MANNER -> _uiState.update { state ->
+                state.copy(mannerRoomTag = !uiState.value.mannerRoomTag)
+            }
+
+            else -> {
+
+            }
         }
     }
 
