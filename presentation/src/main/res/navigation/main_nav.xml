@@ -75,22 +75,14 @@
             android:id="@+id/action_arrivalSearchFragment_to_arrivalMapFragment"
             app:destination="@id/arrivalMapFragment" />
     </fragment>
-
     <fragment
-        android:id="@+id/secondFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.home.temp.SecondFragment"
-        android:label="SecondFragment" />
-
+        android:id="@+id/myPageFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.MyPageFragment"
+        android:label="MyPageFragment" />
     <fragment
-        android:id="@+id/thirdFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.home.temp.ThirdFragment"
-        android:label="ThirdFragment" />
-
-    <fragment
-        android:id="@+id/fourthFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.home.temp.FourthFragment"
-        android:label="FourthFragment" />
-
+        android:id="@+id/taxiPotFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.taxipot.TaxiPotFragment"
+        android:label="TaxiPotFragment" />
 
 
 </navigation>

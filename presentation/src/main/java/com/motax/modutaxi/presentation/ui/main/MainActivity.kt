@@ -1,7 +1,9 @@
 package com.motax.modutaxi.presentation.ui.main
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -23,9 +25,8 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         setBnv()
-
+        setStatusBarFullScreen()
         initEventObserve()
     }
 
@@ -42,6 +43,15 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
                     true
                 }
             }
+
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                if(destination.id == R.id.homeFragment || destination.id == R.id.showPartyFragment || destination.id == R.id.myPageFragment ||
+                    destination.id == R.id.taxiPotFragment){
+                    bottomNavigationView.visibility = View.VISIBLE
+                } else {
+                    bottomNavigationView.visibility = View.GONE
+                }
+            }
         }
     }
 
@@ -50,14 +60,31 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
             viewModel.event.collect{
                 when(it){
                     is MainEvent.FullScreenMode -> {
-                        enableEdgeToEdge()
+                        setStatusBarFullScreen()
                     }
 
                     is MainEvent.NotFullScreenMode -> {
-                        WindowCompat.setDecorFitsSystemWindows(window, true)
+//                        WindowCompat.setDecorFitsSystemWindows(window, true)
+                        setStatusBarNotFullScreen()
                     }
                 }
             }
+        }
+    }
+
+    private fun setStatusBarFullScreen(){
+        window.apply {
+            statusBarColor = Color.TRANSPARENT
+            decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
+    }
+
+    private fun setStatusBarNotFullScreen(){
+        window.apply {
+            statusBarColor = Color.WHITE
+            decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
 
