@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.matchdetail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ParticipantListUiState(
@@ -30,8 +32,19 @@ class MatchDetailViewModel @Inject constructor(
     val chipItems: LiveData<List<String>> get() = _chipItems
 
     init {
-        _chipItems.value = listOf("test1", "test2", "test3")
+        _chipItems.value = listOf("ONLY_WOMAN", "MANNER", "STUDENT_CERTIFICATION")
     }
+
+//    fun getRoom(roomId: Long) {
+//        viewModelScope.launch {
+//            repository.getRoom(roomId).onSuccess {
+//                it.roomTagBitMaskList
+//                _chipItems.value = it.roomTagBitMaskList
+//                Log.d("success", "success")
+//                Log.d("test", "RoomData: $it")
+//            }
+//        }
+//    }
 
 
 }

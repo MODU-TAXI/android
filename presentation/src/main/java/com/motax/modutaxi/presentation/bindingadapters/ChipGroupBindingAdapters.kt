@@ -10,9 +10,23 @@ import com.motax.modutaxi.presentation.R
 fun setChipItems(chipGroup: ChipGroup, items: List<String>?) {
     items?.let {
         chipGroup.removeAllViews()
-        for (item in items) {
+
+        val sortedItems = items.sortedByDescending { it == "STUDENT_CERTIFICATION" }
+
+        for (item in sortedItems) {
             val chip = LayoutInflater.from(chipGroup.context).inflate(R.layout.item_chip, chipGroup, false) as Chip
-            chip.text = item
+            if(item == "STUDENT_CERTIFICATION") {
+                chip.text = "학생인증"
+                chip.setChipBackgroundColorResource(R.color.mx_sub100)
+                chip.setTextColor(chipGroup.context.resources.getColor(R.color.mx_sub500))
+            } else {
+                chip.setChipBackgroundColorResource(R.color.mx_gray100)
+                chip.setTextColor(chipGroup.context.resources.getColor(R.color.mx_gray500))
+                if(item == "ONLY_WOMAN") chip.text = "여자만"
+                if(item == "MANNER") chip.text = "조용히"
+            }
+
+
             chipGroup.addView(chip)
         }
     }

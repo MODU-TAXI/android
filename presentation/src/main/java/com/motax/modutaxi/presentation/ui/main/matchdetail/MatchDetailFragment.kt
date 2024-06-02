@@ -25,7 +25,6 @@ class MatchDetailFragment :
         binding.lifecycleOwner = viewLifecycleOwner
 
         participantAdapter = ParticipantAdapter()
-
         binding.rvParticipants.adapter = participantAdapter
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -33,6 +32,9 @@ class MatchDetailFragment :
                 participantAdapter.submitList(uiState.participantList)
             }
         }
+
+        val roomId = 138L
+        //viewModel.getRoom(roomId)
     }
 
 
