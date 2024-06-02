@@ -20,12 +20,21 @@ class MainRepositoryImpl @Inject constructor(
         api.enterPot(roomId)
     }
 
-    override suspend fun getSpot(
+    override suspend fun getSpotRadius(
         radius: Long,
         latitude: Double,
         longitude: Double
     ): Result<GetSpotListData> = runCatching {
-        api.getSpot(radius, latitude, longitude)
+        api.getSpotRadius(radius, latitude, longitude)
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun getSpotList(
+        page: Int,
+        size: Int,
+        searchLongitude: Double,
+        searchLatitude: Double
+    ): Result<GetSpotListData> = runCatching {
+        api.getSpotList(page, size, searchLongitude, searchLatitude)
     }.mapCatching { it.toDomain() }
 
 }

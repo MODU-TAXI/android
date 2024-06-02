@@ -14,9 +14,16 @@ interface MainRepository {
         roomId: Long
     ): Result<Unit>
 
-    suspend fun getSpot(
+    suspend fun getSpotRadius(
         radius: Long,
         latitude: Double,
         longitude: Double
+    ): Result<GetSpotListData>
+
+    suspend fun getSpotList(
+        page: Int,
+        size: Int,
+        searchLongitude: Double,
+        searchLatitude: Double
     ): Result<GetSpotListData>
 }

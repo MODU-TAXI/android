@@ -61,7 +61,8 @@ class ArrivalSearchFragment :
                             it.latitude,
                             it.longitude,
                             it.landMark,
-                            it.address
+                            it.address,
+                            it.isSpot
                         )
                     }
                 }
@@ -110,11 +111,12 @@ class ArrivalSearchFragment :
         latitude: Double,
         longitude: Double,
         landMark: String,
-        address: String
+        address: String,
+        isSpot: Boolean
     ) {
         val action =
             ArrivalSearchFragmentDirections.actionArrivalSearchFragmentToArrivalMapFragment(
-                MtLocation(latitude, longitude, landMark, address)
+                MtLocation(latitude, longitude, landMark, address, isSpot)
             )
         navigate(action)
     }

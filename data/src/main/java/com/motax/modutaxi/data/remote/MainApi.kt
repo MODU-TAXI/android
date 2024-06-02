@@ -21,10 +21,18 @@ interface MainApi {
     ): Unit
 
     @GET("/api/spots/map")
-    suspend fun getSpot(
+    suspend fun getSpotRadius(
         @Query("radius") radius: Long,
-        @Query("latitude") latitude: Double,
-        @Query("longitude") longitude: Double
+        @Query("searchLatitude") latitude: Double,
+        @Query("searchLongitude") longitude: Double
+    ): GetSpotListResponse
+
+    @GET("/api/spots/list")
+    suspend fun getSpotList(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("searchLongitude") searchLongitude: Double,
+        @Query("searchLatitude") searchLatitude: Double
     ): GetSpotListResponse
 
 

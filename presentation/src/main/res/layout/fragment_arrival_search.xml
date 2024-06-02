@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.motax.modutaxi.presentation.ui.main.createparty.search.ArrivalSearchViewModel" />
@@ -93,7 +95,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
+            android:onClick="@{() -> vm.selectSpot()}"
             android:src="@drawable/ic_search_flag"
+            android:visibility="@{vm.uiState.nearSpot.empty ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="@id/layout_search"
             app:layout_constraintTop_toBottomOf="@id/layout_search" />
 
@@ -103,7 +107,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:onClick="@{() -> vm.selectSpot()}"
+            android:text="@{vm.uiState.nearSpot}"
             android:textColor="@color/mx_sub500"
+            android:visibility="@{vm.uiState.nearSpot.empty ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_position_flag"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_position_flag"

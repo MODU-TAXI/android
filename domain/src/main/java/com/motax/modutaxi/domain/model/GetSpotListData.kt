@@ -6,7 +6,10 @@ data class GetSpotListData(
 
 data class GetSpotListItemData(
     val id: Long,
+    val name: String,
+    val address: String,
     val longitude: Double,
     val latitude: Double,
-    val spotName: String?
+    val distance: Double,
+    val liked: Boolean
 )

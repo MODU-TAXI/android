@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiMarkerItem
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
+import com.naver.maps.map.overlay.Marker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,12 +25,13 @@ data class ArrivalMapUiState(
 
 sealed class ArrivalMapEvent {
     data object SetMarkers : ArrivalMapEvent()
-    data class SelectMarker(val latitude: Double, val longitude: Double) : ArrivalMapEvent()
     data class SelectArrival(
         val spotId: Long,
         val name: String
     ) : ArrivalMapEvent()
-    data object NavigateToBack: ArrivalMapEvent()
+
+    data object NavigateToBack : ArrivalMapEvent()
+    data class ChangeZoom(val state: Double) : ArrivalMapEvent()
 }
 
 @HiltViewModel
@@ -45,22 +47,25 @@ class ArrivalMapViewModel @Inject constructor(
 
     fun getMarkerData(latitude: Double, longitude: Double) {
         viewModelScope.launch {
-            repository.getSpot(2000, latitude, longitude).onSuccess {
+            repository.getSpotList(0, 3, longitude, latitude).onSuccess {
+                var maxDistance = 0.0
                 _uiState.update { state ->
                     state.copy(
-                        markerDataList = uiState.value.markerDataList + it.spots.map { data ->
+                        markerDataList = it.spots.map { data ->
+                            if (maxDistance < data.distance) maxDistance = data.distance
                             data.toUiMarkerItem()
                         }
                     )
                 }
                 _event.emit(ArrivalMapEvent.SetMarkers)
+                _event.emit(ArrivalMapEvent.ChangeZoom(maxDistance))
             }.onFailure {
 
             }
         }
     }
 
-    fun setSearchKeyWord(keyword: String){
+    fun setSearchKeyWord(keyword: String) {
         _uiState.update { state ->
             state.copy(
                 searchKeyWord = keyword
@@ -68,15 +73,11 @@ class ArrivalMapViewModel @Inject constructor(
         }
     }
 
-    fun selectMarker(marker: UiMarkerItem) {
+    fun selectMarker(markerData: UiMarkerItem) {
         _uiState.update { state ->
             state.copy(
-                selectedMarkerData = marker
+                selectedMarkerData = markerData,
             )
-        }
-
-        viewModelScope.launch {
-            _event.emit(ArrivalMapEvent.SelectMarker(marker.latitude, marker.longitude))
         }
     }
 
@@ -89,7 +90,7 @@ class ArrivalMapViewModel @Inject constructor(
         }
     }
 
-    fun navigateToBack(){
+    fun navigateToBack() {
         viewModelScope.launch {
             _event.emit(ArrivalMapEvent.NavigateToBack)
         }

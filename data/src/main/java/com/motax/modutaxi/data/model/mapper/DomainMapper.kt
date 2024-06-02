@@ -123,9 +123,12 @@ fun AddressFromGeoResponse.toDomain() = AddressFromGeoData(
 fun GetSpotListResponse.toDomain() = GetSpotListData(spots.map {
     GetSpotListItemData(
         it.id,
+        it.name,
+        it.address,
         it.longitude,
         it.latitude,
-        it.spotName
+        it.distance ?: 0.0,
+        it.liked ?: false
     )
 })
 
