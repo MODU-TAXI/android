@@ -2,7 +2,7 @@ package com.motax.modutaxi.presentation.ui.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.data.config.DataStoreManager
+import com.motax.modutaxi.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -17,19 +17,31 @@ sealed class SplashUiEvent {
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val dataStoreManager: DataStoreManager,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
-    private val _events = MutableSharedFlow<SplashUiEvent>()
-    val events: SharedFlow<SplashUiEvent> = _events.asSharedFlow()
+    private val _event = MutableSharedFlow<SplashUiEvent>()
+    val event: SharedFlow<SplashUiEvent> = _event.asSharedFlow()
 
-    fun getAutoLogin() {
+    fun checkLoginType() {
         viewModelScope.launch {
-            dataStoreManager.getAccessToken().collect { accessToken ->
-                if (accessToken != "") {
-                    _events.emit(SplashUiEvent.NavigateToMain)
-                } else {
-                    _events.emit(SplashUiEvent.NavigateToIntro)
-                }
+            authRepository.getRefreshToken()?.let {
+                refreshToken(it)
+            } ?: run {
+                _event.emit(SplashUiEvent.NavigateToIntro)
+            }
+        }
+    }
+
+    private fun refreshToken(token: String) {
+        viewModelScope.launch {
+            authRepository.refreshToken(token).onSuccess {
+                authRepository.putAccessToken(it.tokenData.accessToken)
+                authRepository.putRefreshToken(it.tokenData.refreshToken)
+                _event.emit(SplashUiEvent.NavigateToMain)
+            }.onFailure {
+                authRepository.deleteAccessToken()
+                authRepository.deleteRefreshToken()
+                _event.emit(SplashUiEvent.NavigateToIntro)
             }
         }
     }
