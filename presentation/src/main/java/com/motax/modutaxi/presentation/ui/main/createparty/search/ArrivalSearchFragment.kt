@@ -12,41 +12,35 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.gms.location.LocationServices
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
-import com.motax.modutaxi.presentation.databinding.FragmentAddressSearchBinding
+import com.motax.modutaxi.presentation.databinding.FragmentArrivalSearchBinding
+import com.motax.modutaxi.presentation.ui.MtLocation
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.departuremap.DepartureMapViewModel
+import com.motax.modutaxi.presentation.ui.main.createparty.departure.DepartureMapViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AddressSearchResultAdapter
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
-import com.motax.modutaxi.presentation.util.Constants.ARRIVAL_SEARCH
-import com.motax.modutaxi.presentation.util.Constants.DEPARTURE_SEARCH
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddressSearchFragment :
-    BaseFragment<FragmentAddressSearchBinding>(R.layout.fragment_address_search) {
+class ArrivalSearchFragment :
+    BaseFragment<FragmentArrivalSearchBinding>(R.layout.fragment_arrival_search) {
 
-    private val viewModel: AddressSearchViewModel by viewModels()
+
+    private val viewModel: ArrivalSearchViewModel by viewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
-    private val departureMapViewModel: DepartureMapViewModel by activityViewModels()
 
     private val locationPermissionList = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
 
-    private val args: AddressSearchFragmentArgs by navArgs()
-    private val type by lazy { args.type }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
-
 
         parentViewModel.setNotFullScreenMode()
         binding.rvSearchResult.adapter = AddressSearchResultAdapter()
@@ -61,22 +55,14 @@ class AddressSearchFragment :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is AddressSearchEvent.NavigateToBack -> findNavController().navigateUp()
-                    is AddressSearchEvent.SelectLocation -> {
-                        when (type) {
-                            DEPARTURE_SEARCH -> {
-                                findNavController().navigateUp()
-                                departureMapViewModel.selectLocationFromSearch(
-                                    it.latitude,
-                                    it.longitude,
-                                    it.landMark
-                                )
-                            }
-
-                            ARRIVAL_SEARCH -> {
-                                findNavController().toArrivalMap()
-                            }
-                        }
+                    is ArrivalSearchEvent.NavigateToBack -> findNavController().navigateUp()
+                    is ArrivalSearchEvent.SelectLocation -> {
+                        findNavController().toArrivalMap(
+                            it.latitude,
+                            it.longitude,
+                            it.landMark,
+                            it.address
+                        )
                     }
                 }
             }
@@ -120,9 +106,16 @@ class AddressSearchFragment :
         inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    private fun NavController.toArrivalMap() {
+    private fun NavController.toArrivalMap(
+        latitude: Double,
+        longitude: Double,
+        landMark: String,
+        address: String
+    ) {
         val action =
-            AddressSearchFragmentDirections.actionAddressSearchFragmentToArrivalMapFragment()
+            ArrivalSearchFragmentDirections.actionArrivalSearchFragmentToArrivalMapFragment(
+                MtLocation(latitude, longitude, landMark, address)
+            )
         navigate(action)
     }
 }

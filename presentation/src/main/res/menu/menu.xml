@@ -3,20 +3,20 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/navigation_home_icon"
+        android:icon="@drawable/selector_menu_home"
         android:title="홈"
         />
 
     <item
-        android:id="@+id/secondFragment"
-        android:icon="@drawable/navigation_map_icon"
+        android:id="@+id/showPartyFragment"
+        android:icon="@drawable/selector_menu_map"
         android:title="지도"/>
     <item
-        android:id="@+id/thirdFragment"
-        android:icon="@drawable/navigation_taxi_icon"
+        android:id="@+id/taxiPotFragment"
+        android:icon="@drawable/selector_menu_taxi"
         android:title="택시팟" />
     <item
-        android:id="@+id/fourthFragment"
-        android:icon="@drawable/navigation_profile_icon"
+        android:id="@+id/myPageFragment"
+        android:icon="@drawable/selector_menu_profile"
         android:title="마이페이지" />
 </menu>

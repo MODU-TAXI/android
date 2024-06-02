@@ -13,45 +13,24 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="56dp"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_04_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.04" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_96_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.96" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_50_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.50" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_top_section"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@{vm.isParticipating() ? @drawable/bg_header_nav_sub500 : @drawable/bg_header_nav_gray}"
+                android:paddingTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guide_04_vertical1"
@@ -132,72 +111,101 @@
                         app:layout_constraintStart_toEndOf="@id/ic_search"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@+id/iv_make_taxipot"
-                android:layout_width="0dp"
-                android:layout_height="237dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/mx_gray200"
-                android:src="@drawable/ic_example"
-                app:layout_constraintEnd_toStartOf="@id/iv_find_taxipot"
-                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                app:layout_constraintTop_toBottomOf="@id/layout_top_section" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-            <ImageView
-                android:id="@+id/iv_find_taxipot"
-                android:layout_width="0dp"
-                android:layout_height="237dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="18dp"
-                android:background="@color/mx_gray500"
-                android:src="@drawable/ic_example"
-                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
-                app:layout_constraintStart_toEndOf="@id/iv_make_taxipot"
-                app:layout_constraintTop_toBottomOf="@id/layout_top_section" />
-
-            <View
-                android:id="@+id/iv_contour_first"
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:layout_marginTop="24dp"
-                android:background="#F2F2F2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_make_taxipot" />
-
-            <TextView
-                android:id="@+id/tv_participating_taxipot"
-                style="@style/TextLargeSemibold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:paddingLeft="4dp"
-                android:text="내가 참여중인 택시팟"
-                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                app:layout_constraintTop_toBottomOf="@id/iv_contour_first" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingBottom="200dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_participating_taxipot"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
-                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                app:layout_constraintTop_toBottomOf="@id/tv_participating_taxipot">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_04_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.04" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_96_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.96" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_50_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.50" />
+
+                <ImageView
+                    android:id="@+id/iv_make_taxipot"
+                    android:layout_width="0dp"
+                    android:layout_height="237dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/mx_gray200"
+                    android:onClick="@{() -> vm.navigateToCreateParty()}"
+                    android:src="@drawable/ic_example"
+                    app:layout_constraintEnd_toStartOf="@id/iv_find_taxipot"
+                    app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_find_taxipot"
+                    android:layout_width="0dp"
+                    android:layout_height="237dp"
+                    android:layout_marginLeft="8dp"
+                    android:onClick="@{() -> vm.navigateToShowParty()}"
+                    android:layout_marginTop="18dp"
+                    android:background="@color/mx_gray500"
+                    android:src="@drawable/ic_example"
+                    app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                    app:layout_constraintStart_toEndOf="@id/iv_make_taxipot"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/iv_contour_first"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/rect_gray100fill_nostroke_12radius"
-                    android:padding="66dp"
-                    android:visibility="@{vm.isParticipating ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="24dp"
+                    android:background="#F2F2F2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/iv_make_taxipot" />
+
+                <TextView
+                    android:id="@+id/tv_participating_taxipot"
+                    style="@style/TextLargeSemibold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:paddingLeft="4dp"
+                    android:text="내가 참여중인 택시팟"
+                    app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/iv_contour_first" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_no_participating_taxipot"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/rect_gray100fill_nostroke_12radius"
+                    android:padding="66dp"
+                    android:visibility="@{vm.isParticipating ? View.INVISIBLE : View.VISIBLE}"
+                    app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                    app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/tv_participating_taxipot">
 
                     <TextView
                         style="@style/TextRegularSemibold"
@@ -214,17 +222,18 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:id="@+id/layout_participating_taxipot"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/rect_nofill_gray200stroke_12radius"
                     android:paddingHorizontal="12dp"
                     android:paddingTop="12dp"
                     android:paddingBottom="14dp"
-                    android:visibility="@{vm.isParticipating ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:visibility="@{vm.isParticipating ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
+                    app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/tv_participating_taxipot">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_departure_time"
@@ -368,252 +377,253 @@
                         android:gravity="center"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
-
                         android:text="채팅방 바로가기"
                         android:textColor="@color/mx_sub500"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_person_fill" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/iv_contour_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="24dp"
+                    android:background="#F2F2F2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_participating_taxipot" />
+
+                <TextView
+                    android:id="@+id/tv_realtime_taxipot"
+                    style="@style/TextLargeSemibold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:paddingLeft="4dp"
+                    android:text="실시간 택시팟을 알려드려요!"
+                    app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/iv_contour_second" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_navigate_next"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_realtime_taxipot"
+                    app:layout_constraintEnd_toEndOf="@id/guide_96_vertical"
+                    app:layout_constraintTop_toTopOf="@id/tv_realtime_taxipot" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_realtime_taxipot_list"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_realtime_taxipot"
+                    app:list="@{vm.uiState.realtimeTaxiPotList}"
+                    tools:listitem="@layout/item_realtime_taxipot" />
+
+                <View
+                    android:id="@+id/iv_contour_third"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="24dp"
+                    android:background="#F2F2F2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_realtime_taxipot_list" />
+
+                <TextView
+                    android:id="@+id/tv_usage_history"
+                    style="@style/TextLargeSemibold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="이용내역"
+                    app:layout_constraintStart_toStartOf="@id/guide_04_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/iv_contour_third" />
+
+                <TextView
+                    android:id="@+id/my_matching_rate"
+                    style="@style/TextLargeSemibold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="24dp"
+                    android:text="나의 매칭률"
+                    app:layout_constraintStart_toEndOf="@id/guide_50_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/iv_contour_third" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/rect_nofill_gray200stroke_12radius"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="16dp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_50_vertical"
+                    app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/my_matching_rate">
+
+                    <ImageView
+                        android:id="@+id/ic_recipt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_receipt"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_month"
+                        style="@style/TextSmallMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="5"
+                        android:textColor="@color/mx_gray700"
+                        app:layout_constraintStart_toEndOf="@id/ic_recipt"
+                        app:layout_constraintTop_toTopOf="@id/ic_recipt"
+                        tools:text="5" />
+
+                    <TextView
+                        style="@style/TextSmallMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="월 한 달 동안"
+                        android:textColor="@color/mx_gray700"
+                        app:layout_constraintStart_toEndOf="@id/tv_month"
+                        app:layout_constraintTop_toTopOf="@id/tv_month" />
+
+                    <TextView
+                        android:id="@+id/tv_saved_money"
+                        style="@style/TextRegularSemibold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="16,700"
+                        android:textColor="#10A2F4"
+                        app:layout_constraintStart_toStartOf="@id/tv_month"
+                        app:layout_constraintTop_toBottomOf="@id/tv_month"
+                        tools:text="16,700" />
+
+                    <TextView
+                        android:id="@+id/tv_won"
+                        style="@style/TextRegularSemibold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="원"
+                        android:textColor="#10A2F4"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_saved_money"
+                        app:layout_constraintStart_toEndOf="@id/tv_saved_money"
+                        app:layout_constraintTop_toTopOf="@id/tv_saved_money" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:text="아꼈어요!"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_won"
+                        app:layout_constraintStart_toEndOf="@id/tv_won"
+                        app:layout_constraintTop_toTopOf="@id/tv_won" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/rect_nofill_gray200stroke_12radius"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="16dp"
+                    app:layout_constraintEnd_toEndOf="@id/guide_96_vertical"
+                    app:layout_constraintStart_toEndOf="@id/guide_50_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/my_matching_rate">
+
+                    <ImageView
+                        android:id="@+id/ic_popper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_popper"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_now"
+                        style="@style/TextSmallMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="현재 상위 "
+                        android:textColor="@color/mx_gray700"
+                        app:layout_constraintStart_toEndOf="@id/ic_popper"
+                        app:layout_constraintTop_toTopOf="@id/ic_popper" />
+
+                    <TextView
+                        android:id="@+id/tv_percent_sign"
+                        style="@style/TextSmallMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/mx_gray700"
+                        app:layout_constraintStart_toEndOf="@id/tv_now"
+                        app:layout_constraintTop_toTopOf="@id/tv_now"
+                        tools:text="1" />
+
+                    <TextView
+                        style="@style/TextSmallMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="%에요!"
+                        android:textColor="@color/mx_gray700"
+                        app:layout_constraintStart_toEndOf="@id/tv_percent_sign"
+                        app:layout_constraintTop_toTopOf="@id/tv_percent_sign" />
+
+                    <TextView
+                        android:id="@+id/tv_matching_percent"
+                        style="@style/TextRegularSemibold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="매칭률"
+                        android:textColor="#10A2F4"
+                        app:layout_constraintStart_toStartOf="@id/tv_now"
+                        app:layout_constraintTop_toBottomOf="@id/tv_now" />
+
+                    <TextView
+                        android:id="@+id/tv_percent"
+                        style="@style/TextRegularSemibold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:text="97"
+                        android:textColor="#10A2F4"
+                        app:layout_constraintStart_toEndOf="@id/tv_matching_percent"
+                        app:layout_constraintTop_toTopOf="@id/tv_matching_percent"
+                        tools:text="97" />
+
+                    <TextView
+                        style="@style/TextRegularSemibold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textColor="#10A2F4"
+                        app:layout_constraintStart_toEndOf="@id/tv_percent"
+                        app:layout_constraintTop_toTopOf="@id/tv_percent" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:id="@+id/iv_contour_second"
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:layout_marginTop="24dp"
-                android:background="#F2F2F2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_participating_taxipot" />
+        </androidx.core.widget.NestedScrollView>
 
-            <TextView
-                android:id="@+id/tv_realtime_taxipot"
-                style="@style/TextLargeSemibold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:paddingLeft="4dp"
-                android:text="실시간 택시팟을 알려드려요!"
-                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                app:layout_constraintTop_toBottomOf="@id/iv_contour_second" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_navigate_next"
-                app:layout_constraintBottom_toBottomOf="@id/tv_realtime_taxipot"
-                app:layout_constraintEnd_toEndOf="@id/guide_96_vertical"
-                app:layout_constraintTop_toTopOf="@id/tv_realtime_taxipot" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_realtime_taxipot_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="@id/guide_04_vertical"
-                app:layout_constraintTop_toBottomOf="@id/tv_realtime_taxipot"
-                app:list="@{vm.uiState.realtimeTaxiPotList}"
-                tools:listitem="@layout/item_realtime_taxipot" />
-
-            <View
-                android:id="@+id/iv_contour_third"
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:layout_marginTop="24dp"
-                android:background="#F2F2F2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_realtime_taxipot_list" />
-
-            <TextView
-                android:id="@+id/tv_usage_history"
-                style="@style/TextLargeSemibold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="이용내역"
-                app:layout_constraintStart_toStartOf="@id/guide_04_vertical"
-                app:layout_constraintTop_toBottomOf="@id/iv_contour_third" />
-
-            <TextView
-                android:id="@+id/my_matching_rate"
-                style="@style/TextLargeSemibold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="24dp"
-                android:text="나의 매칭률"
-                app:layout_constraintStart_toEndOf="@id/guide_50_vertical"
-                app:layout_constraintTop_toBottomOf="@id/iv_contour_third" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/rect_nofill_gray200stroke_12radius"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="16dp"
-                app:layout_constraintEnd_toStartOf="@id/guide_50_vertical"
-                app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                app:layout_constraintTop_toBottomOf="@id/my_matching_rate">
-
-                <ImageView
-                    android:id="@+id/ic_recipt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_receipt"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_month"
-                    style="@style/TextSmallMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="5"
-                    android:textColor="@color/mx_gray700"
-                    app:layout_constraintStart_toEndOf="@id/ic_recipt"
-                    app:layout_constraintTop_toTopOf="@id/ic_recipt"
-                    tools:text="5" />
-
-                <TextView
-                    style="@style/TextSmallMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="월 한 달 동안"
-                    android:textColor="@color/mx_gray700"
-                    app:layout_constraintStart_toEndOf="@id/tv_month"
-                    app:layout_constraintTop_toTopOf="@id/tv_month" />
-
-                <TextView
-                    android:id="@+id/tv_saved_money"
-                    style="@style/TextRegularSemibold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="16,700"
-                    android:textColor="#10A2F4"
-                    app:layout_constraintStart_toStartOf="@id/tv_month"
-                    app:layout_constraintTop_toBottomOf="@id/tv_month"
-                    tools:text="16,700" />
-
-                <TextView
-                    android:id="@+id/tv_won"
-                    style="@style/TextRegularSemibold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="원"
-                    android:textColor="#10A2F4"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_saved_money"
-                    app:layout_constraintStart_toEndOf="@id/tv_saved_money"
-                    app:layout_constraintTop_toTopOf="@id/tv_saved_money" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:text="아꼈어요!"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_won"
-                    app:layout_constraintStart_toEndOf="@id/tv_won"
-                    app:layout_constraintTop_toTopOf="@id/tv_won" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/rect_nofill_gray200stroke_12radius"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="16dp"
-                app:layout_constraintEnd_toEndOf="@id/guide_96_vertical"
-                app:layout_constraintStart_toEndOf="@id/guide_50_vertical"
-                app:layout_constraintTop_toBottomOf="@id/my_matching_rate">
-
-                <ImageView
-                    android:id="@+id/ic_popper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_popper"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_now"
-                    style="@style/TextSmallMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="현재 상위 "
-                    android:textColor="@color/mx_gray700"
-                    app:layout_constraintStart_toEndOf="@id/ic_popper"
-                    app:layout_constraintTop_toTopOf="@id/ic_popper" />
-
-                <TextView
-                    android:id="@+id/tv_percent_sign"
-                    style="@style/TextSmallMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textColor="@color/mx_gray700"
-                    app:layout_constraintStart_toEndOf="@id/tv_now"
-                    app:layout_constraintTop_toTopOf="@id/tv_now"
-                    tools:text="1" />
-
-                <TextView
-                    style="@style/TextSmallMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="%에요!"
-                    android:textColor="@color/mx_gray700"
-                    app:layout_constraintStart_toEndOf="@id/tv_percent_sign"
-                    app:layout_constraintTop_toTopOf="@id/tv_percent_sign" />
-
-                <TextView
-                    android:id="@+id/tv_matching_percent"
-                    style="@style/TextRegularSemibold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="매칭률"
-                    android:textColor="#10A2F4"
-                    app:layout_constraintStart_toStartOf="@id/tv_now"
-                    app:layout_constraintTop_toBottomOf="@id/tv_now" />
-
-                <TextView
-                    android:id="@+id/tv_percent"
-                    style="@style/TextRegularSemibold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:text="97"
-                    android:textColor="#10A2F4"
-                    app:layout_constraintStart_toEndOf="@id/tv_matching_percent"
-                    app:layout_constraintTop_toTopOf="@id/tv_matching_percent"
-                    tools:text="97" />
-
-                <TextView
-                    style="@style/TextRegularSemibold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="%"
-                    android:textColor="#10A2F4"
-                    app:layout_constraintStart_toEndOf="@id/tv_percent"
-                    app:layout_constraintTop_toTopOf="@id/tv_percent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

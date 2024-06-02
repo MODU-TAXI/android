@@ -18,11 +18,11 @@
 
     <fragment
         android:id="@+id/departureMapFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.departuremap.DepartureMapFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.departure.DepartureMapFragment"
         android:label="MapFragment">
         <action
-            android:id="@+id/action_departureMapFragment_to_addressSearchFragment"
-            app:destination="@id/addressSearchFragment" />
+            android:id="@+id/action_departureMapFragment_to_departureSearchFragment"
+            app:destination="@id/departureSearchFragment" />
     </fragment>
 
     <fragment
@@ -38,8 +38,8 @@
             android:id="@+id/action_createPartyFragment_to_departureMapFragment"
             app:destination="@id/departureMapFragment" />
         <action
-            android:id="@+id/action_createPartyFragment_to_addressSearchFragment"
-            app:destination="@id/addressSearchFragment" />
+            android:id="@+id/action_createPartyFragment_to_arrivalSearchFragment"
+            app:destination="@id/arrivalSearchFragment" />
     </fragment>
 
     <fragment
@@ -49,8 +49,13 @@
 
     <fragment
         android:id="@+id/arrivalMapFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.arrivalmap.ArrivalMapFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.arrival.ArrivalMapFragment"
         android:label="ArrivalMapFragment">
+
+        <argument
+            app:argType="com.motax.modutaxi.presentation.ui.MtLocation"
+            android:name="selectLocation"/>
+
         <action
             android:id="@+id/action_arrivalMapFragment_to_createPartyFragment"
             app:destination="@id/createPartyFragment"
@@ -59,36 +64,25 @@
     </fragment>
 
     <fragment
-        android:id="@+id/addressSearchFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.AddressSearchFragment"
-        android:label="AddressSearchFragment">
-
-        <argument
-            app:argType="string"
-            android:name="type"/>
-
+        android:id="@+id/departureSearchFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.DepartureSearchFragment"
+        android:label="DepartureSearchFragment" />
+    <fragment
+        android:id="@+id/arrivalSearchFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.ArrivalSearchFragment"
+        android:label="ArrivalSearchFragment" >
         <action
-            android:id="@+id/action_addressSearchFragment_to_arrivalMapFragment"
-            app:destination="@id/arrivalMapFragment"
-            app:popUpTo="@id/createPartyFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_arrivalSearchFragment_to_arrivalMapFragment"
+            app:destination="@id/arrivalMapFragment" />
     </fragment>
-
     <fragment
-        android:id="@+id/secondFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.home.temp.SecondFragment"
-        android:label="SecondFragment" />
-
+        android:id="@+id/myPageFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.MyPageFragment"
+        android:label="MyPageFragment" />
     <fragment
-        android:id="@+id/thirdFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.home.temp.ThirdFragment"
-        android:label="ThirdFragment" />
-
-    <fragment
-        android:id="@+id/fourthFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.home.temp.FourthFragment"
-        android:label="FourthFragment" />
-
+        android:id="@+id/taxiPotFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.taxipot.TaxiPotFragment"
+        android:label="TaxiPotFragment" />
 
 
 </navigation>

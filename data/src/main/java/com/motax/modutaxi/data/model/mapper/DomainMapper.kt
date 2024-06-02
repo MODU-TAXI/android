@@ -2,11 +2,14 @@ package com.motax.modutaxi.data.model.mapper
 
 import android.text.Html
 import com.motax.modutaxi.data.model.response.AddressFromGeoResponse
-import com.motax.modutaxi.data.model.response.AuthResponse
+import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
+import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
+import com.motax.modutaxi.data.model.response.MemberInfo
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
+import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.TaxiPotItem
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
@@ -16,15 +19,19 @@ import com.motax.modutaxi.domain.model.AddressFromGeoItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoLandData
 import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
-import com.motax.modutaxi.domain.model.AuthData
+import com.motax.modutaxi.domain.model.TokenData
 import com.motax.modutaxi.domain.model.CertificateData
+import com.motax.modutaxi.domain.model.GetSpotListData
+import com.motax.modutaxi.domain.model.GetSpotListItemData
 import com.motax.modutaxi.domain.model.MemberCheckData
+import com.motax.modutaxi.domain.model.MemberInfoData
 import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.domain.model.SearchResultListData
+import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.TaxiPotData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 
-fun AuthResponse.toDomain() = AuthData(
+fun TokenResponse.toDomain() = TokenData(
     accessToken = accessToken,
     refreshToken = refreshToken
 )
@@ -111,4 +118,28 @@ fun AddressFromGeoResponse.toDomain() = AddressFromGeoData(
             )
         )
     }
+)
+
+fun GetSpotListResponse.toDomain() = GetSpotListData(spots.map {
+    GetSpotListItemData(
+        it.id,
+        it.longitude,
+        it.latitude,
+        it.spotName
+    )
+})
+
+fun AuthResponse.toDomain() = AuthData(
+    tokenData = tokenResponse.toDomain(),
+    memberInfoData = memberInfoResponse.toDomain()
+)
+
+fun MemberInfo.toDomain() = MemberInfoData(
+    id = id,
+    name = name,
+    nickname = nickname ?: "",
+    gender = gender,
+    phoneNumber = phoneNumber,
+    email = email ?: "",
+    imageUrl = imageUrl
 )

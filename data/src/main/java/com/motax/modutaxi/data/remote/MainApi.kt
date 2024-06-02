@@ -1,5 +1,6 @@
 package com.motax.modutaxi.data.remote
 
+import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -18,6 +19,13 @@ interface MainApi {
     suspend fun enterPot(
         @Path("roomId") roomId: Long
     ): Unit
+
+    @GET("/api/spots/map")
+    suspend fun getSpot(
+        @Query("radius") radius: Long,
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double
+    ): GetSpotListResponse
 
 
 }
