@@ -2,6 +2,7 @@ package com.motax.modutaxi.di
 
 import com.motax.modutaxi.BuildConfig
 import com.motax.modutaxi.data.config.AccessTokenInterceptor
+import com.motax.modutaxi.data.config.BearerInterceptor
 import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.data.config.NaverKeyInterceptor
 import com.motax.modutaxi.data.config.NaverMapKeyInterceptor
@@ -48,6 +49,10 @@ object NetworkModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
+    annotation class BaseUrl
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
     annotation class NaverClientId
 
     @Qualifier
@@ -68,12 +73,14 @@ object NetworkModule {
     fun provideBaseOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         accessTokenInterceptor: AccessTokenInterceptor,
+        bearerInterceptor: BearerInterceptor
     ): OkHttpClient {
 
         return OkHttpClient.Builder()
             .readTimeout(10000, TimeUnit.MILLISECONDS)
             .connectTimeout(10000, TimeUnit.MILLISECONDS)
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(bearerInterceptor)
             .addNetworkInterceptor(accessTokenInterceptor)
             .build()
     }
@@ -121,6 +128,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @BaseUrl
+    fun provideBaseUrl(): String = BuildConfig.BASE_DEV_URL
+
+    @Provides
+    @Singleton
     @NaverClientId
     fun provideNaverClientId(): String = BuildConfig.NAVER_CLIENT_ID
 
@@ -138,6 +150,13 @@ object NetworkModule {
     @Singleton
     @NaverMapClientSecret
     fun provideNaverMapClientSecret(): String = BuildConfig.NAVER_MAP_CLIENT_SECRET
+
+    @Provides
+    @Singleton
+    fun provideBearerInterceptor(
+        @BaseUrl baseUrl: String,
+        dataStoreManager: DataStoreManager
+    ): BearerInterceptor = BearerInterceptor(dataStoreManager, baseUrl)
 
     @Provides
     @Singleton
