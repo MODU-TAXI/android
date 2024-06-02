@@ -1,18 +1,25 @@
 package com.motax.modutaxi.domain.repository
 
 import com.motax.modutaxi.domain.model.RoomData
+import com.motax.modutaxi.domain.model.GetSpotListData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 
 interface MainRepository {
 
     suspend fun getTaxiPotList(
         page: Int,
-        size : Int
+        size: Int
     ): Result<TaxiPotListData>
 
     suspend fun enterPot(
-        roomId : Long
+        roomId: Long
     ): Result<Unit>
+
+    suspend fun getSpot(
+        radius: Long,
+        latitude: Double,
+        longitude: Double
+    ): Result<GetSpotListData>
 
     suspend fun getRoom(
         roomId: Long

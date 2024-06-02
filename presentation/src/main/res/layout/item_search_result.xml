@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.motax.modutaxi.presentation.ui.main.createparty.search.model.UiSearchResultItem"/>
+            type="com.motax.modutaxi.presentation.ui.main.createparty.model.UiSearchResultItem" />
 
     </data>
 
@@ -21,61 +21,49 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/search_divider"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            >
-
-        </View>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_place_name"
+            style="@style/TextLargeMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{item.placeName}"
-            app:keyword="@{item.keyword}"
-            app:searchResult="@{item.placeName}"
-            tools:text = "주안역"
-            android:textColor="@color/search_result_normal"
-            style="@style/TextLargeMedium"
             android:layout_marginTop="12dp"
-            android:paddingBottom="4dp"
             android:paddingLeft="8dp"
-
+            android:paddingBottom="4dp"
+            android:text="@{item.placeName}"
+            android:textColor="@color/search_result_normal"
+            app:keyword="@{item.keyword}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_divider">
-        </TextView>
+            app:layout_constraintTop_toBottomOf="@id/search_divider"
+            app:searchResult="@{item.placeName}"
+            tools:text="주안역" />
 
         <TextView
             android:id="@+id/tv_place_address"
+            style="@style/TextRegularRegular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{item.placeAddress}"
-            style="@style/TextRegularRegular"
             android:paddingLeft="8dp"
+            android:text="@{item.placeAddress}"
             android:textColor="@color/search_result_address_distance"
-            app:layout_constraintTop_toBottomOf="@id/tv_place_name"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_distance"
-            tools:text = "인천 미추홀구 주안로 41번길">
-        </TextView>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_place_name"
+            tools:text="인천 미추홀구 주안로 41번길" />
 
         <TextView
             android:id="@+id/tv_distance"
+            style="@style/TextRegularRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.distance}"
+            android:layout_marginEnd="8dp"
             android:textColor="@color/search_result_address_distance"
-            style="@style/TextRegularRegular"
-            tools:text="500m"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_place_name"
-            android:layout_marginEnd="8dp"
-            >
-        </TextView>
-
-
-
+            tools:text="500m" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

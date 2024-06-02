@@ -1,27 +1,29 @@
 package com.motax.modutaxi.domain.repository
 
 import com.motax.modutaxi.domain.model.AuthData
-import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.model.CertificateData
+import com.motax.modutaxi.domain.model.MemberCheckData
 
 interface IntroRepository {
 
     suspend fun login(
         type: String,
-        accessToken: String
+        accessToken: String,
+        fcmToken: String
     ): Result<AuthData>
 
     suspend fun memberCheck(
         type: String,
-        accessToken: String
+        accessToken: String,
+        fcmToken: String
     ): Result<MemberCheckData>
-
 
     suspend fun signUp(
         key: String,
         name: String,
         gender: String,
-        phoneNumber: String
+        phoneNumber: String,
+        fcmToken: String
     ): Result<AuthData>
 
     suspend fun smsConfirm(

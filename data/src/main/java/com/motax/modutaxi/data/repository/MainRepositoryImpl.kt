@@ -2,6 +2,7 @@ package com.motax.modutaxi.data.repository
 
 import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.remote.MainApi
+import com.motax.modutaxi.domain.model.GetSpotListData
 import com.motax.modutaxi.domain.model.RoomData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.repository.MainRepository
@@ -19,6 +20,14 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun enterPot(roomId: Long): Result<Unit> = runCatching {
         api.enterPot(roomId)
     }
+
+    override suspend fun getSpot(
+        radius: Long,
+        latitude: Double,
+        longitude: Double
+    ): Result<GetSpotListData> = runCatching {
+        api.getSpot(radius, latitude, longitude)
+    }.mapCatching { it.toDomain() }
 
     override suspend fun getRoom(roomId: Long): Result<RoomData> =
         runCatching {

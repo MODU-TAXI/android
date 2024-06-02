@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_participating_taxipot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rect_nofill_gray200stroke_12radius"
+        android:paddingLeft="12dp"
+        android:paddingRight="26dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="14dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+        app:layout_constraintTop_toBottomOf="@id/tv_participating_taxipot">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_departure_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_sub100fill_nostroke_8radius"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_group_check"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_group_check"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_depart"
+                style="@style/TextSmallMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="출발"
+                android:textColor="@color/mx_sub500"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_group_check"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_departure_datetime"
+                style="@style/TextSmallMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="@{item.departTime}"
+                android:textColor="@color/mx_sub500"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_depart"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="14:25" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_departure"
+            style="@style/TextRegularSemibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{item.departureSpot}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_departure_time"
+            tools:text="인하대학교" />
+
+        <ImageView
+            android:id="@+id/ic_arrow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_arrow"
+            app:layout_constraintBottom_toBottomOf="@id/tv_departure"
+            app:layout_constraintStart_toEndOf="@id/tv_departure"
+            app:layout_constraintTop_toTopOf="@id/tv_departure" />
+
+        <TextView
+            style="@style/TextRegularSemibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="@{item.arrivalSpot}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_departure"
+            app:layout_constraintStart_toEndOf="@id/ic_arrow"
+            app:layout_constraintTop_toTopOf="@id/tv_departure"
+            tools:text="주안역" />
+
+        <ImageView
+            android:id="@+id/iv_person_fill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_person_fill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_departure" />
+
+        <TextView
+            android:id="@+id/tv_cur_head_count"
+            style="@style/TextSmallRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:textColor="#969DA4"
+            android:text="@{String.valueOf(item.curHeadCount)}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintStart_toEndOf="@id/iv_person_fill"
+            app:layout_constraintTop_toTopOf="@+id/iv_person_fill"
+            tools:text="2" />
+
+
+
+        <TextView
+            android:id="@+id/tv_slash"
+            style="@style/TextSmallRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#969DA4"
+            android:text="/"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintStart_toEndOf="@id/tv_cur_head_count"
+            app:layout_constraintTop_toTopOf="@+id/iv_person_fill" />
+
+        <TextView
+            android:id="@+id/tv_wish_head_count"
+            style="@style/TextSmallRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#969DA4"
+            android:text="@{String.valueOf(item.wishHeadCount)}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintStart_toEndOf="@id/tv_slash"
+            app:layout_constraintTop_toTopOf="@+id/iv_person_fill"
+            tools:text="3" />
+
+        <ImageView
+            android:id="@+id/iv_pig"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_pig"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintStart_toEndOf="@id/tv_wish_head_count"
+            app:layout_constraintTop_toTopOf="@id/iv_person_fill" />
+
+        <TextView
+            android:id="@+id/tv_per_person"
+            style="@style/TextSmallRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:text="인당 "
+            android:textColor="#969DA4"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintStart_toEndOf="@id/iv_pig"
+            app:layout_constraintTop_toTopOf="@id/iv_person_fill" />
+
+        <TextView
+            android:id="@+id/tv_fee_per_person"
+            style="@style/TextSmallRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#969DA4"
+            android:text="@{item.feePerPerson}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+            app:layout_constraintStart_toEndOf="@id/tv_per_person"
+            app:layout_constraintTop_toTopOf="@id/iv_person_fill"
+            tools:text="8,300원" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

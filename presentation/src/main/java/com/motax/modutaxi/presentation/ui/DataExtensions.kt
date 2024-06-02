@@ -8,6 +8,7 @@ import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.pow
+import kotlin.math.round
 import kotlin.math.sin
 import kotlin.math.sqrt
 
@@ -55,4 +56,7 @@ fun Double.toDistanceString(): String {
         "${String.format("%.2f", this / 1000)} km"
     }
 }
+
+fun Double.to8Round(): Double = round(this * 100000000) / 100000000
+
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/selector_menu_home"
+        android:title="홈"
+        />
+
+    <item
+        android:id="@+id/showPartyFragment"
+        android:icon="@drawable/selector_menu_map"
+        android:title="지도"/>
+    <item
+        android:id="@+id/taxiPotFragment"
+        android:icon="@drawable/selector_menu_taxi"
+        android:title="택시팟" />
+    <item
+        android:id="@+id/myPageFragment"
+        android:icon="@drawable/selector_menu_profile"
+        android:title="마이페이지" />
+</menu>

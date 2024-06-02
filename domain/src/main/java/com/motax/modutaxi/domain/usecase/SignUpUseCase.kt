@@ -10,6 +10,7 @@ class SignUpUseCase @Inject constructor(
         key: String,
         name: String,
         gender: String,
-        phoneNumber: String
-    ) = repository.signUp(key, name, gender, phoneNumber)
+        phoneNumber: String,
+        fcmToken: String
+    ) = repository.signUp(key, name, gender, phoneNumber, "")
 }

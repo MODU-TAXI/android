@@ -6,9 +6,10 @@ import com.motax.modutaxi.data.model.request.LoginRequest
 import com.motax.modutaxi.data.model.request.SignUpRequest
 import com.motax.modutaxi.data.model.request.SmsCertificateRequest
 import com.motax.modutaxi.data.model.request.SmsConfirmRequest
-import com.motax.modutaxi.data.model.response.AuthResponse
+import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
+import com.motax.modutaxi.data.model.response.AuthResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Path

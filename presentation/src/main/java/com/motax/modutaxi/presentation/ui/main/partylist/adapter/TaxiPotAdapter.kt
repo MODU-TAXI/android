@@ -26,7 +26,6 @@ class TaxiPotAdapter :
         )
 }
 
-
 class TaxiPotViewHolder(private val binding: ItemTaxipotBinding) :
     RecyclerView.ViewHolder(binding.root) {
 

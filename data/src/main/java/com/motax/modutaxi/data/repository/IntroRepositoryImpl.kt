@@ -18,14 +18,27 @@ class IntroRepositoryImpl @Inject constructor(
     private val api: IntroApi
 ) : IntroRepository {
 
-    override suspend fun login(type: String, accessToken: String): Result<AuthData> =
-        runCatching { api.login(type, LoginRequest(accessToken)) }.mapCatching { it.toDomain() }
+    override suspend fun login(
+        type: String,
+        accessToken: String,
+        fcmToken: String
+    ): Result<AuthData> =
+        runCatching {
+            api.login(
+                type,
+                LoginRequest(accessToken, fcmToken)
+            )
+        }.mapCatching { it.toDomain() }
 
-    override suspend fun memberCheck(type: String, accessToken: String): Result<MemberCheckData> =
+    override suspend fun memberCheck(
+        type: String,
+        accessToken: String,
+        fcmToken: String
+    ): Result<MemberCheckData> =
         runCatching {
             api.memberCheck(
                 type,
-                LoginRequest(accessToken)
+                LoginRequest(accessToken, fcmToken)
             )
         }.mapCatching { it.toDomain() }
 
@@ -33,7 +46,8 @@ class IntroRepositoryImpl @Inject constructor(
         key: String,
         name: String,
         gender: String,
-        phoneNumber: String
+        phoneNumber: String,
+        fcmToken: String
     ): Result<AuthData> =
         runCatching {
             api.signUp(
@@ -41,7 +55,8 @@ class IntroRepositoryImpl @Inject constructor(
                     key,
                     name,
                     gender,
-                    phoneNumber
+                    phoneNumber,
+                    fcmToken
                 )
             )
         }.mapCatching { it.toDomain() }

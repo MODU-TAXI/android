@@ -27,14 +27,16 @@ data class CreatePartyUiState(
     val departureHour: Int = getCurHour(),
     val departureMinute: Int = getCurMinute(),
     val wishHeadCount: WishHeadCount = WishHeadCount.EMPTY,
-    val roomTag: RoomTag = RoomTag.EMPTY,
+    val studentCertificationRoomTag: Boolean = false,
+    val onlyWomanRoomTag: Boolean = false,
+    val mannerRoomTag: Boolean = false,
     val todayDate: String = getTodayDate()
 )
 
 sealed class CreatePartyEvent {
     data class ShowTimePicker(val hour: Int, val minute: Int) : CreatePartyEvent()
     data object NavigateToDepartureMap : CreatePartyEvent()
-    data object NavigateToArrivalMap : CreatePartyEvent()
+    data object NavigateToArrivalSearch : CreatePartyEvent()
 }
 
 @HiltViewModel
@@ -57,6 +59,18 @@ class CreatePartyViewModel @Inject constructor() : ViewModel() {
                 departureLatitude = latitude,
                 departureLongitude = longitude,
                 departureName = name
+            )
+        }
+    }
+
+    fun setArrivalInfo(
+        spotId: Long,
+        name: String
+    ) {
+        _uiState.update { state ->
+            state.copy(
+                spotId = spotId,
+                arrivalName = name
             )
         }
     }
@@ -88,9 +102,9 @@ class CreatePartyViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun navigateToArrivalMap() {
+    fun navigateToArrivalSearch() {
         viewModelScope.launch {
-            _event.emit(CreatePartyEvent.NavigateToArrivalMap)
+            _event.emit(CreatePartyEvent.NavigateToArrivalSearch)
         }
     }
 
@@ -103,10 +117,22 @@ class CreatePartyViewModel @Inject constructor() : ViewModel() {
     }
 
     fun selectRoomTag(tag: RoomTag) {
-        _uiState.update { state ->
-            state.copy(
-                roomTag = tag
-            )
+        when (tag) {
+            RoomTag.STUDENT_CERTIFICATION -> _uiState.update { state ->
+                state.copy(studentCertificationRoomTag = !uiState.value.studentCertificationRoomTag)
+            }
+
+            RoomTag.ONLY_WOMAN -> _uiState.update { state ->
+                state.copy(onlyWomanRoomTag = !uiState.value.onlyWomanRoomTag)
+            }
+
+            RoomTag.MANNER -> _uiState.update { state ->
+                state.copy(mannerRoomTag = !uiState.value.mannerRoomTag)
+            }
+
+            else -> {
+
+            }
         }
     }
 
