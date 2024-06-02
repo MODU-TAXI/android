@@ -31,7 +31,7 @@ class LoginViewModel @Inject constructor(
 
     fun memberCheck(token: String) {
         viewModelScope.launch {
-            memberCheckUseCase("KAKAO", token).onSuccess {
+            memberCheckUseCase("KAKAO", token, "").onSuccess {
                 if (it.existent) {
                     kakaoLogin(token)
                 } else {
@@ -46,10 +46,10 @@ class LoginViewModel @Inject constructor(
 
     fun kakaoLogin(token: String) {
         viewModelScope.launch {
-            loginUseCase("KAKAO", token).onSuccess {
+            loginUseCase("KAKAO", token, "").onSuccess {
                 _event.emit(LoginEvent.ShowToastMessage("로그인 성공"))
-                dataStoreManager.putAccessToken(it.accessToken)
-                dataStoreManager.putRefreshToken(it.refreshToken)
+                dataStoreManager.putAccessToken(it.tokenData.accessToken)
+                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
                 _event.emit(LoginEvent.NavigateToMainActivity)
             }.onFailure {
                 _event.emit(LoginEvent.ShowToastMessage(it.message.toString()))

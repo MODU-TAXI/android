@@ -8,7 +8,8 @@ class LoginUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         type: String,
-        accessToken: String
-    ) = repository.login(type, accessToken)
+        accessToken: String,
+        fcmToken: String
+    ) = repository.login(type, accessToken, fcmToken)
 
 }

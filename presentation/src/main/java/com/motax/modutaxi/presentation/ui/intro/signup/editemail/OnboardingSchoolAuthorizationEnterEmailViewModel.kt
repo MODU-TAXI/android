@@ -58,10 +58,11 @@ class OnboardingSchoolAuthorizationEnterEmailViewModel @Inject constructor(
                 SignUpData.key,
                 SignUpData.name,
                 SignUpData.gender,
-                SignUpData.phoneNumber
+                SignUpData.phoneNumber,
+                ""
             ).onSuccess {
-                dataStoreManager.putAccessToken(it.accessToken)
-                dataStoreManager.putRefreshToken(it.refreshToken)
+                dataStoreManager.putAccessToken(it.tokenData.accessToken)
+                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
                 isSignUpSuccess.value = true
             }.onFailure {
                 _event.emit(OnboardingSchoolAuthorizationEnterEmailEvent.ShowToastMessage("회원가입 실패!"))
