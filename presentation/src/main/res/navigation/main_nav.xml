@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/matchDetailFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -71,6 +71,11 @@
             app:destination="@id/arrivalMapFragment"
             app:popUpTo="@id/createPartyFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/matchDetailFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.matchdetail.MatchDetailFragment"
+        android:label="MatchDetailFragment">
     </fragment>
 
 
