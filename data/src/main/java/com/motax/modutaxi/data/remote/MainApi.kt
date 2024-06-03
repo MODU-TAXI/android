@@ -44,4 +44,8 @@ interface MainApi {
         @Body params: CreateTaxiPotRequest
     ): TaxiPotDetailResponse
 
+    @GET("/api/rooms/{roomId}")
+    suspend fun getRoom(
+        @Path("roomId") roomId: Long
+    ) : TaxiPotDetailResponse
 }

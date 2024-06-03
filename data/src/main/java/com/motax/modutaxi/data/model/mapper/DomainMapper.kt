@@ -8,7 +8,6 @@ import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
-import com.motax.modutaxi.data.model.response.Path
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse

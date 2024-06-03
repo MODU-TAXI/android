@@ -50,3 +50,14 @@ fun bindOnboardPhoneAuthHelperText(tv: TextView, state: AuthBtnState) {
         }
     }
 }
+
+@BindingAdapter("matchingParticipateBtnState")
+fun bindMatchingParticipateBtnState(btn: AppCompatButton, myRoom: Boolean) {
+    if (myRoom) {
+        btn.setBackgroundResource(R.drawable.rect_nofill_sub500stroke_61radius)
+        btn.setTextColor(ContextCompat.getColor(btn.context, R.color.mx_sub500))
+    } else {
+        btn.setBackgroundResource(R.drawable.rect_sub500fill_nostroke_61radius)
+        ContextCompat.getColor(btn.context, R.color.white)
+    }
+}

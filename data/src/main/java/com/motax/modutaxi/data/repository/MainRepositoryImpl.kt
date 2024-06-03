@@ -62,4 +62,9 @@ class MainRepositoryImpl @Inject constructor(
         )
     }.mapCatching { it.toDomain() }
 
+    override suspend fun getRoom(roomId: Long): Result<TaxiPotDetailData> =
+        runCatching {
+            api.getRoom(roomId)
+        }.mapCatching { it.toDomain() }
+
 }

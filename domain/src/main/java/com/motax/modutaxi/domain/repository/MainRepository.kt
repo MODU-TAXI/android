@@ -38,4 +38,8 @@ interface MainRepository {
         departureName: String,
         wishHeadcount: Int
     ): Result<TaxiPotDetailData>
+
+    suspend fun getRoom(
+        roomId: Long
+    ):Result<TaxiPotDetailData>
 }
