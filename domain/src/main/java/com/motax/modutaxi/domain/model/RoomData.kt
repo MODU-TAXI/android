@@ -2,7 +2,7 @@ package com.motax.modutaxi.domain.model
 
 data class RoomData(
     val managerId: Int,
-    val profileImageUrl: String,
+    val profileImageUrl: String?,
     val roomId: Int,
     val spotId: Int,
     val departureDairyDate: String,
@@ -26,15 +26,10 @@ data class RoomData(
 )
 
 data class PathData(
-    val coordinateReferenceSystem: CoordinateReferenceSystemData,
     val coordinates: List<CoordinateData>,
     val type: String
 )
 
-data class CoordinateReferenceSystemData(
-    val type: String
-)
-
 data class CoordinateData(
-    val values: List<Int>
+    val values: List<Double>
 )

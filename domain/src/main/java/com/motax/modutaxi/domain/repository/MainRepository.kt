@@ -3,7 +3,6 @@ package com.motax.modutaxi.domain.repository
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.RoomData
-import com.motax.modutaxi.domain.model.GetSpotListData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 
 interface MainRepository {
@@ -29,7 +28,6 @@ interface MainRepository {
         searchLongitude: Double,
         searchLatitude: Double
     ): Result<SpotListData>
-    ): Result<GetSpotListData>
 
     suspend fun getRoom(
         roomId: Long

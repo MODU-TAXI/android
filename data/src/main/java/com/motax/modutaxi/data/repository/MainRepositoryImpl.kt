@@ -4,7 +4,6 @@ import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
-import com.motax.modutaxi.domain.model.GetSpotListData
 import com.motax.modutaxi.domain.model.RoomData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.repository.MainRepository

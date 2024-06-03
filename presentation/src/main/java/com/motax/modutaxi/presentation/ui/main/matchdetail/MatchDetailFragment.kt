@@ -33,8 +33,8 @@ class MatchDetailFragment :
             }
         }
 
-        val roomId = 138L
-        //viewModel.getRoom(roomId)
+        val roomId = 18L
+        viewModel.getRoom(roomId)
     }
 
 

@@ -16,7 +16,13 @@
             android:value="${NAVER_MAP_CLIENT_ID_FOR_MANIFEST}" />
 
         <activity android:name=".presentation.ui.splash.SplashActivity"
-            android:exported="false">
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
 
         <activity android:name=".presentation.ui.intro.IntroActivity"
@@ -26,11 +32,8 @@
 
         <activity android:name=".presentation.ui.main.MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity

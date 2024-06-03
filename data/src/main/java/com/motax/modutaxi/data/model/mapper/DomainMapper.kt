@@ -23,10 +23,7 @@ import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
-import com.motax.modutaxi.domain.model.GetSpotListData
-import com.motax.modutaxi.domain.model.GetSpotListItemData
 import com.motax.modutaxi.domain.model.CoordinateData
-import com.motax.modutaxi.domain.model.CoordinateReferenceSystemData
 import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.model.MemberInfoData
 import com.motax.modutaxi.domain.model.NearSpotData
@@ -191,9 +188,6 @@ fun RoomResponse.toDomain() = RoomData(
     expectedChargePerPerson = expectedChargePerPerson,
     expectedCharge = expectedCharge,
     path = PathData(
-        coordinateReferenceSystem = CoordinateReferenceSystemData(
-            type = path.coordinateReferenceSystem.type
-        ),
         coordinates = path.coordinates.map {
             CoordinateData(
                 values = it.values
