@@ -1,7 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.createparty.arrival
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -14,8 +13,10 @@ import com.motax.modutaxi.presentation.databinding.FragmentArrivalMapBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
-import com.motax.modutaxi.presentation.util.Constants.TAG
+import com.motax.modutaxi.presentation.ui.setMapZoomForCircle
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraAnimation
+import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -66,19 +67,7 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
             isCompassEnabled = false
             isZoomControlEnabled = false
         }
-        setInitCamera()
         viewModel.getMarkerData(selectedLocation.latitude, selectedLocation.longitude)
-    }
-
-    private fun setInitCamera() {
-        moveCamera(selectedLocation.latitude, selectedLocation.longitude)
-    }
-
-    private fun moveCamera(latitude: Double, longitude: Double) {
-        val locate = CameraUpdate.scrollTo(
-            LatLng(latitude, longitude)
-        )
-        naverMap.moveCamera(locate)
     }
 
     private fun initEventObserve() {
@@ -106,8 +95,11 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
                         findNavController().navigateUp()
                     }
 
-                    is ArrivalMapEvent.ChangeZoom -> {
-                        it.state
+                    is ArrivalMapEvent.MoveCamera -> {
+                        val cameraPosition = CameraPosition(LatLng(selectedLocation.latitude, selectedLocation.longitude), it.distance.setMapZoomForCircle(requireContext()))
+                        val cameraUpdate = CameraUpdate.toCameraPosition(cameraPosition)
+                            .apply{ animate(CameraAnimation.Fly, 100)}
+                        naverMap.moveCamera(cameraUpdate)
                     }
                 }
             }

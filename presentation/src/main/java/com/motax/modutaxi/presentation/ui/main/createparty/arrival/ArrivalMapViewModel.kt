@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiMarkerItem
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
-import com.naver.maps.map.overlay.Marker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +30,7 @@ sealed class ArrivalMapEvent {
     ) : ArrivalMapEvent()
 
     data object NavigateToBack : ArrivalMapEvent()
-    data class ChangeZoom(val state: Double) : ArrivalMapEvent()
+    data class MoveCamera(val distance: Double) : ArrivalMapEvent()
 }
 
 @HiltViewModel
@@ -56,7 +55,7 @@ class ArrivalMapViewModel @Inject constructor(
                     )
                 }
                 _event.emit(ArrivalMapEvent.SetMarkers)
-                _event.emit(ArrivalMapEvent.ChangeZoom(it.distance))
+                _event.emit(ArrivalMapEvent.MoveCamera(it.distance))
             }.onFailure {
 
             }
