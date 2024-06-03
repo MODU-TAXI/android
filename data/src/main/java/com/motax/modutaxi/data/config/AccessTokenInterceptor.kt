@@ -18,7 +18,7 @@ class AccessTokenInterceptor @Inject constructor(private val dataStoreManager: D
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val accessToken = runBlocking {
-            dataStoreManager.getAccessToken().first()
+            dataStoreManager.getAccessToken()
         }
 
         Log.d("token", accessToken.toString())

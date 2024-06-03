@@ -1,9 +1,11 @@
 package com.motax.modutaxi.di
 
+import com.motax.modutaxi.data.repository.AuthRepositoryImpl
 import com.motax.modutaxi.data.repository.IntroRepositoryImpl
 import com.motax.modutaxi.data.repository.MainRepositoryImpl
 import com.motax.modutaxi.data.repository.NaverMapRepositoryImpl
 import com.motax.modutaxi.data.repository.NaverRepositoryImpl
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.IntroRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.domain.repository.NaverMapRepository
@@ -17,6 +19,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+
+    @Singleton
+    @Binds
+    abstract fun bindAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
 
     @Singleton
     @Binds

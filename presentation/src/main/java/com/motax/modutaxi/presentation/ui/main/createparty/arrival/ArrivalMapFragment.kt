@@ -1,9 +1,9 @@
 package com.motax.modutaxi.presentation.ui.main.createparty.arrival
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,8 +13,10 @@ import com.motax.modutaxi.presentation.databinding.FragmentArrivalMapBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
-import com.motax.modutaxi.presentation.util.Constants.TAG
+import com.motax.modutaxi.presentation.ui.setMapZoomForCircle
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraAnimation
+import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -28,11 +30,11 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
     OnMapReadyCallback {
 
     private val markerList = mutableListOf<Marker>()
-    private val selectedMarker: Marker? = null
+    private var selectedMarker: Marker? = null
 
     private lateinit var naverMap: NaverMap
     private val parentViewModel: MainViewModel by activityViewModels()
-    private val viewModel: ArrivalMapViewModel by activityViewModels()
+    private val viewModel: ArrivalMapViewModel by viewModels()
     private val createPartyViewModel: CreatePartyViewModel by activityViewModels()
     private val args: ArrivalMapFragmentArgs by navArgs()
 
@@ -65,19 +67,7 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
             isCompassEnabled = false
             isZoomControlEnabled = false
         }
-        setInitCamera()
         viewModel.getMarkerData(selectedLocation.latitude, selectedLocation.longitude)
-    }
-
-    private fun setInitCamera() {
-        moveCamera(selectedLocation.latitude, selectedLocation.longitude)
-    }
-
-    private fun moveCamera(latitude: Double, longitude: Double) {
-        val locate = CameraUpdate.scrollTo(
-            LatLng(latitude, longitude)
-        )
-        naverMap.moveCamera(locate)
     }
 
     private fun initEventObserve() {
@@ -88,9 +78,10 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
                         viewModel.uiState.value.markerDataList.forEach { data ->
                             setMarker(data)
                         }
-                    }
-                    is ArrivalMapEvent.SelectMarker -> {
-                        moveCamera(it.latitude, it.longitude)
+
+                        if(selectedLocation.isSpot){
+                            clickSpot()
+                        }
                     }
                     is ArrivalMapEvent.SelectArrival -> {
                         createPartyViewModel.setArrivalInfo(
@@ -103,6 +94,13 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
                     is ArrivalMapEvent.NavigateToBack -> {
                         findNavController().navigateUp()
                     }
+
+                    is ArrivalMapEvent.MoveCamera -> {
+                        val cameraPosition = CameraPosition(LatLng(selectedLocation.latitude, selectedLocation.longitude), it.distance.setMapZoomForCircle(requireContext()))
+                        val cameraUpdate = CameraUpdate.toCameraPosition(cameraPosition)
+                            .apply{ animate(CameraAnimation.Fly, 100)}
+                        naverMap.moveCamera(cameraUpdate)
+                    }
                 }
             }
         }
@@ -114,10 +112,13 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
         marker.position = LatLng(data.latitude, data.longitude)
         marker.icon = OverlayImage.fromView(binding.marker)
         marker.setOnClickListener {
-            binding.tvMarkerText.text = viewModel.uiState.value.selectedMarkerData.landMark
-            selectedMarker?.icon = OverlayImage.fromView(binding.marker)
+            selectedMarker?.let{
+                binding.tvMarkerText.text = viewModel.uiState.value.selectedMarkerData.landMark
+                selectedMarker?.icon = OverlayImage.fromView(binding.marker)
+            }
             binding.tvSelectedMarkerText.text = data.landMark
             marker.icon = OverlayImage.fromView(binding.markerSelected)
+            selectedMarker = marker
             viewModel.selectMarker(data)
             true
         }
@@ -125,7 +126,9 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
         markerList.add(marker)
     }
 
-
+    private fun clickSpot(){
+        markerList[0].performClick()
+    }
 
     private fun NavController.toCreateParty() {
         val action = ArrivalMapFragmentDirections.actionArrivalMapFragmentToCreatePartyFragment()

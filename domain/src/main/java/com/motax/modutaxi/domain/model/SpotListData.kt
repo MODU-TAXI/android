@@ -1,10 +1,10 @@
-package com.motax.modutaxi.data.model.response
+package com.motax.modutaxi.domain.model
 
-data class GetSpotListResponse(
-    val spots: List<GetSpotListItem>
+data class SpotListData(
+    val spots: List<SpotListItemData>
 )
 
-data class GetSpotListItem(
+data class SpotListItemData(
     val id: Long,
     val name: String,
     val address: String,

@@ -1,5 +1,6 @@
 package com.motax.modutaxi.di
 
+import com.motax.modutaxi.data.remote.AuthApi
 import com.motax.modutaxi.data.remote.IntroApi
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.data.remote.NaverApi
@@ -15,6 +16,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
+
+    @Singleton
+    @Provides
+    fun provideAuthApi(@NetworkModule.BaseRetrofit retrofit: Retrofit): AuthApi =
+        retrofit.create(AuthApi::class.java)
 
     @Singleton
     @Provides

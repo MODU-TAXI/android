@@ -7,13 +7,15 @@ data class MtLocation(
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
     val landMark: String? = "",
-    val address: String? = ""
+    val address: String? = "",
+    val isSpot: Boolean = false,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readByte() != 0.toByte()
     ) {
     }
 
@@ -22,6 +24,7 @@ data class MtLocation(
         parcel.writeDouble(longitude)
         parcel.writeString(landMark)
         parcel.writeString(address)
+        parcel.writeByte(if (isSpot) 1 else 0)
     }
 
     override fun describeContents(): Int {

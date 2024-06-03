@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
-class SplashActivity: BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
+class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
 
     private val viewModel: SplashViewModel by viewModels()
 
@@ -20,10 +20,10 @@ class SplashActivity: BaseActivity<ActivitySplashBinding>(ActivitySplashBinding:
 
         repeatOnStarted {
             delay(2000)
-            viewModel.getAutoLogin()
+            viewModel.checkLoginType()
         }
         repeatOnStarted {
-            viewModel.events.collect {
+            viewModel.event.collect {
                 when (it) {
                     is SplashUiEvent.NavigateToIntro -> toIntroActivity()
                     is SplashUiEvent.NavigateToMain -> toMainActivity()
