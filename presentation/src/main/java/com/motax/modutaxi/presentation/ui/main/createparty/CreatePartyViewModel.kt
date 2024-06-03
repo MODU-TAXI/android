@@ -39,6 +39,7 @@ sealed class CreatePartyEvent {
     data object NavigateToDepartureMap : CreatePartyEvent()
     data object NavigateToArrivalSearch : CreatePartyEvent()
     data class NavigateToMatchDetail(val id: Long) : CreatePartyEvent()
+    data class ShowToast(val msg: String) : CreatePartyEvent()
 }
 
 @HiltViewModel
@@ -90,6 +91,7 @@ class CreatePartyViewModel @Inject constructor(
                 _event.emit(CreatePartyEvent.NavigateToMatchDetail(it.roomId))
             }.onFailure {
 
+                _event.emit(CreatePartyEvent.ShowToast(it.message.toString()))
             }
         }
     }
