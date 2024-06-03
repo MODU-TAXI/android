@@ -20,12 +20,10 @@ class CreatePartyFragment :
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: CreatePartyViewModel by activityViewModels()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-
         parentViewModel.setNotFullScreenMode()
         initEventObserve()
     }
