@@ -2,7 +2,8 @@ package com.motax.modutaxi.data.repository
 
 import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.remote.MainApi
-import com.motax.modutaxi.domain.model.GetSpotListData
+import com.motax.modutaxi.domain.model.NearSpotData
+import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.repository.MainRepository
 import javax.inject.Inject
@@ -20,12 +21,12 @@ class MainRepositoryImpl @Inject constructor(
         api.enterPot(roomId)
     }
 
-    override suspend fun getSpotRadius(
-        radius: Long,
+    override suspend fun getNearSpot(
+        count: Int,
         latitude: Double,
         longitude: Double
-    ): Result<GetSpotListData> = runCatching {
-        api.getSpotRadius(radius, latitude, longitude)
+    ): Result<NearSpotData> = runCatching {
+        api.getNearSpot(count, latitude, longitude)
     }.mapCatching { it.toDomain() }
 
     override suspend fun getSpotList(
@@ -33,7 +34,7 @@ class MainRepositoryImpl @Inject constructor(
         size: Int,
         searchLongitude: Double,
         searchLatitude: Double
-    ): Result<GetSpotListData> = runCatching {
+    ): Result<SpotListData> = runCatching {
         api.getSpotList(page, size, searchLongitude, searchLatitude)
     }.mapCatching { it.toDomain() }
 

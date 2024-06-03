@@ -1,5 +1,6 @@
 package com.motax.modutaxi.data.remote
 
+import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import retrofit2.http.GET
@@ -21,11 +22,11 @@ interface MainApi {
     ): Unit
 
     @GET("/api/spots/map")
-    suspend fun getSpotRadius(
-        @Query("radius") radius: Long,
+    suspend fun getNearSpot(
+        @Query("count") count: Int,
         @Query("searchLatitude") latitude: Double,
         @Query("searchLongitude") longitude: Double
-    ): GetSpotListResponse
+    ): GetNearSpotResponse
 
     @GET("/api/spots/list")
     suspend fun getSpotList(

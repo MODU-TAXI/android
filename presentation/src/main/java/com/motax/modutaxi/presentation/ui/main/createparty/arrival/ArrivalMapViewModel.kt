@@ -47,18 +47,16 @@ class ArrivalMapViewModel @Inject constructor(
 
     fun getMarkerData(latitude: Double, longitude: Double) {
         viewModelScope.launch {
-            repository.getSpotList(0, 3, longitude, latitude).onSuccess {
-                var maxDistance = 0.0
+            repository.getNearSpot(3, latitude, longitude).onSuccess {
                 _uiState.update { state ->
                     state.copy(
                         markerDataList = it.spots.map { data ->
-                            if (maxDistance < data.distance) maxDistance = data.distance
                             data.toUiMarkerItem()
                         }
                     )
                 }
                 _event.emit(ArrivalMapEvent.SetMarkers)
-                _event.emit(ArrivalMapEvent.ChangeZoom(maxDistance))
+                _event.emit(ArrivalMapEvent.ChangeZoom(it.distance))
             }.onFailure {
 
             }

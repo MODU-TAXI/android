@@ -10,6 +10,6 @@ data class GetSpotListItem(
     val address: String,
     val longitude: Double,
     val latitude: Double,
-    val distance: Double?,
-    val liked: Boolean?
+    val distance: Double,
+    val liked: Boolean
 )

@@ -1,6 +1,7 @@
 package com.motax.modutaxi.domain.repository
 
-import com.motax.modutaxi.domain.model.GetSpotListData
+import com.motax.modutaxi.domain.model.NearSpotData
+import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 
 interface MainRepository {
@@ -14,16 +15,16 @@ interface MainRepository {
         roomId: Long
     ): Result<Unit>
 
-    suspend fun getSpotRadius(
-        radius: Long,
+    suspend fun getNearSpot(
+        count: Int,
         latitude: Double,
         longitude: Double
-    ): Result<GetSpotListData>
+    ): Result<NearSpotData>
 
     suspend fun getSpotList(
         page: Int,
         size: Int,
         searchLongitude: Double,
         searchLatitude: Double
-    ): Result<GetSpotListData>
+    ): Result<SpotListData>
 }
