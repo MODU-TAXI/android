@@ -2,7 +2,7 @@ package com.motax.modutaxi.domain.repository
 
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
-import com.motax.modutaxi.domain.model.RoomData
+import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 
 interface MainRepository {
@@ -29,7 +29,17 @@ interface MainRepository {
         searchLatitude: Double
     ): Result<SpotListData>
 
+    suspend fun createTaxiPot(
+        spotId: Long,
+        roomTagBitMask: List<String>,
+        departureLongitude: Double,
+        departureLatitude: Double,
+        departureTime: String,
+        departureName: String,
+        wishHeadcount: Int
+    ): Result<TaxiPotDetailData>
+
     suspend fun getRoom(
         roomId: Long
-    ):Result<RoomData>
+    ):Result<TaxiPotDetailData>
 }

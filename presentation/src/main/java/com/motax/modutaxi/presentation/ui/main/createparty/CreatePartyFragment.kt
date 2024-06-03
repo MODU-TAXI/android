@@ -11,6 +11,7 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentCreatePartyBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
+import com.motax.modutaxi.presentation.ui.toMatchDetail
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,12 +21,10 @@ class CreatePartyFragment :
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: CreatePartyViewModel by activityViewModels()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-
         parentViewModel.setNotFullScreenMode()
         initEventObserve()
     }
@@ -37,6 +36,8 @@ class CreatePartyFragment :
                     is CreatePartyEvent.NavigateToArrivalSearch -> findNavController().toArrivalSearch()
                     is CreatePartyEvent.NavigateToDepartureMap -> findNavController().toDepartureMap()
                     is CreatePartyEvent.ShowTimePicker -> showTimePicker(it.hour, it.minute)
+                    is CreatePartyEvent.NavigateToMatchDetail -> findNavController().toMatchDetail(it.id)
+                    is CreatePartyEvent.ShowToast -> showToastMessage(it.msg)
                 }
             }
         }

@@ -1,9 +1,11 @@
 package com.motax.modutaxi.data.remote
 
+import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
-import com.motax.modutaxi.data.model.response.RoomResponse
+import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -37,9 +39,13 @@ interface MainApi {
         @Query("searchLatitude") searchLatitude: Double
     ): GetSpotListResponse
 
+    @POST("/api/rooms")
+    suspend fun createTaxiPot(
+        @Body params: CreateTaxiPotRequest
+    ): TaxiPotDetailResponse
 
     @GET("/api/rooms/{roomId}")
     suspend fun getRoom(
         @Path("roomId") roomId: Long
-    ) : RoomResponse
+    ) : TaxiPotDetailResponse
 }

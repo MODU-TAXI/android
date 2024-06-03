@@ -2,9 +2,15 @@ package com.motax.modutaxi.presentation.ui
 
 import android.content.Context
 import com.motax.modutaxi.domain.model.AddressFromGeoItemData
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -20,6 +26,19 @@ fun AddressFromGeoItemData.toAddressString() =
 
 
 fun AddressFromGeoItemData.toBuildingName() = land.addition0.value
+
+
+
+fun getUTCTime(hour: Int, minute: Int): String{
+    val seoulZoneId = ZoneId.of("Asia/Seoul")
+    val currentSeoulDateTime = LocalDateTime.now(seoulZoneId)
+        .withHour(hour)
+        .withMinute(minute)
+    val offset = ZoneOffset.from(currentSeoulDateTime.atZone(seoulZoneId))
+    val localDateTimeWithOffset = currentSeoulDateTime.atOffset(offset)
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    return localDateTimeWithOffset.format(formatter)
+}
 
 fun getTodayDate(): String {
     val currentDate = LocalDate.now()
