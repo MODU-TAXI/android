@@ -14,7 +14,7 @@ data class TaxiPotDetailData(
     val durationMinutes: Int,
     val expectedCharge: Int,
     val expectedChargePerPerson: Int,
-    val managerId: Int,
+    val managerId: Long,
     val myRoom: Boolean,
     val participate: Boolean,
     val path: PathData,
