@@ -2,6 +2,7 @@ package com.motax.modutaxi.presentation.ui.main.createparty.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.domain.repository.NaverRepository
 import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiSearchResultItem
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiSearchResultItem
@@ -21,7 +22,10 @@ import javax.inject.Inject
 data class ArrivalSearchUiState(
     val searchResult: List<UiSearchResultItem> = emptyList(),
     val curLatitude: Double = 37.4507292,
-    val curLongitude: Double = 126.6538126
+    val curLongitude: Double = 126.6538126,
+    val nearSpot: String = "",
+    val nearSpotLatitude: Double = 0.0,
+    val nearSpotLongitude: Double = 0.0
 )
 
 sealed class ArrivalSearchEvent {
@@ -30,14 +34,15 @@ sealed class ArrivalSearchEvent {
         val latitude: Double,
         val longitude: Double,
         val landMark: String,
-        val address: String
-    ) :
-        ArrivalSearchEvent()
+        val address: String,
+        val isSpot: Boolean
+    ) : ArrivalSearchEvent()
 }
 
 @HiltViewModel
 class ArrivalSearchViewModel @Inject constructor(
-    private val repository: NaverRepository
+    private val repository: NaverRepository,
+    private val mainRepository: MainRepository
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<ArrivalSearchEvent>()
@@ -86,10 +91,42 @@ class ArrivalSearchViewModel @Inject constructor(
                         }.sortedBy { it.distance }
                     )
                 }
+
+                if(uiState.value.searchResult.isNotEmpty()){
+                    val firstResult = uiState.value.searchResult[0]
+                    getNearSpot(firstResult.longitude, firstResult.latitude)
+                } else {
+                    _uiState.update { state ->
+                        state.copy(
+                            nearSpot = ""
+                        )
+                    }
+                }
             }.onFailure {
 
             }
         }
+    }
+
+    private fun getNearSpot(searchLongitude: Double, searchLatitude: Double){
+        viewModelScope.launch {
+            mainRepository.getSpotList(0,1,searchLongitude,searchLatitude).onSuccess {
+                _uiState.update { state ->
+                    state.copy(
+                        nearSpot = it.spots[0].name,
+                        nearSpotLatitude = it.spots[0].latitude,
+                        nearSpotLongitude = it.spots[0].longitude
+                    )
+                }
+            }.onFailure {
+                _uiState.update { state ->
+                    state.copy(
+                        nearSpot = ""
+                    )
+                }
+            }
+        }
+
     }
 
     private fun selectLocation(
@@ -99,7 +136,13 @@ class ArrivalSearchViewModel @Inject constructor(
         address: String
     ) {
         viewModelScope.launch {
-            _event.emit(ArrivalSearchEvent.SelectLocation(latitude, longitude, landMark, address))
+            _event.emit(ArrivalSearchEvent.SelectLocation(latitude, longitude, landMark, address, false))
+        }
+    }
+
+    fun selectSpot(){
+        viewModelScope.launch {
+            _event.emit(ArrivalSearchEvent.SelectLocation(uiState.value.nearSpotLatitude, uiState.value.nearSpotLongitude, uiState.value.nearSpot, "", true))
         }
     }
 

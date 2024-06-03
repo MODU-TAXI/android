@@ -2,17 +2,18 @@ package com.motax.modutaxi.data.model.mapper
 
 import android.text.Html
 import com.motax.modutaxi.data.model.response.AddressFromGeoResponse
-import com.motax.modutaxi.data.model.response.TokenResponse
+import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
+import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
 import com.motax.modutaxi.data.model.response.RoomResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
-import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.TaxiPotItem
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
+import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
 import com.motax.modutaxi.domain.model.AddressFromGeoData
@@ -20,7 +21,7 @@ import com.motax.modutaxi.domain.model.AddressFromGeoItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoLandData
 import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
-import com.motax.modutaxi.domain.model.TokenData
+import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
 import com.motax.modutaxi.domain.model.GetSpotListData
 import com.motax.modutaxi.domain.model.GetSpotListItemData
@@ -28,13 +29,17 @@ import com.motax.modutaxi.domain.model.CoordinateData
 import com.motax.modutaxi.domain.model.CoordinateReferenceSystemData
 import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.model.MemberInfoData
+import com.motax.modutaxi.domain.model.NearSpotData
+import com.motax.modutaxi.domain.model.NearSpotItemData
 import com.motax.modutaxi.domain.model.PathData
 import com.motax.modutaxi.domain.model.RoomData
 import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.domain.model.SearchResultListData
-import com.motax.modutaxi.domain.model.AuthData
+import com.motax.modutaxi.domain.model.SpotListData
+import com.motax.modutaxi.domain.model.SpotListItemData
 import com.motax.modutaxi.domain.model.TaxiPotData
 import com.motax.modutaxi.domain.model.TaxiPotListData
+import com.motax.modutaxi.domain.model.TokenData
 
 fun TokenResponse.toDomain() = TokenData(
     accessToken = accessToken,
@@ -125,12 +130,28 @@ fun AddressFromGeoResponse.toDomain() = AddressFromGeoData(
     }
 )
 
-fun GetSpotListResponse.toDomain() = GetSpotListData(spots.map {
-    GetSpotListItemData(
+fun GetNearSpotResponse.toDomain() = NearSpotData(
+    distance = distance,
+    spots = spots.map {
+        NearSpotItemData(
+            it.id,
+            it.name,
+            it.address,
+            it.longitude,
+            it.latitude
+        )
+    }
+)
+
+fun GetSpotListResponse.toDomain() = SpotListData(spots.map {
+    SpotListItemData(
         it.id,
+        it.name,
+        it.address,
         it.longitude,
         it.latitude,
-        it.spotName
+        it.distance,
+        it.liked
     )
 })
 

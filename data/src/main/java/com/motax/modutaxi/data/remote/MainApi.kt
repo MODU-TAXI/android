@@ -1,5 +1,6 @@
 package com.motax.modutaxi.data.remote
 
+import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.RoomResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
@@ -22,10 +23,18 @@ interface MainApi {
     ): Unit
 
     @GET("/api/spots/map")
-    suspend fun getSpot(
-        @Query("radius") radius: Long,
-        @Query("latitude") latitude: Double,
-        @Query("longitude") longitude: Double
+    suspend fun getNearSpot(
+        @Query("count") count: Int,
+        @Query("searchLatitude") latitude: Double,
+        @Query("searchLongitude") longitude: Double
+    ): GetNearSpotResponse
+
+    @GET("/api/spots/list")
+    suspend fun getSpotList(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("searchLongitude") searchLongitude: Double,
+        @Query("searchLatitude") searchLatitude: Double
     ): GetSpotListResponse
 
 

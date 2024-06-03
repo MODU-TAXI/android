@@ -9,6 +9,7 @@ import com.motax.modutaxi.data.Constants.ACCESS_TOKEN
 import com.motax.modutaxi.data.Constants.AUTO_LOGIN
 import com.motax.modutaxi.data.Constants.REFRESH_TOKEN
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -19,16 +20,16 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
         private val REFRESH_TOKEN_KEY = stringPreferencesKey(REFRESH_TOKEN)
     }
 
-    fun getAccessToken(): Flow<String?> {
+    suspend fun getAccessToken(): String? {
         return dataStore.data.map { prefs ->
-            prefs[ACCESS_TOKEN_KEY] ?: ""
-        }
+            prefs[ACCESS_TOKEN_KEY]
+        }.first()
     }
 
-    fun getRefreshToken() : Flow<String?> {
+    suspend fun getRefreshToken() : String? {
         return dataStore.data.map { prefs ->
-            prefs[REFRESH_TOKEN_KEY] ?: ""
-        }
+            prefs[REFRESH_TOKEN_KEY]
+        }.first()
     }
 
     suspend fun putAccessToken(token : String){
