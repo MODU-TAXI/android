@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/matchDetailFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -83,6 +83,11 @@
         android:id="@+id/taxiPotFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.taxipot.TaxiPotFragment"
         android:label="TaxiPotFragment" />
+    <fragment
+        android:id="@+id/matchDetailFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.matchdetail.MatchDetailFragment"
+        android:label="MatchDetailFragment">
+    </fragment>
 
 
 </navigation>

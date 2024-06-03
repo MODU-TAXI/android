@@ -2,6 +2,7 @@ package com.motax.modutaxi.data.remote
 
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
+import com.motax.modutaxi.data.model.response.RoomResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -37,4 +38,8 @@ interface MainApi {
     ): GetSpotListResponse
 
 
+    @GET("/api/rooms/{roomId}")
+    suspend fun getRoom(
+        @Path("roomId") roomId: Long
+    ) : RoomResponse
 }

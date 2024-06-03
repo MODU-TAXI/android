@@ -8,6 +8,7 @@ import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
+import com.motax.modutaxi.data.model.response.RoomResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotItem
@@ -22,10 +23,13 @@ import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
+import com.motax.modutaxi.domain.model.CoordinateData
 import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.model.MemberInfoData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NearSpotItemData
+import com.motax.modutaxi.domain.model.PathData
+import com.motax.modutaxi.domain.model.RoomData
 import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.domain.model.SearchResultListData
 import com.motax.modutaxi.domain.model.SpotListData
@@ -161,4 +165,36 @@ fun MemberInfo.toDomain() = MemberInfoData(
     phoneNumber = phoneNumber,
     email = email ?: "",
     imageUrl = imageUrl
+)
+
+fun RoomResponse.toDomain() = RoomData(
+    managerId = managerId,
+    profileImageUrl = profileImageUrl,
+    roomId = roomId,
+    spotId = spotId,
+    departureDairyDate = departureDairyDate,
+    arrivalLongitude = arrivalLongitude,
+    arrivalLatitude = arrivalLatitude,
+    arrivalTime = arrivalTime,
+    arrivalName = arrivalName,
+    roomTagBitMaskList = roomTagBitMaskList,
+    departureLongitude = departureLongitude,
+    departureLatitude = departureLatitude,
+    departureTime = departureTime,
+    departureName = departureName,
+    currentHeadcount = currentHeadcount,
+    wishHeadcount = wishHeadcount,
+    durationMinutes = durationMinutes,
+    expectedChargePerPerson = expectedChargePerPerson,
+    expectedCharge = expectedCharge,
+    path = PathData(
+        coordinates = path.coordinates.map {
+            CoordinateData(
+                values = it.values
+            )
+        },
+        type = path.type
+    ),
+    participate = participate,
+    myRoom = myRoom
 )
