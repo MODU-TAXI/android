@@ -18,10 +18,10 @@ data class TaxiPotDetailData(
     val myRoom: Boolean,
     val participate: Boolean,
     val path: PathData,
-    val profileImageUrl: String,
-    val roomId: Int,
+    val profileImageUrl: String?,
+    val roomId: Long,
     val roomTagBitMaskList: List<String>,
-    val spotId: Int,
+    val spotId: Long,
     val wishHeadcount: Int
 )
 

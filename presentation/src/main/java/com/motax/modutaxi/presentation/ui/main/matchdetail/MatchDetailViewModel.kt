@@ -21,14 +21,14 @@ data class MatchDetailUiState(
     val arrivalTime: String = "",
     val arrivalName: String = "",
     val departureName: String = "",
-    val departureTime: String = "null",
+    val departureTime: String = "",
     val expectedChargePerPerson: Int = 0,
     val expectedCharge: Int = 0,
     val myRoom: Boolean = false,
     val participate: Boolean = false,
     val currentHeadcount: Int = 0,
     val wishHeadcount: Int = 0,
-    val roomId: Int = 0,
+    val roomId: Long = 0,
     val chipItems: List<String> = emptyList(),
     val participantList: List<UiParticipantItem> = emptyList()
 )

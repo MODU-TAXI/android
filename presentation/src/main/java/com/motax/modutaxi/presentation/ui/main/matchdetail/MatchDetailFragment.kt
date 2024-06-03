@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMatchDetailBinding
@@ -15,25 +16,19 @@ class MatchDetailFragment :
     BaseFragment<FragmentMatchDetailBinding>(R.layout.fragment_match_detail) {
 
     private val viewModel: MatchDetailViewModel by viewModels()
-    private lateinit var participantAdapter: ParticipantAdapter
+    private val args: MatchDetailFragmentArgs by navArgs()
+    private val roomId by lazy { args.id }
+
+    private var participantAdapter: ParticipantAdapter?= null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
         participantAdapter = ParticipantAdapter()
         binding.rvParticipants.adapter = participantAdapter
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.uiState.collect { uiState ->
-                participantAdapter.submitList(uiState.participantList)
-            }
-        }
-
-        val roomId = 18L
         viewModel.getRoom(roomId)
     }
 

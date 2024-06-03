@@ -58,8 +58,8 @@ class DepartureMapFragment :
                     is DepartureMapEvent.NavigateToSearch -> findNavController().toDepartureSearch()
                     is DepartureMapEvent.SelectDeparture -> {
                         createPartyViewModel.setDepartureInfo(
-                            it.longitude,
                             it.latitude,
+                            it.longitude,
                             it.name.ifBlank { it.address }
                         )
                         findNavController().navigateUp()

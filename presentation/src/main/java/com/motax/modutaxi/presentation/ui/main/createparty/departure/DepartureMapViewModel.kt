@@ -147,8 +147,8 @@ class DepartureMapViewModel @Inject constructor(
         viewModelScope.launch {
             _event.emit(
                 DepartureMapEvent.SelectDeparture(
-                    uiState.value.longitude,
                     uiState.value.latitude,
+                    uiState.value.longitude,
                     uiState.value.landMark,
                     uiState.value.address
                 )

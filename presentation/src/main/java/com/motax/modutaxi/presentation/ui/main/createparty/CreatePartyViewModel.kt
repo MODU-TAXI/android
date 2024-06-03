@@ -38,6 +38,7 @@ sealed class CreatePartyEvent {
     data class ShowTimePicker(val hour: Int, val minute: Int) : CreatePartyEvent()
     data object NavigateToDepartureMap : CreatePartyEvent()
     data object NavigateToArrivalSearch : CreatePartyEvent()
+    data class NavigateToMatchDetail(val id: Long) : CreatePartyEvent()
 }
 
 @HiltViewModel
@@ -59,11 +60,16 @@ class CreatePartyViewModel @Inject constructor(
     val departureName = MutableStateFlow("")
     val wishHeadCount = MutableStateFlow(WishHeadCount.EMPTY)
 
-    val isDataReady = combine(spotId, roomTagBitMask, departureName, departureTime, wishHeadCount) { spot, roomTag, departureName, departureTime, wishHeadCount ->
-            spot != 0L && roomTag.isNotEmpty() && departureName.isNotBlank() && departureTime.isNotBlank() && wishHeadCount != WishHeadCount.EMPTY
-        }.stateIn(
-            viewModelScope, SharingStarted.WhileSubscribed(), false
-        )
+    val isDataReady = combine(
+        spotId,
+        departureName,
+        departureTime,
+        wishHeadCount
+    ) { spot, departureName, departureTime, wishHeadCount ->
+        spot != 0L && departureName.isNotBlank() && departureTime.isNotBlank() && wishHeadCount != WishHeadCount.EMPTY
+    }.stateIn(
+        viewModelScope, SharingStarted.WhileSubscribed(), false
+    )
 
     fun createTaxiPot() {
         viewModelScope.launch {
@@ -81,7 +87,7 @@ class CreatePartyViewModel @Inject constructor(
                 departureName.value,
                 wishHeadCount.value.count
             ).onSuccess {
-
+                _event.emit(CreatePartyEvent.NavigateToMatchDetail(it.roomId))
             }.onFailure {
 
             }
@@ -89,12 +95,13 @@ class CreatePartyViewModel @Inject constructor(
     }
 
     fun setDepartureInfo(
-        longitude: Double,
         latitude: Double,
+        longitude: Double,
         name: String
     ) {
         departureLatitude.value = latitude
         departureLongitude.value = longitude
+        departureName.value = name
 
         _uiState.update { state ->
             state.copy(

@@ -1,9 +1,9 @@
 package com.motax.modutaxi.presentation.ui.main.matchdetail.mapper
 
-import com.motax.modutaxi.domain.model.RoomData
+import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.presentation.ui.main.matchdetail.MatchDetailUiState
 
-fun RoomData.toUiRoomData() = MatchDetailUiState(
+fun TaxiPotDetailData.toUiRoomData() = MatchDetailUiState(
     managerId = managerId,
     profileImageUrl = profileImageUrl?: "",
     departureDairyDate = departureDairyDate,

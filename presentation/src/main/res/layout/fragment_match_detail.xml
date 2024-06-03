@@ -93,7 +93,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:singleLine="true"/>
 
-
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/match_detail_map_fragment"
                     android:name="com.naver.maps.map.MapFragment"
@@ -152,6 +151,7 @@
                     tools:text="인하대학교 후문"
                     app:layout_constraintStart_toStartOf="@id/tv_departure_time"
                     app:layout_constraintTop_toBottomOf="@id/tv_departure_time" />
+
                 <ImageView
                     android:id="@+id/iv_stick"
                     android:layout_width="wrap_content"
@@ -161,6 +161,7 @@
                     app:layout_constraintEnd_toEndOf="@id/iv_dotted_circle"
                     app:layout_constraintStart_toStartOf="@id/iv_dotted_circle"
                     app:layout_constraintTop_toBottomOf="@id/iv_dotted_circle" />
+
                 <ImageView
                     android:id="@+id/iv_mint_circle"
                     android:layout_width="0dp"
