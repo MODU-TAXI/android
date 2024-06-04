@@ -4,19 +4,38 @@ import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
+import com.motax.modutaxi.data.model.response.TaxiPotListRadiusItem
+import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface MainApi {
 
+    @GET("/api/rooms/map")
+    suspend fun getTaxiPotListRadius(
+        @QueryMap filter: Map<String, Long>,
+        @Query("radius") radius: Int,
+        @Query("searchLatitude") latitude: Double,
+        @Query("searchLongitude") longitude: Double,
+        @Query("sortType") sortType: String,
+        @Query("roomTags") roomTags: List<String>
+    ): TaxiPotListRadiusResponse
+
     @GET("/api/rooms/list")
     suspend fun getTaxiPotList(
+        @QueryMap filter: Map<String, Long>,
         @Query("page") page: Int,
-        @Query("size") size: Int
+        @Query("size") size: Int,
+        @Query("radius") radius: Int,
+        @Query("searchLatitude") latitude: Double,
+        @Query("searchLongitude") longitude: Double,
+        @Query("sortType") sortType: String,
+        @Query("roomTags") roomTags: List<String>
     ): TaxiPotListResponse
 
     @POST("/room-waiting/{roomId}/members")

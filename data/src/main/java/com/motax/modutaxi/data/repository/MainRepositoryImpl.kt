@@ -14,10 +14,30 @@ class MainRepositoryImpl @Inject constructor(
     private val api: MainApi
 ) : MainRepository {
 
-    override suspend fun getTaxiPotList(page: Int, size: Int): Result<TaxiPotListData> =
-        runCatching {
-            api.getTaxiPotList(page, size)
-        }.mapCatching { it.toDomain() }
+    override suspend fun getTaxiPotListRadius(
+        filter: Map<String, Long>,
+        radius: Int,
+        latitude: Double,
+        longitude: Double,
+        sortType: String,
+        roomTags: List<String>
+    ) = runCatching {
+        api.getTaxiPotListRadius(filter, radius, latitude, longitude, sortType, roomTags)
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun getTaxiPotList(
+        filter: Map<String, Long>,
+        page: Int,
+        size: Int,
+        radius: Int,
+        latitude: Double,
+        longitude: Double,
+        sortType: String,
+        roomTags: List<String>
+    ) = runCatching {
+        api.getTaxiPotList(filter,page, size, radius, latitude, longitude, sortType, roomTags)
+    }.mapCatching { it.toDomain() }
+
 
     override suspend fun enterPot(roomId: Long): Result<Unit> = runCatching {
         api.enterPot(roomId)

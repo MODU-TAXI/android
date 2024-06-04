@@ -1,13 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/showparty_map_fragment"
+            android:name="com.naver.maps.map.MapFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/et_search"
+            style="@style/TextLargeMedium"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rect_whitefill_nostroke_12radius"
+            android:drawableStart="@drawable/ic_magnifying_glass_mint"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/mx_gray600"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="델로님 우리 어디로 떠날까요?" />
+
+        <ImageView
+            android:id="@+id/iv_center_marker_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@{vm.uiState.isMoving ? @drawable/ic_car_marker_moving : @drawable/ic_car_marker_stop}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_create_taxi_pot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/ic_create_taxi_pot"
+            app:layout_constraintBottom_toTopOf="@id/bottom_sheet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_cur_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_cur_location"
+            app:layout_constraintEnd_toStartOf="@id/btn_refresh"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@id/btn_create_taxi_pot"
+            app:layout_constraintTop_toTopOf="@id/btn_create_taxi_pot" />
+
+        <ImageView
+            android:id="@+id/btn_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_refresh"
+            app:layout_constraintBottom_toBottomOf="@id/btn_cur_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_cur_location"
+            app:layout_constraintTop_toTopOf="@id/btn_cur_location" />
+
+        <FrameLayout
+            android:id="@+id/bottom_sheet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -12,6 +12,7 @@ import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotItem
+import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
@@ -37,6 +38,8 @@ import com.motax.modutaxi.domain.model.SpotListItemData
 import com.motax.modutaxi.domain.model.TaxiPotData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
+import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
+import com.motax.modutaxi.domain.model.TaxiPotListRadiusItemData
 import com.motax.modutaxi.domain.model.TokenData
 
 fun TokenResponse.toDomain() = TokenData(
@@ -197,4 +200,15 @@ fun TaxiPotDetailResponse.toDomain() = TaxiPotDetailData(
     roomTagBitMaskList = roomTagBitMaskList,
     spotId = spotId,
     wishHeadcount = wishHeadcount
+)
+
+fun TaxiPotListRadiusResponse.toDomain() = TaxiPotListRadiusData(
+    rooms = rooms.map {
+        TaxiPotListRadiusItemData(
+            id = it.id,
+            departureLongitude = it.departureLongitude,
+            departureLatitude = it.departureLatitude,
+            spotName = it.spotName
+        )
+    }
 )

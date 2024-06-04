@@ -4,12 +4,28 @@ import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
+import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
 
 interface MainRepository {
 
+    suspend fun getTaxiPotListRadius(
+        filter: Map<String, Long>,
+        radius: Int,
+        latitude: Double,
+        longitude: Double,
+        sortType: String,
+        roomTags: List<String>
+    ) : Result<TaxiPotListRadiusData>
+
     suspend fun getTaxiPotList(
+        filter: Map<String, Long>,
         page: Int,
-        size: Int
+        size: Int,
+        radius: Int,
+        latitude: Double,
+        longitude: Double,
+        sortType: String,
+        roomTags: List<String>
     ): Result<TaxiPotListData>
 
     suspend fun enterPot(
