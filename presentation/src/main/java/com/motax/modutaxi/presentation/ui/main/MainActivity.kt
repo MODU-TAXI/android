@@ -45,7 +45,7 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
             }
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                if(destination.id == R.id.homeFragment || destination.id == R.id.showPartyFragment || destination.id == R.id.myPageFragment ||
+                if(destination.id == R.id.homeFragment  || destination.id == R.id.myPageFragment ||
                     destination.id == R.id.taxiPotFragment){
                     bottomNavigationView.visibility = View.VISIBLE
                 } else {

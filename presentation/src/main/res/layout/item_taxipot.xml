@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.motax.modutaxi.presentation.ui.main.partylist.model.UiTaxiPotItem" />
+            type="com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem" />
 
     </data>
 
