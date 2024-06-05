@@ -2,11 +2,7 @@ package com.motax.modutaxi.presentation.ui.main.showparty.model
 
 data class UiTaxiPotMarkerItem(
     val roomId: Long = 0,
-    val spotId: Long = 0,
-    val departureName: String = "",
-    val departureTime: String = "",
-    val arrivalName: String = "",
-    val headCountString: String = "",
-    val expectedCharge : String = "",
-    val roomTagBitMaskList : List<String> = emptyList(),
+    val longitude: Double = 0.0,
+    val latitude: Double = 0.0,
+    val spotName: String = ""
 )

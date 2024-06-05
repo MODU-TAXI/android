@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.showparty
 import android.Manifest
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
@@ -16,14 +17,19 @@ import com.motax.modutaxi.presentation.databinding.FragmentShowPartyBinding
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
+import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
+import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotMarkerItem
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import com.motax.modutaxi.presentation.ui.to8Round
 import com.motax.modutaxi.presentation.ui.toMatchDetail
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +37,8 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     OnMapReadyCallback {
 
     private lateinit var naverMap: NaverMap
+    private val markerList = mutableListOf<Marker>()
+    private var selectedMarker: Marker? = null
 
     private val locationPermissionList = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
@@ -62,7 +70,9 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
                     }
 
                     is ShowPartyEvent.SetMarkers -> {
-
+                        it.list.forEach { data ->
+                            setMarker(data)
+                        }
                     }
 
                     is ShowPartyEvent.NavigateToSearch -> findNavController().toShowPartySearch()
@@ -82,6 +92,9 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
                 }
 
         mapFragment.getMapAsync(this)
+        binding.btnRefresh.setOnClickListener {
+            viewModel.getTaxiPots()
+        }
     }
 
     override fun onMapReady(nM: NaverMap) {
@@ -118,7 +131,6 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     }
 
     private fun setMapListener() {
-        // todo 화면 이동시 리스너
 
         naverMap.addOnCameraChangeListener { _, isStop ->
             if (!isStop) {
@@ -129,9 +141,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         naverMap.addOnCameraIdleListener {
             viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
-            if(viewModel.uiState.value.latitude != cameraPosition.latitude.to8Round() || viewModel.uiState.value.longitude != cameraPosition.longitude.to8Round()){
-                // todo 주변 방 호출 API
-            }
+            viewModel.getTaxiPots(cameraPosition.latitude, cameraPosition.longitude)
         }
     }
 
@@ -150,12 +160,33 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         naverMap.moveCamera(locate)
     }
 
-    private fun NavController.toShowPartySearch(){
+
+    private fun setMarker(data: UiTaxiPotMarkerItem) {
+        val marker = Marker()
+        binding.partyMarker.text = data.spotName
+        marker.position = LatLng(data.latitude, data.longitude)
+        marker.icon = OverlayImage.fromView(binding.partyMarker)
+        marker.setOnClickListener {
+            selectedMarker?.let {
+                binding.partyMarker.text = viewModel.uiState.value.selectedMarkerData.spotName
+                selectedMarker?.icon = OverlayImage.fromView(binding.partyMarker)
+            }
+            binding.partyMarkerSelected.text = data.spotName
+            marker.icon = OverlayImage.fromView(binding.partyMarkerSelected)
+            selectedMarker = marker
+            viewModel.selectMarker(data)
+            true
+        }
+        marker.map = naverMap
+        markerList.add(marker)
+    }
+
+    private fun NavController.toShowPartySearch() {
         val action = ShowPartyFragmentDirections.actionShowPartyFragmentToShowPartySearchFragment()
         navigate(action)
     }
 
-    private fun NavController.toCreateParty(){
+    private fun NavController.toCreateParty() {
         val action = ShowPartyFragmentDirections.actionShowPartyFragmentToCreatePartyFragment()
         navigate(action)
     }

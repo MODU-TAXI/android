@@ -33,7 +33,6 @@ sealed class ShowPartySearchEvent {
         val longitude: Double,
         val landMark: String
     ) : ShowPartySearchEvent()
-
 }
 
 @HiltViewModel

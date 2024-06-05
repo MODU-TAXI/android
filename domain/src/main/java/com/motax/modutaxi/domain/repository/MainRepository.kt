@@ -13,7 +13,6 @@ interface MainRepository {
         radius: Int,
         latitude: Double,
         longitude: Double,
-        sortType: String,
         roomTags: List<String>
     ) : Result<TaxiPotListRadiusData>
 

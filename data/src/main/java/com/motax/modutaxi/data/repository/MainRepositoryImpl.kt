@@ -19,10 +19,9 @@ class MainRepositoryImpl @Inject constructor(
         radius: Int,
         latitude: Double,
         longitude: Double,
-        sortType: String,
         roomTags: List<String>
     ) = runCatching {
-        api.getTaxiPotListRadius(filter, radius, latitude, longitude, sortType, roomTags)
+        api.getTaxiPotListRadius(filter, radius, latitude, longitude, roomTags)
     }.mapCatching { it.toDomain() }
 
     override suspend fun getTaxiPotList(

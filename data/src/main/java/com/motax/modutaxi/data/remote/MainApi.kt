@@ -22,7 +22,6 @@ interface MainApi {
         @Query("radius") radius: Int,
         @Query("searchLatitude") latitude: Double,
         @Query("searchLongitude") longitude: Double,
-        @Query("sortType") sortType: String,
         @Query("roomTags") roomTags: List<String>
     ): TaxiPotListRadiusResponse
 
