@@ -3,12 +3,17 @@ package com.motax.modutaxi.presentation.ui.main.showparty
 import android.Manifest
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginBottom
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentShowPartyBinding
@@ -19,6 +24,7 @@ import com.motax.modutaxi.presentation.ui.main.showparty.bottomsheet.TaxiPotList
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotMarkerItem
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import com.motax.modutaxi.presentation.ui.toMatchDetail
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -31,6 +37,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragment_show_party),
     OnMapReadyCallback {
+
+
+    companion object{
+        const val NEW = 0
+        const val NEXT_PAGE = 1
+    }
 
     private lateinit var naverMap: NaverMap
     private val markerList = mutableListOf<Marker>()
@@ -51,6 +63,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         binding.vm = viewModel
         parentViewModel.setFullScreenMode()
         initEventObserve()
+        initStateObserve()
         initMapView()
         initBottomSheet()
     }
@@ -77,6 +90,34 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
                     is ShowPartyEvent.NavigateToCreateParty -> findNavController().toCreateParty()
                     is ShowPartyEvent.NavigateToMatchDetail -> findNavController().toMatchDetail(it.id)
                 }
+            }
+        }
+    }
+
+    private fun initStateObserve(){
+        repeatOnStarted {
+            viewModel.bottomSheetState.collect{
+                when(it){
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        Log.d(TAG,"state_expanded")
+                    }
+
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        Log.d(TAG,"state_half_expanded")
+                    }
+
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        Log.d(TAG,"state_collapsed")
+                    }
+                }
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.bottomSheetHeight.collect{
+                val layoutParams = binding.btnCreateTaxiPot.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.setMargins(0,0,0,300 + (it * 1600).toInt())
+                binding.btnCreateTaxiPot.layoutParams = layoutParams
             }
         }
     }
@@ -149,6 +190,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
             viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
             viewModel.getTaxiPotMarkers(cameraPosition.latitude, cameraPosition.longitude)
+            viewModel.getTaxiPotList(NEW, cameraPosition.latitude, cameraPosition.longitude)
         }
     }
 

@@ -2,6 +2,7 @@ package com.motax.modutaxi.presentation.ui
 
 import android.content.Context
 import com.motax.modutaxi.domain.model.AddressFromGeoItemData
+import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -27,7 +28,21 @@ fun AddressFromGeoItemData.toAddressString() =
 
 fun AddressFromGeoItemData.toBuildingName() = land.addition0.value
 
+internal fun Int.formatNumberWithCommas(): String {
+    return String.format("%,d", this)
+}
 
+fun String.toRoomTag(): RoomTag {
+    return if(this == "ONLY_WOMAN"){
+        RoomTag.ONLY_WOMAN
+    } else if(this == "STUDENT_CERTIFICATION"){
+        RoomTag.STUDENT_CERTIFICATION
+    } else if(this == "MANNER"){
+        RoomTag.MANNER
+    } else {
+        RoomTag.EMPTY
+    }
+}
 
 fun getUTCTime(hour: Int, minute: Int): String{
     val seoulZoneId = ZoneId.of("Asia/Seoul")

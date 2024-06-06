@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyViewModel" />
@@ -23,11 +25,11 @@
             android:background="@drawable/rect_whitefill_nostroke_29radius"
             android:drawableEnd="@drawable/ic_right_arrow_gray600"
             android:drawablePadding="6dp"
-            android:visibility="gone"
             android:elevation="20dp"
             android:paddingHorizontal="14dp"
             android:paddingVertical="8dp"
             android:textColor="@color/mx_gray600"
+            android:visibility="gone"
             tools:text="주안역" />
 
         <TextView
@@ -40,9 +42,9 @@
             android:drawablePadding="6dp"
             android:elevation="20dp"
             android:paddingHorizontal="14dp"
-            android:visibility="gone"
             android:paddingVertical="8dp"
             android:textColor="@color/mx_sub500"
+            android:visibility="gone"
             tools:text="인하대 후문" />
 
 
@@ -62,6 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="46dp"
             android:layout_marginHorizontal="20dp"
+            android:text="@{vm.uiState.searchKeyword}"
             android:layout_marginTop="50dp"
             android:background="@drawable/rect_whitefill_nostroke_12radius"
             android:drawableStart="@drawable/ic_magnifying_glass_mint"
@@ -89,10 +92,10 @@
             android:id="@+id/btn_create_taxi_pot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:onClick="@{() -> vm.navigateToCreateParty()}"
             android:src="@drawable/ic_create_taxi_pot"
-            app:layout_constraintBottom_toTopOf="@id/show_party_bottom_sheet"
+            android:visibility="@{vm.bottomSheetHeight > 0.6 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -103,6 +106,7 @@
             android:layout_marginTop="4dp"
             android:onClick="@{() -> vm.locationBtnClicked()}"
             android:src="@drawable/ic_cur_location"
+            android:visibility="@{vm.bottomSheetHeight > 0.6 ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toStartOf="@id/btn_refresh"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toEndOf="@id/btn_create_taxi_pot"
@@ -114,6 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:src="@drawable/ic_refresh"
+            android:visibility="@{vm.bottomSheetHeight > 0.6 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/btn_cur_location"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_cur_location"
@@ -122,10 +127,12 @@
         <FrameLayout
             android:id="@+id/show_party_bottom_sheet"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_search" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

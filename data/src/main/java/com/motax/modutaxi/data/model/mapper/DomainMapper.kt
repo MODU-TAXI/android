@@ -35,7 +35,7 @@ import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.domain.model.SearchResultListData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.SpotListItemData
-import com.motax.modutaxi.domain.model.TaxiPotData
+import com.motax.modutaxi.domain.model.TaxiPotListItemData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
@@ -56,21 +56,24 @@ fun CertificateResponse.toDomain() = CertificateData(
     isConfirm = isConfirm
 )
 
-fun TaxiPotItem.toDomain() = TaxiPotData(
+fun TaxiPotItem.toDomain() = TaxiPotListItemData(
     roomId = roomId,
     spotId = spotId,
+    arrivalTime = arrivalTime,
+    arrivalName = arrivalName,
     roomTagBitMaskList = roomTagBitMaskList,
-    departureLongitude = departureLongitude,
-    departureLatitude = departureLatitude,
+    departureName = departureName,
     departureTime = departureTime,
     wishHeadcount = wishHeadcount,
-    duration = duration,
+    currentHeadcount = currentHeadcount,
+    durationMinutes = durationMinutes,
+    expectedChargePerPerson = expectedChargePerPerson,
     expectedCharge = expectedCharge
 )
 
 fun TaxiPotListResponse.toDomain() = TaxiPotListData(
     page = page,
-    haxNext = haxNext,
+    hasNext = hasNext,
     result = result.map { it.toDomain() }
 )
 
