@@ -29,6 +29,7 @@ data class ShowPartyUiState(
     val searchKeyword: String = "",
     val markerDataList: List<UiTaxiPotMarkerItem> = emptyList(),
     val selectedMarkerData: UiTaxiPotMarkerItem = UiTaxiPotMarkerItem(),
+    val selectedTaxiPotData: UiTaxiPotListItem = UiTaxiPotListItem() {}
 )
 
 data class ShowPartyBottomSheetUiState(
@@ -54,7 +55,7 @@ class ShowPartyViewModel @Inject constructor(
     private val repository: MainRepository
 ) : ViewModel() {
 
-    companion object{
+    companion object {
         const val NEW = 0
         const val NEXT_PAGE = 1
 
@@ -73,7 +74,8 @@ class ShowPartyViewModel @Inject constructor(
     val uiState: StateFlow<ShowPartyUiState> = _uiState.asStateFlow()
 
     private val _bottomSheetUiState = MutableStateFlow(ShowPartyBottomSheetUiState())
-    val bottomSheetUiState: StateFlow<ShowPartyBottomSheetUiState> = _bottomSheetUiState.asStateFlow()
+    val bottomSheetUiState: StateFlow<ShowPartyBottomSheetUiState> =
+        _bottomSheetUiState.asStateFlow()
 
     val bottomSheetState = MutableStateFlow(STATE_HALF_EXPANDED)
     val bottomSheetHeight = MutableStateFlow(0F)
@@ -84,14 +86,13 @@ class ShowPartyViewModel @Inject constructor(
         setBottomSheetFilter()
     }
 
-    fun changeBottomSheetState(state: Int){
+    fun changeBottomSheetState(state: Int) {
         bottomSheetState.value = state
     }
 
-    fun changeBottomSheetHeight(height: Float){
+    fun changeBottomSheetHeight(height: Float) {
         bottomSheetHeight.value = height
     }
-
 
 
     private fun setBottomSheetFilter() {
@@ -132,7 +133,7 @@ class ShowPartyViewModel @Inject constructor(
         latitude: Double = uiState.value.latitude,
         longitude: Double = uiState.value.longitude
     ) {
-        if(type == NEW){
+        if (type == NEW) {
             _bottomSheetUiState.update { state ->
                 state.copy(
                     page = 0,
@@ -141,7 +142,7 @@ class ShowPartyViewModel @Inject constructor(
             }
         }
 
-        if(bottomSheetUiState.value.hasNext){
+        if (bottomSheetUiState.value.hasNext) {
             val filterMap = hashMapOf<String, Long>()
 
             if (bottomSheetUiState.value.spotFilter.isNotBlank()) {
@@ -168,7 +169,7 @@ class ShowPartyViewModel @Inject constructor(
                         state.copy(
                             page = it.page + 1,
                             hasNext = it.hasNext,
-                            taxiPotList = if(type == NEXT_PAGE) bottomSheetUiState.value.taxiPotList + newList else newList
+                            taxiPotList = if (type == NEXT_PAGE) bottomSheetUiState.value.taxiPotList + newList else newList
                         )
                     }
                 }.onFailure {
@@ -184,6 +185,11 @@ class ShowPartyViewModel @Inject constructor(
         longitude: Double = uiState.value.longitude
     ) {
 
+        _uiState.update { state ->
+            state.copy(
+                selectedTaxiPotData = UiTaxiPotListItem() {}
+            )
+        }
         val filterMap = hashMapOf<String, Long>()
 
         if (bottomSheetUiState.value.spotFilter.isNotBlank()) {
@@ -254,6 +260,21 @@ class ShowPartyViewModel @Inject constructor(
             state.copy(
                 selectedMarkerData = markerData,
             )
+        }
+        getTaxiPotPreview(markerData.roomId)
+    }
+
+    private fun getTaxiPotPreview(id: Long) {
+        viewModelScope.launch {
+            repository.getTaxiPotPreview(id).onSuccess {
+                _uiState.update { state ->
+                    state.copy(
+                        selectedTaxiPotData = it.toUiTaxiPotListItem(::navigateToMatchDetail)
+                    )
+                }
+            }.onFailure {
+
+            }
         }
     }
 

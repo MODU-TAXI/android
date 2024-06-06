@@ -14,6 +14,7 @@ import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotItem
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
+import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
@@ -40,6 +41,7 @@ import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
 import com.motax.modutaxi.domain.model.TaxiPotListRadiusItemData
+import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TokenData
 
 fun TokenResponse.toDomain() = TokenData(
@@ -214,4 +216,16 @@ fun TaxiPotListRadiusResponse.toDomain() = TaxiPotListRadiusData(
             spotName = it.spotName
         )
     }
+)
+
+fun TaxiPotPreviewResponse.toDomain() = TaxiPotPreviewData(
+    roomId = roomId,
+    departureTime = departureTime,
+    departureName = departureName,
+    arrivalName = arrivalName,
+    roomStatus = roomStatus,
+    currentHeadcount = currentHeadcount,
+    wishHeadcount = wishHeadcount,
+    expectedChargePerPerson = expectedChargePerPerson,
+    expectedCharge = expectedCharge
 )

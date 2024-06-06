@@ -5,6 +5,7 @@ import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
+import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 
 interface MainRepository {
 
@@ -26,6 +27,10 @@ interface MainRepository {
         sortType: String,
         roomTags: List<String>
     ): Result<TaxiPotListData>
+
+    suspend fun getTaxiPotPreview(
+        id : Long
+    ): Result<TaxiPotPreviewData>
 
     suspend fun enterPot(
         roomId: Long

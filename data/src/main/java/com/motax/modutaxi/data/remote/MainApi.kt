@@ -7,6 +7,7 @@ import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusItem
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
+import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -36,6 +37,11 @@ interface MainApi {
         @Query("sortType") sortType: String,
         @Query("roomTags") roomTags: List<String>
     ): TaxiPotListResponse
+
+    @GET("/api/rooms/preview/{id}")
+    suspend fun getTaxiPotPreview(
+        @Path("id") id : Long
+    ): TaxiPotPreviewResponse
 
     @POST("/room-waiting/{roomId}/members")
     suspend fun enterPot(
