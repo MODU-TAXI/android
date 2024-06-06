@@ -3,11 +3,9 @@ package com.motax.modutaxi.presentation.ui.main.showparty
 import android.Manifest
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
@@ -17,12 +15,10 @@ import com.motax.modutaxi.presentation.databinding.FragmentShowPartyBinding
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
+import com.motax.modutaxi.presentation.ui.main.showparty.bottomsheet.TaxiPotListBottomSheetFragment
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotMarkerItem
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
-import com.motax.modutaxi.presentation.ui.to8Round
 import com.motax.modutaxi.presentation.ui.toMatchDetail
-import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -39,6 +35,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     private lateinit var naverMap: NaverMap
     private val markerList = mutableListOf<Marker>()
     private var selectedMarker: Marker? = null
+    private var taxiPotListBottomSheetFragment : TaxiPotListBottomSheetFragment?=null
 
     private val locationPermissionList = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
@@ -55,6 +52,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         parentViewModel.setFullScreenMode()
         initEventObserve()
         initMapView()
+        initBottomSheet()
     }
 
     private fun initEventObserve() {
@@ -93,7 +91,16 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
 
         mapFragment.getMapAsync(this)
         binding.btnRefresh.setOnClickListener {
-            viewModel.getTaxiPots()
+            viewModel.getTaxiPotMarkers()
+        }
+    }
+
+    private fun initBottomSheet(){
+        if( childFragmentManager.findFragmentById(R.id.show_party_bottom_sheet) == null){
+            taxiPotListBottomSheetFragment = TaxiPotListBottomSheetFragment()
+            childFragmentManager.beginTransaction().add(R.id.show_party_bottom_sheet,
+                taxiPotListBottomSheetFragment!!
+            ).commit()
         }
     }
 
@@ -141,7 +148,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         naverMap.addOnCameraIdleListener {
             viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
-            viewModel.getTaxiPots(cameraPosition.latitude, cameraPosition.longitude)
+            viewModel.getTaxiPotMarkers(cameraPosition.latitude, cameraPosition.longitude)
         }
     }
 

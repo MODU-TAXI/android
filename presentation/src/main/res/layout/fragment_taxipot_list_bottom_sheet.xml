@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyViewModel" />
 
     </data>
 
@@ -21,73 +26,60 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_13_horizontal"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_filter"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:clipToPadding="false"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.13" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_04_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.04" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_96_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.96" />
+            android:paddingHorizontal="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_bottomsheet_top"
+            tools:listitem="@layout/item_taxipot_filter" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_deadline_and_toggle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@id/guide_96_vertical"
-            app:layout_constraintStart_toStartOf="@id/guide_04_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_13_horizontal">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_filter">
 
             <ImageView
                 android:id="@+id/btn_deadline_imminent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:src="@drawable/ic_ellipse_no_fill"
+                android:src="@drawable/ic_eclipse_no_fill"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                style="@style/TextRegularRegular"
+                style="@style/TextRegularMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="마감임박"
+                android:textColor="@color/mx_box"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btn_deadline_imminent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_sorting_option"
-                style="@style/TextRegularRegular"
+                style="@style/TextRegularMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
+                android:drawableEnd="@drawable/ic_box_down_arrow"
+                android:drawablePadding="6dp"
                 android:text="최신순"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_toggle_check"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/btn_toggle_check"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="2dp"
-                android:paddingVertical="6dp"
-                android:src="@drawable/ic_chevron_down"
+                android:textColor="@color/mx_box"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -98,9 +90,10 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
-            app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_deadline_and_toggle">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -108,7 +101,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_taxipot" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

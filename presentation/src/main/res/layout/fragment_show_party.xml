@@ -23,6 +23,7 @@
             android:background="@drawable/rect_whitefill_nostroke_29radius"
             android:drawableEnd="@drawable/ic_right_arrow_gray600"
             android:drawablePadding="6dp"
+            android:visibility="gone"
             android:elevation="20dp"
             android:paddingHorizontal="14dp"
             android:paddingVertical="8dp"
@@ -91,7 +92,7 @@
             android:layout_marginBottom="12dp"
             android:onClick="@{() -> vm.navigateToCreateParty()}"
             android:src="@drawable/ic_create_taxi_pot"
-            app:layout_constraintBottom_toTopOf="@id/bottom_sheet"
+            app:layout_constraintBottom_toTopOf="@id/show_party_bottom_sheet"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -119,7 +120,7 @@
             app:layout_constraintTop_toTopOf="@id/btn_cur_location" />
 
         <FrameLayout
-            android:id="@+id/bottom_sheet"
+            android:id="@+id/show_party_bottom_sheet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

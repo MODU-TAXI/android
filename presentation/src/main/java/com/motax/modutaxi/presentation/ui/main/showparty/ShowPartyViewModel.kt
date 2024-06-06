@@ -3,10 +3,8 @@ package com.motax.modutaxi.presentation.ui.main.showparty
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
 import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiTaxiPotMarkerItem
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotMarkerItem
-import com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,7 +49,7 @@ class ShowPartyViewModel @Inject constructor(
 
     private var spotFilterId: Long = 0
 
-    fun getTaxiPots(latitude: Double = uiState.value.latitude, longitude: Double = uiState.value.longitude) {
+    fun getTaxiPotMarkers(latitude: Double = uiState.value.latitude, longitude: Double = uiState.value.longitude) {
 
         val filterMap = hashMapOf<String, Long>()
 

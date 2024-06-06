@@ -15,7 +15,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rect_nofill_greystroke_12radius"
+        android:background="@drawable/rect_nofill_gray100stroke_8radius"
         android:padding="16dp">
 
         <TextView
