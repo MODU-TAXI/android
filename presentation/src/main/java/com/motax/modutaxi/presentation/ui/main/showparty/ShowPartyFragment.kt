@@ -96,30 +96,30 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
 
     private fun initStateObserve(){
         repeatOnStarted {
-            viewModel.bottomSheetState.collect{
-                when(it){
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                        Log.d(TAG,"state_expanded")
-                    }
-
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                        Log.d(TAG,"state_half_expanded")
-                    }
-
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        Log.d(TAG,"state_collapsed")
-                    }
-                }
+            viewModel.bottomSheetHeight.collect{
+                setButtonsMargin(300 + (it * 1600).toInt())
             }
         }
 
         repeatOnStarted {
-            viewModel.bottomSheetHeight.collect{
-                val layoutParams = binding.btnCreateTaxiPot.layoutParams as ConstraintLayout.LayoutParams
-                layoutParams.setMargins(0,0,0,300 + (it * 1600).toInt())
-                binding.btnCreateTaxiPot.layoutParams = layoutParams
+            viewModel.bottomSheetUiState.collect{
+                if(it.showBottomSheet){
+                    selectedMarker?.let {
+                        binding.partyMarker.text = viewModel.uiState.value.selectedMarkerData.spotName
+                        selectedMarker?.icon = OverlayImage.fromView(binding.partyMarker)
+                    }
+                    setButtonsMargin(300)
+                } else {
+                    setButtonsMargin(0)
+                }
             }
         }
+    }
+
+    private fun setButtonsMargin(margin: Int){
+        val layoutParams = binding.btnCreateTaxiPot.layoutParams as ConstraintLayout.LayoutParams
+        layoutParams.setMargins(0,0,0,margin)
+        binding.btnCreateTaxiPot.layoutParams = layoutParams
     }
 
     private fun initMapView() {
@@ -132,7 +132,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
 
         mapFragment.getMapAsync(this)
         binding.btnRefresh.setOnClickListener {
-            viewModel.getTaxiPotMarkers()
+            viewModel.getTaxiPotData()
         }
     }
 
@@ -183,14 +183,14 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         naverMap.addOnCameraChangeListener { _, isStop ->
             if (!isStop) {
                 viewModel.changeMovingState(true)
+
             }
         }
 
         naverMap.addOnCameraIdleListener {
             viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
-            viewModel.getTaxiPotMarkers(cameraPosition.latitude, cameraPosition.longitude)
-            viewModel.getTaxiPotList(NEW, cameraPosition.latitude, cameraPosition.longitude)
+            viewModel.getTaxiPotData(cameraPosition.latitude, cameraPosition.longitude)
         }
     }
 

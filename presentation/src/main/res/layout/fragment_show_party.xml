@@ -98,7 +98,7 @@
             android:elevation="8dp"
             android:paddingHorizontal="20dp"
             android:paddingVertical="12dp"
-            android:visibility="@{vm.uiState.selectedTaxiPotData.roomId == -1L ? View.GONE : View.VISIBLE}"
+            android:visibility="@{vm.bottomSheetUiState.showBottomSheet ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@id/btn_create_taxi_pot"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -239,7 +239,7 @@
             android:id="@+id/show_party_bottom_sheet"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="@{vm.uiState.selectedTaxiPotData.roomId == -1L ? View.VISIBLE : View.GONE }"
+            android:visibility="@{vm.bottomSheetUiState.showBottomSheet ? View.VISIBLE : View.GONE }"
             android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

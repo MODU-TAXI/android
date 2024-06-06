@@ -10,6 +10,7 @@ import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiTaxiPotMarke
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListFilterItem
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotMarkerItem
+import com.naver.maps.map.overlay.Marker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,7 +40,8 @@ data class ShowPartyBottomSheetUiState(
     val taxiPotList: List<UiTaxiPotListItem> = emptyList(),
     val sortType: TaxiPotSortType = TaxiPotSortType.NEW,
     val spotFilter: String = "",
-    val roomTagFilter: List<String> = emptyList()
+    val roomTagFilter: List<String> = emptyList(),
+    val showBottomSheet: Boolean = true
 )
 
 sealed class ShowPartyEvent {
@@ -128,10 +130,21 @@ class ShowPartyViewModel @Inject constructor(
 
     }
 
-    fun getTaxiPotList(
+    fun getTaxiPotData(latitude : Double = uiState.value.latitude, longitude: Double = uiState.value.longitude){
+        _bottomSheetUiState.update { state ->
+            state.copy(
+                showBottomSheet = true
+            )
+        }
+
+        getTaxiPotList(NEW, latitude, longitude)
+        getTaxiPotMarkers(latitude, longitude)
+    }
+
+    private fun getTaxiPotList(
         type: Int,
-        latitude: Double = uiState.value.latitude,
-        longitude: Double = uiState.value.longitude
+        latitude: Double ,
+        longitude: Double
     ) {
         if (type == NEW) {
             _bottomSheetUiState.update { state ->
@@ -180,16 +193,11 @@ class ShowPartyViewModel @Inject constructor(
 
     }
 
-    fun getTaxiPotMarkers(
-        latitude: Double = uiState.value.latitude,
-        longitude: Double = uiState.value.longitude
+    private fun getTaxiPotMarkers(
+        latitude: Double,
+        longitude: Double
     ) {
 
-        _uiState.update { state ->
-            state.copy(
-                selectedTaxiPotData = UiTaxiPotListItem() {}
-            )
-        }
         val filterMap = hashMapOf<String, Long>()
 
         if (bottomSheetUiState.value.spotFilter.isNotBlank()) {
@@ -256,12 +264,20 @@ class ShowPartyViewModel @Inject constructor(
     }
 
     fun selectMarker(markerData: UiTaxiPotMarkerItem) {
-        _uiState.update { state ->
-            state.copy(
-                selectedMarkerData = markerData,
-            )
+        viewModelScope.launch {
+            _uiState.update { state ->
+                state.copy(
+                    selectedMarkerData = markerData,
+                )
+            }
+
+            _bottomSheetUiState.update { state ->
+                state.copy(
+                    showBottomSheet = false
+                )
+            }
+            getTaxiPotPreview(markerData.roomId)
         }
-        getTaxiPotPreview(markerData.roomId)
     }
 
     private fun getTaxiPotPreview(id: Long) {
