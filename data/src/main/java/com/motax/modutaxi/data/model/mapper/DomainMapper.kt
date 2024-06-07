@@ -194,7 +194,9 @@ fun TaxiPotDetailResponse.toDomain() = TaxiPotDetailData(
     myRoom = myRoom,
     participate = participate,
     path = PathData(
-        coordinateReferenceSystem = CoordinateReferenceSystemData(path.coordinateReferenceSystem.type),
+        coordinateReferenceSystem = CoordinateReferenceSystemData(
+            path.coordinateReferenceSystem?.type ?: ""
+        ),
         coordinates = path.coordinates.map {
             CoordinateData(it.values)
         },

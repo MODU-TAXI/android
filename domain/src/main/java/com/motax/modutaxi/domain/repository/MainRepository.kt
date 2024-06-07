@@ -59,7 +59,7 @@ interface MainRepository {
         wishHeadcount: Int
     ): Result<TaxiPotDetailData>
 
-    suspend fun getRoom(
+    suspend fun getTaxiPotDetail(
         roomId: Long
     ):Result<TaxiPotDetailData>
 }

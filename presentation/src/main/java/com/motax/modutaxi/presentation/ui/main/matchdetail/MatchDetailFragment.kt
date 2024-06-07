@@ -5,7 +5,6 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -37,7 +36,7 @@ class MatchDetailFragment :
         participantAdapter = ParticipantAdapter()
         binding.rvParticipants.adapter = participantAdapter
 
-        viewModel.getRoom(roomId)
+        viewModel.getTaxiPotDetail(roomId)
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {

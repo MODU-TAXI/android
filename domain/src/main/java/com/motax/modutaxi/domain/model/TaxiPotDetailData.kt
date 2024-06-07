@@ -26,7 +26,7 @@ data class TaxiPotDetailData(
 )
 
 data class PathData(
-    val coordinateReferenceSystem: CoordinateReferenceSystemData,
+    val coordinateReferenceSystem: CoordinateReferenceSystemData?,
     val coordinates: List<CoordinateData>,
     val type: String
 )
@@ -36,5 +36,5 @@ data class CoordinateReferenceSystemData(
 )
 
 data class CoordinateData(
-    val values: List<Int>
+    val values: List<Double>
 )

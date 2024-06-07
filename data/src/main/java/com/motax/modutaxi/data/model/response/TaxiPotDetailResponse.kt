@@ -26,7 +26,7 @@ data class TaxiPotDetailResponse(
 )
 
 data class Path(
-    val coordinateReferenceSystem: CoordinateReferenceSystem,
+    val coordinateReferenceSystem: CoordinateReferenceSystem?,
     val coordinates: List<Coordinate>,
     val type: String
 )
@@ -36,5 +36,5 @@ data class CoordinateReferenceSystem(
 )
 
 data class Coordinate(
-    val values: List<Int>
+    val values: List<Double>
 )

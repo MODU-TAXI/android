@@ -6,7 +6,6 @@ import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
-import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.repository.MainRepository
 import javax.inject.Inject
@@ -85,9 +84,9 @@ class MainRepositoryImpl @Inject constructor(
         )
     }.mapCatching { it.toDomain() }
 
-    override suspend fun getRoom(roomId: Long): Result<TaxiPotDetailData> =
+    override suspend fun getTaxiPotDetail(roomId: Long): Result<TaxiPotDetailData> =
         runCatching {
-            api.getRoom(roomId)
+            api.getTaxiPotDetail(roomId)
         }.mapCatching { it.toDomain() }
 
 }

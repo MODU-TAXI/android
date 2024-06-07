@@ -4,7 +4,6 @@ import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
-import com.motax.modutaxi.data.model.response.TaxiPotListRadiusItem
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
@@ -69,7 +68,7 @@ interface MainApi {
     ): TaxiPotDetailResponse
 
     @GET("/api/rooms/{roomId}")
-    suspend fun getRoom(
+    suspend fun getTaxiPotDetail(
         @Path("roomId") roomId: Long
     ) : TaxiPotDetailResponse
 }
