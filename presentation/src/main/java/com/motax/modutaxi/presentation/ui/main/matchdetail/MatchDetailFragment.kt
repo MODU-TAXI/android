@@ -2,9 +2,12 @@ package com.motax.modutaxi.presentation.ui.main.matchdetail
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
@@ -22,12 +25,13 @@ class MatchDetailFragment :
     private val args: MatchDetailFragmentArgs by navArgs()
     private val roomId by lazy { args.id }
 
-    private var participantAdapter: ParticipantAdapter?= null
+    private var participantAdapter: ParticipantAdapter? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
         parentViewModel.setNotFullScreenMode()
         binding.vm = viewModel
         participantAdapter = ParticipantAdapter()
@@ -36,5 +40,14 @@ class MatchDetailFragment :
         viewModel.getRoom(roomId)
     }
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            findNavController().toHome()
+        }
+    }
 
+    private fun NavController.toHome() {
+        val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToHomeFragment()
+        navigate(action)
+    }
 }

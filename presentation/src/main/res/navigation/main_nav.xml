@@ -94,12 +94,15 @@
         <argument
             android:name="id"
             app:argType="long"/>
+        <action
+            android:id="@+id/action_matchDetailFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/main_nav"/>
     </fragment>
 
     <action
         android:id="@+id/global_action_to_matchDetailFragment"
-        app:destination="@id/matchDetailFragment"
-        app:popUpTo="@id/main_nav" />
+        app:destination="@id/matchDetailFragment"/>
     <fragment
         android:id="@+id/showPartySearchFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchFragment"
