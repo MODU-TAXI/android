@@ -48,6 +48,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     private val markerList = mutableListOf<Marker>()
     private var selectedMarker: Marker? = null
     private var taxiPotListBottomSheetFragment : TaxiPotListBottomSheetFragment?=null
+    private var lastButtonMargin = 0
 
     private val locationPermissionList = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
@@ -97,7 +98,8 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     private fun initStateObserve(){
         repeatOnStarted {
             viewModel.bottomSheetHeight.collect{
-                setButtonsMargin(300 + (it * 1600).toInt())
+                lastButtonMargin = 300 + (it * 1600).toInt()
+                setButtonsMargin(lastButtonMargin)
             }
         }
 
@@ -108,7 +110,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
                         binding.partyMarker.text = viewModel.uiState.value.selectedMarkerData.spotName
                         selectedMarker?.icon = OverlayImage.fromView(binding.partyMarker)
                     }
-                    setButtonsMargin(300)
+                    setButtonsMargin(lastButtonMargin)
                 } else {
                     setButtonsMargin(0)
                 }
@@ -179,16 +181,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     }
 
     private fun setMapListener() {
-
-        naverMap.addOnCameraChangeListener { _, isStop ->
-            if (!isStop) {
-                viewModel.changeMovingState(true)
-
-            }
-        }
-
         naverMap.addOnCameraIdleListener {
-            viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
             viewModel.getTaxiPotData(cameraPosition.latitude, cameraPosition.longitude)
         }
@@ -239,6 +232,4 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         val action = ShowPartyFragmentDirections.actionShowPartyFragmentToCreatePartyFragment()
         navigate(action)
     }
-
-
 }

@@ -25,7 +25,6 @@ import javax.inject.Inject
 data class ShowPartyUiState(
     val longitude: Double = 126.6538126,
     val latitude: Double = 37.4507292,
-    val isMoving: Boolean = false,
     val isFromSearch: Boolean = false,
     val searchKeyword: String = "",
     val markerDataList: List<UiTaxiPotMarkerItem> = emptyList(),
@@ -230,15 +229,6 @@ class ShowPartyViewModel @Inject constructor(
             }.onFailure {
 
             }
-        }
-    }
-
-
-    fun changeMovingState(movingState: Boolean) {
-        _uiState.update { state ->
-            state.copy(
-                isMoving = movingState
-            )
         }
     }
 

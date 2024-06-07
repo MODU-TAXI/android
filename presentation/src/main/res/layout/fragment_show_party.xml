@@ -78,16 +78,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="델로님 우리 어디로 떠날까요?" />
 
-        <ImageView
-            android:id="@+id/iv_center_marker_stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@{vm.uiState.isMoving ? @drawable/ic_car_marker_moving : @drawable/ic_car_marker_stop}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_selected_taxipot"
             android:layout_width="0dp"
