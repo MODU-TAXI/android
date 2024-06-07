@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     app:chipSpacing="4dp"
-                    chipItems="@{vm.uiState.chipItems}"
+                    app:taxiPotFilterChips="@{vm.uiState.chipItems}"
                     app:layout_constraintStart_toStartOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toTopOf="parent"
                     app:singleLine="true"/>
