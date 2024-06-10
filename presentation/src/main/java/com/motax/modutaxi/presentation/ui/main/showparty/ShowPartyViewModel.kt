@@ -19,10 +19,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 data class ShowPartyUiState(
     val longitude: Double = 126.6538126,
     val latitude: Double = 37.4507292,
+    val curZoomLevel: Double = 0.0,
     val isFromSearch: Boolean = false,
     val searchKeyword: String = "",
     val taxiPotList: List<UiTaxiPotListItem> = emptyList(),
@@ -123,6 +126,14 @@ class ShowPartyViewModel @Inject constructor(
 
     }
 
+    fun setZoomLevel(level: Double){
+        _uiState.update { state ->
+            state.copy(
+                curZoomLevel = level
+            )
+        }
+    }
+
     fun getTaxiPotData(
         latitude: Double = uiState.value.latitude,
         longitude: Double = uiState.value.longitude
@@ -143,7 +154,7 @@ class ShowPartyViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getTaxiPotListIntegration(
                 filterMap,
-                2000,
+                (15000000 * 2.0.pow(-uiState.value.curZoomLevel)).roundToInt(),
                 latitude,
                 longitude,
                 bottomSheetUiState.value.sortType.text,

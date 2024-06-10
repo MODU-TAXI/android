@@ -1,6 +1,7 @@
 package com.motax.modutaxi.presentation.ui.main.matchdetail.model
 
 import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import com.naver.maps.geometry.LatLng
 
 data class UiMatchDetailData(
     val roomTags: List<RoomTag> = emptyList(),
@@ -13,6 +14,7 @@ data class UiMatchDetailData(
     val feePerPerson: String = "",
     val isMyRoom: Boolean = false,
     val isParticipate: Boolean = false,
-    val headCount: String = ""
+    val headCount: String = "",
+    val path: List<LatLng> = emptyList()
 )
 

@@ -178,6 +178,10 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     }
 
     private fun setMapListener() {
+
+        naverMap.addOnCameraChangeListener { i, b ->
+            viewModel.setZoomLevel(naverMap.cameraPosition.zoom)
+        }
         naverMap.addOnCameraIdleListener {
             val cameraPosition = naverMap.cameraPosition.target
             viewModel.getTaxiPotData(cameraPosition.latitude, cameraPosition.longitude)

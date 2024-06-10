@@ -137,7 +137,7 @@ class DepartureMapFragment :
         naverMap.addOnCameraIdleListener {
             viewModel.changeMovingState(false)
             val cameraPosition = naverMap.cameraPosition.target
-            if(viewModel.uiState.value.latitude != cameraPosition.latitude.to8Round() || viewModel.uiState.value.longitude != cameraPosition.longitude.to8Round()){
+            if (viewModel.uiState.value.latitude != cameraPosition.latitude.to8Round() || viewModel.uiState.value.longitude != cameraPosition.longitude.to8Round()) {
                 viewModel.getAddress(
                     cameraPosition.latitude,
                     cameraPosition.longitude
@@ -160,25 +160,6 @@ class DepartureMapFragment :
         )
         naverMap.moveCamera(locate)
     }
-
-//    private fun setPath() {
-//        val path = PathOverlay()
-//        val manager = resources.assets
-//        val inputStream = manager.open("test.json")
-//        val jsonString = inputStream.bufferedReader().use { it.readText() }
-//
-//        val gson = Gson()
-//        val data: TestMapData = gson.fromJson(jsonString, TestMapData::class.java)
-//
-//        val list = data.route.traoptimal[0].path.map {
-//            LatLng(it[1], it[0])
-//        }
-//
-//        path.coords = list
-//
-//        path.color = Color.RED
-//        path.map = naverMap
-//    }
 
     private fun NavController.toDepartureSearch() {
         val action =
