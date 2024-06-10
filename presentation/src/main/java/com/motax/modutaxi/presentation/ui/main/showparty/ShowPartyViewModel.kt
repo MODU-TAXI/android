@@ -143,7 +143,7 @@ class ShowPartyViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getTaxiPotListIntegration(
                 filterMap,
-                1500,
+                2000,
                 latitude,
                 longitude,
                 bottomSheetUiState.value.sortType.text,
@@ -218,6 +218,12 @@ class ShowPartyViewModel @Inject constructor(
     fun navigateToMatchDetail(id: Long) {
         viewModelScope.launch {
             _event.emit(ShowPartyEvent.NavigateToMatchDetail(id))
+        }
+    }
+
+    fun navigateToMatchDetailBySelected() {
+        viewModelScope.launch {
+            _event.emit(ShowPartyEvent.NavigateToMatchDetail(uiState.value.selectedTaxiPotData.roomId))
         }
     }
 }

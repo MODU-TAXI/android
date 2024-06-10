@@ -77,6 +77,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
                     }
 
                     is ShowPartyEvent.SetMarkers -> {
+                        removeMarkers()
                         it.list.forEach { data ->
                             setMarker(data)
                         }
@@ -196,6 +197,14 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
             LatLng(latitude, longitude)
         )
         naverMap.moveCamera(locate)
+    }
+
+    private fun removeMarkers(){
+        markerList.forEach {
+            it.map = null
+        }
+
+        markerList.clear()
     }
 
 

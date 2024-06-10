@@ -84,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginBottom="20dp"
+            android:onClick="@{() -> vm.navigateToMatchDetailBySelected()}"
             android:background="@drawable/rect_white0_fill_nostroke_12_radius"
             android:elevation="8dp"
             android:paddingHorizontal="20dp"
