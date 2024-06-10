@@ -6,6 +6,7 @@ import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
+import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.repository.MainRepository
 import javax.inject.Inject
@@ -35,6 +36,17 @@ class MainRepositoryImpl @Inject constructor(
         roomTags: List<String>
     ) = runCatching {
         api.getTaxiPotList(filter, page, size, radius, latitude, longitude, sortType, roomTags)
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun getTaxiPotListIntegration(
+        filter: Map<String, Long>,
+        radius: Int,
+        latitude: Double,
+        longitude: Double,
+        sortType: String,
+        roomTags: List<String>
+    ): Result<TaxiPotListData> = runCatching {
+        api.getTaxiPotListIntegration(filter, radius, latitude, longitude, sortType, roomTags)
     }.mapCatching { it.toDomain() }
 
     override suspend fun getTaxiPotPreview(id: Long): Result<TaxiPotPreviewData> = runCatching {

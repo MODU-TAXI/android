@@ -70,13 +70,13 @@ fun TaxiPotItem.toDomain() = TaxiPotListItemData(
     currentHeadcount = currentHeadcount,
     durationMinutes = durationMinutes,
     expectedChargePerPerson = expectedChargePerPerson,
-    expectedCharge = expectedCharge
+    expectedCharge = expectedCharge,
+    departureLatitude = departureLatitude,
+    departureLongitude = departureLongitude
 )
 
 fun TaxiPotListResponse.toDomain() = TaxiPotListData(
-    page = page,
-    hasNext = hasNext,
-    result = result.map { it.toDomain() }
+    rooms = rooms.map { it.toDomain() }
 )
 
 fun SearchResultItem.toDomain() = SearchResultData(

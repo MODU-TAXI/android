@@ -67,7 +67,7 @@ class TaxiPotListBottomSheetFragment: BottomSheetDialogFragment() {
 
     private fun initStateObserve(){
         repeatOnStarted {
-            viewModel.bottomSheetUiState.collectLatest{
+            viewModel.uiState.collectLatest{
                 taxiPotAdapter?.submitList(it.taxiPotList)
             }
         }

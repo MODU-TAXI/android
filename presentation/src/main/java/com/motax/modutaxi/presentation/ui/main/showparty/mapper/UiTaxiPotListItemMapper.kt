@@ -12,6 +12,8 @@ fun TaxiPotListItemData.toUiTaxiPotListItem(
 ) = UiTaxiPotListItem(
     roomId = roomId,
     headCount = "${wishHeadcount}/${currentHeadcount}",
+    departureLatitude = departureLatitude,
+    departureLongitude = departureLongitude,
     departureTime = "출발 ${departureTime}",
     departureName = departureName,
     arrivalName = arrivalName,

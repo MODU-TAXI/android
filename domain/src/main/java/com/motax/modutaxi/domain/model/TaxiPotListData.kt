@@ -1,9 +1,7 @@
 package com.motax.modutaxi.domain.model
 
 data class TaxiPotListData(
-    val page: Int,
-    val hasNext: Boolean,
-    val result: List<TaxiPotListItemData>
+    val rooms: List<TaxiPotListItemData>
 )
 
 data class TaxiPotListItemData(
@@ -12,6 +10,8 @@ data class TaxiPotListItemData(
     val arrivalTime: String,
     val arrivalName: String,
     val roomTagBitMaskList: List<String>,
+    val departureLongitude: Double,
+    val departureLatitude: Double,
     val departureName: String,
     val departureTime: String,
     val wishHeadcount: Int,

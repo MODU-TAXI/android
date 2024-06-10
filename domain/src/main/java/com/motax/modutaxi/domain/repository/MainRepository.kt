@@ -28,6 +28,15 @@ interface MainRepository {
         roomTags: List<String>
     ): Result<TaxiPotListData>
 
+    suspend fun getTaxiPotListIntegration(
+        filter: Map<String, Long>,
+        radius: Int,
+        latitude: Double,
+        longitude: Double,
+        sortType: String,
+        roomTags: List<String>
+    ): Result<TaxiPotListData>
+
     suspend fun getTaxiPotPreview(
         id : Long
     ): Result<TaxiPotPreviewData>

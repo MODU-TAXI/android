@@ -3,17 +3,13 @@ package com.motax.modutaxi.presentation.ui.main.showparty
 import android.Manifest
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginBottom
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentShowPartyBinding
@@ -21,10 +17,9 @@ import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.showparty.bottomsheet.TaxiPotListBottomSheetFragment
-import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotMarkerItem
+import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import com.motax.modutaxi.presentation.ui.toMatchDetail
-import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -39,7 +34,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     OnMapReadyCallback {
 
 
-    companion object{
+    companion object {
         const val NEW = 0
         const val NEXT_PAGE = 1
     }
@@ -47,7 +42,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     private lateinit var naverMap: NaverMap
     private val markerList = mutableListOf<Marker>()
     private var selectedMarker: Marker? = null
-    private var taxiPotListBottomSheetFragment : TaxiPotListBottomSheetFragment?=null
+    private var taxiPotListBottomSheetFragment: TaxiPotListBottomSheetFragment? = null
     private var lastButtonMargin = 0
 
     private val locationPermissionList = arrayOf(
@@ -95,19 +90,19 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         }
     }
 
-    private fun initStateObserve(){
+    private fun initStateObserve() {
         repeatOnStarted {
-            viewModel.bottomSheetHeight.collect{
+            viewModel.bottomSheetHeight.collect {
                 lastButtonMargin = 300 + (it * 1600).toInt()
                 setButtonsMargin(lastButtonMargin)
             }
         }
 
         repeatOnStarted {
-            viewModel.bottomSheetUiState.collect{
-                if(it.showBottomSheet){
+            viewModel.bottomSheetUiState.collect {
+                if (it.showBottomSheet) {
                     selectedMarker?.let {
-                        binding.partyMarker.text = viewModel.uiState.value.selectedMarkerData.spotName
+                        binding.partyMarker.text = viewModel.uiState.value.selectedTaxiPotData.arrivalName
                         selectedMarker?.icon = OverlayImage.fromView(binding.partyMarker)
                     }
                     setButtonsMargin(lastButtonMargin)
@@ -118,9 +113,9 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         }
     }
 
-    private fun setButtonsMargin(margin: Int){
+    private fun setButtonsMargin(margin: Int) {
         val layoutParams = binding.btnCreateTaxiPot.layoutParams as ConstraintLayout.LayoutParams
-        layoutParams.setMargins(0,0,0,margin)
+        layoutParams.setMargins(0, 0, 0, margin)
         binding.btnCreateTaxiPot.layoutParams = layoutParams
     }
 
@@ -138,10 +133,11 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         }
     }
 
-    private fun initBottomSheet(){
-        if( childFragmentManager.findFragmentById(R.id.show_party_bottom_sheet) == null){
+    private fun initBottomSheet() {
+        if (childFragmentManager.findFragmentById(R.id.show_party_bottom_sheet) == null) {
             taxiPotListBottomSheetFragment = TaxiPotListBottomSheetFragment()
-            childFragmentManager.beginTransaction().add(R.id.show_party_bottom_sheet,
+            childFragmentManager.beginTransaction().add(
+                R.id.show_party_bottom_sheet,
                 taxiPotListBottomSheetFragment!!
             ).commit()
         }
@@ -203,17 +199,17 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     }
 
 
-    private fun setMarker(data: UiTaxiPotMarkerItem) {
+    private fun setMarker(data: UiTaxiPotListItem) {
         val marker = Marker()
-        binding.partyMarker.text = data.spotName
-        marker.position = LatLng(data.latitude, data.longitude)
+        binding.partyMarker.text = data.arrivalName
+        marker.position = LatLng(data.departureLatitude, data.departureLongitude)
         marker.icon = OverlayImage.fromView(binding.partyMarker)
         marker.setOnClickListener {
             selectedMarker?.let {
-                binding.partyMarker.text = viewModel.uiState.value.selectedMarkerData.spotName
+                binding.partyMarker.text = viewModel.uiState.value.selectedTaxiPotData.arrivalName
                 selectedMarker?.icon = OverlayImage.fromView(binding.partyMarker)
             }
-            binding.partyMarkerSelected.text = data.spotName
+            binding.partyMarkerSelected.text = data.arrivalName
             marker.icon = OverlayImage.fromView(binding.partyMarkerSelected)
             selectedMarker = marker
             viewModel.selectMarker(data)

@@ -37,6 +37,16 @@ interface MainApi {
         @Query("roomTags") roomTags: List<String>
     ): TaxiPotListResponse
 
+    @GET("/api/rooms/integration")
+    suspend fun getTaxiPotListIntegration(
+        @QueryMap filter: Map<String, Long>,
+        @Query("radius") radius: Int,
+        @Query("searchLatitude") latitude: Double,
+        @Query("searchLongitude") longitude: Double,
+        @Query("sortType") sortType: String,
+        @Query("roomTags") roomTags: List<String>
+    ): TaxiPotListResponse
+
     @GET("/api/rooms/preview/{id}")
     suspend fun getTaxiPotPreview(
         @Path("id") id : Long
