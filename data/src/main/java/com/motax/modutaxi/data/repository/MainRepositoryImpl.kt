@@ -7,7 +7,9 @@ import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
+import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
+import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.repository.MainRepository
 import javax.inject.Inject
 
@@ -53,10 +55,6 @@ class MainRepositoryImpl @Inject constructor(
         api.getTaxiPotPreview(id)
     }.mapCatching { it.toDomain() }
 
-    override suspend fun enterPot(roomId: Long): Result<Unit> = runCatching {
-        api.enterPot(roomId)
-    }
-
     override suspend fun getNearSpot(
         count: Int,
         latitude: Double,
@@ -99,6 +97,25 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getTaxiPotDetail(roomId: Long): Result<TaxiPotDetailData> =
         runCatching {
             api.getTaxiPotDetail(roomId)
+        }.mapCatching { it.toDomain() }
+
+    override suspend fun approveEnterTaxiPot(roomId: Long, memberId: Long): Result<Unit> =
+        runCatching {
+            api.approveEnterTaxiPot(roomId, memberId)
+        }
+
+    override suspend fun enterTaxiPot(roomId: Long): Result<Unit> = runCatching {
+        api.enterTaxiPot(roomId)
+    }
+
+    override suspend fun getTaxiPotParticipants(roomId: Long): Result<TaxiPotParticipantsData> =
+        runCatching {
+            api.getTaxiPotParticipants(roomId)
+        }.mapCatching { it.toDomain() }
+
+    override suspend fun getTaxiPotWaitingMembers(roomId: Long): Result<TaxiPotWaitingMembersData> =
+        runCatching {
+            api.getTaxiPotWaitingMembers(roomId)
         }.mapCatching { it.toDomain() }
 
 }

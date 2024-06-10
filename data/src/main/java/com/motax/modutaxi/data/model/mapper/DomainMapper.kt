@@ -14,7 +14,10 @@ import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotItem
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
+import com.motax.modutaxi.data.model.response.TaxiPotMemberItem
+import com.motax.modutaxi.data.model.response.TaxiPotParticipants
 import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
+import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
@@ -41,7 +44,10 @@ import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
 import com.motax.modutaxi.domain.model.TaxiPotListRadiusItemData
+import com.motax.modutaxi.domain.model.TaxiPotMemberData
+import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
+import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.TokenData
 
 fun TokenResponse.toDomain() = TokenData(
@@ -230,4 +236,21 @@ fun TaxiPotPreviewResponse.toDomain() = TaxiPotPreviewData(
     wishHeadcount = wishHeadcount,
     expectedChargePerPerson = expectedChargePerPerson,
     expectedCharge = expectedCharge
+)
+
+fun TaxiPotMemberItem.toDomain() = TaxiPotMemberData(
+    memberId = memberId,
+    nickname = nickname,
+    imageUrl = imageUrl,
+    matchingCount = matchingCount,
+    thisIsMe = thisIsMe,
+    certified = certified
+)
+
+fun TaxiPotParticipants.toDomain() = TaxiPotParticipantsData(
+    inList = inList.map{ it.toDomain() }
+)
+
+fun TaxiPotWaitingMembers.toDomain() = TaxiPotWaitingMembersData(
+    waitingList = waitingList.map{ it.toDomain() }
 )

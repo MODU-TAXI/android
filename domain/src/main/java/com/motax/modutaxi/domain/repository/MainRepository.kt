@@ -5,7 +5,9 @@ import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
+import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
+import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 
 interface MainRepository {
 
@@ -15,7 +17,7 @@ interface MainRepository {
         latitude: Double,
         longitude: Double,
         roomTags: List<String>
-    ) : Result<TaxiPotListRadiusData>
+    ): Result<TaxiPotListRadiusData>
 
     suspend fun getTaxiPotList(
         filter: Map<String, Long>,
@@ -38,12 +40,8 @@ interface MainRepository {
     ): Result<TaxiPotListData>
 
     suspend fun getTaxiPotPreview(
-        id : Long
+        id: Long
     ): Result<TaxiPotPreviewData>
-
-    suspend fun enterPot(
-        roomId: Long
-    ): Result<Unit>
 
     suspend fun getNearSpot(
         count: Int,
@@ -70,5 +68,22 @@ interface MainRepository {
 
     suspend fun getTaxiPotDetail(
         roomId: Long
-    ):Result<TaxiPotDetailData>
+    ): Result<TaxiPotDetailData>
+
+    suspend fun getTaxiPotParticipants(
+        roomId: Long
+    ): Result<TaxiPotParticipantsData>
+
+    suspend fun getTaxiPotWaitingMembers(
+        roomId: Long
+    ): Result<TaxiPotWaitingMembersData>
+
+    suspend fun enterTaxiPot(
+        roomId: Long
+    ): Result<Unit>
+
+    suspend fun approveEnterTaxiPot(
+        roomId: Long,
+        memberId: Long
+    ): Result<Unit>
 }
