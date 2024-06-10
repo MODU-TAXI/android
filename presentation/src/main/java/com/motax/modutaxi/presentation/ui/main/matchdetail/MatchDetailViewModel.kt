@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.matchdetail
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
@@ -9,6 +10,7 @@ import com.motax.modutaxi.presentation.ui.main.matchdetail.mapper.toUiWaitingMem
 import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiMatchDetailData
 import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiParticipantItem
 import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiWaitingMemberItem
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -46,8 +48,7 @@ class MatchDetailViewModel @Inject constructor(
     fun getTaxiPotData(id: Long) {
         roomId = id
         getTaxiPotDetail(roomId)
-        getParticipants(roomId)
-        getWaitingMembers(roomId)
+
     }
 
     private fun getTaxiPotDetail(roomId: Long) {
@@ -62,6 +63,9 @@ class MatchDetailViewModel @Inject constructor(
                         else RoomState.NOTHING
                     )
                 }
+
+                getParticipants(roomId)
+                getWaitingMembers(roomId)
             }.onFailure {
             }
         }
@@ -71,8 +75,19 @@ class MatchDetailViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getTaxiPotParticipants(roomId).onSuccess {
                 _uiState.update { state ->
+                    val members = it.inList.map { data -> data.toUiParticipantItem() }
+                    var owner = UiParticipantItem()
+                    members.forEach {
+                        if (it.memberId == uiState.value.matchDetailUiData.managerId) {
+                            owner = it
+                        }
+                    }
+
                     state.copy(
-                        participants = it.inList.map { data -> data.toUiParticipantItem() }
+                        owner = owner,
+                        participants = members.filter {
+                            it.memberId != uiState.value.matchDetailUiData.managerId
+                        }
                     )
                 }
             }.onFailure { }
@@ -118,6 +133,5 @@ class MatchDetailViewModel @Inject constructor(
             }
         }
     }
-
 
 }

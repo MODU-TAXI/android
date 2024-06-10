@@ -7,6 +7,7 @@ import com.motax.modutaxi.presentation.ui.toRoomTag
 import com.naver.maps.geometry.LatLng
 
 fun TaxiPotDetailData.toUiMatchDetailData() = UiMatchDetailData(
+    managerId = managerId,
     roomTags = roomTagBitMaskList.map { it.toRoomTag() },
     departureDate = departureDairyDate,
     departureTime = departureTime,

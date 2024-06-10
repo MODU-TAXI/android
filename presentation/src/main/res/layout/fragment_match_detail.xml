@@ -224,11 +224,10 @@
 
                 <ImageView
                     android:id="@+id/iv_room_manager"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_person"
-                    app:imgUrl="@{vm.uiState.owner.profileImage}"
+                    app:profileImgUrl="@{vm.uiState.owner.profileImage}"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/tv_room_manager_label" />
 
@@ -261,6 +260,7 @@
                     style="@style/TextLargeRegular"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:text="@{vm.uiState.owner.matchingCount}"
                     android:textColor="@color/mx_gray500"
                     app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"

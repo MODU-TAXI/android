@@ -4,6 +4,7 @@ import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
 import com.naver.maps.geometry.LatLng
 
 data class UiMatchDetailData(
+    val managerId: Long = 0,
     val roomTags: List<RoomTag> = emptyList(),
     val departureDate: String = "",
     val departureTime: String = "",
