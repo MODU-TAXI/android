@@ -16,6 +16,7 @@ data class TaxiPotDetailResponse(
     val expectedChargePerPerson: Int,
     val managerId: Long,
     val myRoom: Boolean,
+    val waiting: Boolean,
     val participate: Boolean,
     val path: Path,
     val profileImageUrl: String?,

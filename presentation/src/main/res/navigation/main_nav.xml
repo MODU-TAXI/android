@@ -98,6 +98,9 @@
             android:id="@+id/action_matchDetailFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/main_nav"/>
+        <action
+            android:id="@+id/action_matchDetailFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
     </fragment>
 
     <action
@@ -107,5 +110,15 @@
         android:id="@+id/showPartySearchFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchFragment"
         android:label="ShowPartySearchFragment" />
+    <fragment
+        android:id="@+id/chatRoomFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.ChatRoomFragment"
+        android:label="ChatRoomFragment" >
+
+        <argument
+            android:name="id"
+            app:argType="long"/>
+
+    </fragment>
 
 </navigation>

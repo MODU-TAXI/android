@@ -1,6 +1,7 @@
 package com.motax.modutaxi.presentation.ui.intro.signup.phoneauth
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -10,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentOnboardingPhoneAuthBinding
+import com.motax.modutaxi.presentation.ui.intro.IntroActivity
+import com.motax.modutaxi.presentation.ui.intro.signup.editemail.OnboardingSchoolAuthorizationEnterEmailEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,14 +38,20 @@ class OnboardingPhoneAuthorization :
         repeatOnStarted {
             viewModel.event.collect{
                 when(it) {
-                    is PhoneAuthEvent.NavigateToQuestionHowToKnow -> findNavController().toQuestionHowToKnow()
+                    is PhoneAuthEvent.NavigateToEditNick -> findNavController().toEditNick()
+                    is PhoneAuthEvent.GoBackToInit -> {
+                        val intent = Intent(requireContext(), IntroActivity::class.java)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }
+                    is PhoneAuthEvent.ShowToastMessage -> showToastMessage(it.msg)
                 }
             }
         }
     }
 
-    private fun NavController.toQuestionHowToKnow(){
-        val action = OnboardingPhoneAuthorizationDirections.actionPhoneAuthFragmentToQuestionHowToKnowFragment()
+    private fun NavController.toEditNick(){
+        val action = OnboardingPhoneAuthorizationDirections.actionPhoneAuthFragmentToEditNickFragment()
         navigate(action)
     }
 
@@ -58,6 +67,5 @@ class OnboardingPhoneAuthorization :
         val inputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
-
     }
 }

@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.intro.signup.identification
 import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -12,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentOnboardingIdentificationBinding
+import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
+import com.motax.modutaxi.presentation.util.Constants.TAG
 
 class OnboardingIdentificationFragment :
     BaseFragment<FragmentOnboardingIdentificationBinding>(R.layout.fragment_onboarding_identification) {
@@ -54,7 +57,10 @@ class OnboardingIdentificationFragment :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is OnboardingIdentificationEvent.NavigateToPhoneAuth -> findNavController().toPhoneAuth()
+                    is OnboardingIdentificationEvent.NavigateToPhoneAuth -> {
+                        Log.d(TAG, SignUpData.name)
+                        findNavController().toPhoneAuth()
+                    }
                 }
             }
         }
@@ -72,11 +78,11 @@ class OnboardingIdentificationFragment :
         }
 
         binding.etName.setOnFocusChangeListener { _, hasFocus ->
-            if(hasFocus) viewModel.focusOnName()
+            if (hasFocus) viewModel.focusOnName()
         }
 
         binding.etPhoneNumber.setOnFocusChangeListener { _, hasFocus ->
-            if(hasFocus) viewModel.focusOnPhoneNumber()
+            if (hasFocus) viewModel.focusOnPhoneNumber()
         }
     }
 

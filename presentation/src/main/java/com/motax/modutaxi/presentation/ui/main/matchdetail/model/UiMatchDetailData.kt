@@ -14,6 +14,7 @@ data class UiMatchDetailData(
     val feePerPerson: String = "",
     val isMyRoom: Boolean = false,
     val isParticipate: Boolean = false,
+    val isWaiting: Boolean = false,
     val headCount: String = "",
     val path: List<LatLng> = emptyList()
 )

@@ -212,7 +212,8 @@ fun TaxiPotDetailResponse.toDomain() = TaxiPotDetailData(
     roomId = roomId,
     roomTagBitMaskList = roomTagBitMaskList,
     spotId = spotId,
-    wishHeadcount = wishHeadcount
+    wishHeadcount = wishHeadcount,
+    waiting = waiting
 )
 
 fun TaxiPotListRadiusResponse.toDomain() = TaxiPotListRadiusData(

@@ -17,6 +17,7 @@ data class TaxiPotDetailData(
     val managerId: Long,
     val myRoom: Boolean,
     val participate: Boolean,
+    val waiting: Boolean,
     val path: PathData,
     val profileImageUrl: String?,
     val roomId: Long,

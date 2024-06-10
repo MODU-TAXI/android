@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -15,6 +16,8 @@ import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMatchDetailBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.ParticipantAdapter
+import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.WaitingMemberAdapter
+import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.WaitingMemberParticipantAdapter
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.CameraUpdate
@@ -35,8 +38,6 @@ class MatchDetailFragment :
     private val pathList = mutableListOf<PathOverlay>()
     private val roomId by lazy { args.id }
 
-    private var participantAdapter: ParticipantAdapter? = null
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,9 +45,7 @@ class MatchDetailFragment :
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
         parentViewModel.setNotFullScreenMode()
         binding.vm = viewModel
-        participantAdapter = ParticipantAdapter()
-        binding.rvParticipants.adapter = participantAdapter
-
+        binding.rvParticipants.adapter = ParticipantAdapter()
         initMapView()
     }
 
@@ -73,8 +72,9 @@ class MatchDetailFragment :
             isCompassEnabled = false
             isZoomControlEnabled = false
         }
-        viewModel.getTaxiPotDetail(roomId)
+        viewModel.getTaxiPotData(roomId)
         initStateObserve()
+        setBtnClickListener()
     }
 
     private fun initStateObserve(){
@@ -83,6 +83,33 @@ class MatchDetailFragment :
                 if(it.matchDetailUiData.path.isNotEmpty()){
                     setPath()
                 }
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.uiState.collect{
+                if(it.matchDetailUiData.isMyRoom){
+                    binding.rvWaitingMember.adapter = WaitingMemberAdapter()
+                } else {
+                    binding.rvWaitingMember.adapter = WaitingMemberParticipantAdapter()
+                }
+            }
+        }
+    }
+
+    private fun setBtnClickListener(){
+        binding.btnParticipate.setOnClickListener {
+            when(viewModel.uiState.value.roomState){
+
+                RoomState.PARTICIPANT, RoomState.OWNER -> {
+                    findNavController().toChatRoom(roomId)
+                }
+
+                RoomState.NOTHING -> {
+                    viewModel.enterTaxiPot()
+                }
+
+                else ->{}
             }
         }
     }
@@ -112,6 +139,11 @@ class MatchDetailFragment :
 
     private fun NavController.toHome() {
         val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToHomeFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toChatRoom(id: Long){
+        val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToChatRoomFragment(id)
         navigate(action)
     }
 }

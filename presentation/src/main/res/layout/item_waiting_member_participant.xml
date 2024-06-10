@@ -9,22 +9,22 @@
 
         <variable
             name="item"
-            type="com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiParticipantItem" />
+            type="com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiWaitingMemberItem" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:paddingVertical="6dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingVertical="6dp">
 
         <ImageView
             android:id="@+id/iv_room_manager"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            app:profileImgUrl="@{item.profileImage}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:profileImgUrl="@{item.profileImage}" />
 
         <TextView
             android:id="@+id/tv_room_manager_nickname"
@@ -55,8 +55,8 @@
             style="@style/TextLargeRegular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/mx_gray500"
             android:text="@{item.matchingCount}"
+            android:textColor="@color/mx_gray500"
             app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_room_manager"

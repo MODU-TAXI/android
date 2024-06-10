@@ -1,5 +1,6 @@
 package com.motax.modutaxi.data.remote
 
+import com.motax.modutaxi.data.model.request.EditNickRequest
 import com.motax.modutaxi.data.model.request.EmailCertificationRequest
 import com.motax.modutaxi.data.model.request.EmailConfirmRequest
 import com.motax.modutaxi.data.model.request.LoginRequest
@@ -10,6 +11,7 @@ import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
 import com.motax.modutaxi.data.model.response.AuthResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -43,6 +45,11 @@ interface IntroApi {
     suspend fun smsCertificate(
         @Body body: SmsCertificateRequest
     ): CertificateResponse
+
+    @POST("/api/members/nickname")
+    suspend fun editNick(
+        @Body body : EditNickRequest
+    ): Response<Unit>
 
     @POST("/api/members/mail/confirm")
     suspend fun emailConfirm(

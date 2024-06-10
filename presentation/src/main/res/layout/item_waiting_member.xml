@@ -9,14 +9,14 @@
 
         <variable
             name="item"
-            type="com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiParticipantItem" />
+            type="com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiWaitingMemberItem" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:paddingVertical="6dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingVertical="6dp">
 
         <ImageView
             android:id="@+id/iv_room_manager"
@@ -39,28 +39,31 @@
             tools:text="버스를 놓친 사자" />
 
         <TextView
+            android:id="@+id/tv_matching_count"
             style="@style/TextLargeMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:text="(나)"
             android:textColor="@color/mx_gray500"
-            android:visibility="@{item.thisIsMe ? View.VISIBLE : View.GONE }"
             app:layout_constraintBottom_toBottomOf="@id/tv_room_manager_nickname"
             app:layout_constraintStart_toEndOf="@id/tv_room_manager_nickname"
-            app:layout_constraintTop_toTopOf="@id/tv_room_manager_nickname" />
+            app:layout_constraintTop_toTopOf="@id/tv_room_manager_nickname"
+            tools:text="(5회)" />
 
         <TextView
-            android:id="@+id/tv_matching_count"
-            style="@style/TextLargeRegular"
-            android:layout_width="0dp"
+            android:id="@+id/btn_accept_enter"
+            style="@style/TextSmallMedium"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/mx_gray500"
-            android:text="@{item.matchingCount}"
-            app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
+            android:background="@drawable/rect_sub100fill_nostroke_37radius"
+            android:paddingHorizontal="14dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="7dp"
+            android:text="참여수락"
+            android:textColor="@color/mx_sub500"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_room_manager"
-            tools:text="7회" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

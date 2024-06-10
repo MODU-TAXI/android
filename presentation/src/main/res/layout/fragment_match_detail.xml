@@ -104,7 +104,7 @@
                     android:background="@drawable/rect_whitefill_nostroke_12radius"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chip_group_classification"/>
+                    app:layout_constraintTop_toBottomOf="@id/chip_group_classification" />
 
                 <TextView
                     android:id="@+id/tv_departure_datetime"
@@ -294,7 +294,7 @@
                     android:id="@+id/layout_no_participants"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="@{vm.uiState.participants.empty ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{vm.uiState.participants.empty ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/tv_participant_label">
 
@@ -320,17 +320,16 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_participants"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/layout_no_participants"
+                    app:layout_constraintTop_toBottomOf="@id/tv_participant_label"
                     app:list="@{vm.uiState.participants}"
                     tools:listitem="@layout/item_participant" />
 
@@ -348,7 +347,7 @@
                     android:id="@+id/layout_no_waiting_member"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="@{vm.uiState.waitingMembers.empty ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{vm.uiState.waitingMembers.empty ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/tv_waiting_member_label">
 
@@ -379,12 +378,12 @@
                     android:id="@+id/rv_waiting_member"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/layout_no_waiting_member"
+                    app:layout_constraintTop_toBottomOf="@id/tv_waiting_member_label"
                     app:list="@{vm.uiState.waitingMembers}" />
 
                 <ImageView
@@ -455,33 +454,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="154dp"
+                    android:layout_marginTop="120dp"
                     android:gravity="center"
-                    android:paddingVertical="20dp"
-                    android:text="@{vm.uiState.matchDetailUiData.myRoom ? `매칭 수정하기` : `매칭 참여하기`}"
+                    android:outlineProvider="none"
+                    android:paddingVertical="16dp"
                     android:visibility="visible"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="@id/guide_96_vertical"
                     app:layout_constraintStart_toStartOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/matching_price"
-                    app:matchingParticipateBtnState="@{vm.uiState.matchDetailUiData.myRoom}"
+                    app:matchingParticipateBtnState="@{vm.uiState.roomState}"
                     tools:text="매칭 참여하기" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_modify"
-                    style="@style/TextLargeSemibold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="14dp"
-                    android:background="@drawable/selector_create_btn"
-                    android:gravity="center"
-                    android:paddingVertical="20dp"
-                    android:text="매칭 삭제하기"
-                    android:textColor="@color/white"
-                    android:visibility="@{vm.uiState.matchDetailUiData.myRoom ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="@id/guide_96_vertical"
-                    app:layout_constraintStart_toStartOf="@id/guide_04_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/btn_participate" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

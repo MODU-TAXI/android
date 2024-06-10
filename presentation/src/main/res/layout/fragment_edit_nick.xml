@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.intro.signup.emailauth.OnboardingSchoolAuthorizationEnterCodeViewModel" />
+            type="com.motax.modutaxi.presentation.ui.intro.signup.editnick.EditNickViewModel" />
 
     </data>
 
@@ -64,7 +67,7 @@
             android:layout_marginTop="6dp"
             android:backgroundTint="#D9D9D9"
             android:max="7"
-            android:progress="6"
+            android:progress="3"
             android:progressTint="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +79,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="@string/email_sent"
+            android:text="모두의 택시 이용을 위해\n닉네임을 설정해주세요!"
             android:textColor="#000000"
             android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
@@ -98,7 +101,7 @@
                 android:id="@+id/tv_name_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="인증번호"
+                android:text="닉네임"
                 android:textColor="#626262"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,55 +113,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:background="@null"
-                android:hint="인증번호를 입력해주세요"
-                android:text="@={vm.certCode}"
+                android:hint="한글, 영문 2~12자"
+                android:text="@={vm.nick}"
                 android:textColorHint="#C0C0C0"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name_label" />
 
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@{vm.uiState.time}"
-                android:textColor="#FF3131"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/et_authorization_code"
-                app:layout_constraintEnd_toEndOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <TextView
+            android:id="@+id/tv_warning_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="12dp"
             android:paddingVertical="8dp"
-            android:text="인증번호가 틀렸어요!"
+            android:text="@{vm.helperMessage}"
             android:textColor="#FF3131"
             android:textSize="12sp"
+            android:visibility="@{vm.helperMessage.empty ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
             app:layout_constraintTop_toBottomOf="@id/layout_enter_code"
-            app:onboardPhoneAuthHelperText="@{vm.uiState.btnState}" />
-
-
-        <TextView
-            android:id="@+id/tv_not_recent_authorization_code"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:onClick="@{() -> vm.resendAuthCode()}"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="8dp"
-            android:text="@string/not_recent"
-            android:textColor="#626262"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@id/guide_92_vertical"
-            app:layout_constraintTop_toBottomOf="@id/layout_enter_code" />
-
+            tools:text="닉네임은 최소 2글자부터 가능해요!" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_edit_nickname"
@@ -166,16 +143,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_next_btn"
+            android:enabled="@{vm.nick.empty ? false : true}"
             android:gravity="center"
-            android:onClick="@{() -> vm.checkAuthCode()}"
+            android:onClick="@{() -> vm.editNick()}"
             android:paddingVertical="16dp"
             android:text="확인"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal"
-            app:onboardPhoneAuthBtnState="@{vm.uiState.btnState}" />
+            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
