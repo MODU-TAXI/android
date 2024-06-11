@@ -32,6 +32,7 @@ class TaxiPotListBottomSheetFragment: BottomSheetDialogFragment() {
     private val viewModel: ShowPartyViewModel by activityViewModels()
 
     private var taxiPotAdapter : TaxiPotListAdapter ? = null
+    private var taxiPotFilterAdapter: TaxiPotFilterAdapter ? = null
 
     fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -58,8 +59,10 @@ class TaxiPotListBottomSheetFragment: BottomSheetDialogFragment() {
 
         binding.vm = viewModel
         taxiPotAdapter = TaxiPotListAdapter()
-        binding.rvFilter.adapter = TaxiPotFilterAdapter()
+        taxiPotFilterAdapter = TaxiPotFilterAdapter()
+        binding.rvFilter.adapter = taxiPotFilterAdapter
         binding.rvTaxipotList.adapter = taxiPotAdapter
+        binding.rvFilter.itemAnimator = null
 
         setBottomSheetState()
         initStateObserve()
@@ -69,6 +72,12 @@ class TaxiPotListBottomSheetFragment: BottomSheetDialogFragment() {
         repeatOnStarted {
             viewModel.uiState.collectLatest{
                 taxiPotAdapter?.submitList(it.taxiPotList)
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.bottomSheetUiState.collectLatest {
+                taxiPotFilterAdapter?.submitList(it.filterList)
             }
         }
     }

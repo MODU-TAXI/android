@@ -36,7 +36,7 @@ data class ShowPartyBottomSheetUiState(
     val filterList: List<UiTaxiPotListFilterItem> = emptyList(),
     val sortType: TaxiPotSortType = TaxiPotSortType.NEW,
     val spotFilter: String = "",
-    val roomTagFilter: List<String> = emptyList(),
+    val roomTagFilter: List<RoomTag> = emptyList(),
     val showBottomSheet: Boolean = true
 )
 
@@ -98,20 +98,13 @@ class ShowPartyViewModel @Inject constructor(
             state.copy(
                 filterList = listOf(
                     UiTaxiPotListFilterItem(
-                        RoomTag.EMPTY,
-                        "거점지", ::setFilter, ::showSpotFilterBottomSheet
+                        RoomTag.STUDENT_CERTIFICATION, false,::setFilter
                     ),
                     UiTaxiPotListFilterItem(
-                        RoomTag.STUDENT_CERTIFICATION,
-                        "", ::setFilter, ::showSpotFilterBottomSheet
+                        RoomTag.ONLY_WOMAN, false,::setFilter
                     ),
                     UiTaxiPotListFilterItem(
-                        RoomTag.ONLY_WOMAN,
-                        "", ::setFilter, ::showSpotFilterBottomSheet
-                    ),
-                    UiTaxiPotListFilterItem(
-                        RoomTag.MANNER,
-                        "", ::setFilter, ::showSpotFilterBottomSheet
+                        RoomTag.MANNER, false,::setFilter
                     ),
                 )
             )
@@ -120,13 +113,36 @@ class ShowPartyViewModel @Inject constructor(
 
     private fun setFilter(filter: RoomTag) {
 
+        val newTagFilter = bottomSheetUiState.value.roomTagFilter.toMutableList()
+        if (bottomSheetUiState.value.roomTagFilter.contains(filter)) {
+            newTagFilter.remove(filter)
+        } else {
+            newTagFilter.add(filter)
+        }
+
+        _bottomSheetUiState.update { state ->
+            state.copy(
+                filterList = bottomSheetUiState.value.filterList.map {
+                    if (it.filter == filter) {
+                        it.copy(
+                            isClicked = !it.isClicked
+                        )
+                    } else {
+                        it.copy()
+                    }
+                },
+                roomTagFilter = newTagFilter
+            )
+        }
+
+        getTaxiPotData()
     }
 
     private fun showSpotFilterBottomSheet() {
 
     }
 
-    fun setZoomLevel(level: Double){
+    fun setZoomLevel(level: Double) {
         _uiState.update { state ->
             state.copy(
                 curZoomLevel = level
@@ -158,7 +174,7 @@ class ShowPartyViewModel @Inject constructor(
                 latitude,
                 longitude,
                 bottomSheetUiState.value.sortType.text,
-                bottomSheetUiState.value.roomTagFilter
+                bottomSheetUiState.value.roomTagFilter.map { data -> data.text }
             ).onSuccess {
                 _uiState.update { state ->
                     state.copy(
@@ -172,7 +188,7 @@ class ShowPartyViewModel @Inject constructor(
 
                 _event.emit(ShowPartyEvent.SetMarkers(uiState.value.taxiPotList))
             }.onFailure {
-                Log.d(TAG,it.message.toString())
+                Log.d(TAG, it.message.toString())
             }
         }
     }

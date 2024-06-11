@@ -13,18 +13,18 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:nestedScrollingEnabled="true"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/taxipot_list_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:behavior_hideable="false"
-            android:nestedScrollingEnabled="true"
-            app:behavior_peekHeight="90dp"
-            app:behavior_fitToContents="false"
             android:background="@drawable/rect_whitefill_nostroke_top20radius"
+            android:nestedScrollingEnabled="true"
+            app:behavior_fitToContents="false"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="90dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <ImageView
@@ -37,20 +37,72 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_filter"
+            <HorizontalScrollView
+                android:id="@+id/scroll_filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
+                android:fillViewport="true"
                 android:paddingHorizontal="20dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_bottomsheet_top"
-                app:list="@{vm.bottomSheetUiState.filterList}"
-                tools:listitem="@layout/item_taxipot_filter" />
+                app:layout_constraintTop_toBottomOf="@id/iv_bottomsheet_top">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_select_spot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:background="@{vm.bottomSheetUiState.spotFilter.empty ? @drawable/rect_nofill_gray200stroke_101radius : @drawable/rect_sub500fill_nostroke_101radius}"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/iv_small_flag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@{vm.bottomSheetUiState.spotFilter.empty ? @drawable/ic_small_flag_gray200 : @drawable/ic_circle_flag}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_filter_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@{vm.bottomSheetUiState.spotFilter.empty ? `거점지` : vm.bottomSheetUiState.spotFilter}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iv_small_flag"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="거점지" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/layout_select_spot"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:list="@{vm.bottomSheetUiState.filterList}"
+                        tools:listitem="@layout/item_taxipot_filter" />
+
+                </RelativeLayout>
+
+            </HorizontalScrollView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_deadline_and_toggle"
@@ -60,7 +112,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_filter">
+                app:layout_constraintTop_toBottomOf="@id/scroll_filter">
 
                 <ImageView
                     android:id="@+id/btn_deadline_imminent"
@@ -103,8 +155,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:orientation="vertical"
                 android:clipToPadding="false"
+                android:orientation="vertical"
                 android:paddingBottom="300dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
