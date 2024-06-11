@@ -46,6 +46,7 @@ sealed class ShowPartyEvent {
     data object NavigateToSearch : ShowPartyEvent()
     data object NavigateToCreateParty : ShowPartyEvent()
     data class NavigateToMatchDetail(val id: Long) : ShowPartyEvent()
+    data object ShowSpotFilterSheet : ShowPartyEvent()
 }
 
 @HiltViewModel
@@ -138,8 +139,32 @@ class ShowPartyViewModel @Inject constructor(
         getTaxiPotData()
     }
 
-    private fun showSpotFilterBottomSheet() {
+    fun showSpotFilterBottomSheet() {
+        viewModelScope.launch {
+            _event.emit(ShowPartyEvent.ShowSpotFilterSheet)
+        }
+    }
 
+    fun setSpotFilter(id: Long, name: String){
+        spotFilterId = id
+        _bottomSheetUiState.update { state ->
+            state.copy(
+                spotFilter = name
+            )
+        }
+
+        getTaxiPotData()
+    }
+
+    fun cancelSpotFilter(){
+        spotFilterId = 0
+        _bottomSheetUiState.update { state ->
+            state.copy(
+                spotFilter = ""
+            )
+        }
+
+        getTaxiPotData()
     }
 
     fun setZoomLevel(level: Double) {

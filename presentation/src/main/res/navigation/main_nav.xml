@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_showPartyFragment_to_createPartyFragment"
             app:destination="@id/createPartyFragment" />
+        <action
+            android:id="@+id/action_showPartyFragment_to_selectSpotFilterBottomSheetFragment"
+            app:destination="@id/selectSpotFilterBottomSheetFragment" />
     </fragment>
 
     <fragment
@@ -120,5 +123,9 @@
             app:argType="long"/>
 
     </fragment>
+    <dialog
+        android:id="@+id/selectSpotFilterBottomSheetFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.showparty.bottomsheet.SelectSpotFilterBottomSheetFragment"
+        android:label="SelectSpotFilterBottomSheetFragment" />
 
 </navigation>

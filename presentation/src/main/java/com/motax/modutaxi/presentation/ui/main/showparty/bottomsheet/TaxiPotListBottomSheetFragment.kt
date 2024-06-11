@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -25,14 +26,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class TaxiPotListBottomSheetFragment: BottomSheetDialogFragment() {
+class TaxiPotListBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentTaxipotListBottomSheetBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ShowPartyViewModel by activityViewModels()
 
-    private var taxiPotAdapter : TaxiPotListAdapter ? = null
-    private var taxiPotFilterAdapter: TaxiPotFilterAdapter ? = null
+    private var taxiPotAdapter: TaxiPotListAdapter? = null
+    private var taxiPotFilterAdapter: TaxiPotFilterAdapter? = null
 
     fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -68,9 +69,9 @@ class TaxiPotListBottomSheetFragment: BottomSheetDialogFragment() {
         initStateObserve()
     }
 
-    private fun initStateObserve(){
+    private fun initStateObserve() {
         repeatOnStarted {
-            viewModel.uiState.collectLatest{
+            viewModel.uiState.collectLatest {
                 taxiPotAdapter?.submitList(it.taxiPotList)
             }
         }
@@ -80,6 +81,34 @@ class TaxiPotListBottomSheetFragment: BottomSheetDialogFragment() {
                 taxiPotFilterAdapter?.submitList(it.filterList)
             }
         }
+
+        repeatOnStarted {
+            viewModel.bottomSheetUiState.collect {
+                if (it.spotFilter.isBlank()) {
+                    binding.layoutSelectSpot.setBackgroundResource(R.drawable.rect_nofill_gray200stroke_101radius)
+                    binding.ivSmallFlag.setImageResource(R.drawable.ic_small_flag_gray200)
+                    binding.tvFilterName.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.mx_gray700
+                        )
+                    )
+                    binding.tvFilterName.text = "거점지"
+                    binding.btnCancelFilter.visibility = View.GONE
+                } else {
+                    binding.layoutSelectSpot.setBackgroundResource(R.drawable.rect_sub500fill_nostroke_101radius)
+                    binding.ivSmallFlag.setImageResource(R.drawable.ic_circle_flag)
+                    binding.tvFilterName.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.white
+                        )
+                    )
+                    binding.tvFilterName.text = it.spotFilter
+                    binding.btnCancelFilter.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -87,7 +116,7 @@ class TaxiPotListBottomSheetFragment: BottomSheetDialogFragment() {
         val behavior = BottomSheetBehavior.from(binding.taxipotListBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
-        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 viewModel.changeBottomSheetState(newState)
             }

@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
-                        android:background="@{vm.bottomSheetUiState.spotFilter.empty ? @drawable/rect_nofill_gray200stroke_101radius : @drawable/rect_sub500fill_nostroke_101radius}"
+                        android:onClick="@{() -> vm.showSpotFilterBottomSheet()}"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,7 +70,6 @@
                             android:id="@+id/iv_small_flag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@{vm.bottomSheetUiState.spotFilter.empty ? @drawable/ic_small_flag_gray200 : @drawable/ic_circle_flag}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -80,11 +79,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:text="@{vm.bottomSheetUiState.spotFilter.empty ? `거점지` : vm.bottomSheetUiState.spotFilter}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/iv_small_flag"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="거점지" />
+
+                        <ImageView
+                            android:id="@+id/btn_cancel_filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> vm.cancelSpotFilter()}"
+                            app:layout_constraintStart_toEndOf="@id/tv_filter_name"
+                            android:layout_marginStart="6dp"
+                            android:src="@drawable/ic_white_x"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

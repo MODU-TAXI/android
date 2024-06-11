@@ -86,6 +86,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
                     is ShowPartyEvent.NavigateToSearch -> findNavController().toShowPartySearch()
                     is ShowPartyEvent.NavigateToCreateParty -> findNavController().toCreateParty()
                     is ShowPartyEvent.NavigateToMatchDetail -> findNavController().toMatchDetail(it.id)
+                    is ShowPartyEvent.ShowSpotFilterSheet -> findNavController().toSelectSpotFilter()
                 }
             }
         }
@@ -239,6 +240,11 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
 
     private fun NavController.toCreateParty() {
         val action = ShowPartyFragmentDirections.actionShowPartyFragmentToCreatePartyFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toSelectSpotFilter(){
+        val action = ShowPartyFragmentDirections.actionShowPartyFragmentToSelectSpotFilterBottomSheetFragment()
         navigate(action)
     }
 }
