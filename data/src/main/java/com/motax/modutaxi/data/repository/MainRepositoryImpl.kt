@@ -46,9 +46,10 @@ class MainRepositoryImpl @Inject constructor(
         latitude: Double,
         longitude: Double,
         sortType: String,
-        roomTags: List<String>
+        roomTags: List<String>,
+        isImminent : Boolean
     ): Result<TaxiPotListData> = runCatching {
-        api.getTaxiPotListIntegration(filter, radius, latitude, longitude, sortType, roomTags)
+        api.getTaxiPotListIntegration(filter, radius, latitude, longitude, sortType, roomTags, isImminent)
     }.mapCatching { it.toDomain() }
 
     override suspend fun getTaxiPotPreview(id: Long): Result<TaxiPotPreviewData> = runCatching {

@@ -36,6 +36,7 @@ data class ShowPartyBottomSheetUiState(
     val filterList: List<UiTaxiPotListFilterItem> = emptyList(),
     val sortType: TaxiPotSortType = TaxiPotSortType.NEW,
     val spotFilter: String = "",
+    val isImminent: Boolean = false,
     val roomTagFilter: List<RoomTag> = emptyList(),
     val showBottomSheet: Boolean = true
 )
@@ -145,6 +146,16 @@ class ShowPartyViewModel @Inject constructor(
         }
     }
 
+    fun setIsImminent(){
+        _bottomSheetUiState.update { state ->
+            state.copy(
+                isImminent = !bottomSheetUiState.value.isImminent
+            )
+        }
+
+        getTaxiPotData()
+    }
+
     fun setSpotFilter(id: Long, name: String){
         spotFilterId = id
         _bottomSheetUiState.update { state ->
@@ -199,7 +210,8 @@ class ShowPartyViewModel @Inject constructor(
                 latitude,
                 longitude,
                 bottomSheetUiState.value.sortType.text,
-                bottomSheetUiState.value.roomTagFilter.map { data -> data.text }
+                bottomSheetUiState.value.roomTagFilter.map { data -> data.text },
+                bottomSheetUiState.value.isImminent
             ).onSuccess {
                 _uiState.update { state ->
                     state.copy(

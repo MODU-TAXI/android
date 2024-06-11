@@ -109,6 +109,16 @@ class TaxiPotListBottomSheetFragment : BottomSheetDialogFragment() {
                 }
             }
         }
+
+        repeatOnStarted {
+            viewModel.bottomSheetUiState.collect{
+                if(it.isImminent){
+                    binding.btnDeadlineImminent.setImageResource(R.drawable.ic_eclipse_fill)
+                } else {
+                    binding.btnDeadlineImminent.setImageResource(R.drawable.ic_eclipse_no_fill)
+                }
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")

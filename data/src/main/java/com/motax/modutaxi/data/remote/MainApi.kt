@@ -47,7 +47,8 @@ interface MainApi {
         @Query("searchLatitude") latitude: Double,
         @Query("searchLongitude") longitude: Double,
         @Query("sortType") sortType: String,
-        @Query("roomTags") roomTags: List<String>
+        @Query("roomTags") roomTags: List<String>,
+        @Query("isImminent") isImminent: Boolean
     ): TaxiPotListResponse
 
     @GET("/api/rooms/preview/{id}")

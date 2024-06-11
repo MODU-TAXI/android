@@ -36,7 +36,8 @@ interface MainRepository {
         latitude: Double,
         longitude: Double,
         sortType: String,
-        roomTags: List<String>
+        roomTags: List<String>,
+        isImminent : Boolean
     ): Result<TaxiPotListData>
 
     suspend fun getTaxiPotPreview(
