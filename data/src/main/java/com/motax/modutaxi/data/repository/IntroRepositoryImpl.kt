@@ -1,17 +1,20 @@
 package com.motax.modutaxi.data.repository
 
 import com.motax.modutaxi.data.model.mapper.toDomain
+import com.motax.modutaxi.data.model.request.EditNickRequest
 import com.motax.modutaxi.data.model.request.EmailCertificationRequest
 import com.motax.modutaxi.data.model.request.EmailConfirmRequest
 import com.motax.modutaxi.data.model.request.LoginRequest
 import com.motax.modutaxi.data.model.request.SignUpRequest
 import com.motax.modutaxi.data.model.request.SmsCertificateRequest
 import com.motax.modutaxi.data.model.request.SmsConfirmRequest
+import com.motax.modutaxi.data.model.runRemote
 import com.motax.modutaxi.data.remote.IntroApi
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
 import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.repository.IntroRepository
+import retrofit2.Response
 import javax.inject.Inject
 
 class IntroRepositoryImpl @Inject constructor(
@@ -60,6 +63,10 @@ class IntroRepositoryImpl @Inject constructor(
                 )
             )
         }.mapCatching { it.toDomain() }
+
+    override suspend fun editNick(nick: String) = runRemote {
+        api.editNick(EditNickRequest(nick))
+    }
 
     override suspend fun smsCertificate(key: String, phoneNumber: String): Result<CertificateData> =
         runCatching {

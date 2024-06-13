@@ -17,6 +17,7 @@ data class TaxiPotDetailData(
     val managerId: Long,
     val myRoom: Boolean,
     val participate: Boolean,
+    val waiting: Boolean,
     val path: PathData,
     val profileImageUrl: String?,
     val roomId: Long,
@@ -26,7 +27,7 @@ data class TaxiPotDetailData(
 )
 
 data class PathData(
-    val coordinateReferenceSystem: CoordinateReferenceSystemData,
+    val coordinateReferenceSystem: CoordinateReferenceSystemData?,
     val coordinates: List<CoordinateData>,
     val type: String
 )
@@ -36,5 +37,5 @@ data class CoordinateReferenceSystemData(
 )
 
 data class CoordinateData(
-    val values: List<Int>
+    val values: List<Double>
 )

@@ -1,7 +1,10 @@
 package com.motax.modutaxi.data.model.response
 
 data class GetNearSpotResponse(
-    val distance: Double,
+    val minLongitude: Double,
+    val minLatitude: Double,
+    val maxLongitude: Double,
+    val maxLatitude: Double,
     val spots: List<GetNearSpotItem>
 )
 

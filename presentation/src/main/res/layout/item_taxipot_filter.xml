@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListFilterItem" />
+
+    </data>
+
+    <TextView
+        android:id="@+id/tv_filter_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@{ item.clicked ? @drawable/rect_sub500fill_nostroke_101radius : @drawable/rect_nofill_gray200stroke_101radius}"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:text="@{item.filter.uiText}"
+        android:textColor="@{ item.clicked ? @color/white : @color/mx_gray700}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="학생인증" />
+
+</layout>

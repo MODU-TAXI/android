@@ -1,8 +1,11 @@
 package com.motax.modutaxi.presentation.ui.main.matchdetail.model
 
-import android.health.connect.datatypes.units.Percentage
-
-data class UiWaitingMemberItem(
-    val nickname: String ="",
-    val matchingPercentage: Int
+data class UiWaitingMemberItem (
+    val memberId: Long = 0,
+    val profileImage: String = "",
+    val nickname: String = "",
+    val matchingCount: String = "",
+    val certified: Boolean = false,
+    val thisIsMe: Boolean = false,
+    val acceptParticipant: (Long) -> Unit
 )

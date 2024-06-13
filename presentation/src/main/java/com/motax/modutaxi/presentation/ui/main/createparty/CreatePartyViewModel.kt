@@ -193,11 +193,11 @@ enum class WishHeadCount(val count: Int) {
     THREE(3)
 }
 
-enum class RoomTag(val text: String) {
-    EMPTY(""),
-    ONLY_WOMAN("ONLY_WOMAN"),
-    ONLY_MAN("ONLY_MAN"),
-    MANNER("MANNER"),
-    QUIET("QUIET"),
-    STUDENT_CERTIFICATION("STUDENT_CERTIFICATION")
+enum class RoomTag(val text: String, val uiText: String) {
+    EMPTY("",""),
+    ONLY_WOMAN("ONLY_WOMAN","여자만"),
+    ONLY_MAN("ONLY_MAN","남자만"),
+    MANNER("MANNER","매너탑승"),
+    QUIET("QUIET","조용한"),
+    STUDENT_CERTIFICATION("STUDENT_CERTIFICATION","학생인증")
 }

@@ -1,13 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/party_marker"
+            style="@style/TextRegularMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_whitefill_nostroke_29radius"
+            android:drawableEnd="@drawable/ic_right_arrow_gray600"
+            android:drawablePadding="6dp"
+            android:elevation="20dp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/mx_gray600"
+            android:visibility="gone"
+            tools:text="주안역" />
+
+        <TextView
+            android:id="@+id/party_marker_selected"
+            style="@style/TextRegularSemibold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_whitefill_sub500stroke_29radius"
+            android:drawableEnd="@drawable/ic_right_arrow_sub500"
+            android:drawablePadding="6dp"
+            android:elevation="20dp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/mx_sub500"
+            android:visibility="gone"
+            tools:text="인하대 후문" />
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/showparty_map_fragment"
+            android:name="com.naver.maps.map.MapFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/et_search"
+            style="@style/TextLargeMedium"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rect_whitefill_nostroke_12radius"
+            android:drawableStart="@drawable/ic_magnifying_glass_mint"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> vm.navigateToSearch()}"
+            android:paddingHorizontal="10dp"
+            android:text="@{vm.uiState.searchKeyword}"
+            android:textColor="@color/mx_gray600"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="델로님 우리 어디로 떠날까요?" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_selected_taxipot"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="@{() -> vm.navigateToMatchDetailBySelected()}"
+            android:background="@drawable/rect_white0_fill_nostroke_12_radius"
+            android:elevation="8dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="12dp"
+            android:visibility="@{vm.bottomSheetUiState.showBottomSheet ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_create_taxi_pot"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tv_departure_datetime"
+                style="@style/TextSmallMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_sub100fill_nostroke_8radius"
+                android:drawableStart="@drawable/ic_group_check"
+                android:drawablePadding="4dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="@{vm.uiState.selectedTaxiPotData.departureTime}"
+                android:textColor="@color/mx_sub500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="출발 14:25" />
+
+            <TextView
+                android:id="@+id/tv_departure"
+                style="@style/TextRegularSemibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{vm.uiState.selectedTaxiPotData.departureName}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_departure_datetime"
+                tools:text="인하대학교" />
+
+            <ImageView
+                android:id="@+id/ic_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tv_departure"
+                app:layout_constraintStart_toEndOf="@id/tv_departure"
+                app:layout_constraintTop_toTopOf="@id/tv_departure" />
+
+            <TextView
+                style="@style/TextRegularSemibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@{vm.uiState.selectedTaxiPotData.arrivalName}"
+                app:layout_constraintBottom_toBottomOf="@id/tv_departure"
+                app:layout_constraintStart_toEndOf="@id/ic_arrow"
+                app:layout_constraintTop_toTopOf="@id/tv_departure"
+                tools:text="주안역" />
+
+            <ImageView
+                android:id="@+id/iv_person_fill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_person_fill"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_departure" />
+
+            <TextView
+                android:id="@+id/tv_headcount"
+                style="@style/TextSmallRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="@{vm.uiState.selectedTaxiPotData.headCount}"
+                android:textColor="#969DA4"
+                app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+                app:layout_constraintStart_toEndOf="@id/iv_person_fill"
+                app:layout_constraintTop_toTopOf="@+id/iv_person_fill"
+                tools:text="2/3" />
+
+            <ImageView
+                android:id="@+id/iv_pig"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_pig"
+                app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+                app:layout_constraintStart_toEndOf="@id/tv_headcount"
+                app:layout_constraintTop_toTopOf="@id/iv_person_fill" />
+
+            <TextView
+                android:id="@+id/tv_fee_per_person"
+                style="@style/TextSmallRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="@{vm.uiState.selectedTaxiPotData.feeForPerson}"
+                android:textColor="#969DA4"
+                app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
+                app:layout_constraintStart_toEndOf="@id/iv_pig"
+                app:layout_constraintTop_toTopOf="@id/iv_person_fill"
+                tools:text="인당 8,300원" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/btn_create_taxi_pot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> vm.navigateToCreateParty()}"
+            android:src="@drawable/ic_create_taxi_pot"
+            android:visibility="@{vm.bottomSheetHeight > 0.6 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_cur_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:onClick="@{() -> vm.locationBtnClicked()}"
+            android:src="@drawable/ic_cur_location"
+            android:visibility="@{vm.bottomSheetHeight > 0.6 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toStartOf="@id/btn_refresh"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@id/btn_create_taxi_pot"
+            app:layout_constraintTop_toTopOf="@id/btn_create_taxi_pot" />
+
+        <ImageView
+            android:id="@+id/btn_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_refresh"
+            android:visibility="@{vm.bottomSheetHeight > 0.6 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/btn_cur_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_cur_location"
+            app:layout_constraintTop_toTopOf="@id/btn_cur_location" />
+
+        <FrameLayout
+            android:id="@+id/show_party_bottom_sheet"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{vm.bottomSheetUiState.showBottomSheet ? View.VISIBLE : View.GONE }"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_search" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

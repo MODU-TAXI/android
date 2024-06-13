@@ -1,20 +1,22 @@
 package com.motax.modutaxi.presentation.ui.main.matchdetail.model
 
+import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import com.naver.maps.geometry.LatLng
+
 data class UiMatchDetailData(
     val managerId: Long = 0,
-    val roomId: Long = 0,
-    val profileImageUrl: String = "",
-    val departureDairyDate: String = "",
+    val roomTags: List<RoomTag> = emptyList(),
+    val departureDate: String = "",
+    val departureTime: String = "",
+    val departureName: String = "",
     val arrivalTime: String = "",
     val arrivalName: String = "",
-    val departureName: String = "",
-    val departureTime: String = "",
-    val expectedChargePerPerson: Int = 0,
-    val expectedCharge: Int = 0,
-    val myRoom: Boolean = false,
-    val participate: Boolean = false,
-    val currentHeadcount: Int = 0,
-    val wishHeadcount: Int = 0,
-    val chipItems: List<String> = emptyList(),
-    val participantList: List<UiParticipantItem> = emptyList()
+    val wholeFee: String = "",
+    val feePerPerson: String = "",
+    val isMyRoom: Boolean = false,
+    val isParticipate: Boolean = false,
+    val isWaiting: Boolean = false,
+    val headCount: String = "",
+    val path: List<LatLng> = emptyList()
 )
+

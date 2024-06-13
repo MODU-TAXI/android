@@ -75,6 +75,9 @@ dependencies {
     api("com.naver.maps:map-sdk:3.17.0")
     api("com.google.android.gms:play-services-location:21.0.1")
 
+    // CircleImageView
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
     // chipGroup
     implementation ("com.google.android.material:material:1.11.0")
 }

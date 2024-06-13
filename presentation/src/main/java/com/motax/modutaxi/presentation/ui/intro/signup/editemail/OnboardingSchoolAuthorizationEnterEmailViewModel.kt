@@ -22,15 +22,12 @@ import javax.inject.Inject
 sealed class OnboardingSchoolAuthorizationEnterEmailEvent {
     data class NavigateToEnterCode(val email : String) : OnboardingSchoolAuthorizationEnterEmailEvent()
     data object NavigateToOnboardingComplete : OnboardingSchoolAuthorizationEnterEmailEvent()
-    data object GoBackToInit : OnboardingSchoolAuthorizationEnterEmailEvent()
     data class ShowToastMessage(val msg: String) : OnboardingSchoolAuthorizationEnterEmailEvent()
 }
 
 @HiltViewModel
 class OnboardingSchoolAuthorizationEnterEmailViewModel @Inject constructor(
     private val repository: IntroRepository,
-    private val signUpUseCase: SignUpUseCase,
-    private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<OnboardingSchoolAuthorizationEnterEmailEvent>()
@@ -38,38 +35,18 @@ class OnboardingSchoolAuthorizationEnterEmailViewModel @Inject constructor(
 
     val email = MutableStateFlow("")
     val helperText = MutableStateFlow("")
-    private val isSignUpSuccess = MutableStateFlow(false)
 
     val isDataReady =
-        combine(email, helperText, isSignUpSuccess) { email, helperText, isSignUpSuccess ->
-            email.isNotBlank() && helperText.isBlank() && isSignUpSuccess
+        combine(email, helperText) { email, helperText ->
+            email.isNotBlank() && helperText.isBlank()
         }.stateIn(
             viewModelScope, SharingStarted.WhileSubscribed(), false
         )
 
     init {
-        signUp()
         observeEmail()
     }
 
-    private fun signUp() {
-        viewModelScope.launch {
-            signUpUseCase(
-                SignUpData.key,
-                SignUpData.name,
-                SignUpData.gender,
-                SignUpData.phoneNumber,
-                ""
-            ).onSuccess {
-                dataStoreManager.putAccessToken(it.tokenData.accessToken)
-                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
-                isSignUpSuccess.value = true
-            }.onFailure {
-                _event.emit(OnboardingSchoolAuthorizationEnterEmailEvent.ShowToastMessage("회원가입 실패!"))
-                _event.emit(OnboardingSchoolAuthorizationEnterEmailEvent.GoBackToInit)
-            }
-        }
-    }
 
     private fun observeEmail() {
         email.onEach {

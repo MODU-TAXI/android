@@ -13,10 +13,8 @@ import com.motax.modutaxi.presentation.databinding.FragmentArrivalMapBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
-import com.motax.modutaxi.presentation.ui.setMapZoomForCircle
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraAnimation
-import com.naver.maps.map.CameraPosition
+import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -96,9 +94,13 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
                     }
 
                     is ArrivalMapEvent.MoveCamera -> {
-                        val cameraPosition = CameraPosition(LatLng(selectedLocation.latitude, selectedLocation.longitude), it.distance.setMapZoomForCircle(requireContext()))
-                        val cameraUpdate = CameraUpdate.toCameraPosition(cameraPosition)
-                            .apply{ animate(CameraAnimation.Fly, 100)}
+                        val bounds = LatLngBounds.Builder()
+                            .include(it.start)
+                            .include(it.end)
+                            .build()
+
+                        val padding = resources.getDimensionPixelSize(R.dimen.arrival_map_padding)
+                        val cameraUpdate = CameraUpdate.fitBounds(bounds, padding)
                         naverMap.moveCamera(cameraUpdate)
                     }
                 }

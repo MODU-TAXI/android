@@ -31,6 +31,5 @@ class ParticipantViewHolder(private val binding: ItemParticipantBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: UiParticipantItem) {
         binding.item = item
-        binding.executePendingBindings()
     }
 }

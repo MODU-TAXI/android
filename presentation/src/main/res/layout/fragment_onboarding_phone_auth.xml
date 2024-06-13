@@ -63,8 +63,8 @@
             android:layout_height="4dp"
             android:layout_marginTop="6dp"
             android:backgroundTint="#D9D9D9"
-            android:max="5"
-            android:progress="1"
+            android:max="7"
+            android:progress="2"
             android:progressTint="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -159,7 +159,7 @@
             app:layout_constraintTop_toBottomOf="@id/layout_enter_code" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_school_authorization_check"
+            android:id="@+id/btn_edit_nickname"
             style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
