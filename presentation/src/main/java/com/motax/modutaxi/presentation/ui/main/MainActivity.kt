@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseActivity
+import com.motax.modutaxi.presentation.chatmanager.ChatManager
 import com.motax.modutaxi.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     private val viewModel : MainViewModel by viewModels()
+    private val chatManager : ChatManager by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

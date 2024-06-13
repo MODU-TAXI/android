@@ -90,7 +90,6 @@ class CreatePartyViewModel @Inject constructor(
             ).onSuccess {
                 _event.emit(CreatePartyEvent.NavigateToMatchDetail(it.roomId))
             }.onFailure {
-
                 _event.emit(CreatePartyEvent.ShowToast(it.message.toString()))
             }
         }
