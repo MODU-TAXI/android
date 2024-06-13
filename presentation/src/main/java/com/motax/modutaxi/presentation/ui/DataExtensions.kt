@@ -1,17 +1,13 @@
 package com.motax.modutaxi.presentation.ui
 
-import android.content.Context
 import com.motax.modutaxi.domain.model.AddressFromGeoItemData
 import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.util.Date
 import java.util.Locale
-import java.util.TimeZone
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -33,18 +29,18 @@ internal fun Int.formatNumberWithCommas(): String {
 }
 
 fun String.toRoomTag(): RoomTag {
-    return if(this == "ONLY_WOMAN"){
+    return if (this == "ONLY_WOMAN") {
         RoomTag.ONLY_WOMAN
-    } else if(this == "STUDENT_CERTIFICATION"){
+    } else if (this == "STUDENT_CERTIFICATION") {
         RoomTag.STUDENT_CERTIFICATION
-    } else if(this == "MANNER"){
+    } else if (this == "MANNER") {
         RoomTag.MANNER
     } else {
         RoomTag.EMPTY
     }
 }
 
-fun getUTCTime(hour: Int, minute: Int): String{
+fun getUTCTime(hour: Int, minute: Int): String {
     val seoulZoneId = ZoneId.of("Asia/Seoul")
     val currentSeoulDateTime = LocalDateTime.now(seoulZoneId)
         .withHour(hour)
@@ -94,38 +90,3 @@ fun Double.toDistanceString(): String {
 
 fun Double.to8Round(): Double = round(this * 100000000) / 100000000
 
-fun Double.setMapZoomForCircle(context: Context): Double {
-    return 8.0
-}
-
-//fun getScreenDimensions(context: Context): Pair<Int, Int> {
-//    val displayMetrics = DisplayMetrics()
-//    val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-//    windowManager.defaultDisplay.getMetrics(displayMetrics)
-//    val screenWidth = displayMetrics.widthPixels
-//    val screenHeight = displayMetrics.heightPixels
-//    return Pair(screenWidth, screenHeight)
-//}
-//
-//
-//fun Double.setMapZoomForCircle(context: Context) : Double{
-//    val (screenWidth, screenHeight) = getScreenDimensions(context)
-//
-//    // Calculate the horizontal and vertical angles spanned by the circle on the screen
-//    val horizontalAngle = (Math.toDegrees(2 * asin(this / (2 * 6371000))) * screenWidth) / 256
-//    val verticalAngle = (Math.toDegrees(2 * asin(this / (2 * 6371000))) * screenHeight) / 256
-//
-//    // Calculate the maximum of horizontal and vertical angles to determine the proper zoom level
-//    val angle = max(horizontalAngle, verticalAngle)
-//
-//    // Calculate the zoom level based on the angle
-//    return getZoomLevel(angle)
-//}
-//
-//fun getZoomLevel(angle: Double): Double {
-//    val zoomScale = angle / 256.0
-//    val equatorLength = 40075004 // in meters
-//    val metersPerPixel = equatorLength / 256
-//    val zoomLevel = ln(156543.03392 / metersPerPixel / 2) / ln(2.0)
-//    return zoomLevel - ln(zoomScale) / ln(2.0)
-//}

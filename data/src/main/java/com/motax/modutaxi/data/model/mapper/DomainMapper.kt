@@ -143,7 +143,10 @@ fun AddressFromGeoResponse.toDomain() = AddressFromGeoData(
 )
 
 fun GetNearSpotResponse.toDomain() = NearSpotData(
-    distance = distance,
+    maxLongitude = maxLongitude,
+    maxLatitude = maxLatitude,
+    minLongitude = minLongitude,
+    minLatitude = minLatitude,
     spots = spots.map {
         NearSpotItemData(
             it.id,
@@ -249,9 +252,9 @@ fun TaxiPotMemberItem.toDomain() = TaxiPotMemberData(
 )
 
 fun TaxiPotParticipants.toDomain() = TaxiPotParticipantsData(
-    inList = inList.map{ it.toDomain() }
+    inList = inList.map { it.toDomain() }
 )
 
 fun TaxiPotWaitingMembers.toDomain() = TaxiPotWaitingMembersData(
-    waitingList = waitingList.map{ it.toDomain() }
+    waitingList = waitingList.map { it.toDomain() }
 )

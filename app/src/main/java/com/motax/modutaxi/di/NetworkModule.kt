@@ -129,7 +129,7 @@ object NetworkModule {
     @Provides
     @Singleton
     @BaseUrl
-    fun provideBaseUrl(): String = BuildConfig.BASE_TEST_URL
+    fun provideBaseUrl(): String = BuildConfig.BASE_DEV_URL
 
     @Provides
     @Singleton
@@ -185,7 +185,7 @@ object NetworkModule {
     fun provideBaseRetrofit(@BaseOkHttpClient okHttpClient: OkHttpClient): Retrofit {
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_TEST_URL)
+            .baseUrl(BuildConfig.BASE_DEV_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
