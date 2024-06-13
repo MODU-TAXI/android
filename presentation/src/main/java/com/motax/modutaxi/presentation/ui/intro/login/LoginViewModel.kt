@@ -2,11 +2,16 @@ package com.motax.modutaxi.presentation.ui.intro.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.FirebaseApp
 import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.domain.usecase.LoginUseCase
 import com.motax.modutaxi.domain.usecase.MemberCheckUseCase
+import com.motax.modutaxi.presentation.service.MyFirebaseMessagingService
 import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -31,7 +36,7 @@ class LoginViewModel @Inject constructor(
 
     fun memberCheck(token: String) {
         viewModelScope.launch {
-            memberCheckUseCase("KAKAO", token, "").onSuccess {
+            memberCheckUseCase("KAKAO", token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).onSuccess {
                 if (it.existent) {
                     kakaoLogin(token)
                 } else {
@@ -46,7 +51,7 @@ class LoginViewModel @Inject constructor(
 
     fun kakaoLogin(token: String) {
         viewModelScope.launch {
-            loginUseCase("KAKAO", token, "").onSuccess {
+            loginUseCase("KAKAO", token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).onSuccess {
                 _event.emit(LoginEvent.ShowToastMessage("로그인 성공"))
                 dataStoreManager.putAccessToken(it.tokenData.accessToken)
                 dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
@@ -56,4 +61,5 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
 }

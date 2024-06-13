@@ -5,10 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.domain.repository.IntroRepository
 import com.motax.modutaxi.domain.usecase.SignUpUseCase
+import com.motax.modutaxi.presentation.service.MyFirebaseMessagingService
 import com.motax.modutaxi.presentation.ui.intro.signup.AuthBtnState
 import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -122,7 +124,7 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
                 SignUpData.name,
                 SignUpData.gender,
                 SignUpData.phoneNumber,
-                ""
+                async { MyFirebaseMessagingService().getFirebaseToken() }.await()
             ).onSuccess {
                 dataStoreManager.putAccessToken(it.tokenData.accessToken)
                 dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
