@@ -37,10 +37,14 @@ class BearerInterceptor @Inject constructor(
                     getNewAccessToken(token).onSuccess {
                         dataStoreManager.putAccessToken(it.tokenResponse.accessToken)
                         dataStoreManager.putRefreshToken(it.tokenResponse.refreshToken)
+                        dataStoreManager.putGender(it.memberInfoResponse.gender)
+                        dataStoreManager.putMemberId(it.memberInfoResponse.id)
                         newAccessToken = it.tokenResponse.accessToken
                     }.onFailure {
                         dataStoreManager.deleteAccessToken()
                         dataStoreManager.deleteRefreshToken()
+                        dataStoreManager.deleteGender()
+                        dataStoreManager.deleteMemberId()
                     }
                 }
             }

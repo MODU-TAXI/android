@@ -15,10 +15,11 @@ class ChatSocket(
     private val dataStoreManager: DataStoreManager
 ) {
 
-    private val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://test.modutaxi.shop:8181/ws")
+    private val stompClient =
+        Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://test.modutaxi.shop:8181/ws")
 
     fun connectServer() {
-        try{
+        try {
             val headerList = arrayListOf<StompHeader>()
             val jwt = runBlocking {
                 dataStoreManager.getAccessToken()
@@ -31,35 +32,36 @@ class ChatSocket(
             }
 
             stompClient.connect(headerList)
-        } catch(e: Exception){
-            Log.d(TAG,e.message.toString())
+        } catch (e: Exception) {
+            Log.d(TAG, e.message.toString())
         }
     }
 
-    fun disconnectServer(){
+    fun disconnectServer() {
         stompClient.disconnect()
     }
 
     @SuppressLint("CheckResult")
     fun subscribeChat(roomId: Long) {
-        try{
+        try {
             stompClient.topic("/sub/chat/$roomId").subscribe { topicMessage ->
                 acceptChat(topicMessage.payload)
             }
-        } catch(e: Exception){
-            Log.d(TAG,e.message.toString())
+        } catch (e: Exception) {
+            Log.d(TAG, e.message.toString())
         }
     }
 
-    fun sendChat(roomId: Long, messageType: String, content: String) {
-        try{
+    fun sendChat(roomId: Long, memberId: Long, messageType: String, content: String) {
+        try {
             val data = JSONObject()
-            data.put("roomId",roomId)
-            data.put("type",messageType)
-            data.put("content",content)
+            data.put("memberId", memberId)
+            data.put("roomId", roomId)
+            data.put("type", messageType)
+            data.put("content", content)
             stompClient.send("/pub/chat", data.toString()).subscribe()
-        } catch(e: Exception){
-            Log.d(TAG,e.message.toString())
+        } catch (e: Exception) {
+            Log.d(TAG, e.message.toString())
         }
     }
 }

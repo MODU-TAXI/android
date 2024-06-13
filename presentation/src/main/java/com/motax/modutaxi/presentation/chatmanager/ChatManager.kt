@@ -25,7 +25,7 @@ sealed class ChatEvent {
 class ChatManager @Inject constructor(
     private val mainRepository: MainRepository,
     private val dataStoreManager: DataStoreManager
-) : ViewModel(){
+) : ViewModel() {
 
     private val _events: MutableSharedFlow<ChatEvent> = MutableSharedFlow()
     val event: SharedFlow<ChatEvent> = _events
@@ -38,26 +38,31 @@ class ChatManager @Inject constructor(
 
     private fun receiveMessage(payload: String) {
 //        val chatMessage = Gson().fromJson(payload, ChatMessage::class.java)
-        Log.d(TAG,payload)
+        Log.d(TAG, payload)
 
         viewModelScope.launch {
 //            _newChat.emit(chatMessage)
         }
     }
 
-    fun sendMessage(roomId:Long, message: String) {
-        chatSocket.sendChat(
-            roomId,
-            "CHAT",
-            message
-        )
+    fun sendMessage(roomId: Long, message: String) {
+        viewModelScope.launch {
+            dataStoreManager.getMemberId()?.let { id ->
+                chatSocket.sendChat(
+                    roomId,
+                    id,
+                    "CHAT",
+                    message
+                )
+            }
+        }
     }
 
     fun disconnectChat() {
         chatSocket.disconnectServer()
     }
 
-    fun connectChat(roomId: Long){
+    fun connectChat(roomId: Long) {
         chatSocket.connectServer()
         chatSocket.subscribeChat(roomId)
     }

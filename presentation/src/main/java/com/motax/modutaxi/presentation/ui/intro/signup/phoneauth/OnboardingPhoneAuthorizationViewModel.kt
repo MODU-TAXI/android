@@ -128,6 +128,8 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
             ).onSuccess {
                 dataStoreManager.putAccessToken(it.tokenData.accessToken)
                 dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
+                dataStoreManager.putGender(it.memberInfoData.gender)
+                dataStoreManager.putMemberId(it.memberInfoData.id)
                 isSignUpSuccess.value = true
                 _event.emit(PhoneAuthEvent.NavigateToEditNick)
             }.onFailure {

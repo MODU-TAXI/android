@@ -22,7 +22,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
 
         chatManager.connectChat(roomId)
         binding.btnSendMessage.setOnClickListener {
-            chatManager.sendMessage(roomId,"테스트입니다")
+            chatManager.sendMessage(roomId,"")
         }
         initChatObserve()
     }
