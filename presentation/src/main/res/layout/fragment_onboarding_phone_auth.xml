@@ -65,7 +65,7 @@
             android:backgroundTint="#D9D9D9"
             android:max="7"
             android:progress="2"
-            android:progressTint="#000000"
+            android:progressTint="@color/mx_sub500"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -86,10 +86,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:background="@{vm.uiState.isCodeCorrect ? @drawable/rect_nofill_gray500stroke_12radius : @drawable/rect_redfill_nostroke_12radius}"
             android:paddingHorizontal="22dp"
             android:paddingVertical="16dp"
             app:layout_constraintEnd_toStartOf="@id/guide_92_vertical"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
             app:layout_constraintTop_toBottomOf="@id/tv_identification_description">
 
@@ -135,12 +136,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="12dp"
             android:paddingVertical="8dp"
-            android:text="인증번호가 틀렸어요!"
+            android:text="인증번호가 틀렸어요, 다시 확인해주세요!"
             android:textColor="@color/mx_red"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
+            app:layout_constraintStart_toStartOf="@id/layout_enter_code"
             app:layout_constraintTop_toBottomOf="@id/layout_enter_code"
             app:onboardPhoneAuthHelperText="@{vm.uiState.btnState}" />
 

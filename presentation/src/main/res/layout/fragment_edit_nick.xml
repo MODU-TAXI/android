@@ -86,11 +86,11 @@
             app:layout_constraintTop_toBottomOf="@id/guide_09_horizontal" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_enter_code"
+            android:id="@+id/layout_enter_nickname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="@drawable/rect_grey0_fill_nostroke_12radius"
+            android:background="@{vm.uiState.isNicknameValid ? @drawable/rect_nofill_gray500stroke_12radius : @drawable/rect_redfill_nostroke_12radius}"
             android:paddingHorizontal="22dp"
             android:paddingVertical="16dp"
             app:layout_constraintEnd_toStartOf="@id/guide_92_vertical"
@@ -134,7 +134,7 @@
             android:textSize="12sp"
             android:visibility="@{vm.helperMessage.empty ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
-            app:layout_constraintTop_toBottomOf="@id/layout_enter_code"
+            app:layout_constraintTop_toBottomOf="@id/layout_enter_nickname"
             tools:text="닉네임은 최소 2글자부터 가능해요!" />
 
         <androidx.appcompat.widget.AppCompatButton

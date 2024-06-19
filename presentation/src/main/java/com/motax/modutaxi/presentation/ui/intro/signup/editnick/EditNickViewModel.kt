@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.model.BaseState
 import com.motax.modutaxi.domain.repository.IntroRepository
-import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +29,7 @@ class EditNickViewModel @Inject constructor(
 
     val nick = MutableStateFlow("")
     val helperMessage = MutableStateFlow("")
+    val isNicknameValid = MutableStateFlow(true)
 
     init{
         observeNick()
@@ -51,6 +51,7 @@ class EditNickViewModel @Inject constructor(
 
                     is BaseState.Error -> {
                         helperMessage.value = it.message
+                        isNicknameValid.value = false
                     }
                 }
             }
