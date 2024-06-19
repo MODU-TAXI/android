@@ -1,6 +1,7 @@
 package com.motax.modutaxi.di
 
 import com.motax.modutaxi.data.remote.AuthApi
+import com.motax.modutaxi.data.remote.ImageApi
 import com.motax.modutaxi.data.remote.IntroApi
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.data.remote.NaverApi
@@ -31,6 +32,11 @@ object ApiModule {
     @Provides
     fun provideMainApi(@NetworkModule.BaseRetrofit retrofit: Retrofit): MainApi =
         retrofit.create(MainApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideImageApi(@NetworkModule.BaseRetrofit retrofit: Retrofit): ImageApi =
+        retrofit.create(ImageApi::class.java)
 
     @Singleton
     @Provides

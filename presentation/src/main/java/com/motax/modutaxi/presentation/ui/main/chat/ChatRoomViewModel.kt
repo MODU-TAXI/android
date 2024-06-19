@@ -32,6 +32,7 @@ sealed class ChatRoomEvent{
     data class SendMessage(val msg: String): ChatRoomEvent()
     data class SendImage(val img: String): ChatRoomEvent()
     data object ScrollBottom: ChatRoomEvent()
+    data object GoToGallery: ChatRoomEvent()
 }
 
 @HiltViewModel
@@ -143,6 +144,12 @@ class ChatRoomViewModel @Inject constructor(
         viewModelScope.launch {
             delay(50)
             _event.emit(ChatRoomEvent.ScrollBottom)
+        }
+    }
+
+    fun goToGallery(){
+        viewModelScope.launch {
+            _event.emit(ChatRoomEvent.GoToGallery)
         }
     }
 }

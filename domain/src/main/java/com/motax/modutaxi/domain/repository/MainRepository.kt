@@ -9,6 +9,7 @@ import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
 import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
+import java.net.URI
 
 interface MainRepository {
 
@@ -92,4 +93,5 @@ interface MainRepository {
     suspend fun getChatMessages(
         roomId: Long
     ): Result<ChatMessageData>
+
 }

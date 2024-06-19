@@ -9,6 +9,7 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.chatmanager.ChatManager
 import com.motax.modutaxi.presentation.databinding.FragmentChatRoomBinding
+import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageAdapter
 import com.motax.modutaxi.presentation.util.ChatState
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment_chat_room) {
 
     private val chatManager : ChatManager by activityViewModels()
+    private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: ChatRoomViewModel by viewModels()
     private val args: ChatRoomFragmentArgs by navArgs()
     private val adapter = ChatMessageAdapter()
@@ -34,6 +36,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         viewModel.getChatMessages(roomId)
         initChatObserve()
         initEventObserve()
+        initImageObserve()
     }
 
     private fun initChatObserve(){
@@ -51,7 +54,16 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
                     is ChatRoomEvent.SendMessage -> chatManager.sendMessage(roomId, it.msg)
                     is ChatRoomEvent.SendImage -> chatManager.sendImage(roomId, it.img)
                     is ChatRoomEvent.ScrollBottom -> scrollRecyclerViewBottom()
+                    is ChatRoomEvent.GoToGallery -> parentViewModel.goToGallery()
                 }
+            }
+        }
+    }
+
+    private fun initImageObserve(){
+        repeatOnStarted {
+            parentViewModel.imageUrl.collect{
+                chatManager.sendImage(roomId, it)
             }
         }
     }

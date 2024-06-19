@@ -1,7 +1,14 @@
 package com.motax.modutaxi.presentation.ui
 
+import android.content.Context
+import android.net.Uri
+import android.provider.MediaStore
 import com.motax.modutaxi.domain.model.AddressFromGeoItemData
 import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -28,6 +35,26 @@ fun AddressFromGeoItemData.toBuildingName() = land.addition0.value
 
 internal fun Int.formatNumberWithCommas(): String {
     return String.format("%,d", this)
+}
+
+internal fun Uri.toMultiPart(context: Context): MultipartBody.Part {
+    val file = File(getRealPathFromUri(this, context) ?: "")
+    val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+    return MultipartBody.Part.createFormData("file", file.name, requestFile)
+}
+
+private fun getRealPathFromUri(uri: Uri, context: Context): String? {
+    var filePath: String? = null
+    val projection = arrayOf(MediaStore.Images.Media.DATA)
+    val cursor = context.contentResolver.query(uri, projection, null, null, null)
+    cursor?.let {
+        if (it.moveToFirst()) {
+            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            filePath = it.getString(columnIndex)
+        }
+        it.close()
+    }
+    return filePath
 }
 
 fun String.toRoomTag(): RoomTag {

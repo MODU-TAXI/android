@@ -11,7 +11,6 @@ import com.motax.modutaxi.data.model.response.TaxiPotParticipants
 import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -107,4 +106,5 @@ interface MainApi {
     suspend fun getChatMessages(
         @Path("roomId") roomId: Long
     ): ChatMessageResponse
+
 }

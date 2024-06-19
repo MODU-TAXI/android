@@ -56,7 +56,7 @@ class ChatManager @Inject constructor(
     fun sendImage(roomId: Long, imageUrl: String){
         viewModelScope.launch {
             dataStoreManager.getMemberId()?.let { id ->
-                chatSocket.sendChat(
+                chatSocket.sendImage(
                     roomId,
                     id,
                     imageUrl

@@ -11,4 +11,5 @@ object Constants {
     const val MY_IMAGE_CHAT = 2
     const val OTHER_CHAT = 3
     const val OTHER_IMAGE_CHAT = 4
+    const val STORAGE_PERMISSION = 1001
 }

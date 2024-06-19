@@ -35,7 +35,7 @@ fun ChatMessage.toUiChatMessage(
     profileImgUrl = imageUrl ?: "",
     messageType = messageType,
     sender = sender,
-    content = content,
+    content = content ?: "",
     imageUrl = imageUrl ?: "",
     sentTime = dateTime.toChatSentTime(),
     memberId = memberId.toLong()
