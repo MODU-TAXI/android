@@ -42,7 +42,7 @@ class MatchDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
+//        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
         parentViewModel.setNotFullScreenMode()
         binding.vm = viewModel
         binding.rvParticipants.adapter = ParticipantAdapter()
@@ -51,7 +51,6 @@ class MatchDetailFragment :
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            findNavController().toHome()
         }
     }
 
@@ -158,10 +157,6 @@ class MatchDetailFragment :
         naverMap.moveCamera(cameraUpdate)
     }
 
-    private fun NavController.toHome() {
-        val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToHomeFragment()
-        navigate(action)
-    }
 
     private fun NavController.toChatRoom(id: Long) {
         val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToChatRoomFragment(id)

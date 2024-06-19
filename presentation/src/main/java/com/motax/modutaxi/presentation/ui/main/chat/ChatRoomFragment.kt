@@ -1,7 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.chat
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -12,7 +11,6 @@ import com.motax.modutaxi.presentation.chatmanager.ChatManager
 import com.motax.modutaxi.presentation.databinding.FragmentChatRoomBinding
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageAdapter
 import com.motax.modutaxi.presentation.util.ChatState
-import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +30,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         binding.rvChat.adapter = adapter
         binding.rvChat.itemAnimator = null
         chatManager.connectChat(roomId)
+        viewModel.getMatchInfo(roomId)
         viewModel.getChatMessages(roomId)
         initChatObserve()
         initEventObserve()

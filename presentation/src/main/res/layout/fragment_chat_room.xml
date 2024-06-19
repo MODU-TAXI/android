@@ -22,7 +22,8 @@
             android:background="@drawable/rect_whitefill_nostroke_bottom24radius"
             android:elevation="10dp"
             android:paddingHorizontal="16dp"
-            android:paddingVertical="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -90,6 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:text="@{vm.uiState.chatInfo.departureName}"
                 app:layout_constraintStart_toStartOf="@id/btn_back"
                 app:layout_constraintTop_toBottomOf="@id/btn_exit_chat"
                 tools:text="인하대학교" />
@@ -105,10 +107,12 @@
                 app:layout_constraintTop_toTopOf="@id/tv_departure" />
 
             <TextView
+                android:id="@+id/tv_arrival"
                 style="@style/TextLargeSemibold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
+                android:text="@{vm.uiState.chatInfo.arrivalName}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_departure"
                 app:layout_constraintStart_toEndOf="@id/ic_arrow"
                 app:layout_constraintTop_toTopOf="@id/tv_departure"
@@ -120,6 +124,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:text="@{vm.uiState.chatInfo.departureTime}"
                 android:textColor="@color/mx_gray600"
                 app:layout_constraintBottom_toBottomOf="@id/tv_fee_per_person"
                 app:layout_constraintStart_toStartOf="@id/tv_departure"
@@ -141,6 +146,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:text="@{vm.uiState.chatInfo.headCount}"
                 android:textColor="@color/mx_gray600"
                 app:layout_constraintBottom_toBottomOf="@id/tv_fee_per_person"
                 app:layout_constraintEnd_toStartOf="@id/iv_pig"
@@ -164,6 +170,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:text="@{vm.uiState.chatInfo.feeForPerson}"
                 android:textColor="@color/mx_gray600"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_start_state"
@@ -213,7 +220,7 @@
                 android:layout_marginStart="12dp"
                 android:background="@drawable/rect_nofill_gray600stroke_59radius"
                 android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
+                android:paddingVertical="12dp"
                 android:text="@={vm.chatMessage}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

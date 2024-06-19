@@ -8,6 +8,8 @@ import com.motax.modutaxi.presentation.chatmanager.model.ChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessageList
 import com.motax.modutaxi.presentation.ui.main.chat.model.UiChatMessage
+import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiTaxiPotListItem
+import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,7 +24,8 @@ import javax.inject.Inject
 
 
 data class ChatRoomUiState(
-    val chatMessage: List<UiChatMessage> = emptyList()
+    val chatMessage: List<UiChatMessage> = emptyList(),
+    val chatInfo: UiTaxiPotListItem = UiTaxiPotListItem{}
 )
 
 sealed class ChatRoomEvent{
@@ -55,6 +58,20 @@ class ChatRoomViewModel @Inject constructor(
         viewModelScope.launch {
             dataStoreManager.getMemberId()?.let{
                 myId = it
+            }
+        }
+    }
+
+    fun getMatchInfo(roomId: Long){
+        viewModelScope.launch {
+            repository.getTaxiPotPreview(roomId).onSuccess {
+                _uiState.update { state ->
+                    state.copy(
+                        chatInfo = it.toUiTaxiPotListItem{}
+                    )
+                }
+            }.onFailure {
+
             }
         }
     }
