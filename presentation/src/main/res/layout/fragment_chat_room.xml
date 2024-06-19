@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.chat.ChatRoomViewModel" />
 
     </data>
 
@@ -10,15 +15,223 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_send_message"
-            android:text="메세지 전송"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_toolbar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/rect_whitefill_nostroke_bottom24radius"
+            android:elevation="10dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="100dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_backward"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_header"
+                style="@style/TextTitle3Semibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="채팅방"
+                app:layout_constraintBottom_toBottomOf="@id/btn_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btn_back" />
+
+            <ImageView
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/btn_exit_chat"
+                style="@style/TextSmallRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_nofill_gray100stroke_8radius"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="방 나가기"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_header" />
+
+            <TextView
+                android:id="@+id/tv_start_state"
+                style="@style/TextSmallRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_sub100fill_nostroke_8radius"
+                android:backgroundTint="#E9E9E9"
+                android:drawableStart="@drawable/ic_dot_before_start"
+                android:drawablePadding="4dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="2dp"
+                android:textColor="#828282"
+                app:layout_constraintEnd_toEndOf="@id/btn_exit_chat"
+                app:layout_constraintStart_toStartOf="@id/btn_exit_chat"
+                app:layout_constraintTop_toBottomOf="@id/btn_exit_chat"
+                tools:text="출발전" />
+
+
+            <TextView
+                android:id="@+id/tv_departure"
+                style="@style/TextLargeSemibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toStartOf="@id/btn_back"
+                app:layout_constraintTop_toBottomOf="@id/btn_exit_chat"
+                tools:text="인하대학교" />
+
+            <ImageView
+                android:id="@+id/ic_arrow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tv_departure"
+                app:layout_constraintStart_toEndOf="@id/tv_departure"
+                app:layout_constraintTop_toTopOf="@id/tv_departure" />
+
+            <TextView
+                style="@style/TextLargeSemibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_departure"
+                app:layout_constraintStart_toEndOf="@id/ic_arrow"
+                app:layout_constraintTop_toTopOf="@id/tv_departure"
+                tools:text="주안역" />
+
+            <TextView
+                android:id="@+id/tv_start_date"
+                style="@style/TextSmallRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/mx_gray600"
+                app:layout_constraintBottom_toBottomOf="@id/tv_fee_per_person"
+                app:layout_constraintStart_toStartOf="@id/tv_departure"
+                tools:text="5월 11일  14:25 출발" />
+
+            <ImageView
+                android:id="@+id/iv_person_fill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_person_fill"
+                app:layout_constraintBottom_toBottomOf="@id/tv_fee_per_person"
+                app:layout_constraintEnd_toStartOf="@id/tv_head_count"
+                app:layout_constraintTop_toTopOf="@id/tv_fee_per_person" />
+
+            <TextView
+                android:id="@+id/tv_head_count"
+                style="@style/TextSmallRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/mx_gray600"
+                app:layout_constraintBottom_toBottomOf="@id/tv_fee_per_person"
+                app:layout_constraintEnd_toStartOf="@id/iv_pig"
+                app:layout_constraintTop_toTopOf="@id/tv_fee_per_person"
+                tools:text="2/3" />
+
+
+            <ImageView
+                android:id="@+id/iv_pig"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_pig"
+                app:layout_constraintBottom_toBottomOf="@id/tv_fee_per_person"
+                app:layout_constraintEnd_toStartOf="@id/tv_fee_per_person"
+                app:layout_constraintTop_toTopOf="@id/tv_fee_per_person" />
+
+            <TextView
+                android:id="@+id/tv_fee_per_person"
+                style="@style/TextSmallRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/mx_gray600"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_start_state"
+                tools:text="인당 8,300원" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_chat"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="32dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/layout_chat_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
+            app:list="@{vm.uiState.chatMessage}"
+            app:reverseLayout="true" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_chat_box"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_select_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_select_image"
+                app:layout_constraintBottom_toBottomOf="@id/et_chat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/et_chat" />
+
+            <EditText
+                android:id="@+id/et_chat"
+                style="@style/TextRegularRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/rect_nofill_gray600stroke_59radius"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@={vm.chatMessage}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_select_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/btn_send_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{() -> vm.sendMessage()}"
+                android:src="@drawable/ic_send_message"
+                app:layout_constraintBottom_toBottomOf="@id/et_chat"
+                app:layout_constraintEnd_toEndOf="@id/et_chat"
+                app:layout_constraintTop_toTopOf="@id/et_chat" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

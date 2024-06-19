@@ -1,12 +1,12 @@
 package com.motax.modutaxi.presentation.chatmanager.model
 
-import java.time.LocalDateTime
 
 data class ChatMessage(
     val roomId: Long,
-    val dateTime: LocalDateTime,
+    val dateTime: String,
     val content: String,
     val sender: String,
-    val memberId: Long,
-    val messageType: String
+    val memberId: String,
+    val messageType: String,
+    val imageUrl: String?
 )

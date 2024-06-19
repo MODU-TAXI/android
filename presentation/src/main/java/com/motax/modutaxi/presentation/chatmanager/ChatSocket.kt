@@ -52,13 +52,26 @@ class ChatSocket(
         }
     }
 
-    fun sendChat(roomId: Long, memberId: Long, messageType: String, content: String) {
+    fun sendChat(roomId: Long, memberId: Long, content: String) {
         try {
             val data = JSONObject()
             data.put("memberId", memberId)
             data.put("roomId", roomId)
-            data.put("type", messageType)
+            data.put("type", "CHAT")
             data.put("content", content)
+            stompClient.send("/pub/chat", data.toString()).subscribe()
+        } catch (e: Exception) {
+            Log.d(TAG, e.message.toString())
+        }
+    }
+
+    fun sendImage(roomId: Long, memberId: Long, imageUrl: String) {
+        try {
+            val data = JSONObject()
+            data.put("memberId", memberId)
+            data.put("roomId", roomId)
+            data.put("type", "IMAGE")
+            data.put("imageUrl", imageUrl)
             stompClient.send("/pub/chat", data.toString()).subscribe()
         } catch (e: Exception) {
             Log.d(TAG, e.message.toString())

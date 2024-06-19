@@ -15,6 +15,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.ui.splash.SplashActivity
+import com.motax.modutaxi.presentation.util.ChatState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -40,7 +41,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
 
         val msg = message.data["message"]
-        showNotification(msg)
+        if(!ChatState.inChat){
+            showNotification(msg)
+        }
         when (message.data["messageType"]) {
 
 

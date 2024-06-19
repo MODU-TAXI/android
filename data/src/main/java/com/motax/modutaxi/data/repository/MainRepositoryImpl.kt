@@ -3,6 +3,7 @@ package com.motax.modutaxi.data.repository
 import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.remote.MainApi
+import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
@@ -47,9 +48,17 @@ class MainRepositoryImpl @Inject constructor(
         longitude: Double,
         sortType: String,
         roomTags: List<String>,
-        isImminent : Boolean
+        isImminent: Boolean
     ): Result<TaxiPotListData> = runCatching {
-        api.getTaxiPotListIntegration(filter, radius, latitude, longitude, sortType, roomTags, isImminent)
+        api.getTaxiPotListIntegration(
+            filter,
+            radius,
+            latitude,
+            longitude,
+            sortType,
+            roomTags,
+            isImminent
+        )
     }.mapCatching { it.toDomain() }
 
     override suspend fun getTaxiPotPreview(id: Long): Result<TaxiPotPreviewData> = runCatching {
@@ -119,4 +128,7 @@ class MainRepositoryImpl @Inject constructor(
             api.getTaxiPotWaitingMembers(roomId)
         }.mapCatching { it.toDomain() }
 
+    override suspend fun getChatMessages(roomId: Long): Result<ChatMessageData> = runCatching {
+        api.getChatMessages(roomId)
+    }.mapCatching { it.toDomain() }
 }

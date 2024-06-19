@@ -4,6 +4,7 @@ import android.text.Html
 import com.motax.modutaxi.data.model.response.AddressFromGeoResponse
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
+import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
@@ -28,6 +29,8 @@ import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
+import com.motax.modutaxi.domain.model.ChatMessageData
+import com.motax.modutaxi.domain.model.ChatMessageItemData
 import com.motax.modutaxi.domain.model.CoordinateData
 import com.motax.modutaxi.domain.model.CoordinateReferenceSystemData
 import com.motax.modutaxi.domain.model.MemberCheckData
@@ -216,7 +219,11 @@ fun TaxiPotDetailResponse.toDomain() = TaxiPotDetailData(
     roomTagBitMaskList = roomTagBitMaskList,
     spotId = spotId,
     wishHeadcount = wishHeadcount,
-    waiting = waiting
+    waiting = waiting,
+    minLatitude = minLatitude,
+    minLongitude = minLongitude,
+    maxLatitude = maxLatitude,
+    maxLongitude = maxLongitude
 )
 
 fun TaxiPotListRadiusResponse.toDomain() = TaxiPotListRadiusData(
@@ -257,4 +264,18 @@ fun TaxiPotParticipants.toDomain() = TaxiPotParticipantsData(
 
 fun TaxiPotWaitingMembers.toDomain() = TaxiPotWaitingMembersData(
     waitingList = waitingList.map { it.toDomain() }
+)
+
+fun ChatMessageResponse.toDomain() = ChatMessageData(
+    messages = messages.map { data ->
+        ChatMessageItemData(
+            roomId = data.roomId,
+            messageType = data.messageType,
+            content = data.content,
+            sender = data.sender,
+            memberId = data.memberId,
+            dateTime = data.dateTime,
+            imageUrl = data.imageUrl
+        )
+    }
 )

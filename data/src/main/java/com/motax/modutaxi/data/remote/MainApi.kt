@@ -1,6 +1,7 @@
 package com.motax.modutaxi.data.remote
 
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
@@ -96,9 +97,14 @@ interface MainApi {
         @Path("roomId") roomId: Long
     ): Unit
 
-    @DELETE("/api/rooms/{roomId}/members/{memberId}/approve")
+    @POST("/api/rooms/{roomId}/members/{memberId}/approve")
     suspend fun approveEnterTaxiPot(
         @Path("roomId") roomId: Long,
         @Path("memberId") memberId: Long
     ): Unit
+
+    @GET("/api/chats/rooms/{roomId}/messages")
+    suspend fun getChatMessages(
+        @Path("roomId") roomId: Long
+    ): ChatMessageResponse
 }

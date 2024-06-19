@@ -2,12 +2,14 @@ package com.motax.modutaxi.presentation.ui
 
 import com.motax.modutaxi.domain.model.AddressFromGeoItemData
 import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import java.util.TimeZone
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -65,6 +67,17 @@ fun getCurHour(): Int {
 fun getCurMinute(): Int {
     val currentDateTime = LocalDateTime.now()
     return currentDateTime.minute
+}
+
+fun String.toChatSentTime() : String{
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+    inputFormat.parse(this)?.let{
+        return outputFormat.format(it)
+    } ?: run{
+        return ""
+    }
 }
 
 fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {

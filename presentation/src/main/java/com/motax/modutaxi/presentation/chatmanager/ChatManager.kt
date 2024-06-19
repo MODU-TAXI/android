@@ -1,13 +1,11 @@
 package com.motax.modutaxi.presentation.chatmanager
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.chatmanager.model.ChatMessage
-import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -37,11 +35,9 @@ class ChatManager @Inject constructor(
         ChatSocket(::receiveMessage, dataStoreManager)
 
     private fun receiveMessage(payload: String) {
-//        val chatMessage = Gson().fromJson(payload, ChatMessage::class.java)
-        Log.d(TAG, payload)
-
+        val chatMessage = Gson().fromJson(payload, ChatMessage::class.java)
         viewModelScope.launch {
-//            _newChat.emit(chatMessage)
+            _newChat.emit(chatMessage)
         }
     }
 
@@ -51,8 +47,19 @@ class ChatManager @Inject constructor(
                 chatSocket.sendChat(
                     roomId,
                     id,
-                    "CHAT",
                     message
+                )
+            }
+        }
+    }
+
+    fun sendImage(roomId: Long, imageUrl: String){
+        viewModelScope.launch {
+            dataStoreManager.getMemberId()?.let { id ->
+                chatSocket.sendChat(
+                    roomId,
+                    id,
+                    imageUrl
                 )
             }
         }
