@@ -4,6 +4,7 @@ import android.text.Html
 import com.motax.modutaxi.data.model.response.AddressFromGeoResponse
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
+import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
@@ -28,6 +29,7 @@ import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
+import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.CoordinateData
 import com.motax.modutaxi.domain.model.CoordinateReferenceSystemData
 import com.motax.modutaxi.domain.model.MemberCheckData
@@ -257,4 +259,9 @@ fun TaxiPotParticipants.toDomain() = TaxiPotParticipantsData(
 
 fun TaxiPotWaitingMembers.toDomain() = TaxiPotWaitingMembersData(
     waitingList = waitingList.map { it.toDomain() }
+)
+
+fun ChatInfoResponse.toDomain() = ChatInfoData(
+    roomId = roomId,
+    memberId = memberId
 )

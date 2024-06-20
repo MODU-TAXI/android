@@ -1,5 +1,6 @@
 package com.motax.modutaxi.domain.repository
 
+import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
@@ -87,4 +88,6 @@ interface MainRepository {
         roomId: Long,
         memberId: Long
     ): Result<Unit>
+
+    suspend fun getChatsInfo(): Result<ChatInfoData>
 }

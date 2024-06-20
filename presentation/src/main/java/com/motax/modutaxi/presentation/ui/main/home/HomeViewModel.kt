@@ -1,9 +1,9 @@
 package com.motax.modutaxi.presentation.ui.main.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -12,11 +12,14 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class HomeUiState(
-    val realtimeTaxiPotList: List<UiRealtimeTaxiPotItem> = emptyList()
+    val realtimeTaxiPotList: List<UiRealtimeTaxiPotItem> = emptyList(),
+    val roomId: String? = null,
+    val isParticipating: Boolean = false
 )
 
 sealed class HomeEvent {
@@ -27,7 +30,9 @@ sealed class HomeEvent {
 }
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val repository: MainRepository
+) : ViewModel() {
 
     private val _event = MutableSharedFlow<HomeEvent>()
     val event: SharedFlow<HomeEvent> = _event.asSharedFlow()
@@ -35,23 +40,49 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    private val _isParticipating = MutableLiveData(false)
-    val isParticipating: LiveData<Boolean> = _isParticipating
-
-    fun setParticipating(value: Boolean) {
-        _isParticipating.value = value
-    }
-
     init {
         loadDummyData()
+        getIsParticipating()
     }
 
     private fun loadDummyData() {
         val dummyData = listOf(
-            UiRealtimeTaxiPotItem(roomId = 1, curHeadCount = 2, wishHeadCount = 3, feePerPerson = "8,300원", departureSpot = "인하대학교", arrivalSpot = "주안역", departTime = "12:45", navigateToMatchDetail = {}),
-            UiRealtimeTaxiPotItem(roomId = 2, curHeadCount = 1, wishHeadCount = 3, feePerPerson = "9,000원", departureSpot = "서울역", arrivalSpot = "강남역", departTime = "12:45", navigateToMatchDetail = {}),
-            UiRealtimeTaxiPotItem(roomId = 3, curHeadCount = 3, wishHeadCount = 4, feePerPerson = "7,500원", departureSpot = "홍대입구", arrivalSpot = "명동", departTime = "12:45",  navigateToMatchDetail = {}),
-            UiRealtimeTaxiPotItem(roomId = 4, curHeadCount = 2, wishHeadCount = 2, feePerPerson = "6,000원", departureSpot = "강남역", arrivalSpot = "역삼역", departTime = "12:45", navigateToMatchDetail = {})
+            UiRealtimeTaxiPotItem(
+                roomId = 1,
+                curHeadCount = 2,
+                wishHeadCount = 3,
+                feePerPerson = "8,300원",
+                departureSpot = "인하대학교",
+                arrivalSpot = "주안역",
+                departTime = "12:45",
+                navigateToMatchDetail = {}),
+            UiRealtimeTaxiPotItem(
+                roomId = 2,
+                curHeadCount = 1,
+                wishHeadCount = 3,
+                feePerPerson = "9,000원",
+                departureSpot = "서울역",
+                arrivalSpot = "강남역",
+                departTime = "12:45",
+                navigateToMatchDetail = {}),
+            UiRealtimeTaxiPotItem(
+                roomId = 3,
+                curHeadCount = 3,
+                wishHeadCount = 4,
+                feePerPerson = "7,500원",
+                departureSpot = "홍대입구",
+                arrivalSpot = "명동",
+                departTime = "12:45",
+                navigateToMatchDetail = {}),
+            UiRealtimeTaxiPotItem(
+                roomId = 4,
+                curHeadCount = 2,
+                wishHeadCount = 2,
+                feePerPerson = "6,000원",
+                departureSpot = "강남역",
+                arrivalSpot = "역삼역",
+                departTime = "12:45",
+                navigateToMatchDetail = {})
         )
         _uiState.value = HomeUiState(realtimeTaxiPotList = dummyData)
     }
@@ -60,6 +91,25 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     fun getRealtimeTaxiPots() {
         viewModelScope.launch {
             //TODO 리포지토리 불러오기
+        }
+    }
+
+    private fun getIsParticipating() {
+        viewModelScope.launch {
+            repository.getChatsInfo()
+                .onSuccess {
+                    Log.d("debugging", "$it")
+                    val roomId = it.roomId
+                    val isParticipating = roomId != "null";
+                    _uiState.update { state ->
+                        state.copy(
+                            roomId = roomId,
+                            isParticipating = isParticipating
+                        )
+                    }
+                }
+                .onFailure {  }
+
         }
     }
 

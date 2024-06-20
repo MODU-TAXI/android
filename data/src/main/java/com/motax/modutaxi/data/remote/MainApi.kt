@@ -1,6 +1,7 @@
 package com.motax.modutaxi.data.remote
 
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
@@ -101,4 +102,8 @@ interface MainApi {
         @Path("roomId") roomId: Long,
         @Path("memberId") memberId: Long
     ): Unit
+
+    @GET("/api/chats/info")
+    suspend fun getChatsInfo()
+    : ChatInfoResponse
 }
