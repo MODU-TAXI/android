@@ -86,7 +86,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="@{vm.uiState.isCodeCorrect ? @drawable/rect_nofill_gray500stroke_12radius : @drawable/rect_redfill_nostroke_12radius}"
+            android:background="@{vm.uiState.isCodeCorrect ? @drawable/rect_nofill_gray500stroke_12radius : @drawable/rect_nofill_redstroke_12radius}"
             android:paddingHorizontal="22dp"
             android:paddingVertical="16dp"
             app:layout_constraintEnd_toStartOf="@id/guide_92_vertical"

@@ -1,6 +1,5 @@
 package com.motax.modutaxi.presentation.ui.intro.signup.editnick
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.model.BaseState
