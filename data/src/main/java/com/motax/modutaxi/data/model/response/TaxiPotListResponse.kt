@@ -2,7 +2,7 @@ package com.motax.modutaxi.data.model.response
 
 
 data class TaxiPotListResponse(
-    val rooms: List<TaxiPotItem>
+    val result: List<TaxiPotItem>
 )
 
 data class TaxiPotItem(

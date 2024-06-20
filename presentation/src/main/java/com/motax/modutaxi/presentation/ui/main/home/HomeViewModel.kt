@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.repository.MainRepository
+import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
 import com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -44,56 +45,41 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     init {
-        loadDummyData()
         getIsParticipating()
+        getRealtimeTaxiPots()
     }
 
-    private fun loadDummyData() {
-        val dummyData = listOf(
-            UiRealtimeTaxiPotItem(
-                roomId = 1,
-                curHeadCount = 2,
-                wishHeadCount = 3,
-                feePerPerson = "8,300원",
-                departureSpot = "인하대학교",
-                arrivalSpot = "주안역",
-                departTime = "12:45",
-                navigateToMatchDetail = {}),
-            UiRealtimeTaxiPotItem(
-                roomId = 2,
-                curHeadCount = 1,
-                wishHeadCount = 3,
-                feePerPerson = "9,000원",
-                departureSpot = "서울역",
-                arrivalSpot = "강남역",
-                departTime = "12:45",
-                navigateToMatchDetail = {}),
-            UiRealtimeTaxiPotItem(
-                roomId = 3,
-                curHeadCount = 3,
-                wishHeadCount = 4,
-                feePerPerson = "7,500원",
-                departureSpot = "홍대입구",
-                arrivalSpot = "명동",
-                departTime = "12:45",
-                navigateToMatchDetail = {}),
-            UiRealtimeTaxiPotItem(
-                roomId = 4,
-                curHeadCount = 2,
-                wishHeadCount = 2,
-                feePerPerson = "6,000원",
-                departureSpot = "강남역",
-                arrivalSpot = "역삼역",
-                departTime = "12:45",
-                navigateToMatchDetail = {})
-        )
-        _uiState.value = HomeUiState(realtimeTaxiPotList = dummyData)
-    }
-
-
-    fun getRealtimeTaxiPots() {
+    private fun getRealtimeTaxiPots() {
         viewModelScope.launch {
-            //TODO 리포지토리 불러오기
+            repository.getTaxiPotList(
+                filter = mapOf<String, Long>(),
+                page = 0,
+                size = 5,
+                radius = 5000000,
+                longitude = 126.65915614333,
+                latitude = 37.450354677762,
+                sortType = "NEW",
+                roomTags = listOf<String>()
+            ).onSuccess { response ->
+                val items = response.rooms.map { responseItem ->
+                    UiRealtimeTaxiPotItem(
+                        roomId = responseItem.roomId,
+                        curHeadCount = responseItem.currentHeadcount,
+                        wishHeadCount = responseItem.wishHeadcount,
+                        feePerPerson = "${responseItem.expectedChargePerPerson.formatNumberWithCommas()}원",
+                        departureSpot = responseItem.departureName,
+                        arrivalSpot = responseItem.arrivalName,
+                        departTime = responseItem.departureTime,
+                        navigateToMatchDetail = { roomId -> navigateToMatchDetail(roomId) }
+                    )
+                }
+                _uiState.update { state ->
+                    state.copy(realtimeTaxiPotList = items)
+                }
+            }
+                .onFailure { throwable ->
+                    Log.e("debugging", "$throwable")
+                }
         }
     }
 
@@ -124,7 +110,6 @@ class HomeViewModel @Inject constructor(
                 repository.getTaxiPotPreview(roomId.toLong())
                     .onSuccess {
                         _uiState.update { state ->
-                            Log.d("debugging", "$it")
                             state.copy(participatingTaxiPot = it)
                         }
                     }

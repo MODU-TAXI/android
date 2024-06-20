@@ -86,7 +86,7 @@ fun TaxiPotItem.toDomain() = TaxiPotListItemData(
 )
 
 fun TaxiPotListResponse.toDomain() = TaxiPotListData(
-    rooms = rooms.map { it.toDomain() }
+    rooms = result.map { it.toDomain() }
 )
 
 fun SearchResultItem.toDomain() = SearchResultData(
