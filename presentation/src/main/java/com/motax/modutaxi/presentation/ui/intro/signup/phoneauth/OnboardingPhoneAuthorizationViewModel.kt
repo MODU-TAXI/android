@@ -121,22 +121,21 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
 
     private fun signUp() {
         viewModelScope.launch {
-//            signUpUseCase(
-//                SignUpData.key,
-//                SignUpData.name,
-//                SignUpData.gender,
-//                SignUpData.phoneNumber,
-//                ""
-//            ).onSuccess {
-//                dataStoreManager.putAccessToken(it.tokenData.accessToken)
-//                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
-//                isSignUpSuccess.value = true
-//                _event.emit(PhoneAuthEvent.NavigateToEditNick)
-//            }.onFailure {
-//                _event.emit(PhoneAuthEvent.ShowToastMessage("회원가입 실패!"))
-//                _event.emit(PhoneAuthEvent.GoBackToInit)
-//            }
-            _event.emit(PhoneAuthEvent.NavigateToEditNick)
+            signUpUseCase(
+                SignUpData.key,
+                SignUpData.name,
+                SignUpData.gender,
+                SignUpData.phoneNumber,
+                ""
+            ).onSuccess {
+                dataStoreManager.putAccessToken(it.tokenData.accessToken)
+                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
+                isSignUpSuccess.value = true
+                _event.emit(PhoneAuthEvent.NavigateToEditNick)
+            }.onFailure {
+                _event.emit(PhoneAuthEvent.ShowToastMessage("회원가입 실패!"))
+                _event.emit(PhoneAuthEvent.GoBackToInit)
+            }
         }
     }
 
