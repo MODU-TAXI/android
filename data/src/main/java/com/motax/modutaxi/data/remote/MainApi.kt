@@ -4,6 +4,7 @@ import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
+import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
@@ -106,4 +107,9 @@ interface MainApi {
     @GET("/api/chats/info")
     suspend fun getChatsInfo()
     : ChatInfoResponse
+
+    @GET("/api/members/{memberId}")
+    suspend fun getMemberProfile(
+        @Path("memberId") memberId: Long
+    ): MemberProfileResponse
 }

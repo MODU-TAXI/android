@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +19,11 @@ import javax.inject.Inject
 
 data class HomeUiState(
     val realtimeTaxiPotList: List<UiRealtimeTaxiPotItem> = emptyList(),
+    val participatingTaxiPot: TaxiPotPreviewData? = null,
     val roomId: String? = null,
-    val isParticipating: Boolean = false
+    val isParticipating: Boolean = false,
+    val memberId: String = "",
+    val nickname: String = ""
 )
 
 sealed class HomeEvent {
@@ -98,18 +102,51 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getChatsInfo()
                 .onSuccess {
-                    Log.d("debugging", "$it")
-                    val roomId = it.roomId
-                    val isParticipating = roomId != "null";
                     _uiState.update { state ->
                         state.copy(
-                            roomId = roomId,
-                            isParticipating = isParticipating
+                            roomId = it.roomId,
+                            isParticipating = it.roomId != "null",
+                            memberId = it.memberId
                         )
                     }
+                    getNickname()
+                    if (it.roomId != "null") {
+                        getParticipatingRoomInfo(it.roomId)
+                    }
                 }
-                .onFailure {  }
+                .onFailure { }
 
+        }
+    }
+
+    private fun getParticipatingRoomInfo(roomId: String?) {
+        viewModelScope.launch {
+            if (roomId != null) {
+                repository.getTaxiPotPreview(roomId.toLong())
+                    .onSuccess {
+                        _uiState.update { state ->
+                            Log.d("debugging", "$it")
+                            state.copy(participatingTaxiPot = it)
+                        }
+                    }
+                    .onFailure { }
+            }
+        }
+    }
+
+    private fun getNickname() {
+        viewModelScope.launch {
+            repository.getMemberProfile(_uiState.value.memberId.toLong())
+                .onSuccess {
+                    _uiState.update { state ->
+                        state.copy(
+                            nickname = it.nickname
+                        )
+                    }
+
+                }.onFailure {
+
+                }
         }
     }
 
