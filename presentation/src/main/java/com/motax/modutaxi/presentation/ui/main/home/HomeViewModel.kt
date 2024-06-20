@@ -29,8 +29,7 @@ data class HomeUiState(
 sealed class HomeEvent {
     data object NavigateToCreateParty : HomeEvent()
     data object NavigateToShowParty : HomeEvent()
-
-    data object NavigateToSearch : HomeEvent()
+    data class NavigateToMatchDetail(val id: Long) : HomeEvent()
 }
 
 @HiltViewModel
@@ -162,9 +161,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun navigateToSearch() {
+    fun navigateToMatchDetail(id: Long) {
         viewModelScope.launch {
-            _event.emit(HomeEvent.NavigateToSearch)
+            _event.emit(HomeEvent.NavigateToMatchDetail(id))
         }
     }
 }

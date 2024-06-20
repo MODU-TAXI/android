@@ -377,6 +377,7 @@
                         android:gravity="center"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
+                        android:onClick="@{() -> vm.navigateToMatchDetail(vm.uiState.participatingTaxiPot.roomId)}"
                         android:text="채팅방 바로가기"
                         android:textColor="@color/mx_sub500"
                         app:layout_constraintEnd_toEndOf="parent"
