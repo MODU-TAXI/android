@@ -51,8 +51,8 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         repeatOnStarted {
             viewModel.event.collect{
                 when(it){
-                    is ChatRoomEvent.SendMessage -> chatManager.sendMessage(roomId, it.msg)
-                    is ChatRoomEvent.SendImage -> chatManager.sendImage(roomId, it.img)
+                    is ChatRoomEvent.SendMessage -> chatManager.sendMessage(roomId, it.msg, "CHAT")
+                    is ChatRoomEvent.SendImage -> chatManager.sendMessage(roomId, it.img, "IMAGE")
                     is ChatRoomEvent.ScrollBottom -> scrollRecyclerViewBottom()
                     is ChatRoomEvent.GoToGallery -> parentViewModel.goToGallery()
                 }
@@ -63,7 +63,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
     private fun initImageObserve(){
         repeatOnStarted {
             parentViewModel.imageUrl.collect{
-                chatManager.sendImage(roomId, it)
+                chatManager.sendMessage(roomId, it, "IMAGE")
             }
         }
     }

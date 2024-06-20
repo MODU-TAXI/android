@@ -97,10 +97,11 @@ fun getCurMinute(): Int {
 }
 
 fun String.toChatSentTime() : String{
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS", Locale.getDefault())
+    val time = this.substring(0..18)
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-    inputFormat.parse(this)?.let{
+    inputFormat.parse(time)?.let{
         return outputFormat.format(it)
     } ?: run{
         return ""

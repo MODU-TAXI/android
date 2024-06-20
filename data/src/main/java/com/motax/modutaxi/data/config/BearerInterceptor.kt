@@ -1,7 +1,5 @@
 package com.motax.modutaxi.data.config
 
-import android.content.Intent
-import android.util.Log
 import com.motax.modutaxi.data.Constants.AUTHORIZATION
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.remote.AuthApi
@@ -39,12 +37,14 @@ class BearerInterceptor @Inject constructor(
                         dataStoreManager.putRefreshToken(it.tokenResponse.refreshToken)
                         dataStoreManager.putGender(it.memberInfoResponse.gender)
                         dataStoreManager.putMemberId(it.memberInfoResponse.id)
+                        dataStoreManager.putProfileImg(it.memberInfoResponse.imageUrl)
                         newAccessToken = it.tokenResponse.accessToken
                     }.onFailure {
                         dataStoreManager.deleteAccessToken()
                         dataStoreManager.deleteRefreshToken()
                         dataStoreManager.deleteGender()
                         dataStoreManager.deleteMemberId()
+                        dataStoreManager.deleteProfileImg()
                     }
                 }
             }

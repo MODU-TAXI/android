@@ -8,5 +8,7 @@ object Constants {
     const val MEMBER_ID = "MEMBER_ID"
     const val GENDER = "GENDER"
     const val AUTO_LOGIN = "AUTO_LOGIN"
+    const val PROFILE_IMG = "PROFILE_IMG"
     const val BEARER = "Bearer"
+
 }

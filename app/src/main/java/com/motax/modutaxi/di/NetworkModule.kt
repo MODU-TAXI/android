@@ -6,7 +6,6 @@ import com.motax.modutaxi.data.config.BearerInterceptor
 import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.data.config.NaverKeyInterceptor
 import com.motax.modutaxi.data.config.NaverMapKeyInterceptor
-import com.motax.modutaxi.data.remote.IntroApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -15,5 +15,6 @@
 local.properties
 *.jks
 *.apk
+*.aab
 google-services.json
 output-metadata.json

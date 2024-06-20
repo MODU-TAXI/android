@@ -3,7 +3,7 @@ package com.motax.modutaxi.presentation.chatmanager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.motax.modutaxi.data.config.DataStoreManager
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.chatmanager.model.ChatMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ sealed class ChatEvent {
 @HiltViewModel
 class ChatManager @Inject constructor(
     private val mainRepository: MainRepository,
-    private val dataStoreManager: DataStoreManager
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _events: MutableSharedFlow<ChatEvent> = MutableSharedFlow()
@@ -32,7 +32,7 @@ class ChatManager @Inject constructor(
     val newChat: SharedFlow<ChatMessage> = _newChat.asSharedFlow()
 
     private val chatSocket =
-        ChatSocket(::receiveMessage, dataStoreManager)
+        ChatSocket(::receiveMessage, authRepository)
 
     private fun receiveMessage(payload: String) {
         val chatMessage = Gson().fromJson(payload, ChatMessage::class.java)
@@ -41,29 +41,34 @@ class ChatManager @Inject constructor(
         }
     }
 
-    fun sendMessage(roomId: Long, message: String) {
+    fun sendMessage(roomId: Long, message: String, type: String) {
         viewModelScope.launch {
-            dataStoreManager.getMemberId()?.let { id ->
-                chatSocket.sendChat(
-                    roomId,
-                    id,
-                    message
-                )
+
+            authRepository.getMemberId()?.let { id ->
+                authRepository.getProfileImg()?.let{ img ->
+                    chatSocket.sendChat(
+                        roomId,
+                        id,
+                        message,
+                        type,
+                        img
+                    )
+                }
             }
         }
     }
 
-    fun sendImage(roomId: Long, imageUrl: String){
-        viewModelScope.launch {
-            dataStoreManager.getMemberId()?.let { id ->
-                chatSocket.sendImage(
-                    roomId,
-                    id,
-                    imageUrl
-                )
-            }
-        }
-    }
+//    fun sendImage(roomId: Long, imageUrl: String){
+//        viewModelScope.launch {
+//            dataStoreManager.getMemberId()?.let { id ->
+//                chatSocket.sendImage(
+//                    roomId,
+//                    id,
+//                    imageUrl
+//                )
+//            }
+//        }
+//    }
 
     fun disconnectChat() {
         chatSocket.disconnectServer()

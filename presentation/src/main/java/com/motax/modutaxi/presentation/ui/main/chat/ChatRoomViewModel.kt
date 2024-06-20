@@ -2,7 +2,7 @@ package com.motax.modutaxi.presentation.ui.main.chat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.data.config.DataStoreManager
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.chatmanager.model.ChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessage
@@ -38,7 +38,7 @@ sealed class ChatRoomEvent{
 @HiltViewModel
 class ChatRoomViewModel @Inject constructor(
     private val repository: MainRepository,
-    private val dataStoreManager: DataStoreManager
+    private val authRepository: AuthRepository
 ): ViewModel(){
 
     private val _uiState = MutableStateFlow(ChatRoomUiState())
@@ -57,7 +57,7 @@ class ChatRoomViewModel @Inject constructor(
 
     private fun setMyId(){
         viewModelScope.launch {
-            dataStoreManager.getMemberId()?.let{
+            authRepository.getMemberId()?.let{
                 myId = it
             }
         }

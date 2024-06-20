@@ -2,7 +2,7 @@ package com.motax.modutaxi.presentation.ui.intro.signup.phoneauth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.data.config.DataStoreManager
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.IntroRepository
 import com.motax.modutaxi.domain.usecase.SignUpUseCase
 import com.motax.modutaxi.presentation.service.MyFirebaseMessagingService
@@ -38,7 +38,7 @@ sealed class PhoneAuthEvent {
 class OnboardingPhoneAuthViewModel @Inject constructor(
     private val repository: IntroRepository,
     private val signUpUseCase: SignUpUseCase,
-    private val dataStoreManager: DataStoreManager
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PhoneAuthorizationUiState())
@@ -92,7 +92,7 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
                 SignUpData.phoneNumber,
                 authorizationCode.value
             ).onSuccess {
-                if(it.isConfirm){
+                if (it.isConfirm) {
                     _uiState.update { state ->
                         state.copy(
                             btnState = AuthBtnState.AuthSuccess("인증번호 검증 성공")
@@ -126,10 +126,11 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
                 SignUpData.phoneNumber,
                 async { MyFirebaseMessagingService().getFirebaseToken() }.await()
             ).onSuccess {
-                dataStoreManager.putAccessToken(it.tokenData.accessToken)
-                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
-                dataStoreManager.putGender(it.memberInfoData.gender)
-                dataStoreManager.putMemberId(it.memberInfoData.id)
+                authRepository.putAccessToken(it.tokenData.accessToken)
+                authRepository.putRefreshToken(it.tokenData.refreshToken)
+                authRepository.putGender(it.memberInfoData.gender)
+                authRepository.putMemberId(it.memberInfoData.id)
+                authRepository.putProfileImg(it.memberInfoData.imageUrl)
                 isSignUpSuccess.value = true
                 _event.emit(PhoneAuthEvent.NavigateToEditNick)
             }.onFailure {

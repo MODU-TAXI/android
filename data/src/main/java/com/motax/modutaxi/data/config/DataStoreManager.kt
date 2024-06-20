@@ -2,17 +2,13 @@ package com.motax.modutaxi.data.config
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.motax.modutaxi.data.Constants
 import com.motax.modutaxi.data.Constants.ACCESS_TOKEN
-import com.motax.modutaxi.data.Constants.AUTO_LOGIN
-import com.motax.modutaxi.data.Constants.GENDER
-import com.motax.modutaxi.data.Constants.MEMBER_ID
 import com.motax.modutaxi.data.Constants.REFRESH_TOKEN
-import kotlinx.coroutines.flow.Flow
+import com.motax.modutaxi.data.repository.AuthRepositoryImpl
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -24,6 +20,7 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
         private val REFRESH_TOKEN_KEY = stringPreferencesKey(REFRESH_TOKEN)
         private val MEMBER_ID = longPreferencesKey(Constants.MEMBER_ID)
         private val GENDER = stringPreferencesKey(Constants.GENDER)
+        private val PROFILE_IMG = stringPreferencesKey(Constants.PROFILE_IMG)
     }
 
     suspend fun getAccessToken(): String? {
@@ -47,6 +44,12 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
     suspend fun getGender(): String? {
         return dataStore.data.map{ prefs ->
             prefs[GENDER]
+        }.first()
+    }
+
+    suspend fun getProfileImg(): String? {
+        return dataStore.data.map { prefs ->
+            prefs[PROFILE_IMG]
         }.first()
     }
 
@@ -74,6 +77,12 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
         }
     }
 
+    suspend fun putProfileImg(profileImg: String) {
+        dataStore.edit { prefs ->
+            prefs[PROFILE_IMG] = profileImg
+        }
+    }
+
     suspend fun deleteAccessToken(){
         dataStore.edit { prefs ->
             prefs.remove(ACCESS_TOKEN_KEY)
@@ -95,6 +104,12 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
     suspend fun deleteGender(){
         dataStore.edit{ prefs ->
             prefs.remove(GENDER)
+        }
+    }
+
+    suspend fun deleteProfileImg() {
+        dataStore.edit { prefs ->
+            prefs.remove(PROFILE_IMG)
         }
     }
 
