@@ -63,11 +63,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_profile_image"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:background="@drawable/bg_circle"
                 android:clipToOutline="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -77,19 +76,24 @@
                     android:id="@+id/iv_profile_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:src="@drawable/bg_mypage_profile"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:onClick="@{() -> vm.onProfileImageClick()}"
                     android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/iv_profile_change"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="8dp"
-                    android:onClick="@{() -> vm.onProfileChangeClick()}"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:onClick="@{(view) -> vm.onProfileChangeClick(view)}"
                     android:src="@drawable/ic_camera" />
 
-            </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:layout_width="0dp"
