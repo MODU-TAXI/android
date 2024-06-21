@@ -183,7 +183,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="이름"
+                    android:text="학교 인증"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_dash_line2" />
 
@@ -205,51 +205,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_student_verification_label" />
 
+
+
                 <TextView
-                    android:id="@+id/tv_change_password_label"
+                    android:id="@+id/tv_change_personal_information"
                     style="@style/TextRegularSemibold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="비밀번호 변경"
+                    android:text="개인정보 수정"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_dash_line3" />
 
                 <ImageView
-                    android:id="@+id/iv_to_change_password"
+                    android:id="@+id/iv_to_change_personal_information"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_navigate_next_mypage"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_change_password_label" />
-
-                <ImageView
-                    android:id="@+id/iv_dash_line4"
-                    android:layout_width="0dp"
-                    android:layout_height="2dp"
-                    android:layout_marginVertical="16dp"
-                    android:src="@drawable/dash_line_gray_d9d9d9"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_change_password_label" />
-
-                <TextView
-                    android:id="@+id/tv_change_phone_label"
-                    style="@style/TextRegularSemibold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="휴대폰 번호 변경"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_dash_line4" />
-
-                <ImageView
-                    android:id="@+id/iv_to_change_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_navigate_next_mypage"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_change_phone_label" />
+                    app:layout_constraintTop_toTopOf="@id/tv_change_personal_information" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -265,13 +239,40 @@
                 app:layout_constraintTop_toBottomOf="@id/layout_first">
 
                 <TextView
+                    android:id="@+id/tv_account_management"
+                    style="@style/TextRegularSemibold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="계좌관리"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_to_account_management"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_navigate_next_mypage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_account_management" />
+
+                <ImageView
+                    android:id="@+id/iv_dash_line5"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/dash_line_gray_d9d9d9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_account_management" />
+
+                <TextView
                     android:id="@+id/tv_usage_history_label"
                     style="@style/TextRegularSemibold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="이용내역"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/iv_dash_line5" />
 
                 <ImageView
                     android:id="@+id/iv_to_usage_history"
@@ -282,7 +283,7 @@
                     app:layout_constraintTop_toTopOf="@id/tv_usage_history_label" />
 
                 <ImageView
-                    android:id="@+id/iv_dash_line5"
+                    android:id="@+id/iv_dash_line6"
                     android:layout_width="0dp"
                     android:layout_height="2dp"
                     android:layout_marginTop="16dp"
@@ -299,7 +300,7 @@
                     android:layout_marginTop="16dp"
                     android:text="알림설정"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_dash_line5" />
+                    app:layout_constraintTop_toBottomOf="@id/iv_dash_line6" />
 
                 <ImageView
                     android:id="@+id/iv_to_notification_password"
@@ -310,7 +311,7 @@
                     app:layout_constraintTop_toTopOf="@id/tv_notification_label" />
 
                 <ImageView
-                    android:id="@+id/iv_dash_line6"
+                    android:id="@+id/iv_dash_line7"
                     android:layout_width="0dp"
                     android:layout_height="2dp"
                     android:layout_marginVertical="16dp"
@@ -325,9 +326,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="공지사항"
+                    android:text="공지사항/이벤트"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_dash_line6" />
+                    app:layout_constraintTop_toBottomOf="@id/iv_dash_line7" />
 
                 <ImageView
                     android:id="@+id/iv_to_notice_event"
@@ -338,7 +339,7 @@
                     app:layout_constraintTop_toTopOf="@id/tv_notice_event_label" />
 
                 <ImageView
-                    android:id="@+id/iv_dash_line7"
+                    android:id="@+id/iv_dash_line8"
                     android:layout_width="0dp"
                     android:layout_height="2dp"
                     android:layout_marginVertical="16dp"
@@ -355,7 +356,7 @@
                     android:layout_marginTop="16dp"
                     android:text="문의하기"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_dash_line7" />
+                    app:layout_constraintTop_toBottomOf="@id/iv_dash_line8" />
 
                 <ImageView
                     android:id="@+id/iv_to_inquiry"
