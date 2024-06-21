@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/icon_small_flag"
+                android:src="@drawable/ic_small_flag"
                 android:visibility="@{vm.uiState.isPosition ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_position_label" />

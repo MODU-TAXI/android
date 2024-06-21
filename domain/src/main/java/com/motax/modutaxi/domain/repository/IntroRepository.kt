@@ -1,6 +1,7 @@
 package com.motax.modutaxi.domain.repository
 
 import com.motax.modutaxi.domain.model.AuthData
+import com.motax.modutaxi.domain.model.BaseState
 import com.motax.modutaxi.domain.model.CertificateData
 import com.motax.modutaxi.domain.model.MemberCheckData
 
@@ -25,6 +26,10 @@ interface IntroRepository {
         phoneNumber: String,
         fcmToken: String
     ): Result<AuthData>
+
+    suspend fun editNick(
+        nick: String
+    ): BaseState<Unit>
 
     suspend fun smsConfirm(
         key: String,

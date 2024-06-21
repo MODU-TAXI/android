@@ -43,12 +43,6 @@ class OnboardingSchoolAuthorizationEnterEmailFragment :
                     is OnboardingSchoolAuthorizationEnterEmailEvent.ShowToastMessage -> showToastMessage(
                         it.msg
                     )
-
-                    is OnboardingSchoolAuthorizationEnterEmailEvent.GoBackToInit -> {
-                        val intent = Intent(requireContext(), IntroActivity::class.java)
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(intent)
-                    }
                 }
             }
         }

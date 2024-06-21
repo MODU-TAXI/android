@@ -25,10 +25,6 @@
             app:destination="@id/departureSearchFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/taxiPotListFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.partylist.TaxiPotListFragment"
-        android:label="TaxiPotListFragment" />
 
     <fragment
         android:id="@+id/createPartyFragment"
@@ -45,7 +41,17 @@
     <fragment
         android:id="@+id/showPartyFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyFragment"
-        android:label="ShowPartyFragment" />
+        android:label="ShowPartyFragment" >
+        <action
+            android:id="@+id/action_showPartyFragment_to_showPartySearchFragment"
+            app:destination="@id/showPartySearchFragment" />
+        <action
+            android:id="@+id/action_showPartyFragment_to_createPartyFragment"
+            app:destination="@id/createPartyFragment" />
+        <action
+            android:id="@+id/action_showPartyFragment_to_selectSpotFilterBottomSheetFragment"
+            app:destination="@id/selectSpotFilterBottomSheetFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/arrivalMapFragment"
@@ -83,6 +89,43 @@
         android:id="@+id/taxiPotFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.taxipot.TaxiPotFragment"
         android:label="TaxiPotFragment" />
+    <fragment
+        android:id="@+id/matchDetailFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.matchdetail.MatchDetailFragment"
+        android:label="MatchDetailFragment">
 
+        <argument
+            android:name="id"
+            app:argType="long"/>
+        <action
+            android:id="@+id/action_matchDetailFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/main_nav"/>
+        <action
+            android:id="@+id/action_matchDetailFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
+    </fragment>
+
+    <action
+        android:id="@+id/global_action_to_matchDetailFragment"
+        app:destination="@id/matchDetailFragment"/>
+    <fragment
+        android:id="@+id/showPartySearchFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchFragment"
+        android:label="ShowPartySearchFragment" />
+    <fragment
+        android:id="@+id/chatRoomFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.ChatRoomFragment"
+        android:label="ChatRoomFragment" >
+
+        <argument
+            android:name="id"
+            app:argType="long"/>
+
+    </fragment>
+    <dialog
+        android:id="@+id/selectSpotFilterBottomSheetFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.showparty.bottomsheet.SelectSpotFilterBottomSheetFragment"
+        android:label="SelectSpotFilterBottomSheetFragment" />
 
 </navigation>

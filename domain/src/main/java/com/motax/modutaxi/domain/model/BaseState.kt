@@ -1,6 +1,6 @@
 package com.motax.modutaxi.domain.model
 
-enum class StatusCode{
+enum class StatusCode {
     EMPTY,
     ERROR,
     EXCEPTION,
@@ -10,5 +10,6 @@ enum class StatusCode{
 
 sealed class BaseState<out T> {
     data class Success<out T>(val data: T) : BaseState<T>()
-    data class Error(val statusCode: StatusCode, val message: String) : BaseState<Nothing>()
+    data class Error(val statusCode: StatusCode, val errorCode: String, val message: String) :
+        BaseState<Nothing>()
 }

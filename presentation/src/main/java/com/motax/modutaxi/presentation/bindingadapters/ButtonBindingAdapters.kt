@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.ui.intro.signup.AuthBtnState
+import com.motax.modutaxi.presentation.ui.main.matchdetail.RoomState
 
 @BindingAdapter("onboardQuestionBtnState")
 fun bindOnboardQuestionBtnState(btn: AppCompatButton, isSelected: Boolean) {
@@ -48,5 +49,29 @@ fun bindOnboardPhoneAuthHelperText(tv: TextView, state: AuthBtnState) {
             tv.text = state.msg
             tv.setTextColor(ContextCompat.getColor(tv.context, R.color.mx_red))
         }
+    }
+}
+
+@BindingAdapter("matchingParticipateBtnState")
+fun bindMatchingParticipateBtnState(btn: AppCompatButton, roomState: RoomState) {
+    when(roomState){
+        RoomState.PARTICIPANT, RoomState.OWNER -> {
+            btn.setBackgroundResource(R.drawable.rect_nofill_sub500stroke_61radius)
+            btn.setTextColor(ContextCompat.getColor(btn.context, R.color.mx_sub500))
+            btn.text = "채팅방 입장하기"
+        }
+
+        RoomState.WAITING -> {
+            btn.setBackgroundResource(R.drawable.rect_nofill_sub500stroke_61radius)
+            btn.setTextColor(ContextCompat.getColor(btn.context, R.color.mx_sub500))
+            btn.text = "방장 수락 대기중"
+        }
+
+        RoomState.NOTHING -> {
+            btn.setBackgroundResource(R.drawable.rect_sub500fill_nostroke_61radius)
+            btn.setTextColor(ContextCompat.getColor(btn.context, R.color.white))
+            btn.text = "매칭 참여하기"
+        }
+        else ->{}
     }
 }

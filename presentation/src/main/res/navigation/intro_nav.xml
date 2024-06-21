@@ -43,7 +43,16 @@
         android:label="OnboardingPhoneAuthorization"
         tools:layout="@layout/fragment_onboarding_phone_auth">
         <action
-            android:id="@+id/action_phoneAuthFragment_to_questionHowToKnowFragment"
+            android:id="@+id/action_phoneAuthFragment_to_editNickFragment"
+            app:destination="@id/editNickFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editNickFragment"
+        android:name="com.motax.modutaxi.presentation.ui.intro.signup.editnick.EditNickFragment"
+        android:label="EditNickFragment" >
+        <action
+            android:id="@+id/action_editNickFragment_to_questionHowToKnowFragment"
             app:destination="@id/questionHowToKnowFragment" />
     </fragment>
 
@@ -99,6 +108,7 @@
         tools:layout="@layout/fragment_onboarding_complete">
 
     </fragment>
+
 
 
 </navigation>

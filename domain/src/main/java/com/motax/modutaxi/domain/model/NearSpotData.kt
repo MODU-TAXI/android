@@ -1,7 +1,10 @@
 package com.motax.modutaxi.domain.model
 
 data class NearSpotData(
-    val distance: Double,
+    val minLongitude: Double,
+    val minLatitude: Double,
+    val maxLongitude: Double,
+    val maxLatitude: Double,
     val spots: List<NearSpotItemData>
 )
 

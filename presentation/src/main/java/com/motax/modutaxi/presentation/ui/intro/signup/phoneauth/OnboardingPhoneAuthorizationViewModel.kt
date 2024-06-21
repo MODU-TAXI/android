@@ -2,7 +2,9 @@ package com.motax.modutaxi.presentation.ui.intro.signup.phoneauth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.domain.repository.IntroRepository
+import com.motax.modutaxi.domain.usecase.SignUpUseCase
 import com.motax.modutaxi.presentation.ui.intro.signup.AuthBtnState
 import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,14 +26,17 @@ data class PhoneAuthorizationUiState(
 )
 
 
-
 sealed class PhoneAuthEvent {
-    data object NavigateToQuestionHowToKnow : PhoneAuthEvent()
+    data object NavigateToEditNick : PhoneAuthEvent()
+    data object GoBackToInit : PhoneAuthEvent()
+    data class ShowToastMessage(val msg: String) : PhoneAuthEvent()
 }
 
 @HiltViewModel
 class OnboardingPhoneAuthViewModel @Inject constructor(
-    private val repository: IntroRepository
+    private val repository: IntroRepository,
+    private val signUpUseCase: SignUpUseCase,
+    private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PhoneAuthorizationUiState())
@@ -41,6 +46,7 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
     val event: SharedFlow<PhoneAuthEvent> = _event.asSharedFlow()
 
     val authorizationCode = MutableStateFlow("")
+    private val isSignUpSuccess = MutableStateFlow(false)
 
     var curJob: Job? = null
 
@@ -79,35 +85,53 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            _event.emit(PhoneAuthEvent.NavigateToQuestionHowToKnow)
+            repository.smsConfirm(
+                SignUpData.key,
+                SignUpData.phoneNumber,
+                authorizationCode.value
+            ).onSuccess {
+                if(it.isConfirm){
+                    _uiState.update { state ->
+                        state.copy(
+                            btnState = AuthBtnState.AuthSuccess("인증번호 검증 성공")
+                        )
+                    }
 
-//            repository.smsConfirm(
-//                SignUpData.key,
-//                SignUpData.phoneNumber,
-//                authorizationCode.value
-//            ).onSuccess {
-//                if(it.isConfirm){
-//                    _uiState.update { state ->
-//                        state.copy(
-//                            btnState = PhoneAuthBtnState.AuthSuccess("인증번호 검증 성공")
-//                        )
-//                    }
-//
-//                    _event.emit(PhoneAuthEvent.NavigateToQuestionHowToKnow)
-//                } else {
-//                    _uiState.update { state ->
-//                        state.copy(
-//                            btnState = PhoneAuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
-//                        )
-//                    }
-//                }
-//            }.onFailure {
-//                _uiState.update { state ->
-//                    state.copy(
-//                        btnState = PhoneAuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
-//                    )
-//                }
-//            }
+                    signUp()
+                } else {
+                    _uiState.update { state ->
+                        state.copy(
+                            btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
+                        )
+                    }
+                }
+            }.onFailure {
+                _uiState.update { state ->
+                    state.copy(
+                        btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
+                    )
+                }
+            }
+        }
+    }
+
+    private fun signUp() {
+        viewModelScope.launch {
+            signUpUseCase(
+                SignUpData.key,
+                SignUpData.name,
+                SignUpData.gender,
+                SignUpData.phoneNumber,
+                ""
+            ).onSuccess {
+                dataStoreManager.putAccessToken(it.tokenData.accessToken)
+                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
+                isSignUpSuccess.value = true
+                _event.emit(PhoneAuthEvent.NavigateToEditNick)
+            }.onFailure {
+                _event.emit(PhoneAuthEvent.ShowToastMessage("회원가입 실패!"))
+                _event.emit(PhoneAuthEvent.GoBackToInit)
+            }
         }
     }
 

@@ -10,8 +10,14 @@ import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
+import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotItem
+import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
+import com.motax.modutaxi.data.model.response.TaxiPotMemberItem
+import com.motax.modutaxi.data.model.response.TaxiPotParticipants
+import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
+import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
@@ -22,16 +28,26 @@ import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
+import com.motax.modutaxi.domain.model.CoordinateData
+import com.motax.modutaxi.domain.model.CoordinateReferenceSystemData
 import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.model.MemberInfoData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NearSpotItemData
+import com.motax.modutaxi.domain.model.PathData
 import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.domain.model.SearchResultListData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.SpotListItemData
-import com.motax.modutaxi.domain.model.TaxiPotData
+import com.motax.modutaxi.domain.model.TaxiPotListItemData
+import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
+import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
+import com.motax.modutaxi.domain.model.TaxiPotListRadiusItemData
+import com.motax.modutaxi.domain.model.TaxiPotMemberData
+import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
+import com.motax.modutaxi.domain.model.TaxiPotPreviewData
+import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.TokenData
 
 fun TokenResponse.toDomain() = TokenData(
@@ -48,22 +64,25 @@ fun CertificateResponse.toDomain() = CertificateData(
     isConfirm = isConfirm
 )
 
-fun TaxiPotItem.toDomain() = TaxiPotData(
+fun TaxiPotItem.toDomain() = TaxiPotListItemData(
     roomId = roomId,
     spotId = spotId,
+    arrivalTime = arrivalTime,
+    arrivalName = arrivalName,
     roomTagBitMaskList = roomTagBitMaskList,
-    departureLongitude = departureLongitude,
-    departureLatitude = departureLatitude,
+    departureName = departureName,
     departureTime = departureTime,
     wishHeadcount = wishHeadcount,
-    duration = duration,
-    expectedCharge = expectedCharge
+    currentHeadcount = currentHeadcount,
+    durationMinutes = durationMinutes,
+    expectedChargePerPerson = expectedChargePerPerson,
+    expectedCharge = expectedCharge,
+    departureLatitude = departureLatitude,
+    departureLongitude = departureLongitude
 )
 
 fun TaxiPotListResponse.toDomain() = TaxiPotListData(
-    page = page,
-    haxNext = haxNext,
-    result = result.map { it.toDomain() }
+    rooms = rooms.map { it.toDomain() }
 )
 
 fun SearchResultItem.toDomain() = SearchResultData(
@@ -124,7 +143,10 @@ fun AddressFromGeoResponse.toDomain() = AddressFromGeoData(
 )
 
 fun GetNearSpotResponse.toDomain() = NearSpotData(
-    distance = distance,
+    maxLongitude = maxLongitude,
+    maxLatitude = maxLatitude,
+    minLongitude = minLongitude,
+    minLatitude = minLatitude,
     spots = spots.map {
         NearSpotItemData(
             it.id,
@@ -161,4 +183,78 @@ fun MemberInfo.toDomain() = MemberInfoData(
     phoneNumber = phoneNumber,
     email = email ?: "",
     imageUrl = imageUrl
+)
+
+fun TaxiPotDetailResponse.toDomain() = TaxiPotDetailData(
+    arrivalLatitude = arrivalLatitude,
+    arrivalLongitude = arrivalLongitude,
+    arrivalName = arrivalName,
+    arrivalTime = arrivalTime,
+    currentHeadcount = currentHeadcount,
+    departureDairyDate = departureDairyDate,
+    departureLatitude = departureLatitude,
+    departureLongitude = departureLongitude,
+    departureName = departureName,
+    departureTime = departureTime,
+    durationMinutes = durationMinutes,
+    expectedCharge = expectedCharge,
+    expectedChargePerPerson = expectedChargePerPerson,
+    managerId = managerId,
+    myRoom = myRoom,
+    participate = participate,
+    path = PathData(
+        coordinateReferenceSystem = CoordinateReferenceSystemData(
+            path.coordinateReferenceSystem?.type ?: ""
+        ),
+        coordinates = path.coordinates.map {
+            CoordinateData(it.values)
+        },
+        type = path.type
+    ),
+    profileImageUrl = profileImageUrl,
+    roomId = roomId,
+    roomTagBitMaskList = roomTagBitMaskList,
+    spotId = spotId,
+    wishHeadcount = wishHeadcount,
+    waiting = waiting
+)
+
+fun TaxiPotListRadiusResponse.toDomain() = TaxiPotListRadiusData(
+    rooms = rooms.map {
+        TaxiPotListRadiusItemData(
+            id = it.id,
+            departureLongitude = it.departureLongitude,
+            departureLatitude = it.departureLatitude,
+            spotName = it.spotName
+        )
+    }
+)
+
+fun TaxiPotPreviewResponse.toDomain() = TaxiPotPreviewData(
+    roomId = roomId,
+    departureTime = departureTime,
+    departureName = departureName,
+    arrivalName = arrivalName,
+    roomStatus = roomStatus,
+    currentHeadcount = currentHeadcount,
+    wishHeadcount = wishHeadcount,
+    expectedChargePerPerson = expectedChargePerPerson,
+    expectedCharge = expectedCharge
+)
+
+fun TaxiPotMemberItem.toDomain() = TaxiPotMemberData(
+    memberId = memberId,
+    nickname = nickname,
+    imageUrl = imageUrl,
+    matchingCount = matchingCount,
+    thisIsMe = thisIsMe,
+    certified = certified
+)
+
+fun TaxiPotParticipants.toDomain() = TaxiPotParticipantsData(
+    inList = inList.map { it.toDomain() }
+)
+
+fun TaxiPotWaitingMembers.toDomain() = TaxiPotWaitingMembersData(
+    waitingList = waitingList.map { it.toDomain() }
 )

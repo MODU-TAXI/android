@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="item"
-            type="com.motax.modutaxi.presentation.ui.main.partylist.model.UiTaxiPotItem" />
+            type="com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem" />
 
     </data>
 
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rect_nofill_greystroke_12radius"
+        android:background="@drawable/rect_nofill_gray100stroke_8radius"
         android:padding="16dp">
 
 
@@ -25,7 +26,8 @@
             app:chipSpacing="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:singleLine="true"></com.google.android.material.chip.ChipGroup>
+            app:singleLine="true"
+            app:taxiPotFilterChips="@{item.roomTags}"></com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/tv_minutesAgo"
@@ -34,69 +36,99 @@
             android:layout_height="wrap_content"
             android:paddingTop="2dp"
             android:text="@{item.recentChatTime}"
-            android:textColor="#9C9C9C"
+            android:textColor="#969DA4"
             app:layout_constraintBottom_toBottomOf="@id/chip_group_classification"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/chip_group_classification" />
+            app:layout_constraintTop_toTopOf="@id/chip_group_classification"
+            tools:text="3분전 채팅" />
 
         <ImageView
-            android:id="@+id/iv_clock_fill"
-            android:layout_width="0dp"
+            android:id="@+id/iv_start_eclipse"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:src="@drawable/ic_clock_fill"
+            android:src="@drawable/ic_gray300_circle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/chip_group_classification" />
 
-        <TextView
-            android:id="@+id/tv_departure_datetime"
-            style="@style/TextLargeSemibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{item.departureDatetime}"
-            app:layout_constraintBottom_toBottomOf="@id/iv_clock_fill"
-            app:layout_constraintStart_toEndOf="@id/iv_clock_fill"
-            app:layout_constraintTop_toTopOf="@id/iv_clock_fill" />
+        <ImageView
+            android:id="@+id/iv_vertical_dotline"
+            android:layout_width="1dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_gray300_vertical_dotline"
+            app:layout_constraintEnd_toEndOf="@id/iv_start_eclipse"
+            app:layout_constraintStart_toStartOf="@id/iv_start_eclipse"
+            app:layout_constraintTop_toBottomOf="@id/iv_start_eclipse" />
 
         <ImageView
-            android:id="@+id/iv_location_fill"
-            android:layout_width="0dp"
+            android:id="@+id/iv_end_flag"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:src="@drawable/ic_location_fill"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_clock_fill" />
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_gray300_flag"
+            app:layout_constraintEnd_toEndOf="@id/iv_vertical_dotline"
+            app:layout_constraintStart_toStartOf="@id/iv_vertical_dotline"
+            app:layout_constraintTop_toBottomOf="@id/iv_vertical_dotline" />
 
         <TextView
-            android:id="@+id/tv_route"
-            style="@style/TextLargeSemibold"
-            android:layout_width="0dp"
+            android:id="@+id/tv_departure_time"
+            style="@style/TextSmallMedium"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.departureSpot}"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_location_fill"
-            app:layout_constraintStart_toEndOf="@id/iv_location_fill"
-            app:layout_constraintTop_toTopOf="@id/iv_location_fill" />
+            android:layout_marginStart="12dp"
+            android:text="@{item.departureTime}"
+            android:textColor="@color/mx_sub500"
+            app:layout_constraintStart_toEndOf="@id/iv_start_eclipse"
+            app:layout_constraintTop_toTopOf="@id/iv_start_eclipse"
+            tools:text="출발 14:25" />
+
+        <TextView
+            android:id="@+id/tv_departure_name"
+            style="@style/TextLargeSemibold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.departureName}"
+            android:textColor="@color/mx_gray800"
+            app:layout_constraintStart_toStartOf="@id/tv_departure_time"
+            app:layout_constraintTop_toBottomOf="@id/tv_departure_time"
+            tools:text="인하대학교 후문" />
+
+        <TextView
+            android:id="@+id/tv_arrival_name"
+            style="@style/TextLargeSemibold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@{item.arrivalName}"
+            android:textColor="@color/mx_gray800"
+            app:layout_constraintStart_toStartOf="@id/tv_departure_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_departure_name"
+            tools:text="주안역" />
 
         <ImageView
             android:id="@+id/iv_person_fill"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
             android:paddingHorizontal="2dp"
             android:paddingVertical="6dp"
             android:src="@drawable/ic_person_fill"
-            app:layout_constraintStart_toStartOf="@id/iv_location_fill"
-            app:layout_constraintTop_toBottomOf="@id/iv_location_fill" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_end_flag" />
 
         <TextView
             android:id="@+id/tv_participants"
+            style="@style/TextSmallMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
+            android:text="@{item.headCount}"
+            android:textColor="#969DA4"
             app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
             app:layout_constraintStart_toEndOf="@id/iv_person_fill"
-            app:layout_constraintTop_toTopOf="@+id/iv_person_fill" />
+            app:layout_constraintTop_toTopOf="@+id/iv_person_fill"
+            tools:text="2/3" />
 
         <TextView
             android:id="@+id/tv_fee_per_person"
@@ -104,10 +136,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="2dp"
-            android:textColor="#9C9C9C"
+            android:text="@{item.feeForPerson}"
+            android:textColor="#969DA4"
             app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_person_fill" />
+            app:layout_constraintTop_toTopOf="@id/iv_person_fill"
+            tools:text="인당 8,300원" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
