@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.presentation.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class MyPageUiState(
@@ -17,13 +20,16 @@ data class MyPageUiState(
 )
 
 @HiltViewModel
-class MyPageViewModel @Inject constructor() : ViewModel() {
+class MyPageViewModel @Inject constructor(
+    private val dataStoreManager: DataStoreManager
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MyPageUiState())
     val uiState: StateFlow<MyPageUiState> = _uiState.asStateFlow()
 
     fun onProfileImageClick() {
         Log.d("MyPageViewModel", "프로필 이미지 클릭!!!!!!!!!!")
+        logMemberInfo()
     }
 
     fun onProfileChangeClick(view: View) {
@@ -32,8 +38,6 @@ class MyPageViewModel @Inject constructor() : ViewModel() {
             showPopupMenu(context, view)
         }
     }
-
-    
 
     private fun showPopupMenu(context: Context, anchor: View) {
         val popupMenu = PopupMenu(context, anchor)
@@ -52,5 +56,13 @@ class MyPageViewModel @Inject constructor() : ViewModel() {
             }
         }
         popupMenu.show()
+    }
+
+    private fun logMemberInfo() {
+        viewModelScope.launch {
+            val memberId = dataStoreManager.getMemberId()
+            val memberName = dataStoreManager.getMemberName()
+            Log.d("debugging", "Member ID: $memberId, Member Name: $memberName")
+        }
     }
 }

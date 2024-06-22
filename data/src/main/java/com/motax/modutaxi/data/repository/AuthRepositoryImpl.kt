@@ -22,6 +22,8 @@ class AuthRepositoryImpl @Inject constructor(
     companion object {
         private val ACCESS_TOKEN_KEY = stringPreferencesKey(Constants.ACCESS_TOKEN)
         private val REFRESH_TOKEN_KEY = stringPreferencesKey(Constants.REFRESH_TOKEN)
+        private val MEMBER_ID_KEY = stringPreferencesKey(Constants.MEMBER_ID)
+        private val MEMBER_NAME_KEY = stringPreferencesKey(Constants.MEMBER_NAME)
     }
 
     override suspend fun getAccessToken(): String? {
@@ -33,6 +35,18 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun getRefreshToken(): String? {
         return dataStore.data.map { prefs ->
             prefs[REFRESH_TOKEN_KEY]
+        }.first()
+    }
+
+    override suspend fun getMemberId(): String? {
+        return dataStore.data.map { prefs ->
+            prefs[MEMBER_ID_KEY]
+        }.first()
+    }
+
+    override suspend fun getMemberName(): String? {
+        return dataStore.data.map { prefs ->
+            prefs[MEMBER_NAME_KEY]
         }.first()
     }
 
@@ -48,6 +62,19 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun putMemberId(id: String) {
+        dataStore.edit { prefs ->
+            prefs[MEMBER_ID_KEY] = id
+        }
+    }
+
+    override suspend fun putMemberName(name: String) {
+        dataStore.edit { prefs ->
+            prefs[MEMBER_NAME_KEY] = name
+        }
+
+    }
+
     override suspend fun deleteAccessToken() {
         dataStore.edit { prefs ->
             prefs.remove(ACCESS_TOKEN_KEY)
@@ -57,6 +84,18 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun deleteRefreshToken() {
         dataStore.edit { prefs ->
             prefs.remove(REFRESH_TOKEN_KEY)
+        }
+    }
+
+    override suspend fun deleteMemberId() {
+        dataStore.edit { prefs ->
+            prefs.remove(MEMBER_ID_KEY)
+        }
+    }
+
+    override suspend fun deleteMemberName() {
+        dataStore.edit { prefs ->
+            prefs.remove(MEMBER_NAME_KEY)
         }
     }
 

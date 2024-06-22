@@ -7,4 +7,6 @@ object Constants {
     const val AUTHORIZATION = "authorization"
     const val AUTO_LOGIN = "AUTO_LOGIN"
     const val BEARER = "Bearer"
+    const val MEMBER_ID = "MEMBER_ID"
+    const val MEMBER_NAME ="MEMBER_NAME"
 }

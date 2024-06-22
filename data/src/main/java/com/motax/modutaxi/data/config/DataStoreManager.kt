@@ -2,13 +2,12 @@ package com.motax.modutaxi.data.config
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.motax.modutaxi.data.Constants.ACCESS_TOKEN
-import com.motax.modutaxi.data.Constants.AUTO_LOGIN
 import com.motax.modutaxi.data.Constants.REFRESH_TOKEN
-import kotlinx.coroutines.flow.Flow
+import com.motax.modutaxi.data.Constants.MEMBER_ID
+import com.motax.modutaxi.data.Constants.MEMBER_NAME
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -18,6 +17,8 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
     companion object {
         private val ACCESS_TOKEN_KEY = stringPreferencesKey(ACCESS_TOKEN)
         private val REFRESH_TOKEN_KEY = stringPreferencesKey(REFRESH_TOKEN)
+        private val MEMBER_ID_KEY = stringPreferencesKey(MEMBER_ID)
+        private val MEMBER_NAME_KEY = stringPreferencesKey(MEMBER_NAME)
     }
 
     suspend fun getAccessToken(): String? {
@@ -55,5 +56,39 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
             prefs.remove(REFRESH_TOKEN_KEY)
         }
     }
+    suspend fun getMemberId(): String? {
+        return dataStore.data.map { prefs ->
+            prefs[MEMBER_ID_KEY]
+        }.first()
+    }
 
+    suspend fun getMemberName(): String? {
+        return dataStore.data.map { prefs ->
+            prefs[MEMBER_NAME_KEY]
+        }.first()
+    }
+
+    suspend fun putMemberId(id: String) {
+        dataStore.edit { prefs ->
+            prefs[MEMBER_ID_KEY] = id
+        }
+    }
+
+    suspend fun putMemberName(name: String) {
+        dataStore.edit { prefs ->
+            prefs[MEMBER_NAME_KEY] = name
+        }
+    }
+
+    suspend fun deleteMemberId() {
+        dataStore.edit { prefs ->
+            prefs.remove(MEMBER_ID_KEY)
+        }
+    }
+
+    suspend fun deleteMemberName() {
+        dataStore.edit { prefs ->
+            prefs.remove(MEMBER_NAME_KEY)
+        }
+    }
 }
