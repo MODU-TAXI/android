@@ -3,6 +3,7 @@ package com.motax.modutaxi.data.remote
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
+import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
@@ -101,4 +102,9 @@ interface MainApi {
         @Path("roomId") roomId: Long,
         @Path("memberId") memberId: Long
     ): Unit
+
+    @GET("/api/members/{memberId}")
+    suspend fun getMemberDetail(
+        @Path("memberId") memberId: Long
+    ):MemberDetailResponse
 }

@@ -1,5 +1,7 @@
 package com.motax.modutaxi.domain.repository
 
+import com.motax.modutaxi.domain.model.MemberDetailData
+import com.motax.modutaxi.domain.model.MemberInfoData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
@@ -87,4 +89,8 @@ interface MainRepository {
         roomId: Long,
         memberId: Long
     ): Result<Unit>
+
+    suspend fun getMemberDetail(
+        memberId: Long
+    ): Result<MemberDetailData>
 }

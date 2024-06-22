@@ -7,29 +7,39 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.data.config.DataStoreManager
+import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class MyPageUiState(
-    val isReported: Boolean = false
+    val isReported: Boolean = false,
+    val imageUrl: String = "",
+    val nickname: String = "",
+    val name: String ="",
+    val certified: Boolean = false,
 )
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    private val dataStoreManager: DataStoreManager
+    private val dataStoreManager: DataStoreManager,
+    private val mainRepository: MainRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MyPageUiState())
     val uiState: StateFlow<MyPageUiState> = _uiState.asStateFlow()
 
+    init {
+        loadMemberData()
+    }
+
     fun onProfileImageClick() {
         Log.d("MyPageViewModel", "프로필 이미지 클릭!!!!!!!!!!")
-        logMemberInfo()
     }
 
     fun onProfileChangeClick(view: View) {
@@ -38,6 +48,26 @@ class MyPageViewModel @Inject constructor(
             showPopupMenu(context, view)
         }
     }
+
+    private fun loadMemberData() {
+        viewModelScope.launch {
+            val memberId = dataStoreManager.getMemberId()?.toLongOrNull()
+            if (memberId != null) {
+                mainRepository.getMemberDetail(memberId).onSuccess {
+                    _uiState.update { state ->
+                        state.copy(
+                            name = dataStoreManager.getMemberName().toString(),
+                            nickname = it.nickname,
+                            imageUrl = it.imageUrl,
+                            certified = it.certified
+                        )
+                    }
+                }.onFailure {}
+            }
+        }
+    }
+
+
 
     private fun showPopupMenu(context: Context, anchor: View) {
         val popupMenu = PopupMenu(context, anchor)

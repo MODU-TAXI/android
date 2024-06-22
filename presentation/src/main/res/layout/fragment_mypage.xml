@@ -81,6 +81,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:profileImgUrl="@{vm.uiState.imageUrl}"
                     android:onClick="@{() -> vm.onProfileImageClick()}"
                     android:scaleType="centerCrop" />
 
@@ -135,9 +136,9 @@
                     android:id="@+id/tv_nickname"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:text="@{vm.uiState.nickname}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="델로" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
                     android:id="@+id/iv_dash_line1"
@@ -165,6 +166,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_name_label"
+                    android:text="@{vm.uiState.name}"
                     tools:text="오정현" />
 
                 <ImageView
@@ -191,6 +193,7 @@
                     android:id="@+id/tv_student_verification"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:text="@{vm.uiState.certified ? `인증됨` : `미인증`}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_student_verification_label"
                     tools:text="미인증" />
@@ -270,6 +273,7 @@
                     style="@style/TextRegularSemibold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:text="이용내역"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/iv_dash_line5" />

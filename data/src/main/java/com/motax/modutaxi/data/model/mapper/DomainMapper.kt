@@ -8,6 +8,7 @@ import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
+import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
@@ -31,6 +32,7 @@ import com.motax.modutaxi.domain.model.CertificateData
 import com.motax.modutaxi.domain.model.CoordinateData
 import com.motax.modutaxi.domain.model.CoordinateReferenceSystemData
 import com.motax.modutaxi.domain.model.MemberCheckData
+import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.MemberInfoData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NearSpotItemData
@@ -256,4 +258,12 @@ fun TaxiPotParticipants.toDomain() = TaxiPotParticipantsData(
 
 fun TaxiPotWaitingMembers.toDomain() = TaxiPotWaitingMembersData(
     waitingList = waitingList.map { it.toDomain() }
+)
+
+fun MemberDetailResponse.toDomain() = MemberDetailData(
+    id = this.id,
+    nickname = this.nickname,
+    matchingCount = this.matchingCount,
+    imageUrl = this.imageUrl,
+    certified = this.certified
 )
