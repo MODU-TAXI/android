@@ -57,7 +57,6 @@ fun TokenResponse.toDomain() = TokenData(
 
 fun MemberCheckResponse.toDomain() = MemberCheckData(
     key = key ?: "",
-    existent = existent
 )
 
 fun CertificateResponse.toDomain() = CertificateData(

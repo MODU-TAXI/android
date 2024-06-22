@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.intro.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.data.config.DataStoreManager
@@ -32,7 +33,8 @@ class LoginViewModel @Inject constructor(
     fun memberCheck(token: String) {
         viewModelScope.launch {
             memberCheckUseCase("KAKAO", token, "").onSuccess {
-                if (it.existent) {
+                Log.d("debugging", it.key)
+                if (it.key == "") {
                     kakaoLogin(token)
                 } else {
                     SignUpData.setSignUpKey(it.key)

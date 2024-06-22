@@ -33,6 +33,8 @@ class MyPageViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    
+
     private fun showPopupMenu(context: Context, anchor: View) {
         val popupMenu = PopupMenu(context, anchor)
         popupMenu.menuInflater.inflate(R.menu.profile_image_menu, popupMenu.menu)

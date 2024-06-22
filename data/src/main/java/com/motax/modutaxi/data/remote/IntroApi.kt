@@ -25,7 +25,7 @@ interface IntroApi {
         @Body body: LoginRequest
     ): AuthResponse
 
-    @POST("/api/members/{type}/membership")
+    @POST("/api/members/{type}/login")
     suspend fun memberCheck(
         @Path("type") type: String,
         @Body body: LoginRequest
