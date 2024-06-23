@@ -8,15 +8,30 @@ interface AuthRepository {
     suspend fun getRefreshToken(): String?
     suspend fun getMemberId(): String?
     suspend fun getMemberName(): String?
+    suspend fun getMemberGender(): String?
+    suspend fun getMemberPhoneNumber(): String?
+    suspend fun getMemberEmail(): String?
+    suspend fun getMatchingCount(): String?
+    suspend fun getMemberBlocked(): String?
 
     suspend fun putAccessToken(token: String)
     suspend fun putRefreshToken(token: String)
     suspend fun putMemberId(id: String)
     suspend fun putMemberName(name: String)
+    suspend fun putMemberGender(gender: String)
+    suspend fun putMemberPhoneNumber(phoneNumber: String)
+    suspend fun putMemberEmail(email: String)
+    suspend fun putMatchingCount(matchingCount: String)
+    suspend fun putMemberBlocked(blocked: String)
 
     suspend fun deleteAccessToken()
     suspend fun deleteRefreshToken()
     suspend fun deleteMemberId()
     suspend fun deleteMemberName()
+    suspend fun deleteMemberGender()
+    suspend fun deleteMemberPhoneNumber()
+    suspend fun deleteMemberEmail()
+    suspend fun deleteMatchingCount()
+    suspend fun deleteMemberBlocked()
     suspend fun refreshToken(refreshToken: String): Result<AuthData>
 }

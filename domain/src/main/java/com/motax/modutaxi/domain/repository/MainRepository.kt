@@ -10,6 +10,7 @@ import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
 import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
+import com.motax.modutaxi.domain.model.UpdateMemberData
 
 interface MainRepository {
 
@@ -93,4 +94,8 @@ interface MainRepository {
     suspend fun getMemberDetail(
         memberId: Long
     ): Result<MemberDetailData>
+
+    suspend fun updateMemberProfile(
+        profileData: Map<String, String>
+    ): Result<UpdateMemberData>
 }

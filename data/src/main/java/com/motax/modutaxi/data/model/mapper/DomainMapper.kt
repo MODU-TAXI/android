@@ -20,6 +20,7 @@ import com.motax.modutaxi.data.model.response.TaxiPotParticipants
 import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.TokenResponse
+import com.motax.modutaxi.data.model.response.UpdateMemberResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
 import com.motax.modutaxi.domain.model.AddressFromGeoData
@@ -51,6 +52,7 @@ import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.TokenData
+import com.motax.modutaxi.domain.model.UpdateMemberData
 
 fun TokenResponse.toDomain() = TokenData(
     accessToken = accessToken,
@@ -183,6 +185,8 @@ fun MemberInfo.toDomain() = MemberInfoData(
     gender = gender,
     phoneNumber = phoneNumber,
     email = email ?: "",
+    matchingCount = matchingCount,
+    blocked = blocked,
     imageUrl = imageUrl
 )
 
@@ -266,4 +270,11 @@ fun MemberDetailResponse.toDomain() = MemberDetailData(
     matchingCount = this.matchingCount,
     imageUrl = this.imageUrl,
     certified = this.certified
+)
+
+fun UpdateMemberResponse.toDomain() = UpdateMemberData(
+    name = name,
+    gender = gender,
+    phoneNumber = phoneNumber,
+    imageUrl = imageUrl
 )

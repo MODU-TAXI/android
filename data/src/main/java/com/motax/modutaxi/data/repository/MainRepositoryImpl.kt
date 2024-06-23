@@ -11,6 +11,7 @@ import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
+import com.motax.modutaxi.domain.model.UpdateMemberData
 import com.motax.modutaxi.domain.repository.MainRepository
 import javax.inject.Inject
 
@@ -48,9 +49,17 @@ class MainRepositoryImpl @Inject constructor(
         longitude: Double,
         sortType: String,
         roomTags: List<String>,
-        isImminent : Boolean
+        isImminent: Boolean
     ): Result<TaxiPotListData> = runCatching {
-        api.getTaxiPotListIntegration(filter, radius, latitude, longitude, sortType, roomTags, isImminent)
+        api.getTaxiPotListIntegration(
+            filter,
+            radius,
+            latitude,
+            longitude,
+            sortType,
+            roomTags,
+            isImminent
+        )
     }.mapCatching { it.toDomain() }
 
     override suspend fun getTaxiPotPreview(id: Long): Result<TaxiPotPreviewData> = runCatching {
@@ -123,5 +132,10 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getMemberDetail(memberId: Long): Result<MemberDetailData> =
         runCatching {
             api.getMemberDetail(memberId)
+        }.mapCatching { it.toDomain() }
+
+    override suspend fun updateMemberProfile(profileData: Map<String, String>): Result<UpdateMemberData> =
+        runCatching {
+            api.updateMemberProfile(profileData)
         }.mapCatching { it.toDomain() }
 }

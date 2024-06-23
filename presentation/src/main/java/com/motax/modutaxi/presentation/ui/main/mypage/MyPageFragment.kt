@@ -18,5 +18,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
         binding.vm = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.loadMemberData()
     }
 }

@@ -39,6 +39,11 @@ class SplashViewModel @Inject constructor(
                 authRepository.putRefreshToken(it.tokenData.refreshToken)
                 authRepository.putMemberId(it.memberInfoData.id.toString())
                 authRepository.putMemberName(it.memberInfoData.name)
+                authRepository.putMemberGender(it.memberInfoData.gender)
+                authRepository.putMemberPhoneNumber(it.memberInfoData.phoneNumber)
+                authRepository.putMemberEmail(it.memberInfoData.email)
+                authRepository.putMatchingCount(it.memberInfoData.matchingCount.toString())
+                authRepository.putMemberBlocked(it.memberInfoData.blocked.toString())
 
                 _event.emit(SplashUiEvent.NavigateToMain)
             }.onFailure {
@@ -46,6 +51,11 @@ class SplashViewModel @Inject constructor(
                 authRepository.deleteRefreshToken()
                 authRepository.deleteMemberId()
                 authRepository.deleteMemberName()
+                authRepository.deleteMemberGender()
+                authRepository.deleteMemberPhoneNumber()
+                authRepository.deleteMemberEmail()
+                authRepository.deleteMatchingCount()
+                authRepository.deleteMemberBlocked()
                 _event.emit(SplashUiEvent.NavigateToIntro)
             }
         }

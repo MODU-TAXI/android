@@ -10,9 +10,11 @@ import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotParticipants
 import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
+import com.motax.modutaxi.data.model.response.UpdateMemberResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -107,4 +109,9 @@ interface MainApi {
     suspend fun getMemberDetail(
         @Path("memberId") memberId: Long
     ):MemberDetailResponse
+
+    @PATCH("/api/members")
+    suspend fun updateMemberProfile(
+        @Body profileData: Map<String, String>
+    ): UpdateMemberResponse
 }
