@@ -97,16 +97,39 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-
+    //s3 업로드
     fun uploadImageToS3(uri: Uri) {
         viewModelScope.launch {
             val file = uriToFile(uri)
             mainRepository.uploadFile(file).onSuccess { response ->
                 val imageUrl = response.imageUrl
-                Log.d("debugging", imageUrl)
-            }.onFailure {
-                // 에러 처리 로직 작성
-            }
+
+                _uiState.update { state ->
+                    state.copy(imageUrl = imageUrl)
+                }
+
+                updateMemberProfile(imageUrl)
+            }.onFailure { }
+        }
+    }
+
+    private fun updateMemberProfile(imageUrl: String) {
+        viewModelScope.launch {
+
+            val memberName = dataStoreManager.getMemberName()
+            val gender = dataStoreManager.getGender()
+            val phoneNumber = dataStoreManager.getPhoneNumber()
+
+            val profileData = mapOf(
+                "name" to (memberName ?: ""),
+                "gender" to (gender ?: ""),
+                "phoneNumber" to (phoneNumber ?: ""),
+                "imageUrl" to imageUrl
+            )
+
+            mainRepository.updateMemberProfile(profileData).onSuccess {
+                _event.emit(MyPageEvent.ShowToastMessage("프로필 변경 성공"))
+            }.onFailure { }
         }
     }
 
