@@ -1,7 +1,6 @@
 package com.motax.modutaxi.domain.repository
 
 import com.motax.modutaxi.domain.model.MemberDetailData
-import com.motax.modutaxi.domain.model.MemberInfoData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
@@ -11,6 +10,8 @@ import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.UpdateMemberData
+import com.motax.modutaxi.domain.model.UploadImageData
+import java.io.File
 
 interface MainRepository {
 
@@ -98,4 +99,8 @@ interface MainRepository {
     suspend fun updateMemberProfile(
         profileData: Map<String, String>
     ): Result<UpdateMemberData>
+
+    suspend fun uploadFile(
+        file: File
+    ): Result<UploadImageData>
 }

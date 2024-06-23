@@ -1,16 +1,15 @@
 package com.motax.modutaxi.presentation.ui.main.mypage
 
+import android.app.Application
+import android.content.ContentResolver
 import android.content.Context
+import android.net.Uri
 import android.util.Log
-import android.view.View
-import androidx.appcompat.widget.PopupMenu
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.domain.repository.MainRepository
-import com.motax.modutaxi.presentation.R
-import com.motax.modutaxi.presentation.ui.intro.login.LoginEvent
-import com.motax.modutaxi.presentation.ui.main.home.HomeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +19,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import javax.inject.Inject
 
 data class MyPageUiState(
@@ -37,26 +40,16 @@ sealed class MyPageEvent {
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
+    application: Application,
     private val dataStoreManager: DataStoreManager,
-    private val mainRepository: MainRepository
-) : ViewModel() {
+    private val mainRepository: MainRepository,
+) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow(MyPageUiState())
     val uiState: StateFlow<MyPageUiState> = _uiState.asStateFlow()
 
     private val _event = MutableSharedFlow<MyPageEvent>()
     val event: SharedFlow<MyPageEvent> = _event.asSharedFlow()
-
-    fun onProfileImageClick() {
-        Log.d("MyPageViewModel", "프로필 이미지 클릭!!!!!!!!!!")
-    }
-
-    fun onProfileChangeClick(view: View) {
-        Log.d("MyPageViewModel", "프로필 체인지 클릭!!!!!!!!!!")
-        view.context?.let { context ->
-            showPopupMenu(context, view)
-        }
-    }
 
     fun loadMemberData() {
         viewModelScope.launch {
@@ -76,31 +69,8 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-
-    private fun showPopupMenu(context: Context, anchor: View) {
-        val popupMenu = PopupMenu(context, anchor)
-        popupMenu.menuInflater.inflate(R.menu.profile_image_menu, popupMenu.menu)
-        popupMenu.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_set_default -> {
-                    // 기본 이미지로 설정 처리
-                    setDefaultProfileImage()
-                    true
-                }
-
-                R.id.action_select_from_album -> {
-                    // 앨범에서 선택 처리
-                    true
-                }
-
-                else -> false
-            }
-        }
-        popupMenu.show()
-    }
-
     //기본 프로필 이미지 설정
-    private fun setDefaultProfileImage() {
+    fun setDefaultProfileImage() {
         viewModelScope.launch {
 
             val memberName = dataStoreManager.getMemberName()
@@ -125,6 +95,36 @@ class MyPageViewModel @Inject constructor(
 
             }
         }
+    }
+
+
+    fun uploadImageToS3(uri: Uri) {
+        viewModelScope.launch {
+            val file = uriToFile(uri)
+            mainRepository.uploadFile(file).onSuccess { response ->
+                val imageUrl = response.imageUrl
+                Log.d("debugging", imageUrl)
+            }.onFailure {
+                // 에러 처리 로직 작성
+            }
+        }
+    }
+
+    private fun uriToFile(uri: Uri): File {
+        val contentResolver: ContentResolver = getApplication<Application>().contentResolver
+        val inputStream: InputStream? = contentResolver.openInputStream(uri)
+        val tempFile = File.createTempFile("temp_image", ".jpg", getApplication<Application>().cacheDir)
+        inputStream?.use { input ->
+            FileOutputStream(tempFile).use { output ->
+                val buffer = ByteArray(4 * 1024)
+                var read: Int
+                while (input.read(buffer).also { read = it } != -1) {
+                    output.write(buffer, 0, read)
+                }
+                output.flush()
+            }
+        }
+        return tempFile
     }
 
 }

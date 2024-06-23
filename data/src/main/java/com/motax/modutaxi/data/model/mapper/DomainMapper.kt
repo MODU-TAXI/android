@@ -21,6 +21,7 @@ import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.data.model.response.UpdateMemberResponse
+import com.motax.modutaxi.data.model.response.UploadImageResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
 import com.motax.modutaxi.domain.model.AddressFromGeoData
@@ -53,6 +54,7 @@ import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.TokenData
 import com.motax.modutaxi.domain.model.UpdateMemberData
+import com.motax.modutaxi.domain.model.UploadImageData
 
 fun TokenResponse.toDomain() = TokenData(
     accessToken = accessToken,
@@ -277,4 +279,9 @@ fun UpdateMemberResponse.toDomain() = UpdateMemberData(
     gender = gender,
     phoneNumber = phoneNumber,
     imageUrl = imageUrl
+)
+
+fun UploadImageResponse.toDomain() = UploadImageData(
+    imageUrl = imageUrl,
+    fileName = fileName
 )

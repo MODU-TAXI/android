@@ -12,7 +12,12 @@ import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.UpdateMemberData
+import com.motax.modutaxi.domain.model.UploadImageData
 import com.motax.modutaxi.domain.repository.MainRepository
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
@@ -138,4 +143,11 @@ class MainRepositoryImpl @Inject constructor(
         runCatching {
             api.updateMemberProfile(profileData)
         }.mapCatching { it.toDomain() }
+
+    override suspend fun uploadFile(file: File): Result<UploadImageData> {
+        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        return runCatching { api.uploadFile(body, "PROFILE").toDomain() }
+    }
+
 }

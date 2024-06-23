@@ -82,7 +82,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:profileImgUrl="@{vm.uiState.imageUrl}"
-                    android:onClick="@{() -> vm.onProfileImageClick()}"
                     android:scaleType="centerCrop" />
 
                 <ImageView
@@ -91,7 +90,6 @@
                     android:layout_height="40dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:onClick="@{(view) -> vm.onProfileChangeClick(view)}"
                     android:src="@drawable/ic_camera" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

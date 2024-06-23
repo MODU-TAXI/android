@@ -11,11 +11,15 @@ import com.motax.modutaxi.data.model.response.TaxiPotParticipants
 import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.UpdateMemberResponse
+import com.motax.modutaxi.data.model.response.UploadImageResponse
+import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
@@ -114,4 +118,11 @@ interface MainApi {
     suspend fun updateMemberProfile(
         @Body profileData: Map<String, String>
     ): UpdateMemberResponse
+
+    @Multipart
+    @POST("/api/s3")
+    suspend fun uploadFile(
+        @Part file: MultipartBody.Part,
+        @Query("s3ObjectType") s3ObjectType: String
+    ): UploadImageResponse
 }
