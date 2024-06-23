@@ -37,16 +37,17 @@ class BearerInterceptor @Inject constructor(
                         dataStoreManager.putRefreshToken(it.tokenResponse.refreshToken)
                         newAccessToken = it.tokenResponse.accessToken
 
-                        dataStoreManager.putMemberId(it.memberInfoResponse.id.toString())
-                        dataStoreManager.putMemberName(it.memberInfoResponse.name)
-                        dataStoreManager.putGender(it.memberInfoResponse.gender)
-                        dataStoreManager.putPhoneNumber(it.memberInfoResponse.phoneNumber)
-                        dataStoreManager.putEmail(it.memberInfoResponse.email.toString())
-                        dataStoreManager.putMatchingCount(it.memberInfoResponse.matchingCount.toString())
-                        dataStoreManager.putBlocked(it.memberInfoResponse.blocked.toString())
+
                     }.onFailure {
                         dataStoreManager.deleteAccessToken()
                         dataStoreManager.deleteRefreshToken()
+                        dataStoreManager.deleteMemberId()
+                        dataStoreManager.deleteMemberName()
+                        dataStoreManager.deleteGender()
+                        dataStoreManager.deletePhoneNumber()
+                        dataStoreManager.deleteEmail()
+                        dataStoreManager.deleteMatchingCount()
+                        dataStoreManager.deleteBlocked()
                     }
                 }
             }

@@ -54,6 +54,7 @@ class MyPageViewModel @Inject constructor(
     fun loadMemberData() {
         viewModelScope.launch {
             val memberId = dataStoreManager.getMemberId()?.toLongOrNull()
+            Log.d("debugging", memberId.toString())
             if (memberId != null) {
                 mainRepository.getMemberDetail(memberId).onSuccess {
                     _uiState.update { state ->

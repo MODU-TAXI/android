@@ -52,6 +52,13 @@ class LoginViewModel @Inject constructor(
                 _event.emit(LoginEvent.ShowToastMessage("로그인 성공"))
                 dataStoreManager.putAccessToken(it.tokenData.accessToken)
                 dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
+                dataStoreManager.putMemberId(it.memberInfoData.id.toString())
+                dataStoreManager.putMemberName(it.memberInfoData.name)
+                dataStoreManager.putGender(it.memberInfoData.gender)
+                dataStoreManager.putPhoneNumber(it.memberInfoData.phoneNumber)
+                dataStoreManager.putEmail(it.memberInfoData.email)
+                dataStoreManager.putMatchingCount(it.memberInfoData.matchingCount.toString())
+                dataStoreManager.putBlocked(it.memberInfoData.blocked.toString())
                 _event.emit(LoginEvent.NavigateToMainActivity)
             }.onFailure {
                 _event.emit(LoginEvent.ShowToastMessage(it.message.toString()))
