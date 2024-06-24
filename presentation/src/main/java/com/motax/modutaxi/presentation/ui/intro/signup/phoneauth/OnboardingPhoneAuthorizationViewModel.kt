@@ -23,6 +23,7 @@ import javax.inject.Inject
 data class PhoneAuthorizationUiState(
     val btnState: AuthBtnState = AuthBtnState.Able,
     val time: String = "",
+    val isCodeCorrect: Boolean = true
 )
 
 
@@ -54,7 +55,8 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
         curJob = viewModelScope.launch {
             _uiState.update { state ->
                 state.copy(
-                    btnState = AuthBtnState.Able
+                    btnState = AuthBtnState.Able,
+                    isCodeCorrect = true
                 )
             }
 
@@ -101,14 +103,16 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
                 } else {
                     _uiState.update { state ->
                         state.copy(
-                            btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
+                            btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다"),
+                            isCodeCorrect = false
                         )
                     }
                 }
             }.onFailure {
                 _uiState.update { state ->
                     state.copy(
-                        btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
+                        btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다"),
+                        isCodeCorrect = false
                     )
                 }
             }

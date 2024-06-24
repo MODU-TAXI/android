@@ -4,10 +4,12 @@ import android.text.Html
 import com.motax.modutaxi.data.model.response.AddressFromGeoResponse
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
+import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
+import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
@@ -28,10 +30,12 @@ import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
+import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.CoordinateData
 import com.motax.modutaxi.domain.model.CoordinateReferenceSystemData
 import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.model.MemberInfoData
+import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NearSpotItemData
 import com.motax.modutaxi.domain.model.PathData
@@ -82,7 +86,7 @@ fun TaxiPotItem.toDomain() = TaxiPotListItemData(
 )
 
 fun TaxiPotListResponse.toDomain() = TaxiPotListData(
-    rooms = rooms.map { it.toDomain() }
+    rooms = result.map { it.toDomain() }
 )
 
 fun SearchResultItem.toDomain() = SearchResultData(
@@ -257,4 +261,17 @@ fun TaxiPotParticipants.toDomain() = TaxiPotParticipantsData(
 
 fun TaxiPotWaitingMembers.toDomain() = TaxiPotWaitingMembersData(
     waitingList = waitingList.map { it.toDomain() }
+)
+
+fun ChatInfoResponse.toDomain() = ChatInfoData(
+    roomId = roomId,
+    memberId = memberId
+)
+
+fun MemberProfileResponse.toDomain() = MemberProfileData(
+    id = id,
+    nickname = nickname,
+    matchingCount = matchingCount,
+    imageUrl = imageUrl,
+    certified = certified
 )
