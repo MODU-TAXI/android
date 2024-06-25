@@ -46,7 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 when (it) {
                     is HomeEvent.NavigateToShowParty -> findNavController().toShowParty()
                     is HomeEvent.NavigateToCreateParty -> findNavController().toCreateParty()
-                    is HomeEvent.NavigateToSearch -> {}
+                    is HomeEvent.NavigateToMatchDetail -> findNavController().toMatchDetail(it.id)
                 }
             }
         }
@@ -62,4 +62,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         navigate(action)
     }
 
+    private fun NavController.toMatchDetail(roomId: Long) {
+        val action = HomeFragmentDirections.actionHomeFragmentToMatchDetailFragment(roomId)
+        navigate(action)
+    }
 }

@@ -12,8 +12,7 @@ import com.motax.modutaxi.presentation.ui.main.matchdetail.RoomState
 @BindingAdapter("onboardQuestionBtnState")
 fun bindOnboardQuestionBtnState(btn: AppCompatButton, isSelected: Boolean) {
     if (isSelected) {
-        btn.setBackgroundResource(R.drawable.rect_black_fill_nostroke_12radius)
-        btn.setTextColor(ContextCompat.getColor(btn.context, R.color.white))
+        btn.setBackgroundResource(R.drawable.rect_nofill_gray900stroke_12radius)
     } else {
         btn.setBackgroundResource(R.drawable.rect_grey0_fill_nostroke_12radius)
         btn.setTextColor(ContextCompat.getColor(btn.context, R.color.black))

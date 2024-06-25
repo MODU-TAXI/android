@@ -25,7 +25,7 @@
                 android:id="@+id/layout_top_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@{vm.isParticipating() ? @drawable/bg_header_nav_sub500 : @drawable/bg_header_nav_gray}"
+                android:background="@{vm.uiState.isParticipating ? @drawable/bg_header_nav_sub500 : @drawable/bg_header_nav_gray}"
                 android:paddingTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:text="정현님! 모두의 택시를 이용하고 계시는군요!"
+                    android:text='@{vm.uiState.isParticipating ? (vm.uiState.nickname + "님, 모두의 택시를 이용중이시네요!") : ("반가워요, " + vm.uiState.nickname + "님!")}'
                     android:textColor="@color/white"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical1"
                     app:layout_constraintTop_toBottomOf="@id/tv_app_name" />
@@ -202,7 +202,7 @@
                     android:layout_marginTop="12dp"
                     android:background="@drawable/rect_gray100fill_nostroke_12radius"
                     android:padding="66dp"
-                    android:visibility="@{vm.isParticipating ? View.INVISIBLE : View.VISIBLE}"
+                    android:visibility="@{vm.uiState.isParticipating ? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/tv_participating_taxipot">
@@ -230,7 +230,7 @@
                     android:paddingHorizontal="12dp"
                     android:paddingTop="12dp"
                     android:paddingBottom="14dp"
-                    android:visibility="@{vm.isParticipating ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{vm.uiState.isParticipating ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/tv_participating_taxipot">
@@ -272,7 +272,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
-                            android:text="14:25"
+                            android:text="@{vm.uiState.participatingTaxiPot.departureTime}"
                             android:textColor="@color/mx_sub500"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/tv_depart"
@@ -286,7 +286,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="인하대학교"
+                        android:text="@{vm.uiState.participatingTaxiPot.departureName}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/layout_departure_time"
                         tools:text="인하대학교" />
@@ -306,7 +306,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:text="주안역"
+                        android:text="@{vm.uiState.participatingTaxiPot.arrivalName}"
                         app:layout_constraintBottom_toBottomOf="@id/tv_departure"
                         app:layout_constraintStart_toEndOf="@id/ic_arrow"
                         app:layout_constraintTop_toTopOf="@id/tv_departure"
@@ -327,7 +327,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="2/3"
+                        android:text='@{String.valueOf(vm.uiState.participatingTaxiPot.currentHeadcount) + "/" + String.valueOf(vm.uiState.participatingTaxiPot.wishHeadcount)}'
                         android:textColor="#969DA4"
                         app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
                         app:layout_constraintStart_toEndOf="@id/iv_person_fill"
@@ -361,7 +361,7 @@
                         style="@style/TextSmallRegular"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="8,300원"
+                        android:text='@{String.valueOf(vm.uiState.participatingTaxiPot.expectedChargePerPerson) + "원"}'
                         android:textColor="#969DA4"
                         app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
                         app:layout_constraintStart_toEndOf="@id/tv_per_person"
@@ -377,6 +377,7 @@
                         android:gravity="center"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
+                        android:onClick="@{() -> vm.navigateToMatchDetail(vm.uiState.participatingTaxiPot.roomId)}"
                         android:text="채팅방 바로가기"
                         android:textColor="@color/mx_sub500"
                         app:layout_constraintEnd_toEndOf="parent"

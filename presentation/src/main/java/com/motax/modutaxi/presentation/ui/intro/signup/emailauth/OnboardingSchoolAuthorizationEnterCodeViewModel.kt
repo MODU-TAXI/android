@@ -20,6 +20,7 @@ import javax.inject.Inject
 data class EmailAuthorizationUiState(
     val btnState: AuthBtnState = AuthBtnState.Able,
     val time: String = "",
+    val isCodeCorrect: Boolean = true
 )
 
 sealed class EmailAuthEvent {
@@ -82,14 +83,16 @@ class OnboardingSchoolAuthorizationEnterCodeViewModel @Inject constructor(
                 } else {
                     _uiState.update { state ->
                         state.copy(
-                            btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
+                            btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다"),
+                            isCodeCorrect = false
                         )
                     }
                 }
             }.onFailure {
                 _uiState.update { state ->
                     state.copy(
-                        btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다")
+                        btnState = AuthBtnState.AuthFailure("인증번호가 일치하지 않습니다"),
+                        isCodeCorrect = false
                     )
                 }
             }
@@ -101,7 +104,9 @@ class OnboardingSchoolAuthorizationEnterCodeViewModel @Inject constructor(
             repository.emailCertificate(email).onSuccess {
                 _uiState.update { state ->
                     state.copy(
-                        btnState = AuthBtnState.Able
+                        btnState = AuthBtnState.Able,
+                        isCodeCorrect = true
+
                     )
                 }
                 curJob?.cancel()
