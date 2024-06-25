@@ -5,14 +5,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMypageBinding
+import com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickEvent
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage){
@@ -26,6 +31,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
         binding.vm = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        initEventObserve()
 
         galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result ->
             if (result.resultCode == RESULT_OK) {
@@ -69,4 +75,21 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         galleryLauncher?.launch(intent)
     }
 
+    private fun initEventObserve() {
+        repeatOnStarted {
+            viewModel.event.collect{
+                when(it){
+                    is MyPageEvent.NavigateToEditNick -> findNavController().toEditNick()
+                    is MyPageEvent.ShowToastMessage -> {
+                        Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun NavController.toEditNick() {
+        val action = MyPageFragmentDirections.actionMypageToEditNick()
+        navigate(action)
+    }
 }

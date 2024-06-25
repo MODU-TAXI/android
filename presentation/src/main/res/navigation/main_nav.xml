@@ -90,7 +90,21 @@
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.MyPageFragment"
-        android:label="MyPageFragment" />
+        android:label="MyPageFragment">
+        <action
+            android:id="@+id/action_mypage_to_edit_nick"
+            app:destination="@id/fragment_mypage_edit_nickname" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_mypage_edit_nickname"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickFragment"
+        android:label="EditNicknameFragment" >
+        <action
+            android:id="@+id/action_edit_nick_to_mypage"
+            app:destination="@id/myPageFragment"/>
+    </fragment>
+
     <fragment
         android:id="@+id/taxiPotFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.taxipot.TaxiPotFragment"

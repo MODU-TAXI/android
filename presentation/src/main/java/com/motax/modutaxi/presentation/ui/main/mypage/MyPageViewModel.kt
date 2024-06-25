@@ -2,11 +2,9 @@ package com.motax.modutaxi.presentation.ui.main.mypage
 
 import android.app.Application
 import android.content.ContentResolver
-import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.domain.repository.MainRepository
@@ -19,7 +17,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -34,8 +31,9 @@ data class MyPageUiState(
 )
 
 sealed class MyPageEvent {
-
     data class ShowToastMessage(val msg: String) : MyPageEvent()
+
+    data object NavigateToEditNick : MyPageEvent()
 }
 
 @HiltViewModel
@@ -149,6 +147,12 @@ class MyPageViewModel @Inject constructor(
             }
         }
         return tempFile
+    }
+
+    fun navigateToEditNick() {
+        viewModelScope.launch {
+            _event.emit(MyPageEvent.NavigateToEditNick)
+        }
     }
 
 }
