@@ -14,4 +14,6 @@ object Constants {
     const val MEMBER_EMAIL = "EMAIL"
     const val MEMBER_MATCHING_COUNT = "MATCHING_COUNT"
     const val MEMBER_BLOCKED = "BLOCKED"
+    const val PROFILE_URL = "PROFILE_URL"
+    const val SNS_ID = "SNS_ID"
 }

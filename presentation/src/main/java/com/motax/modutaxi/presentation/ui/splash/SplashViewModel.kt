@@ -44,6 +44,7 @@ class SplashViewModel @Inject constructor(
                 authRepository.putMemberEmail(it.memberInfoData.email)
                 authRepository.putMatchingCount(it.memberInfoData.matchingCount.toString())
                 authRepository.putMemberBlocked(it.memberInfoData.blocked.toString())
+                authRepository.putProfileUrl(it.memberInfoData.imageUrl)
 
                 _event.emit(SplashUiEvent.NavigateToMain)
             }.onFailure {
@@ -56,6 +57,7 @@ class SplashViewModel @Inject constructor(
                 authRepository.deleteMemberEmail()
                 authRepository.deleteMatchingCount()
                 authRepository.deleteMemberBlocked()
+                authRepository.deleteProfileUrl()
                 _event.emit(SplashUiEvent.NavigateToIntro)
             }
         }

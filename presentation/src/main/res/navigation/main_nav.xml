@@ -94,6 +94,9 @@
         <action
             android:id="@+id/action_mypage_to_edit_nick"
             app:destination="@id/fragment_mypage_edit_nickname" />
+        <action
+            android:id="@+id/action_myPage_to_update_profile"
+            app:destination="@id/myPageIdentificationFragment"/>
     </fragment>
 
     <fragment
@@ -147,5 +150,25 @@
         android:id="@+id/selectSpotFilterBottomSheetFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.bottomsheet.SelectSpotFilterBottomSheetFragment"
         android:label="SelectSpotFilterBottomSheetFragment" />
+
+    <fragment
+        android:id="@+id/myPagePhoneAuthFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.phoneauth.MyPagePhoneAuthorization"
+        android:label="myPagePhoneAuthorization">
+    <action
+        android:id="@+id/action_phone_auth_to_mypage"
+        app:destination="@id/myPageFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPageIdentificationFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.identification.MyPageIdentificationFragment"
+        android:label="myPageIdentification">
+        <action
+            android:id="@+id/action_identificationFragment_to_phoneAuthFragment"
+            app:destination="@id/myPagePhoneAuthFragment"/>
+    </fragment>
+
+
 
 </navigation>

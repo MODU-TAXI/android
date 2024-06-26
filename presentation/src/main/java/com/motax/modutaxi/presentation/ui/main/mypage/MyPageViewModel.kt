@@ -3,7 +3,6 @@ package com.motax.modutaxi.presentation.ui.main.mypage
 import android.app.Application
 import android.content.ContentResolver
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.data.config.DataStoreManager
@@ -32,8 +31,8 @@ data class MyPageUiState(
 
 sealed class MyPageEvent {
     data class ShowToastMessage(val msg: String) : MyPageEvent()
-
     data object NavigateToEditNick : MyPageEvent()
+    data object NavigateToUpdateProfile : MyPageEvent()
 }
 
 @HiltViewModel
@@ -52,7 +51,6 @@ class MyPageViewModel @Inject constructor(
     fun loadMemberData() {
         viewModelScope.launch {
             val memberId = dataStoreManager.getMemberId()?.toLongOrNull()
-            Log.d("debugging", memberId.toString())
             if (memberId != null) {
                 mainRepository.getMemberDetail(memberId).onSuccess {
                     _uiState.update { state ->
@@ -152,6 +150,12 @@ class MyPageViewModel @Inject constructor(
     fun navigateToEditNick() {
         viewModelScope.launch {
             _event.emit(MyPageEvent.NavigateToEditNick)
+        }
+    }
+
+    fun navigateToUpdateProfile() {
+        viewModelScope.launch {
+            _event.emit(MyPageEvent.NavigateToUpdateProfile)
         }
     }
 

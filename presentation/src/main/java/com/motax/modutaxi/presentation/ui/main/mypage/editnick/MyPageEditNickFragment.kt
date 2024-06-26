@@ -19,6 +19,7 @@ class MyPageEditNickFragment: BaseFragment<FragmentMypageEditNickBinding>(R.layo
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         initEventObserve()
     }
 
@@ -26,8 +27,13 @@ class MyPageEditNickFragment: BaseFragment<FragmentMypageEditNickBinding>(R.layo
         repeatOnStarted {
             viewModel.event.collect{
                 when(it){
-                    is MyPageEditNickEvent.NavigateToMyPage -> findNavController().toMyPage()
+                    is MyPageEditNickEvent.NavigateToMyPage -> {
+                        findNavController().toMyPage()
+                        showToastMessage(it.msg)
+                    }
+
                 }
+
             }
         }
     }
@@ -36,4 +42,5 @@ class MyPageEditNickFragment: BaseFragment<FragmentMypageEditNickBinding>(R.layo
         val action = MyPageEditNickFragmentDirections.actionEditNickToMypage()
         navigate(action)
     }
+
 }

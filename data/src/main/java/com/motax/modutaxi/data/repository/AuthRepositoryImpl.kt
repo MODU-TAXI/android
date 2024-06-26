@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.motax.modutaxi.data.Constants
+import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.remote.AuthApi
 import com.motax.modutaxi.domain.model.AuthData
@@ -29,6 +30,7 @@ class AuthRepositoryImpl @Inject constructor(
         private val MEMBER_EMAIL_KEY = stringPreferencesKey(Constants.MEMBER_EMAIL)
         private val MEMBER_MATCHING_COUNT_KEY = stringPreferencesKey(Constants.MEMBER_MATCHING_COUNT)
         private val MEMBER_BLOCKED_KEY = stringPreferencesKey(Constants.MEMBER_BLOCKED)
+        private val PROFILE_URL_KEY = stringPreferencesKey(Constants.PROFILE_URL)
     }
 
     override suspend fun getAccessToken(): String? {
@@ -196,4 +198,22 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun refreshToken(refreshToken: String): Result<AuthData> = runCatching {
         api.refreshToken(refreshToken)
     }.mapCatching { it.toDomain() }
+
+    override suspend fun putProfileUrl(url: String) {
+        dataStore.edit { prefs ->
+            prefs[PROFILE_URL_KEY] = url
+        }
+    }
+
+    override suspend fun deleteProfileUrl() {
+        dataStore.edit { prefs ->
+            prefs.remove(PROFILE_URL_KEY)
+        }
+    }
+
+    override suspend fun getProfileUrl(): String? {
+        return dataStore.data.map { prefs ->
+            prefs[PROFILE_URL_KEY]
+        }.first()
+    }
 }

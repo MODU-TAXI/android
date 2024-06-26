@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class MyPageEditNickEvent {
-    data object NavigateToMyPage : MyPageEditNickEvent()
+    data class NavigateToMyPage(val msg: String) : MyPageEditNickEvent()
 }
 
 @HiltViewModel
@@ -45,7 +45,7 @@ class MyPageEditNickViewModel @Inject constructor(
             repository.editNick(nick.value).let {
                 when (it) {
                     is BaseState.Success -> {
-                        _event.emit(MyPageEditNickEvent.NavigateToMyPage)
+                        _event.emit(MyPageEditNickEvent.NavigateToMyPage("닉네임 수정 완료!"))
                     }
 
                     is BaseState.Error -> {
@@ -56,5 +56,4 @@ class MyPageEditNickViewModel @Inject constructor(
             }
         }
     }
-
 }

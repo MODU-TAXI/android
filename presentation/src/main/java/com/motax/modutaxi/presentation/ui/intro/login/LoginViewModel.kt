@@ -38,6 +38,7 @@ class LoginViewModel @Inject constructor(
                     kakaoLogin(token)
                 } else {
                     SignUpData.setSignUpKey(it.key)
+                    dataStoreManager
                     _event.emit(LoginEvent.NavigateToOnBoard)
                 }
             }.onFailure {

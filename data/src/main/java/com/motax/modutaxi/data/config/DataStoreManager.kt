@@ -13,6 +13,8 @@ import com.motax.modutaxi.data.Constants.REFRESH_TOKEN
 import com.motax.modutaxi.data.Constants.MEMBER_ID
 import com.motax.modutaxi.data.Constants.MEMBER_NAME
 import com.motax.modutaxi.data.Constants.MEMBER_PHONE_NUMBER
+import com.motax.modutaxi.data.Constants.PROFILE_URL
+import com.motax.modutaxi.data.Constants.SNS_ID
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -29,6 +31,7 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
         private val EMAIL_KEY = stringPreferencesKey(MEMBER_EMAIL)
         private val MATCHING_COUNT_KEY = stringPreferencesKey(MEMBER_MATCHING_COUNT)
         private val BLOCKED_KEY = stringPreferencesKey(MEMBER_BLOCKED)
+        private val PROFILE_URL_KEY = stringPreferencesKey(PROFILE_URL)
     }
 
     suspend fun getAccessToken(): String? {
@@ -132,6 +135,12 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
         }.first()
     }
 
+    suspend fun getProfileUrl(): String? {
+        return dataStore.data.map { prefs ->
+            prefs[PROFILE_URL_KEY]
+        }.first()
+    }
+
     suspend fun putGender(gender: String) {
         dataStore.edit { prefs ->
             prefs[GENDER_KEY] = gender
@@ -162,6 +171,12 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
         }
     }
 
+    suspend fun putProfileUrl(url: String) {
+        dataStore.edit { prefs ->
+            prefs[PROFILE_URL_KEY] = url
+        }
+    }
+
     suspend fun deleteGender() {
         dataStore.edit { prefs ->
             prefs.remove(GENDER_KEY)
@@ -189,6 +204,12 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
     suspend fun deleteBlocked() {
         dataStore.edit { prefs ->
             prefs.remove(BLOCKED_KEY)
+        }
+    }
+
+    suspend fun deleteProfileUrl() {
+        dataStore.edit { prefs ->
+            prefs.remove(PROFILE_URL_KEY)
         }
     }
 }

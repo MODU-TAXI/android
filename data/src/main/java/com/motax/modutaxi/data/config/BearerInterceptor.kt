@@ -48,6 +48,7 @@ class BearerInterceptor @Inject constructor(
                         dataStoreManager.deleteEmail()
                         dataStoreManager.deleteMatchingCount()
                         dataStoreManager.deleteBlocked()
+                        dataStoreManager.deleteProfileUrl()
                     }
                 }
             }

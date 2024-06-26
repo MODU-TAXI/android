@@ -80,6 +80,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
             viewModel.event.collect{
                 when(it){
                     is MyPageEvent.NavigateToEditNick -> findNavController().toEditNick()
+                    is MyPageEvent.NavigateToUpdateProfile -> findNavController().toUpdateProfile()
                     is MyPageEvent.ShowToastMessage -> {
                         Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
                     }
@@ -90,6 +91,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     private fun NavController.toEditNick() {
         val action = MyPageFragmentDirections.actionMypageToEditNick()
+        navigate(action)
+    }
+
+    private fun NavController.toUpdateProfile() {
+        val action = MyPageFragmentDirections.actionMyPageToUpdateProfile()
         navigate(action)
     }
 }
