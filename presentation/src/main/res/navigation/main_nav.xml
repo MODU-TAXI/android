@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/homeFragment">
 
@@ -14,10 +15,9 @@
         <action
             android:id="@+id/action_homeFragment_to_showPartyFragment"
             app:destination="@id/showPartyFragment" />
-       <action
-           android:id="@+id/action_homeFragment_to_matchDetailFragment"
-           app:destination="@id/matchDetailFragment" />
-
+        <action
+            android:id="@+id/action_homeFragment_to_matchDetailFragment"
+            app:destination="@id/matchDetailFragment" />
 
 
     </fragment>
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/showPartyFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyFragment"
-        android:label="ShowPartyFragment" >
+        android:label="ShowPartyFragment">
         <action
             android:id="@+id/action_showPartyFragment_to_showPartySearchFragment"
             app:destination="@id/showPartySearchFragment" />
@@ -65,8 +65,8 @@
         android:label="ArrivalMapFragment">
 
         <argument
-            app:argType="com.motax.modutaxi.presentation.ui.MtLocation"
-            android:name="selectLocation"/>
+            android:name="selectLocation"
+            app:argType="com.motax.modutaxi.presentation.ui.MtLocation" />
 
         <action
             android:id="@+id/action_arrivalMapFragment_to_createPartyFragment"
@@ -82,7 +82,7 @@
     <fragment
         android:id="@+id/arrivalSearchFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.ArrivalSearchFragment"
-        android:label="ArrivalSearchFragment" >
+        android:label="ArrivalSearchFragment">
         <action
             android:id="@+id/action_arrivalSearchFragment_to_arrivalMapFragment"
             app:destination="@id/arrivalMapFragment" />
@@ -96,16 +96,44 @@
             app:destination="@id/fragment_mypage_edit_nickname" />
         <action
             android:id="@+id/action_myPage_to_update_profile"
-            app:destination="@id/myPageIdentificationFragment"/>
+            app:destination="@id/myPageIdentificationFragment" />
+        <action
+            android:id="@+id/action_myPage_to_authorize_school"
+            app:destination="@id/myPageEnterEmailFragment"/>
     </fragment>
 
     <fragment
+        android:id="@+id/myPageEnterEmailFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.editemail.MyPageSchoolAuthorizationEnterEmailFragment"
+        android:label="EditEmailFragment">
+        <action
+            android:id="@+id/action_emailAuthFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+        <action
+            android:id="@+id/action_emailAuthFragment_to_emailAuthFragment"
+            app:destination="@id/myPageEmailAuthFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPageEmailAuthFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.emailauth.MyPageSchoolAuthorizationEnterCodeFragment"
+        tools:layout="@layout/fragment_mypage_school_authorization_enter_code">
+
+        <argument
+            android:name="email"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_MyPageEmailAuthFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/fragment_mypage_edit_nickname"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickFragment"
-        android:label="EditNicknameFragment" >
+        android:label="EditNicknameFragment">
         <action
             android:id="@+id/action_edit_nick_to_mypage"
-            app:destination="@id/myPageFragment"/>
+            app:destination="@id/myPageFragment" />
     </fragment>
 
     <fragment
@@ -119,11 +147,11 @@
 
         <argument
             android:name="id"
-            app:argType="long"/>
+            app:argType="long" />
         <action
             android:id="@+id/action_matchDetailFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:popUpTo="@id/main_nav"/>
+            app:popUpTo="@id/main_nav" />
         <action
             android:id="@+id/action_matchDetailFragment_to_chatRoomFragment"
             app:destination="@id/chatRoomFragment" />
@@ -131,7 +159,7 @@
 
     <action
         android:id="@+id/global_action_to_matchDetailFragment"
-        app:destination="@id/matchDetailFragment"/>
+        app:destination="@id/matchDetailFragment" />
     <fragment
         android:id="@+id/showPartySearchFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchFragment"
@@ -139,11 +167,11 @@
     <fragment
         android:id="@+id/chatRoomFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.ChatRoomFragment"
-        android:label="ChatRoomFragment" >
+        android:label="ChatRoomFragment">
 
         <argument
             android:name="id"
-            app:argType="long"/>
+            app:argType="long" />
 
     </fragment>
     <dialog
@@ -155,9 +183,9 @@
         android:id="@+id/myPagePhoneAuthFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.phoneauth.MyPagePhoneAuthorization"
         android:label="myPagePhoneAuthorization">
-    <action
-        android:id="@+id/action_phone_auth_to_mypage"
-        app:destination="@id/myPageFragment"/>
+        <action
+            android:id="@+id/action_phone_auth_to_mypage"
+            app:destination="@id/myPageFragment" />
     </fragment>
 
     <fragment
@@ -166,9 +194,8 @@
         android:label="myPageIdentification">
         <action
             android:id="@+id/action_identificationFragment_to_phoneAuthFragment"
-            app:destination="@id/myPagePhoneAuthFragment"/>
+            app:destination="@id/myPagePhoneAuthFragment" />
     </fragment>
-
 
 
 </navigation>

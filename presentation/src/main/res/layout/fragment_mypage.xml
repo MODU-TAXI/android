@@ -196,6 +196,7 @@
                     android:text="@{vm.uiState.certified ? `인증됨` : `미인증`}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_student_verification_label"
+                    android:onClick="@{() -> vm.navigateToEditEmail()}"
                     tools:text="미인증" />
 
                 <ImageView

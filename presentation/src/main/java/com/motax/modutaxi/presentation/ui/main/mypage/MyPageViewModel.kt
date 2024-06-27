@@ -33,6 +33,7 @@ sealed class MyPageEvent {
     data class ShowToastMessage(val msg: String) : MyPageEvent()
     data object NavigateToEditNick : MyPageEvent()
     data object NavigateToUpdateProfile : MyPageEvent()
+    data object NavigateToEditEmail : MyPageEvent()
 }
 
 @HiltViewModel
@@ -156,6 +157,12 @@ class MyPageViewModel @Inject constructor(
     fun navigateToUpdateProfile() {
         viewModelScope.launch {
             _event.emit(MyPageEvent.NavigateToUpdateProfile)
+        }
+    }
+
+    fun navigateToEditEmail() {
+        viewModelScope.launch {
+            _event.emit(MyPageEvent.NavigateToEditEmail)
         }
     }
 
