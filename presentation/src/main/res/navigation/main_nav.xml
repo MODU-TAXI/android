@@ -100,6 +100,9 @@
         <action
             android:id="@+id/action_myPage_to_authorize_school"
             app:destination="@id/myPageEnterEmailFragment"/>
+        <action
+            android:id="@+id/action_myPage_to_notification_settings"
+            app:destination="@id/myPageNotificationSettingsFragment"/>
     </fragment>
 
     <fragment
@@ -195,6 +198,13 @@
         <action
             android:id="@+id/action_identificationFragment_to_phoneAuthFragment"
             app:destination="@id/myPagePhoneAuthFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPageNotificationSettingsFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.notification.NotificationSettingsFragment"
+        android:label="myPageNotification">
+
     </fragment>
 
 
