@@ -382,7 +382,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="로그아웃"
-                android:layout_marginRight="16dp"
                 android:textColor="@color/mx_gray500"
                 app:layout_constraintEnd_toStartOf="@id/vertical_bar_first"
                 app:layout_constraintTop_toBottomOf="@id/layout_second" />
@@ -394,7 +393,8 @@
                 android:src="@drawable/vertical_bar"
                 android:layout_marginRight="16dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_logout"
-                app:layout_constraintEnd_toStartOf="@id/tv_withdrawal"
+                app:layout_constraintStart_toStartOf="@id/layout_profile_image"
+                app:layout_constraintEnd_toEndOf="@id/layout_profile_image"
                 app:layout_constraintTop_toTopOf="@id/tv_logout" />
 
             <TextView
@@ -406,31 +406,11 @@
                 android:textColor="@color/mx_gray500"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@id/tv_logout"
-                app:layout_constraintStart_toStartOf="@id/layout_profile_image"
-                app:layout_constraintEnd_toEndOf="@id/layout_profile_image"
+                app:layout_constraintStart_toEndOf="@id/vertical_bar_first"
                 app:layout_constraintTop_toTopOf="@id/tv_logout" />
 
-            <ImageView
-                android:id="@+id/vertical_bar_second"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/vertical_bar"
-                android:layout_marginLeft="16dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_logout"
-                app:layout_constraintStart_toEndOf="@id/tv_withdrawal"
-                app:layout_constraintTop_toTopOf="@id/tv_logout" />
 
-            <TextView
-                android:id="@+id/tv_inquiry"
-                style="@style/TextRegularRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="문의하기"
-                android:textColor="@color/mx_gray500"
-                android:layout_marginLeft="16dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_logout"
-                app:layout_constraintStart_toEndOf="@id/vertical_bar_second"
-                app:layout_constraintTop_toTopOf="@id/tv_logout" />
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
