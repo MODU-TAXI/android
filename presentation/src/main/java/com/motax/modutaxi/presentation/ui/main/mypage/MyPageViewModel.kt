@@ -35,6 +35,7 @@ sealed class MyPageEvent {
     data object NavigateToUpdateProfile : MyPageEvent()
     data object NavigateToEditEmail : MyPageEvent()
     data object NavigateToNotification : MyPageEvent()
+    data object NavigateToInquiry : MyPageEvent()
 }
 
 @HiltViewModel
@@ -170,6 +171,12 @@ class MyPageViewModel @Inject constructor(
     fun navigateToNotification() {
         viewModelScope.launch {
             _event.emit(MyPageEvent.NavigateToNotification)
+        }
+    }
+
+    fun navigateToInquiry() {
+        viewModelScope.launch {
+            _event.emit(MyPageEvent.NavigateToInquiry)
         }
     }
 }

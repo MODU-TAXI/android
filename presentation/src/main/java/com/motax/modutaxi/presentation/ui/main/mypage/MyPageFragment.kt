@@ -83,6 +83,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                     is MyPageEvent.NavigateToUpdateProfile -> findNavController().toUpdateProfile()
                     is MyPageEvent.NavigateToEditEmail -> findNavController().toEditEmail()
                     is MyPageEvent.NavigateToNotification -> findNavController().toNotification()
+                    is MyPageEvent.NavigateToInquiry -> findNavController().toInquiry()
                     is MyPageEvent.ShowToastMessage -> {
                         Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
                     }
@@ -108,6 +109,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     private fun NavController.toNotification() {
         val action = MyPageFragmentDirections.actionMyPageToNotificationSettings()
+        navigate(action)
+    }
+
+    private fun NavController.toInquiry() {
+        val action = MyPageFragmentDirections.actionMyPageToInquiry()
         navigate(action)
     }
 }

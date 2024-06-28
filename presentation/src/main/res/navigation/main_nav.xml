@@ -103,6 +103,18 @@
         <action
             android:id="@+id/action_myPage_to_notification_settings"
             app:destination="@id/myPageNotificationSettingsFragment"/>
+        <action
+            android:id="@+id/action_myPage_to_inquiry"
+            app:destination="@id/inquiryFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/inquiryFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.inquiry.InquiryFragment"
+        android:label="InquiryFragment">
+        <action
+            android:id="@+id/action_inquiry_to_mypage"
+            app:destination="@id/myPageFragment"/>
     </fragment>
 
     <fragment
