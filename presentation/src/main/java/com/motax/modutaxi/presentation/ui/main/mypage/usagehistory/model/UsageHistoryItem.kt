@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model
+package com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model
 
 data class UsageHistoryItem(
     val historyId: Long,

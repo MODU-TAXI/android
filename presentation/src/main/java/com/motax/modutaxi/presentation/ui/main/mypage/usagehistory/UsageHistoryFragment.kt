@@ -1,15 +1,13 @@
-package com.motax.modutaxi.presentation.ui.main.mypage.usagedetail
+package com.motax.modutaxi.presentation.ui.main.mypage.usagehistory
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentUsageHistoryBinding
-import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.adapter.UsageHistoryAdapter
+import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.adapter.UsageHistoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UsageHistoryFragment : BaseFragment<FragmentUsageHistoryBinding>(R.layout.fragment_usage_history) {

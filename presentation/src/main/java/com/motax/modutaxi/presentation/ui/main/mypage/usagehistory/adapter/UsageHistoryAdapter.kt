@@ -1,11 +1,11 @@
-package com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.adapter
+package com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.databinding.ItemUsageHistoryBinding
-import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UsageHistoryItem
+import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model.UsageHistoryItem
 import com.motax.modutaxi.presentation.util.DefaultDiffUtil
 
 class UsageHistoryAdapter :

@@ -113,7 +113,7 @@
 
     <fragment
         android:id="@+id/usageHistoryFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.UsageHistoryFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.UsageHistoryFragment"
         android:label="UsageHistoryFragment">
         <action
             android:id="@+id/action_history_to_mypage"

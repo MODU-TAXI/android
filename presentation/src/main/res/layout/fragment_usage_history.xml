@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.UsageHistoryViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.UsageHistoryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

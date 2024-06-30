@@ -1,9 +1,9 @@
-package com.motax.modutaxi.presentation.ui.main.mypage.usagedetail
+package com.motax.modutaxi.presentation.ui.main.mypage.usagehistory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
-import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UsageHistoryItem
+import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model.UsageHistoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
