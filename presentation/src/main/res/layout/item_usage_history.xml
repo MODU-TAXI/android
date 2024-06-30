@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UsageHistoryItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="16dp"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:id="@+id/tv_place_name"
+            style="@style/TextRegularMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mx_gray700"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text='@{item.departureName +  "->" + item.arrivalName}' />
+
+        <TextView
+            android:id="@+id/tv_departure_datetime"
+            style="@style/TextRegularRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/mx_gray400"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_place_name"
+            android:text="@{item.departureTime}" />
+
+        <TextView
+            android:id="@+id/tv_charge"
+            style="@style/TextRegularMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/mx_gray700"
+            app:layout_constraintEnd_toStartOf="@id/iv_to_detail"
+            app:layout_constraintTop_toTopOf="@id/tv_place_name"
+            app:layout_constraintBottom_toBottomOf="@id/tv_place_name"
+            android:text='@{"-" + String.valueOf(item.portionCharge) + "원"}' />
+
+        <ImageView
+            android:id="@+id/iv_to_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_navigate_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_charge"
+            app:layout_constraintBottom_toBottomOf="@id/tv_charge" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
