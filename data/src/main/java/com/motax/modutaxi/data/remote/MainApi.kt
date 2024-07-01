@@ -14,6 +14,8 @@ import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.UpdateMemberResponse
 import com.motax.modutaxi.data.model.response.UploadImageResponse
+import com.motax.modutaxi.data.model.response.UsageHistoryResponse
+import com.motax.modutaxi.domain.model.BaseState
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -136,4 +138,11 @@ interface MainApi {
         @Part file: MultipartBody.Part,
         @Query("s3ObjectType") s3ObjectType: String
     ): UploadImageResponse
+
+    @GET("api/histories/monthly")
+    suspend fun getMonthlyUsageHistory(
+        @Query("year") year: Int,
+        @Query("month") month: Int
+    ): UsageHistoryResponse
+
 }

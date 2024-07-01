@@ -3,7 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.mypage.usagehistory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
-import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model.UsageHistoryItem
+import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model.UsageHistoryUiItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ data class UsageHistoryUiState(
     val beforeMoney: Int = 0,
     val afterProgress: Int = 0,
     val afterMoney: Int = 0,
-    val monthlyUsageDetailList: List<UsageHistoryItem> = emptyList()
+    val monthlyUsageDetailList: List<UsageHistoryUiItem> = emptyList()
 )
 
 @HiltViewModel
@@ -35,8 +35,8 @@ class UsageHistoryViewModel @Inject constructor(
     val uiState: StateFlow<UsageHistoryUiState> = _uiState.asStateFlow()
 
     init {
-        loadDummyData()
         setCurrentYearMonth()
+        loadMonthlyUsageHistory()
     }
 
     private fun setCurrentYearMonth() {
@@ -48,46 +48,37 @@ class UsageHistoryViewModel @Inject constructor(
         _uiState.update { it.copy(year = currentYear, month = currentMonth) }
     }
 
-    private fun loadDummyData() {
+    private fun loadMonthlyUsageHistory() {
         viewModelScope.launch {
-            val dummyData = generateDummyData()
-            _uiState.update {
-
-                it.copy(
-                    savedMoney = 51130,
-                    beforeProgress = 90,
-                    beforeMoney = 143000,
-                    afterProgress = 50,
-                    afterMoney = 73000,
-                    monthlyUsageDetailList = dummyData
-                )
-            }
+            val year = _uiState.value.year
+            val month = _uiState.value.month
+            mainRepository.getMonthlyUsageHistory(year, month)
+                .onSuccess { response ->
+                    val items = response.historyList.map { responseItem ->
+                        UsageHistoryUiItem(
+                            historyId = responseItem.historyId,
+                            departureTime = responseItem.departureTime,
+                            departureName = responseItem.departureName,
+                            arrivalName = responseItem.arrivalName,
+                            portionCharge = responseItem.portionCharge
+                        )
+                    }
+                    _uiState.update {
+                        it.copy(
+                            savedMoney = response.accumulatePortionCharge,
+                            beforeProgress = calculateProgress(response.totalCharge, response.accumulatePortionCharge),
+                            beforeMoney = response.totalCharge,
+                            afterProgress = calculateProgress(response.totalCharge, response.accumulatePortionCharge),
+                            afterMoney = response.accumulatePortionCharge,
+                            monthlyUsageDetailList = items
+                        )
+                    }
+                }
+                .onFailure {}
         }
     }
 
-    private fun generateDummyData(): List<UsageHistoryItem> {
-        return listOf(
-            UsageHistoryItem(
-                historyId = 1,
-                departureTime = "2024-06-29T11:23:02.917Z",
-                departureName = "센트리빌",
-                arrivalName = "주안역",
-                portionCharge = 2613
-            ),
-            UsageHistoryItem(
-                historyId = 2,
-                departureTime = "2024-06-28T14:45:30.123Z",
-                departureName = "강남역",
-                arrivalName = "잠실역",
-                portionCharge = 3400
-            ),
-            UsageHistoryItem(
-                historyId = 3,
-                departureTime = "2024-06-27T09:15:20.456Z",
-                departureName = "서울역",
-                arrivalName = "인천공항",
-                portionCharge = 55000
-            )
-        )
+    private fun calculateProgress(total: Int, portion: Int): Int {
+        return if (total == 0) 0 else (portion * 100) / total
     }
 }

@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model.UsageHistoryItem" />
+            type="com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model.UsageHistoryUiItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

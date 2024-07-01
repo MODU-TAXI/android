@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.databinding.ItemUsageHistoryBinding
-import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model.UsageHistoryItem
+import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model.UsageHistoryUiItem
 import com.motax.modutaxi.presentation.util.DefaultDiffUtil
 
 class UsageHistoryAdapter :
-    ListAdapter<UsageHistoryItem, UsageDetailViewHolder>(DefaultDiffUtil<UsageHistoryItem>()) {
+    ListAdapter<UsageHistoryUiItem, UsageDetailViewHolder>(DefaultDiffUtil<UsageHistoryUiItem>()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsageDetailViewHolder =
         UsageDetailViewHolder(
             ItemUsageHistoryBinding.inflate(
@@ -27,7 +27,7 @@ class UsageHistoryAdapter :
 class UsageDetailViewHolder(private val binding: ItemUsageHistoryBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: UsageHistoryItem) {
+    fun bind(item: UsageHistoryUiItem) {
         binding.item = item
         binding.root.setOnClickListener {
             //item.navigateToUsageDetail(item.historyId)

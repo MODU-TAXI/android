@@ -24,6 +24,8 @@ import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.data.model.response.UpdateMemberResponse
 import com.motax.modutaxi.data.model.response.UploadImageResponse
+import com.motax.modutaxi.data.model.response.UsageHistoryItemResponse
+import com.motax.modutaxi.data.model.response.UsageHistoryResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
 import com.motax.modutaxi.domain.model.AddressFromGeoData
@@ -40,6 +42,7 @@ import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.MemberInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
+import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NearSpotItemData
 import com.motax.modutaxi.domain.model.PathData
@@ -59,6 +62,7 @@ import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.TokenData
 import com.motax.modutaxi.domain.model.UpdateMemberData
 import com.motax.modutaxi.domain.model.UploadImageData
+import com.motax.modutaxi.domain.model.UsageHistoryDataItem
 
 fun TokenResponse.toDomain() = TokenData(
     accessToken = accessToken,
@@ -300,4 +304,20 @@ fun UpdateMemberResponse.toDomain() = UpdateMemberData(
 fun UploadImageResponse.toDomain() = UploadImageData(
     imageUrl = imageUrl,
     fileName = fileName
+)
+
+fun UsageHistoryResponse.toDomain() = MonthlyUsageHistoryData(
+    year = this.year,
+    month = this.month,
+    totalCharge = this.accumulateTotalCharge,
+    accumulatePortionCharge = this.accumulatePortionCharge,
+    historyList = this.historySimpleListResponse.map { it.toDomain() }
+)
+
+fun UsageHistoryItemResponse.toDomain() = UsageHistoryDataItem(
+    historyId = this.historyId,
+    departureTime = this.departureTime,
+    departureName = this.departureName,
+    arrivalName = this.arrivalName,
+    portionCharge = this.portionCharge
 )
