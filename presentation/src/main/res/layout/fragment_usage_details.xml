@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.matchdetail.MatchDetailViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.UsageDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,7 +80,8 @@
                 style="@style/TextLargeSemibold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="인하대학교 -> 주안역"
+                android:text="@{vm.uiState.usageDetailUiData.departureArrival}"
+                tools:text="인하대학교 -> 주안역"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,7 +92,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="@{vm.uiState.matchDetailUiData.departureDate}"
+                android:text="@{vm.uiState.usageDetailUiData.departureDate}"
                 android:textColor="@color/mx_gray500"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_departure_arrival"
@@ -148,7 +149,6 @@
                 android:layout_marginLeft="4dp"
                 android:text="(나)"
                 android:textColor="@color/mx_gray500"
-                android:visibility="@{vm.uiState.owner.thisIsMe ? View.VISIBLE : View.GONE }"
                 app:layout_constraintBottom_toBottomOf="@id/tv_room_manager_nickname"
                 app:layout_constraintStart_toEndOf="@id/tv_room_manager_nickname"
                 app:layout_constraintTop_toTopOf="@id/tv_room_manager_nickname" />
@@ -158,7 +158,6 @@
                 style="@style/TextLargeRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{vm.uiState.owner.matchingCount}"
                 android:textColor="@color/mx_gray500"
                 app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -247,7 +246,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@{String.valueOf(vm.uiState.matchDetailUiData.wholeFee)}"
+                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.wholeFee)}"
                 android:textColor="@color/mx_gray900"
                 app:layout_constraintBottom_toBottomOf="@id/total_price_label"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -271,7 +270,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@{String.valueOf(vm.uiState.matchDetailUiData.feePerPerson)}"
+                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.feePerPerson)}"
                 android:textColor="@color/mx_gray900"
                 app:layout_constraintBottom_toBottomOf="@id/matching_price_label"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -306,8 +305,7 @@
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_chat_label"
-            app:matchingParticipateBtnState="@{vm.uiState.roomState}" />
+            app:layout_constraintTop_toBottomOf="@id/tv_chat_label" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
