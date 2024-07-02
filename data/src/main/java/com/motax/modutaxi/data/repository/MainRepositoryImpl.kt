@@ -4,6 +4,8 @@ import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.domain.model.ChatMessageData
+import com.motax.modutaxi.domain.model.ChatInfoData
+import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
@@ -131,4 +133,13 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getChatMessages(roomId: Long): Result<ChatMessageData> = runCatching {
         api.getChatMessages(roomId)
     }.mapCatching { it.toDomain() }
+    override suspend fun getChatsInfo() :Result<ChatInfoData> =
+        runCatching {
+            api.getChatsInfo()
+        }.mapCatching { it.toDomain() }
+
+    override suspend fun getMemberProfile(memberId: Long): Result<MemberProfileData> =
+        runCatching {
+            api.getMemberProfile(memberId)
+        }.mapCatching { it.toDomain() }
 }

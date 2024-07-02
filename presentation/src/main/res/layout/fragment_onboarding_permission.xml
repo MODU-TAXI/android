@@ -281,7 +281,7 @@
             style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rect_black0_fill_nostroke_61radius"
+            android:background="@drawable/rect_sub500fill_nostroke_61radius"
             android:gravity="center"
             android:paddingVertical="16dp"
             android:text="모두 허용"
