@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.UsageDetailViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.UsageDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

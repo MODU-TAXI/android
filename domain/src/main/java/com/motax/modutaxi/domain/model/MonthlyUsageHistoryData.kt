@@ -9,7 +9,7 @@ data class MonthlyUsageHistoryData(
 )
 
 data class UsageHistoryDataItem(
-    val historyId: Int,
+    val historyId: Long,
     val departureTime: String,
     val departureName: String,
     val arrivalName: String,

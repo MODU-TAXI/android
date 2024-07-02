@@ -193,7 +193,9 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="@id/guide_06_vertical"
             app:layout_constraintEnd_toEndOf="@id/guide_94_vertical"
-            app:layout_constraintTop_toBottomOf="@id/tv_usage_details_label" />
+            app:layout_constraintTop_toBottomOf="@id/tv_usage_details_label"
+            list="@{vm.uiState.monthlyUsageDetailList}"
+            tools:listitem="@layout/item_usage_history"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

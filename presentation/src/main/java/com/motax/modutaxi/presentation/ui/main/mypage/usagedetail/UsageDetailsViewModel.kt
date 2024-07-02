@@ -19,19 +19,16 @@ data class UsageDetailUiState(
     val participants: List<UiParticipantItem> = emptyList()
 )
 @HiltViewModel
-class UsageDetailViewModel @Inject constructor(
+class UsageDetailsViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UsageDetailUiState())
     val uiState: StateFlow<UsageDetailUiState> = _uiState.asStateFlow()
 
-    init {
-        loadDummyData()
-    }
-
-    private fun loadDummyData() {
+    fun fetchUsageDetails(id: Long) {
         viewModelScope.launch {
+            // Here you would call the actual API, for now, we use dummy data
             val dummyData = UsageDetailUiState(
                 usageDetailUiData = UiUsageDetailData(
                     departureArrival = "인하대학교 -> 주안역",

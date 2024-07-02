@@ -3,9 +3,14 @@ package com.motax.modutaxi.presentation.ui.main.mypage.usagehistory
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentUsageHistoryBinding
+import com.motax.modutaxi.presentation.ui.main.home.HomeEvent
+import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.UsageDetailsFragmentArgs
 import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.adapter.UsageHistoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -13,7 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class UsageHistoryFragment : BaseFragment<FragmentUsageHistoryBinding>(R.layout.fragment_usage_history) {
 
     private val viewModel: UsageHistoryViewModel by viewModels()
-
     private var adapter: UsageHistoryAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -24,14 +28,23 @@ class UsageHistoryFragment : BaseFragment<FragmentUsageHistoryBinding>(R.layout.
         adapter = UsageHistoryAdapter()
         binding.rvUsageHistory.adapter = adapter
 
-        collectUiState()
+        initEventObserve()
+
     }
 
-    private fun collectUiState() {
+    private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.uiState.collect { uiState ->
-                adapter?.submitList(uiState.monthlyUsageDetailList)
+            viewModel.event.collect {
+                when (it) {
+                    is UsageHistoryEvent.NavigateToUsageDetail -> findNavController().toUsageDetail(it.id)
+                }
             }
         }
     }
+
+    private fun NavController.toUsageDetail(id: Long) {
+        val action = UsageHistoryFragmentDirections.actionHistoryToDetail(id)
+        navigate(action)
+    }
+
 }

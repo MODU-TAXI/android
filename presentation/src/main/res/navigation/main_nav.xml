@@ -112,13 +112,31 @@
     </fragment>
 
     <fragment
+        android:id="@+id/usageDetailsFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.UsageDetailsFragment"
+        android:label="UsageDetailFragment">
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_details_to_history"
+            app:destination="@id/usageHistoryFragment">
+        </action>
+
+    </fragment>
+
+    <fragment
         android:id="@+id/usageHistoryFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.UsageHistoryFragment"
         android:label="UsageHistoryFragment">
         <action
             android:id="@+id/action_history_to_mypage"
             app:destination="@id/myPageFragment"/>
-
+        <action
+            android:id="@+id/action_history_to_detail"
+            app:destination="@id/usageDetailsFragment"/>
     </fragment>
 
 

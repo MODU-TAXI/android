@@ -30,7 +30,7 @@ class UsageDetailViewHolder(private val binding: ItemUsageHistoryBinding) :
     fun bind(item: UsageHistoryUiItem) {
         binding.item = item
         binding.root.setOnClickListener {
-            //item.navigateToUsageDetail(item.historyId)
+            item.navigateToUsageDetail(item.historyId)
         }
     }
 }

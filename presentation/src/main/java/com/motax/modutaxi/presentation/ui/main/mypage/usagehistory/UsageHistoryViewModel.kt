@@ -5,8 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.model.UsageHistoryUiItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,10 +29,17 @@ data class UsageHistoryUiState(
     val monthlyUsageDetailList: List<UsageHistoryUiItem> = emptyList()
 )
 
+sealed class UsageHistoryEvent {
+    data class NavigateToUsageDetail(val id: Long) : UsageHistoryEvent()
+}
+
 @HiltViewModel
 class UsageHistoryViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
+
+    private val _event = MutableSharedFlow<UsageHistoryEvent>()
+    val event: SharedFlow<UsageHistoryEvent> = _event.asSharedFlow()
 
     private val _uiState = MutableStateFlow(UsageHistoryUiState())
     val uiState: StateFlow<UsageHistoryUiState> = _uiState.asStateFlow()
@@ -60,7 +70,8 @@ class UsageHistoryViewModel @Inject constructor(
                             departureTime = responseItem.departureTime,
                             departureName = responseItem.departureName,
                             arrivalName = responseItem.arrivalName,
-                            portionCharge = responseItem.portionCharge
+                            portionCharge = responseItem.portionCharge,
+                            navigateToUsageDetail = {id-> navigateToUsageDetail(id)}
                         )
                     }
                     _uiState.update {
@@ -80,5 +91,11 @@ class UsageHistoryViewModel @Inject constructor(
 
     private fun calculateProgress(total: Int, portion: Int): Int {
         return if (total == 0) 0 else (portion * 100) / total
+    }
+
+    private fun navigateToUsageDetail(id: Long) {
+        viewModelScope.launch {
+            _event.emit(UsageHistoryEvent.NavigateToUsageDetail(id))
+        }
     }
 }

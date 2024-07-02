@@ -24,6 +24,7 @@
             android:textColor="@color/mx_gray700"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="인하대학교 -> 주안역"
             android:text='@{item.departureName +  "->" + item.arrivalName}' />
 
         <TextView
@@ -35,6 +36,7 @@
             android:textColor="@color/mx_gray400"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_place_name"
+            tools:text="2024.06.30"
             android:text="@{item.departureTime}" />
 
         <TextView
@@ -47,6 +49,7 @@
             app:layout_constraintEnd_toStartOf="@id/iv_to_detail"
             app:layout_constraintTop_toTopOf="@id/tv_place_name"
             app:layout_constraintBottom_toBottomOf="@id/tv_place_name"
+            tools:text="-7,500원"
             android:text='@{"-" + String.valueOf(item.portionCharge) + "원"}' />
 
         <ImageView
