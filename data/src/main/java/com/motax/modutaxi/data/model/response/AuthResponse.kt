@@ -21,5 +21,7 @@ data class MemberInfo(
     val gender: String,
     val phoneNumber: String,
     val email: String?,
-    val imageUrl: String
+    val imageUrl: String,
+    val matchingCount: Int,
+    val blocked: Boolean
 )

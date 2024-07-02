@@ -37,16 +37,27 @@ class SplashViewModel @Inject constructor(
             authRepository.refreshToken(token).onSuccess {
                 authRepository.putAccessToken(it.tokenData.accessToken)
                 authRepository.putRefreshToken(it.tokenData.refreshToken)
-                authRepository.putGender(it.memberInfoData.gender)
-                authRepository.putMemberId(it.memberInfoData.id)
-                authRepository.putProfileImg(it.memberInfoData.imageUrl)
+                authRepository.putMemberId(it.memberInfoData.id.toString())
+                authRepository.putMemberName(it.memberInfoData.name)
+                authRepository.putMemberGender(it.memberInfoData.gender)
+                authRepository.putMemberPhoneNumber(it.memberInfoData.phoneNumber)
+                authRepository.putMemberEmail(it.memberInfoData.email)
+                authRepository.putMatchingCount(it.memberInfoData.matchingCount.toString())
+                authRepository.putMemberBlocked(it.memberInfoData.blocked.toString())
+                authRepository.putProfileUrl(it.memberInfoData.imageUrl)
+
                 _event.emit(SplashUiEvent.NavigateToMain)
             }.onFailure {
                 authRepository.deleteAccessToken()
                 authRepository.deleteRefreshToken()
-                authRepository.deleteGender()
                 authRepository.deleteMemberId()
-                authRepository.deleteProfileImg()
+                authRepository.deleteMemberName()
+                authRepository.deleteMemberGender()
+                authRepository.deleteMemberPhoneNumber()
+                authRepository.deleteMemberEmail()
+                authRepository.deleteMatchingCount()
+                authRepository.deleteMemberBlocked()
+                authRepository.deleteProfileUrl()
                 _event.emit(SplashUiEvent.NavigateToIntro)
             }
         }

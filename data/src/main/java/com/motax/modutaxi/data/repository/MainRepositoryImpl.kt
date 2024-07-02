@@ -4,6 +4,7 @@ import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.domain.model.ChatMessageData
+import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.NearSpotData
@@ -13,7 +14,13 @@ import com.motax.modutaxi.domain.model.TaxiPotListData
 import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
+import com.motax.modutaxi.domain.model.UpdateMemberData
+import com.motax.modutaxi.domain.model.UploadImageData
 import com.motax.modutaxi.domain.repository.MainRepository
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
@@ -142,4 +149,20 @@ class MainRepositoryImpl @Inject constructor(
         runCatching {
             api.getMemberProfile(memberId)
         }.mapCatching { it.toDomain() }
+    override suspend fun getMemberDetail(memberId: Long): Result<MemberDetailData> =
+        runCatching {
+            api.getMemberDetail(memberId)
+        }.mapCatching { it.toDomain() }
+
+    override suspend fun updateMemberProfile(profileData: Map<String, String>): Result<UpdateMemberData> =
+        runCatching {
+            api.updateMemberProfile(profileData)
+        }.mapCatching { it.toDomain() }
+
+    override suspend fun uploadFile(file: File): Result<UploadImageData> {
+        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        return runCatching { api.uploadFile(body, "PROFILE").toDomain() }
+    }
+
 }

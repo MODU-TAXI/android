@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.intro.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
@@ -35,9 +36,13 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             memberCheckUseCase("KAKAO", token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).onSuccess {
                 if (it.existent) {
+            memberCheckUseCase("KAKAO", token, "").onSuccess {
+                Log.d("debugging", it.key)
+                if (it.key == "") {
                     kakaoLogin(token)
                 } else {
                     SignUpData.setSignUpKey(it.key)
+                    dataStoreManager
                     _event.emit(LoginEvent.NavigateToOnBoard)
                 }
             }.onFailure {
@@ -50,6 +55,15 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             loginUseCase("KAKAO", token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).onSuccess {
                 _event.emit(LoginEvent.ShowToastMessage("로그인 성공"))
+                dataStoreManager.putAccessToken(it.tokenData.accessToken)
+                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
+                dataStoreManager.putMemberId(it.memberInfoData.id.toString())
+                dataStoreManager.putMemberName(it.memberInfoData.name)
+                dataStoreManager.putGender(it.memberInfoData.gender)
+                dataStoreManager.putPhoneNumber(it.memberInfoData.phoneNumber)
+                dataStoreManager.putEmail(it.memberInfoData.email)
+                dataStoreManager.putMatchingCount(it.memberInfoData.matchingCount.toString())
+                dataStoreManager.putBlocked(it.memberInfoData.blocked.toString())
                 authRepository.putAccessToken(it.tokenData.accessToken)
                 authRepository.putRefreshToken(it.tokenData.refreshToken)
                 authRepository.putGender(it.memberInfoData.gender)

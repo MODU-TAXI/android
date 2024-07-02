@@ -5,6 +5,7 @@ import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
+import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
@@ -12,9 +13,15 @@ import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotParticipants
 import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
+import com.motax.modutaxi.data.model.response.UpdateMemberResponse
+import com.motax.modutaxi.data.model.response.UploadImageResponse
+import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
@@ -118,4 +125,21 @@ interface MainApi {
     suspend fun getMemberProfile(
         @Path("memberId") memberId: Long
     ): MemberProfileResponse
+
+    @GET("/api/members/{memberId}")
+    suspend fun getMemberDetail(
+        @Path("memberId") memberId: Long
+    ):MemberDetailResponse
+
+    @PATCH("/api/members")
+    suspend fun updateMemberProfile(
+        @Body profileData: Map<String, String>
+    ): UpdateMemberResponse
+
+    @Multipart
+    @POST("/api/s3")
+    suspend fun uploadFile(
+        @Part file: MultipartBody.Part,
+        @Query("s3ObjectType") s3ObjectType: String
+    ): UploadImageResponse
 }

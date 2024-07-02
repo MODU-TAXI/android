@@ -39,9 +39,17 @@ class BearerInterceptor @Inject constructor(
                         dataStoreManager.putMemberId(it.memberInfoResponse.id)
                         dataStoreManager.putProfileImg(it.memberInfoResponse.imageUrl)
                         newAccessToken = it.tokenResponse.accessToken
+
+
                     }.onFailure {
                         dataStoreManager.deleteAccessToken()
                         dataStoreManager.deleteRefreshToken()
+                        dataStoreManager.deleteMemberName()
+                        dataStoreManager.deletePhoneNumber()
+                        dataStoreManager.deleteEmail()
+                        dataStoreManager.deleteMatchingCount()
+                        dataStoreManager.deleteBlocked()
+                        dataStoreManager.deleteProfileUrl()
                         dataStoreManager.deleteGender()
                         dataStoreManager.deleteMemberId()
                         dataStoreManager.deleteProfileImg()

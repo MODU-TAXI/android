@@ -8,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.ui.intro.signup.AuthBtnState
 import com.motax.modutaxi.presentation.ui.main.matchdetail.RoomState
+import com.motax.modutaxi.presentation.ui.main.mypage.MyPageAuthBtnState
 
 @BindingAdapter("onboardQuestionBtnState")
 fun bindOnboardQuestionBtnState(btn: AppCompatButton, isSelected: Boolean) {
@@ -44,6 +45,38 @@ fun bindOnboardPhoneAuthHelperText(tv: TextView, state: AuthBtnState) {
         }
 
         is AuthBtnState.Disable -> {
+            tv.visibility = View.VISIBLE
+            tv.text = state.msg
+            tv.setTextColor(ContextCompat.getColor(tv.context, R.color.mx_red))
+        }
+    }
+}
+
+@BindingAdapter("myPagePhoneAuthBtnState")
+fun bindMyPagePhoneAuthBtnState(btn: AppCompatButton, state: MyPageAuthBtnState) {
+    when (state) {
+        is MyPageAuthBtnState.Disable -> btn.isEnabled = false
+        else -> btn.isEnabled = true
+    }
+}
+
+@BindingAdapter("myPagePhoneAuthHelperText")
+fun bindMyPagePhoneAuthHelperText(tv: TextView, state: MyPageAuthBtnState) {
+    when (state) {
+        is MyPageAuthBtnState.Able -> tv.visibility = View.GONE
+        is MyPageAuthBtnState.AuthSuccess -> {
+            tv.visibility = View.VISIBLE
+            tv.text = state.msg
+            tv.setTextColor(ContextCompat.getColor(tv.context, R.color.mx_blue2))
+        }
+
+        is MyPageAuthBtnState.AuthFailure -> {
+            tv.visibility = View.VISIBLE
+            tv.text = state.msg
+            tv.setTextColor(ContextCompat.getColor(tv.context, R.color.mx_red))
+        }
+
+        is MyPageAuthBtnState.Disable -> {
             tv.visibility = View.VISIBLE
             tv.text = state.msg
             tv.setTextColor(ContextCompat.getColor(tv.context, R.color.mx_red))
