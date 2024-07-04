@@ -20,5 +20,9 @@ fun TaxiPotDetailData.toUiMatchDetailData() = UiMatchDetailData(
     isParticipate = participate,
     isWaiting = waiting,
     headCount = "${currentHeadcount}/${wishHeadcount}",
-    path = path.coordinates.map { LatLng(it.values[1], it.values[0]) }
+    path = path.coordinates.map { LatLng(it.values[1], it.values[0]) },
+    minLongitude = minLongitude,
+    minLatitude = minLatitude,
+    maxLongitude = maxLongitude,
+    maxLatitude = maxLatitude
 )

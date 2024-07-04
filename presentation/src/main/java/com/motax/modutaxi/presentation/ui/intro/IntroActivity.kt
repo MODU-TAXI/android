@@ -8,4 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class IntroActivity: BaseActivity<ActivityIntroBinding>(ActivityIntroBinding::inflate) {
 
 
+
+
 }

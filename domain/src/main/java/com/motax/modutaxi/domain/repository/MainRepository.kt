@@ -1,7 +1,10 @@
 package com.motax.modutaxi.domain.repository
 
+import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
+import com.motax.modutaxi.domain.model.MemberDetailData
+import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
@@ -10,6 +13,10 @@ import com.motax.modutaxi.domain.model.TaxiPotListRadiusData
 import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
+import java.net.URI
+import com.motax.modutaxi.domain.model.UpdateMemberData
+import com.motax.modutaxi.domain.model.UploadImageData
+import java.io.File
 
 interface MainRepository {
 
@@ -90,9 +97,30 @@ interface MainRepository {
         memberId: Long
     ): Result<Unit>
 
+    suspend fun getChatMessages(
+        roomId: Long
+    ): Result<ChatMessageData>
+
+
     suspend fun getChatsInfo(): Result<ChatInfoData>
 
     suspend fun getMemberProfile(
         memberId: Long
     ): Result<MemberProfileData>
+
+    suspend fun getMemberDetail(
+        memberId: Long
+    ): Result<MemberDetailData>
+
+    suspend fun updateMemberProfile(
+        profileData: Map<String, String>
+    ): Result<UpdateMemberData>
+
+    suspend fun uploadFile(
+        file: File
+    ): Result<UploadImageData>
+
+    suspend fun getMonthlyUsageHistory(
+        year: Int, month: Int
+    ): Result<MonthlyUsageHistoryData>
 }

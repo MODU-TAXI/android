@@ -2,10 +2,7 @@ package com.motax.modutaxi.presentation.ui.intro.signup.editemail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.domain.repository.IntroRepository
-import com.motax.modutaxi.domain.usecase.SignUpUseCase
-import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

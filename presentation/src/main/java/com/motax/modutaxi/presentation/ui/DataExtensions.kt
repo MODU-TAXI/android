@@ -1,13 +1,22 @@
 package com.motax.modutaxi.presentation.ui
 
+import android.content.Context
+import android.net.Uri
+import android.provider.MediaStore
 import com.motax.modutaxi.domain.model.AddressFromGeoItemData
 import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import java.util.TimeZone
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -26,6 +35,26 @@ fun AddressFromGeoItemData.toBuildingName() = land.addition0.value
 
 internal fun Int.formatNumberWithCommas(): String {
     return String.format("%,d", this)
+}
+
+internal fun Uri.toMultiPart(context: Context): MultipartBody.Part {
+    val file = File(getRealPathFromUri(this, context) ?: "")
+    val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+    return MultipartBody.Part.createFormData("file", file.name, requestFile)
+}
+
+private fun getRealPathFromUri(uri: Uri, context: Context): String? {
+    var filePath: String? = null
+    val projection = arrayOf(MediaStore.Images.Media.DATA)
+    val cursor = context.contentResolver.query(uri, projection, null, null, null)
+    cursor?.let {
+        if (it.moveToFirst()) {
+            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            filePath = it.getString(columnIndex)
+        }
+        it.close()
+    }
+    return filePath
 }
 
 fun String.toRoomTag(): RoomTag {
@@ -65,6 +94,18 @@ fun getCurHour(): Int {
 fun getCurMinute(): Int {
     val currentDateTime = LocalDateTime.now()
     return currentDateTime.minute
+}
+
+fun String.toChatSentTime() : String{
+    val time = this.substring(0..18)
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+    inputFormat.parse(time)?.let{
+        return outputFormat.format(it)
+    } ?: run{
+        return ""
+    }
 }
 
 fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {

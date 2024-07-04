@@ -28,8 +28,8 @@ fun TaxiPotPreviewData.toUiTaxiPotListItem(
     roomId = roomId,
     headCount = "${wishHeadcount}/${currentHeadcount}",
     departureTime = "출발 ${departureTime}",
-    departureName = departureName,
-    arrivalName = arrivalName,
+    departureName = if(departureName.length > 10) departureName.substring(0..10) + "..." else departureName,
+    arrivalName = if(arrivalName.length > 10) arrivalName.substring(0..10) + "..." else arrivalName,
     feeForPerson = "인당 ${expectedChargePerPerson.formatNumberWithCommas()} 원",
     navigateToMatchDetail = navigateToMatchDetail
 )

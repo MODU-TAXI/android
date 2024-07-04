@@ -10,6 +10,6 @@ enum class StatusCode {
 
 sealed class BaseState<out T> {
     data class Success<out T>(val data: T) : BaseState<T>()
-    data class Error(val statusCode: StatusCode, val errorCode: String, val message: String) :
+    data class Error(val code: String, val message: String) :
         BaseState<Nothing>()
 }

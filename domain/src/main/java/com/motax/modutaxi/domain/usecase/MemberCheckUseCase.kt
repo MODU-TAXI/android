@@ -11,5 +11,5 @@ class MemberCheckUseCase @Inject constructor(
         type: String,
         accessToken: String,
         fcmToken: String
-    ) = repository.memberCheck(type, accessToken, fcmToken)
+    ) = repository.login(type, accessToken, fcmToken)
 }

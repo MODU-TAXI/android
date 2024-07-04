@@ -36,7 +36,10 @@ class CreatePartyFragment :
                     is CreatePartyEvent.NavigateToArrivalSearch -> findNavController().toArrivalSearch()
                     is CreatePartyEvent.NavigateToDepartureMap -> findNavController().toDepartureMap()
                     is CreatePartyEvent.ShowTimePicker -> showTimePicker(it.hour, it.minute)
-                    is CreatePartyEvent.NavigateToMatchDetail -> findNavController().toMatchDetail(it.id)
+                    is CreatePartyEvent.NavigateToMatchDetail -> findNavController().toMatchDetail(
+                        it.id
+                    )
+
                     is CreatePartyEvent.ShowToast -> showToastMessage(it.msg)
                 }
             }

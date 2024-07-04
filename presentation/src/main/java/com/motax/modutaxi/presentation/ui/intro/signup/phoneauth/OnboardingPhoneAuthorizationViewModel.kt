@@ -2,13 +2,15 @@ package com.motax.modutaxi.presentation.ui.intro.signup.phoneauth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.data.config.DataStoreManager
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.IntroRepository
 import com.motax.modutaxi.domain.usecase.SignUpUseCase
+import com.motax.modutaxi.presentation.service.MyFirebaseMessagingService
 import com.motax.modutaxi.presentation.ui.intro.signup.AuthBtnState
 import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,7 +39,7 @@ sealed class PhoneAuthEvent {
 class OnboardingPhoneAuthViewModel @Inject constructor(
     private val repository: IntroRepository,
     private val signUpUseCase: SignUpUseCase,
-    private val dataStoreManager: DataStoreManager
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PhoneAuthorizationUiState())
@@ -92,7 +94,7 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
                 SignUpData.phoneNumber,
                 authorizationCode.value
             ).onSuccess {
-                if(it.isConfirm){
+                if (it.isConfirm) {
                     _uiState.update { state ->
                         state.copy(
                             btnState = AuthBtnState.AuthSuccess("인증번호 검증 성공")
@@ -126,10 +128,19 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
                 SignUpData.name,
                 SignUpData.gender,
                 SignUpData.phoneNumber,
-                ""
+                async { MyFirebaseMessagingService().getFirebaseToken() }.await()
             ).onSuccess {
-                dataStoreManager.putAccessToken(it.tokenData.accessToken)
-                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
+
+                authRepository.putAccessToken(it.tokenData.accessToken)
+                authRepository.putRefreshToken(it.tokenData.refreshToken)
+                authRepository.putMemberId(it.memberInfoData.id)
+                authRepository.putMemberName(it.memberInfoData.name)
+                authRepository.putMemberGender(it.memberInfoData.gender)
+                authRepository.putMemberPhoneNumber(it.memberInfoData.phoneNumber)
+                authRepository.putMemberEmail(it.memberInfoData.email)
+                authRepository.putMatchingCount(it.memberInfoData.matchingCount)
+                authRepository.putMemberBlocked(it.memberInfoData.blocked)
+                authRepository.putProfileUrl(it.memberInfoData.imageUrl)
                 isSignUpSuccess.value = true
                 _event.emit(PhoneAuthEvent.NavigateToEditNick)
             }.onFailure {

@@ -15,7 +15,8 @@
     <color name="mx_sub700">#267C67</color>
     <color name="mx_sub800">#1A5245</color>
     <color name="mx_sub900">#0D2922</color>
-    
+
+    <color name="mx_graychat">#F3F4F6</color>
     <color name="mx_gray100">#EBEBEB</color>
     <color name="mx_gray200">#D7D7D7</color>
     <color name="mx_gray300">#C3C3C3</color>

@@ -1,12 +1,16 @@
 package com.motax.modutaxi.presentation.ui.intro.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.data.config.DataStoreManager
+import com.motax.modutaxi.domain.model.BaseState
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.usecase.LoginUseCase
 import com.motax.modutaxi.domain.usecase.MemberCheckUseCase
+import com.motax.modutaxi.presentation.service.MyFirebaseMessagingService
 import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -23,37 +27,41 @@ sealed class LoginEvent {
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val memberCheckUseCase: MemberCheckUseCase,
-    private val dataStoreManager: DataStoreManager
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<LoginEvent>()
     val event: SharedFlow<LoginEvent> = _event.asSharedFlow()
 
-    fun memberCheck(token: String) {
+    fun kakaoLogin(token: String) {
         viewModelScope.launch {
-            memberCheckUseCase("KAKAO", token, "").onSuccess {
-                if (it.existent) {
-                    kakaoLogin(token)
-                } else {
-                    SignUpData.setSignUpKey(it.key)
-                    _event.emit(LoginEvent.NavigateToOnBoard)
+            loginUseCase("KAKAO", token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).let{
+                when(it){
+                    is BaseState.Success -> {
+                        authRepository.putAccessToken(it.data.tokenData.accessToken)
+                        authRepository.putRefreshToken(it.data.tokenData.refreshToken)
+                        authRepository.putMemberId(it.data.memberInfoData.id)
+                        authRepository.putMemberName(it.data.memberInfoData.name)
+                        authRepository.putMemberGender(it.data.memberInfoData.gender)
+                        authRepository.putMemberPhoneNumber(it.data.memberInfoData.phoneNumber)
+                        authRepository.putMemberEmail(it.data.memberInfoData.email)
+                        authRepository.putMatchingCount(it.data.memberInfoData.matchingCount)
+                        authRepository.putMemberBlocked(it.data.memberInfoData.blocked)
+                        authRepository.putProfileUrl(it.data.memberInfoData.imageUrl)
+                        _event.emit(LoginEvent.ShowToastMessage("로그인 성공"))
+                        _event.emit(LoginEvent.NavigateToMainActivity)
+                    }
+
+                    is BaseState.Error -> {
+                        Log.d("debugging",it.message)
+                        SignUpData.setSignUpKey(it.message)
+                        _event.emit(LoginEvent.NavigateToOnBoard)
+                    }
                 }
-            }.onFailure {
-                _event.emit(LoginEvent.ShowToastMessage(it.message.toString()))
             }
         }
     }
 
-    fun kakaoLogin(token: String) {
-        viewModelScope.launch {
-            loginUseCase("KAKAO", token, "").onSuccess {
-                _event.emit(LoginEvent.ShowToastMessage("로그인 성공"))
-                dataStoreManager.putAccessToken(it.tokenData.accessToken)
-                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
-                _event.emit(LoginEvent.NavigateToMainActivity)
-            }.onFailure {
-                _event.emit(LoginEvent.ShowToastMessage(it.message.toString()))
-            }
-        }
-    }
+
+
 }

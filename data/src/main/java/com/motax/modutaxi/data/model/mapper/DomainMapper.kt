@@ -4,11 +4,13 @@ import android.text.Html
 import com.motax.modutaxi.data.model.response.AddressFromGeoResponse
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
+import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
+import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
@@ -21,6 +23,10 @@ import com.motax.modutaxi.data.model.response.TaxiPotParticipants
 import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.TokenResponse
+import com.motax.modutaxi.data.model.response.UpdateMemberResponse
+import com.motax.modutaxi.data.model.response.UploadImageResponse
+import com.motax.modutaxi.data.model.response.UsageHistoryItemResponse
+import com.motax.modutaxi.data.model.response.UsageHistoryResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
 import com.motax.modutaxi.domain.model.AddressFromGeoData
@@ -30,12 +36,16 @@ import com.motax.modutaxi.domain.model.AddressFromGeoLandItemData
 import com.motax.modutaxi.domain.model.AddressFromGeoRegionData
 import com.motax.modutaxi.domain.model.AuthData
 import com.motax.modutaxi.domain.model.CertificateData
+import com.motax.modutaxi.domain.model.ChatMessageData
+import com.motax.modutaxi.domain.model.ChatMessageItemData
 import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.CoordinateData
 import com.motax.modutaxi.domain.model.CoordinateReferenceSystemData
 import com.motax.modutaxi.domain.model.MemberCheckData
+import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.MemberInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
+import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NearSpotItemData
 import com.motax.modutaxi.domain.model.PathData
@@ -53,6 +63,9 @@ import com.motax.modutaxi.domain.model.TaxiPotParticipantsData
 import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.TokenData
+import com.motax.modutaxi.domain.model.UpdateMemberData
+import com.motax.modutaxi.domain.model.UploadImageData
+import com.motax.modutaxi.domain.model.UsageHistoryDataItem
 
 fun TokenResponse.toDomain() = TokenData(
     accessToken = accessToken,
@@ -61,7 +74,6 @@ fun TokenResponse.toDomain() = TokenData(
 
 fun MemberCheckResponse.toDomain() = MemberCheckData(
     key = key ?: "",
-    existent = existent
 )
 
 fun CertificateResponse.toDomain() = CertificateData(
@@ -186,6 +198,8 @@ fun MemberInfo.toDomain() = MemberInfoData(
     gender = gender,
     phoneNumber = phoneNumber,
     email = email ?: "",
+    matchingCount = matchingCount,
+    blocked = blocked,
     imageUrl = imageUrl
 )
 
@@ -220,7 +234,11 @@ fun TaxiPotDetailResponse.toDomain() = TaxiPotDetailData(
     roomTagBitMaskList = roomTagBitMaskList,
     spotId = spotId,
     wishHeadcount = wishHeadcount,
-    waiting = waiting
+    waiting = waiting,
+    minLatitude = minLatitude,
+    minLongitude = minLongitude,
+    maxLatitude = maxLatitude,
+    maxLongitude = maxLongitude
 )
 
 fun TaxiPotListRadiusResponse.toDomain() = TaxiPotListRadiusData(
@@ -263,6 +281,20 @@ fun TaxiPotWaitingMembers.toDomain() = TaxiPotWaitingMembersData(
     waitingList = waitingList.map { it.toDomain() }
 )
 
+fun ChatMessageResponse.toDomain() = ChatMessageData(
+    messages = messages.map { data ->
+        ChatMessageItemData(
+            roomId = data.roomId,
+            messageType = data.messageType,
+            content = data.content,
+            sender = data.sender,
+            memberId = data.memberId,
+            dateTime = data.dateTime,
+            imageUrl = data.imageUrl
+        )
+    }
+)
+
 fun ChatInfoResponse.toDomain() = ChatInfoData(
     roomId = roomId,
     memberId = memberId
@@ -274,4 +306,39 @@ fun MemberProfileResponse.toDomain() = MemberProfileData(
     matchingCount = matchingCount,
     imageUrl = imageUrl,
     certified = certified
+)
+fun MemberDetailResponse.toDomain() = MemberDetailData(
+    id = this.id,
+    nickname = this.nickname,
+    matchingCount = this.matchingCount,
+    imageUrl = this.imageUrl,
+    certified = this.certified
+)
+
+fun UpdateMemberResponse.toDomain() = UpdateMemberData(
+    name = name,
+    gender = gender,
+    phoneNumber = phoneNumber,
+    imageUrl = imageUrl
+)
+
+fun UploadImageResponse.toDomain() = UploadImageData(
+    imageUrl = imageUrl,
+    fileName = fileName
+)
+
+fun UsageHistoryResponse.toDomain() = MonthlyUsageHistoryData(
+    year = this.year,
+    month = this.month,
+    totalCharge = this.accumulateTotalCharge,
+    accumulatePortionCharge = this.accumulatePortionCharge,
+    historyList = this.historySimpleListResponse.map { it.toDomain() }
+)
+
+fun UsageHistoryItemResponse.toDomain() = UsageHistoryDataItem(
+    historyId = this.historyId,
+    departureTime = this.departureTime,
+    departureName = this.departureName,
+    arrivalName = this.arrivalName,
+    portionCharge = this.portionCharge
 )

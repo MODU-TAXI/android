@@ -80,4 +80,16 @@ dependencies {
 
     // chipGroup
     implementation ("com.google.android.material:material:1.11.0")
+
+    // FCM
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
+    // Stomp
+    implementation("com.github.NaikSoftware:StompProtocolAndroid:1.6.6")
+
+    // rx
+    implementation("io.reactivex.rxjava2:rxjava:2.2.5")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.0")
+
 }

@@ -1,7 +1,5 @@
 package com.motax.modutaxi.data.config
 
-import android.content.Intent
-import android.util.Log
 import com.motax.modutaxi.data.Constants.AUTHORIZATION
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.remote.AuthApi
@@ -37,10 +35,28 @@ class BearerInterceptor @Inject constructor(
                     getNewAccessToken(token).onSuccess {
                         dataStoreManager.putAccessToken(it.tokenResponse.accessToken)
                         dataStoreManager.putRefreshToken(it.tokenResponse.refreshToken)
+                        dataStoreManager.putMemberGender(it.memberInfoResponse.gender)
+                        dataStoreManager.putMemberId(it.memberInfoResponse.id)
+                        dataStoreManager.putProfileUrl(it.memberInfoResponse.imageUrl)
+                        dataStoreManager.putMatchingCount(it.memberInfoResponse.matchingCount.toString())
+                        dataStoreManager.putMemberPhoneNumber(it.memberInfoResponse.phoneNumber)
+                        dataStoreManager.putMemberEmail(it.memberInfoResponse.email.toString())
+                        dataStoreManager.putMemberName(it.memberInfoResponse.name)
+                        dataStoreManager.putMemberBlocked(it.memberInfoResponse.blocked.toString())
                         newAccessToken = it.tokenResponse.accessToken
+
                     }.onFailure {
                         dataStoreManager.deleteAccessToken()
                         dataStoreManager.deleteRefreshToken()
+                        dataStoreManager.deleteMemberName()
+                        dataStoreManager.deleteMemberPhoneNumber()
+                        dataStoreManager.deleteMemberEmail()
+                        dataStoreManager.deleteMatchingCount()
+                        dataStoreManager.deleteMemberBlocked()
+                        dataStoreManager.deleteProfileUrl()
+                        dataStoreManager.deleteMemberGender()
+                        dataStoreManager.deleteMemberId()
+                        dataStoreManager.deleteProfileUrl()
                     }
                 }
             }

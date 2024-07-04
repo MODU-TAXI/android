@@ -42,7 +42,7 @@ class MatchDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
+//        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
         parentViewModel.setNotFullScreenMode()
         binding.vm = viewModel
         binding.rvParticipants.adapter = ParticipantAdapter()
@@ -51,7 +51,6 @@ class MatchDetailFragment :
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            findNavController().toHome()
         }
     }
 
@@ -77,18 +76,36 @@ class MatchDetailFragment :
         setBtnClickListener()
     }
 
-    private fun initStateObserve(){
+    private fun initStateObserve() {
         repeatOnStarted {
-            viewModel.uiState.collect{
-                if(it.matchDetailUiData.path.isNotEmpty()){
+            viewModel.uiState.collect {
+                if (it.matchDetailUiData.path.isNotEmpty()) {
                     setPath()
+                    val bounds = LatLngBounds.Builder()
+                        .include(
+                            LatLng(
+                                it.matchDetailUiData.minLatitude,
+                                it.matchDetailUiData.minLongitude
+                            )
+                        )
+                        .include(
+                            LatLng(
+                                it.matchDetailUiData.maxLatitude,
+                                it.matchDetailUiData.maxLongitude
+                            )
+                        )
+                        .build()
+
+                    val padding = resources.getDimensionPixelSize(R.dimen.arrival_map_padding)
+                    val cameraUpdate = CameraUpdate.fitBounds(bounds, padding)
+                    naverMap.moveCamera(cameraUpdate)
                 }
             }
         }
 
         repeatOnStarted {
-            viewModel.uiState.collect{
-                if(it.matchDetailUiData.isMyRoom){
+            viewModel.uiState.collect {
+                if (it.matchDetailUiData.isMyRoom) {
                     binding.rvWaitingMember.adapter = WaitingMemberAdapter()
                 } else {
                     binding.rvWaitingMember.adapter = WaitingMemberParticipantAdapter()
@@ -97,9 +114,9 @@ class MatchDetailFragment :
         }
     }
 
-    private fun setBtnClickListener(){
+    private fun setBtnClickListener() {
         binding.btnParticipate.setOnClickListener {
-            when(viewModel.uiState.value.roomState){
+            when (viewModel.uiState.value.roomState) {
 
                 RoomState.PARTICIPANT, RoomState.OWNER -> {
                     findNavController().toChatRoom(roomId)
@@ -109,7 +126,7 @@ class MatchDetailFragment :
                     viewModel.enterTaxiPot()
                 }
 
-                else ->{}
+                else -> {}
             }
         }
     }
@@ -122,10 +139,13 @@ class MatchDetailFragment :
         path.color = Color.RED
         path.map = naverMap
 
-        moveCamera(LatLng(list[0].latitude, list[0].longitude), LatLng(list[list.size - 1].latitude, list[list.size - 1].longitude))
+        moveCamera(
+            LatLng(list[0].latitude, list[0].longitude),
+            LatLng(list[list.size - 1].latitude, list[list.size - 1].longitude)
+        )
     }
 
-    private fun moveCamera(start: LatLng, end:LatLng) {
+    private fun moveCamera(start: LatLng, end: LatLng) {
 
         val bounds = LatLngBounds.Builder()
             .include(start)
@@ -137,12 +157,8 @@ class MatchDetailFragment :
         naverMap.moveCamera(cameraUpdate)
     }
 
-    private fun NavController.toHome() {
-        val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToHomeFragment()
-        navigate(action)
-    }
 
-    private fun NavController.toChatRoom(id: Long){
+    private fun NavController.toChatRoom(id: Long) {
         val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToChatRoomFragment(id)
         navigate(action)
     }
