@@ -5,166 +5,308 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.UsageDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_06_vertical"
+            android:id="@+id/guide_04_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.06" />
+            app:layout_constraintGuide_percent="0.04" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_94_vertical"
+            android:id="@+id/guide_96_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.94" />
+            app:layout_constraintGuide_percent="0.96" />
 
-        <TextView
-            android:id="@+id/tv_year_month"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="2024년 5월"
-            android:textColor="@color/mx_gray700"
-            style="@style/TextTitle2Semibold"
-            android:layout_marginTop="40dp"
-            android:paddingLeft="4dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guide_06_vertical"/>
+            android:paddingVertical="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_choose_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/tv_year_month"
-            app:layout_constraintStart_toEndOf="@id/tv_year_month"
-            android:src="@drawable/ic_arrow_down"
-            android:layout_marginLeft="4dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_year_month"/>
+            <TextView
+                android:id="@+id/tv_header"
+                style="@style/TextTitle3Semibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이용내역"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_saved_money_label"
+            <ImageView
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_xmark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_usage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="이번 달 아낀 택시비"
-            style="@style/TextLargeMedium"
-            android:textColor="@color/mx_gray700"
-            android:layout_marginTop="24dp"
-            android:paddingLeft="4dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_year_month"
-            app:layout_constraintStart_toEndOf="@id/guide_06_vertical"/>
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="20dp"
+            android:background="@drawable/rect_nofill_gray_eaeaea_stroke_20radius"
+            app:layout_constraintEnd_toEndOf="@id/layout_toolbar"
+            app:layout_constraintStart_toStartOf="@id/layout_toolbar"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar">
+
+            <TextView
+                android:id="@+id/tv_departure_arrival"
+                style="@style/TextLargeSemibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{vm.uiState.usageDetailUiData.departureArrival}"
+                tools:text="인하대학교 -> 주안역"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tv_departure_datetime"
+                style="@style/TextSmallRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@{vm.uiState.usageDetailUiData.departureDate}"
+                android:textColor="@color/mx_gray500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_departure_arrival"
+                tools:text="2024.03.25 18:50" />
+
+            <View
+                android:id="@+id/iv_dash_line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/search_divider"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_departure_datetime"/>
+
+            <TextView
+                android:id="@+id/tv_room_manager_label"
+                style="@style/TextRegularSemibold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/mx_gray700"
+                android:text="방장"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_dash_line1" />
+
+
+            <ImageView
+                android:id="@+id/iv_room_manager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                tools:src="@drawable/ic_person"
+                app:layout_constraintTop_toBottomOf="@id/tv_room_manager_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:profileImgUrl="@{vm.uiState.owner.profileImage}" />
+
+            <TextView
+                android:id="@+id/tv_room_manager_nickname"
+                style="@style/TextLargeMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="@{vm.uiState.owner.nickname}"
+                app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
+                app:layout_constraintStart_toEndOf="@id/iv_room_manager"
+                app:layout_constraintTop_toTopOf="@id/iv_room_manager"
+                tools:text="버스를 놓친 사자" />
+
+            <TextView
+                style="@style/TextLargeMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="(나)"
+                android:textColor="@color/mx_gray500"
+                app:layout_constraintBottom_toBottomOf="@id/tv_room_manager_nickname"
+                app:layout_constraintStart_toEndOf="@id/tv_room_manager_nickname"
+                app:layout_constraintTop_toTopOf="@id/tv_room_manager_nickname" />
+
+            <TextView
+                android:id="@+id/tv_temperature"
+                style="@style/TextLargeRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mx_gray500"
+                app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_room_manager"
+                tools:text="36.5c" />
+
+            <TextView
+                android:id="@+id/tv_participant_label"
+                style="@style/TextRegularSemibold"
+                android:textColor="@color/mx_gray700"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="참여멤버"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_room_manager" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_no_participants"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:visibility="invisible"
+                android:visibility="@{vm.uiState.participants.empty ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_participant_label">
+
+                <ImageView
+                    android:id="@+id/iv_no_participants"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_person"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/TextLargeRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="현재 참여 멤버가 없어요"
+                    android:textColor="@color/mx_gray500"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_no_participants"
+                    app:layout_constraintStart_toEndOf="@id/iv_no_participants"
+                    app:layout_constraintTop_toTopOf="@id/iv_no_participants" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_participants"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_participant_label"
+                app:list="@{vm.uiState.participants}"
+                tools:listitem="@layout/item_participant" />
+
+
+            <View
+                android:id="@+id/iv_dash_line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/search_divider"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_participants"/>
+
+            <TextView
+                android:id="@+id/total_price_label"
+                style="@style/TextLargeMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="총액"
+                android:textColor="@color/mx_gray500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_dash_line2" />
+
+            <TextView
+                android:id="@+id/total_price"
+                style="@style/TextLargeMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.wholeFee)}"
+                android:textColor="@color/mx_gray900"
+                app:layout_constraintBottom_toBottomOf="@id/total_price_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/total_price_label"
+                tools:text="14,450" />
+
+            <TextView
+                android:id="@+id/matching_price_label"
+                style="@style/TextLargeMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="최종 정산 금액"
+                android:textColor="@color/mx_gray500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/total_price_label" />
+
+            <TextView
+                android:id="@+id/matching_price"
+                style="@style/TextLargeMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.feePerPerson)}"
+                android:textColor="@color/mx_gray900"
+                app:layout_constraintBottom_toBottomOf="@id/matching_price_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/matching_price_label"
+                tools:text="3,613" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv_saved_money"
+            android:id="@+id/tv_chat_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="51,130원"
-            android:textColor="@color/mx_sub500"
-            android:paddingLeft="4dp"
-            style="@style/TextHeader"
-            app:layout_constraintStart_toEndOf="@id/guide_06_vertical"
-            app:layout_constraintTop_toBottomOf="@id/tv_saved_money_label"/>
-
-        <TextView
-            android:id="@+id/tv_before_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="모택 이용전"
+            android:text="채팅방은 2주가 지나면 읽을 수 없어요"
+            android:textColor="#9C9C9C"
             style="@style/TextSmallMedium"
-            android:textColor="@color/mx_gray600"
-            android:paddingLeft="4dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@id/guide_06_vertical"
-            app:layout_constraintTop_toBottomOf="@id/tv_saved_money"/>
-
-        <ProgressBar
-            android:id="@+id/progress_before"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:progressDrawable="@drawable/progressbar_before"
-            android:max="100"
-            android:progress="90"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintTop_toTopOf="@id/tv_before_label"
-            app:layout_constraintBottom_toBottomOf="@id/tv_before_label"
-            app:layout_constraintEnd_toStartOf="@id/tv_before_money"
-            app:layout_constraintStart_toEndOf="@id/tv_before_label"/>
-
-        <TextView
-            android:id="@+id/tv_before_money"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            tools:text="143,000"
-            style="@style/TextSmallMedium"
-            android:textColor="@color/mx_gray800"
-            app:layout_constraintEnd_toStartOf="@id/guide_94_vertical"
-            app:layout_constraintTop_toTopOf="@id/tv_before_label"
-            app:layout_constraintBottom_toBottomOf="@id/tv_before_label"/>
-
-        <TextView
-            android:id="@+id/tv_after_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="모택 이용후"
-            style="@style/TextSmallMedium"
-            android:layout_marginTop="14dp"
-            android:paddingLeft="4dp"
-            android:textColor="@color/mx_gray600"
-            app:layout_constraintStart_toEndOf="@id/guide_06_vertical"
-            app:layout_constraintTop_toBottomOf="@id/tv_before_label"/>
-
-        <ProgressBar
-            android:id="@+id/progress_after"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:progressDrawable="@drawable/progressbar_after"
-            android:max="100"
-            tools:progress="50"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintTop_toTopOf="@id/tv_after_label"
-            app:layout_constraintBottom_toBottomOf="@id/tv_after_label"
-            app:layout_constraintEnd_toStartOf="@id/tv_before_money"
-            app:layout_constraintStart_toEndOf="@id/tv_before_label"/>
-
-        <TextView
-            android:id="@+id/tv_after_money"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            tools:text="73,000"
-            style="@style/TextSmallMedium"
-            android:textColor="@color/mx_gray800"
-            app:layout_constraintEnd_toStartOf="@id/guide_94_vertical"
-            app:layout_constraintTop_toTopOf="@id/tv_after_label"
-            app:layout_constraintBottom_toBottomOf="@id/tv_after_label"/>
-
-        <ImageView
-            android:id="@+id/iv_dash_line"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/dash_line_white_f8faf9"
-            android:layout_marginTop="28dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_after_label"
+            app:layout_constraintTop_toBottomOf="@id/layout_usage"
+            android:gravity="center"
+            android:layout_marginTop="108dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_participate"
+            style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="이용내역"
-            android:layout_marginTop="28dp"
-            style="@style/TextRegularMedium"
-            android:textColor="@color/mx_gray500"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintTop_toBottomOf="@id/iv_dash_line"
-            app:layout_constraintStart_toEndOf="@id/guide_06_vertical"/>
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="채팅방 입장하기"
+            android:paddingVertical="16dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chat_label" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

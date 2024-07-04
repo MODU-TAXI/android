@@ -7,6 +7,7 @@ import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
+import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
@@ -165,4 +166,9 @@ class MainRepositoryImpl @Inject constructor(
         return runCatching { api.uploadFile(body, "PROFILE").toDomain() }
     }
 
+    override suspend fun getMonthlyUsageHistory(year: Int, month: Int): Result<MonthlyUsageHistoryData> {
+        return runCatching {
+            api.getMonthlyUsageHistory(year, month)
+        }.mapCatching { it.toDomain() }
+    }
 }

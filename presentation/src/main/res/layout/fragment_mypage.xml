@@ -286,6 +286,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_navigate_next_mypage"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:onClick="@{() -> vm.navigateToUsageHistory()}"
                     app:layout_constraintTop_toTopOf="@id/tv_usage_history_label" />
 
                 <ImageView
@@ -409,9 +410,6 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_logout"
                 app:layout_constraintStart_toEndOf="@id/vertical_bar_first"
                 app:layout_constraintTop_toTopOf="@id/tv_logout" />
-
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
