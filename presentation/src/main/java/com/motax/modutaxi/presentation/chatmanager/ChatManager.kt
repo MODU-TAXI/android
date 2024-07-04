@@ -45,7 +45,7 @@ class ChatManager @Inject constructor(
         viewModelScope.launch {
 
             authRepository.getMemberId()?.let { id ->
-                authRepository.getProfileImg()?.let{ img ->
+                authRepository.getProfileUrl()?.let{ img ->
                     chatSocket.sendChat(
                         roomId,
                         id,

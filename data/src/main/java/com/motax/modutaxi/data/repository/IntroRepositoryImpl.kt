@@ -11,10 +11,9 @@ import com.motax.modutaxi.data.model.request.SmsConfirmRequest
 import com.motax.modutaxi.data.model.runRemote
 import com.motax.modutaxi.data.remote.IntroApi
 import com.motax.modutaxi.domain.model.AuthData
+import com.motax.modutaxi.domain.model.BaseState
 import com.motax.modutaxi.domain.model.CertificateData
-import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.repository.IntroRepository
-import retrofit2.Response
 import javax.inject.Inject
 
 class IntroRepositoryImpl @Inject constructor(
@@ -25,25 +24,18 @@ class IntroRepositoryImpl @Inject constructor(
         type: String,
         accessToken: String,
         fcmToken: String
-    ): Result<AuthData> =
-        runCatching {
-            api.login(
-                type,
-                LoginRequest(accessToken, fcmToken)
-            )
-        }.mapCatching { it.toDomain() }
+    ): BaseState<AuthData> {
 
-    override suspend fun memberCheck(
-        type: String,
-        accessToken: String,
-        fcmToken: String
-    ): Result<MemberCheckData> =
-        runCatching {
-            api.memberCheck(
-                type,
-                LoginRequest(accessToken, fcmToken)
-            )
-        }.mapCatching { it.toDomain() }
+        return when (val result = runRemote { api.login(type, LoginRequest(accessToken, fcmToken)) }) {
+            is BaseState.Success -> {
+                BaseState.Success(result.data.toDomain())
+            }
+
+            is BaseState.Error -> {
+                result
+            }
+        }
+    }
 
     override suspend fun signUp(
         key: String,

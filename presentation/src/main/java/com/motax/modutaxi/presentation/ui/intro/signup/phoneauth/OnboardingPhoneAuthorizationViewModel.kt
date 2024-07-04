@@ -130,11 +130,17 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
                 SignUpData.phoneNumber,
                 async { MyFirebaseMessagingService().getFirebaseToken() }.await()
             ).onSuccess {
+
                 authRepository.putAccessToken(it.tokenData.accessToken)
                 authRepository.putRefreshToken(it.tokenData.refreshToken)
-                authRepository.putGender(it.memberInfoData.gender)
                 authRepository.putMemberId(it.memberInfoData.id)
-                authRepository.putProfileImg(it.memberInfoData.imageUrl)
+                authRepository.putMemberName(it.memberInfoData.name)
+                authRepository.putMemberGender(it.memberInfoData.gender)
+                authRepository.putMemberPhoneNumber(it.memberInfoData.phoneNumber)
+                authRepository.putMemberEmail(it.memberInfoData.email)
+                authRepository.putMatchingCount(it.memberInfoData.matchingCount)
+                authRepository.putMemberBlocked(it.memberInfoData.blocked)
+                authRepository.putProfileUrl(it.memberInfoData.imageUrl)
                 isSignUpSuccess.value = true
                 _event.emit(PhoneAuthEvent.NavigateToEditNick)
             }.onFailure {

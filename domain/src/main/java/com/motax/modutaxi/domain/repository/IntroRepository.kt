@@ -11,13 +11,7 @@ interface IntroRepository {
         type: String,
         accessToken: String,
         fcmToken: String
-    ): Result<AuthData>
-
-    suspend fun memberCheck(
-        type: String,
-        accessToken: String,
-        fcmToken: String
-    ): Result<MemberCheckData>
+    ): BaseState<AuthData>
 
     suspend fun signUp(
         key: String,

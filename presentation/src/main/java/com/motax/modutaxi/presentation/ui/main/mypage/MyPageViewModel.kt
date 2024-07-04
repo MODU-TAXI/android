@@ -53,7 +53,7 @@ class MyPageViewModel @Inject constructor(
 
     fun loadMemberData() {
         viewModelScope.launch {
-            val memberId = dataStoreManager.getMemberId()?.toLongOrNull()
+            val memberId = dataStoreManager.getMemberId()
             if (memberId != null) {
                 mainRepository.getMemberDetail(memberId).onSuccess {
                     _uiState.update { state ->
@@ -74,8 +74,8 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
 
             val memberName = dataStoreManager.getMemberName()
-            val gender = dataStoreManager.getGender()
-            val phoneNumber = dataStoreManager.getPhoneNumber()
+            val gender = dataStoreManager.getMemberGender()
+            val phoneNumber = dataStoreManager.getMemberPhoneNumber()
 
             val profileData = mapOf(
                 "name" to (memberName ?: ""),
@@ -117,8 +117,8 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
 
             val memberName = dataStoreManager.getMemberName()
-            val gender = dataStoreManager.getGender()
-            val phoneNumber = dataStoreManager.getPhoneNumber()
+            val gender = dataStoreManager.getMemberGender()
+            val phoneNumber = dataStoreManager.getMemberPhoneNumber()
 
             val profileData = mapOf(
                 "name" to (memberName ?: ""),
@@ -136,7 +136,8 @@ class MyPageViewModel @Inject constructor(
     private fun uriToFile(uri: Uri): File {
         val contentResolver: ContentResolver = getApplication<Application>().contentResolver
         val inputStream: InputStream? = contentResolver.openInputStream(uri)
-        val tempFile = File.createTempFile("temp_image", ".jpg", getApplication<Application>().cacheDir)
+        val tempFile =
+            File.createTempFile("temp_image", ".jpg", getApplication<Application>().cacheDir)
         inputStream?.use { input ->
             FileOutputStream(tempFile).use { output ->
                 val buffer = ByteArray(4 * 1024)

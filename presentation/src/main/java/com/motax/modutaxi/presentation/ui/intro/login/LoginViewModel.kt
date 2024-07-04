@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.intro.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.model.BaseState
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.usecase.LoginUseCase
 import com.motax.modutaxi.domain.usecase.MemberCheckUseCase
@@ -32,48 +33,35 @@ class LoginViewModel @Inject constructor(
     private val _event = MutableSharedFlow<LoginEvent>()
     val event: SharedFlow<LoginEvent> = _event.asSharedFlow()
 
-    fun memberCheck(token: String) {
+    fun kakaoLogin(token: String) {
         viewModelScope.launch {
-            memberCheckUseCase("KAKAO", token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).onSuccess {
-                if (it.existent) {
-            memberCheckUseCase("KAKAO", token, "").onSuccess {
-                Log.d("debugging", it.key)
-                if (it.key == "") {
-                    kakaoLogin(token)
-                } else {
-                    SignUpData.setSignUpKey(it.key)
-                    dataStoreManager
-                    _event.emit(LoginEvent.NavigateToOnBoard)
+            loginUseCase("KAKAO", token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).let{
+                when(it){
+                    is BaseState.Success -> {
+                        authRepository.putAccessToken(it.data.tokenData.accessToken)
+                        authRepository.putRefreshToken(it.data.tokenData.refreshToken)
+                        authRepository.putMemberId(it.data.memberInfoData.id)
+                        authRepository.putMemberName(it.data.memberInfoData.name)
+                        authRepository.putMemberGender(it.data.memberInfoData.gender)
+                        authRepository.putMemberPhoneNumber(it.data.memberInfoData.phoneNumber)
+                        authRepository.putMemberEmail(it.data.memberInfoData.email)
+                        authRepository.putMatchingCount(it.data.memberInfoData.matchingCount)
+                        authRepository.putMemberBlocked(it.data.memberInfoData.blocked)
+                        authRepository.putProfileUrl(it.data.memberInfoData.imageUrl)
+                        _event.emit(LoginEvent.ShowToastMessage("로그인 성공"))
+                        _event.emit(LoginEvent.NavigateToMainActivity)
+                    }
+
+                    is BaseState.Error -> {
+                        Log.d("debugging",it.message)
+                        SignUpData.setSignUpKey(it.message)
+                        _event.emit(LoginEvent.NavigateToOnBoard)
+                    }
                 }
-            }.onFailure {
-                _event.emit(LoginEvent.ShowToastMessage(it.message.toString()))
             }
         }
     }
 
-    fun kakaoLogin(token: String) {
-        viewModelScope.launch {
-            loginUseCase("KAKAO", token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).onSuccess {
-                _event.emit(LoginEvent.ShowToastMessage("로그인 성공"))
-                dataStoreManager.putAccessToken(it.tokenData.accessToken)
-                dataStoreManager.putRefreshToken(it.tokenData.refreshToken)
-                dataStoreManager.putMemberId(it.memberInfoData.id.toString())
-                dataStoreManager.putMemberName(it.memberInfoData.name)
-                dataStoreManager.putGender(it.memberInfoData.gender)
-                dataStoreManager.putPhoneNumber(it.memberInfoData.phoneNumber)
-                dataStoreManager.putEmail(it.memberInfoData.email)
-                dataStoreManager.putMatchingCount(it.memberInfoData.matchingCount.toString())
-                dataStoreManager.putBlocked(it.memberInfoData.blocked.toString())
-                authRepository.putAccessToken(it.tokenData.accessToken)
-                authRepository.putRefreshToken(it.tokenData.refreshToken)
-                authRepository.putGender(it.memberInfoData.gender)
-                authRepository.putMemberId(it.memberInfoData.id)
-                authRepository.putProfileImg(it.memberInfoData.imageUrl)
-                _event.emit(LoginEvent.NavigateToMainActivity)
-            }.onFailure {
-                _event.emit(LoginEvent.ShowToastMessage(it.message.toString()))
-            }
-        }
-    }
+
 
 }

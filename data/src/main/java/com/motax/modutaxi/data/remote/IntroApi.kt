@@ -23,13 +23,7 @@ interface IntroApi {
     suspend fun login(
         @Path("type") type: String,
         @Body body: LoginRequest
-    ): AuthResponse
-
-    @POST("/api/members/{type}/login")
-    suspend fun memberCheck(
-        @Path("type") type: String,
-        @Body body: LoginRequest
-    ): MemberCheckResponse
+    ): Response<AuthResponse>
 
     @POST("/api/members/sign-up")
     suspend fun signUp(

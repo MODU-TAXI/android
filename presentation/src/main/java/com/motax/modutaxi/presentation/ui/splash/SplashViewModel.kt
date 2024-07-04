@@ -37,13 +37,13 @@ class SplashViewModel @Inject constructor(
             authRepository.refreshToken(token).onSuccess {
                 authRepository.putAccessToken(it.tokenData.accessToken)
                 authRepository.putRefreshToken(it.tokenData.refreshToken)
-                authRepository.putMemberId(it.memberInfoData.id.toString())
+                authRepository.putMemberId(it.memberInfoData.id)
                 authRepository.putMemberName(it.memberInfoData.name)
                 authRepository.putMemberGender(it.memberInfoData.gender)
                 authRepository.putMemberPhoneNumber(it.memberInfoData.phoneNumber)
                 authRepository.putMemberEmail(it.memberInfoData.email)
-                authRepository.putMatchingCount(it.memberInfoData.matchingCount.toString())
-                authRepository.putMemberBlocked(it.memberInfoData.blocked.toString())
+                authRepository.putMatchingCount(it.memberInfoData.matchingCount)
+                authRepository.putMemberBlocked(it.memberInfoData.blocked)
                 authRepository.putProfileUrl(it.memberInfoData.imageUrl)
 
                 _event.emit(SplashUiEvent.NavigateToMain)

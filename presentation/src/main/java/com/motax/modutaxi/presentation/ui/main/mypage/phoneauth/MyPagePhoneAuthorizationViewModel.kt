@@ -91,7 +91,7 @@ class MyPagePhoneAuthViewModel @Inject constructor(
                 SignUpData.phoneNumber,
                 authorizationCode.value
             ).onSuccess {
-                if(it.isConfirm){
+                if (it.isConfirm) {
                     _uiState.update { state ->
                         state.copy(
                             btnState = MyPageAuthBtnState.AuthSuccess("인증번호 검증 성공")
@@ -121,8 +121,8 @@ class MyPagePhoneAuthViewModel @Inject constructor(
     private fun editProfile() {
         viewModelScope.launch {
             val name = dataStoreManager.getMemberName() ?: ""
-            val gender = dataStoreManager.getGender() ?: ""
-            val phoneNumber = dataStoreManager.getPhoneNumber() ?: ""
+            val gender = dataStoreManager.getMemberGender() ?: ""
+            val phoneNumber = dataStoreManager.getMemberPhoneNumber() ?: ""
             val imageUrl = dataStoreManager.getProfileUrl() ?: ""
 
             val profileData = mapOf(

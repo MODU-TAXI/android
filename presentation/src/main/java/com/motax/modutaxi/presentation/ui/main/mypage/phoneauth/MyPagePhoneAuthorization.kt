@@ -33,23 +33,24 @@ class MyPagePhoneAuthorization :
         }
     }
 
-    private fun initEventObserve(){
+    private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect{
-                when(it) {
+            viewModel.event.collect {
+                when (it) {
                     is MyPagePhoneAuthEvent.NavigateToMyPage -> findNavController().toMyPage()
                     is MyPagePhoneAuthEvent.GoBackToInit -> {
                         val intent = Intent(requireContext(), IntroActivity::class.java)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     }
+
                     is MyPagePhoneAuthEvent.ShowToastMessage -> showToastMessage(it.msg)
                 }
             }
         }
     }
 
-    private fun NavController.toMyPage(){
+    private fun NavController.toMyPage() {
         val action = MyPagePhoneAuthorizationDirections.actionPhoneAuthToMypage()
         navigate(action)
     }
@@ -59,7 +60,10 @@ class MyPagePhoneAuthorization :
 
         val inputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        inputMethodManager?.showSoftInput(binding.etAuthorizationCode, InputMethodManager.SHOW_IMPLICIT)
+        inputMethodManager?.showSoftInput(
+            binding.etAuthorizationCode,
+            InputMethodManager.SHOW_IMPLICIT
+        )
     }
 
     private fun hideKeyboard() {

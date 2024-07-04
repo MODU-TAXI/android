@@ -2,11 +2,12 @@ package com.motax.modutaxi.data.repository
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.motax.modutaxi.data.Constants
-import com.motax.modutaxi.data.config.DataStoreManager
 import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.remote.AuthApi
 import com.motax.modutaxi.domain.model.AuthData
@@ -24,13 +25,13 @@ class AuthRepositoryImpl @Inject constructor(
     companion object {
         private val ACCESS_TOKEN_KEY = stringPreferencesKey(Constants.ACCESS_TOKEN)
         private val REFRESH_TOKEN_KEY = stringPreferencesKey(Constants.REFRESH_TOKEN)
-        private val MEMBER_ID_KEY = stringPreferencesKey(Constants.MEMBER_ID)
+        private val MEMBER_ID_KEY = longPreferencesKey(Constants.MEMBER_ID)
         private val MEMBER_NAME_KEY = stringPreferencesKey(Constants.MEMBER_NAME)
         private val MEMBER_GENDER_KEY = stringPreferencesKey(Constants.MEMBER_GENDER)
         private val MEMBER_PHONE_KEY = stringPreferencesKey(Constants.MEMBER_PHONE_NUMBER)
         private val MEMBER_EMAIL_KEY = stringPreferencesKey(Constants.MEMBER_EMAIL)
-        private val MEMBER_MATCHING_COUNT_KEY = stringPreferencesKey(Constants.MEMBER_MATCHING_COUNT)
-        private val MEMBER_BLOCKED_KEY = stringPreferencesKey(Constants.MEMBER_BLOCKED)
+        private val MEMBER_MATCHING_COUNT_KEY = intPreferencesKey(Constants.MEMBER_MATCHING_COUNT)
+        private val MEMBER_BLOCKED_KEY = booleanPreferencesKey(Constants.MEMBER_BLOCKED)
         private val PROFILE_URL_KEY = stringPreferencesKey(Constants.PROFILE_URL)
     }
 
@@ -46,7 +47,7 @@ class AuthRepositoryImpl @Inject constructor(
         }.first()
     }
 
-    override suspend fun getMemberId(): String? {
+    override suspend fun getMemberId(): Long? {
         return dataStore.data.map { prefs ->
             prefs[MEMBER_ID_KEY]
         }.first()
@@ -76,13 +77,13 @@ class AuthRepositoryImpl @Inject constructor(
         }.first()
     }
 
-    override suspend fun getMatchingCount(): String? {
+    override suspend fun getMatchingCount(): Int? {
         return dataStore.data.map { prefs ->
             prefs[MEMBER_MATCHING_COUNT_KEY]
         }.first()
     }
 
-    override suspend fun getMemberBlocked(): String? {
+    override suspend fun getMemberBlocked(): Boolean? {
         return dataStore.data.map { prefs ->
             prefs[MEMBER_BLOCKED_KEY]
         }.first()
@@ -100,7 +101,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun putMemberId(id: String) {
+    override suspend fun putMemberId(id: Long) {
         dataStore.edit { prefs ->
             prefs[MEMBER_ID_KEY] = id
         }
@@ -130,13 +131,13 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun putMatchingCount(matchingCount: String) {
+    override suspend fun putMatchingCount(matchingCount: Int) {
         dataStore.edit { prefs ->
             prefs[MEMBER_MATCHING_COUNT_KEY] = matchingCount
         }
     }
 
-    override suspend fun putMemberBlocked(blocked: String) {
+    override suspend fun putMemberBlocked(blocked: Boolean) {
         dataStore.edit { prefs ->
             prefs[MEMBER_BLOCKED_KEY] = blocked
         }
@@ -199,6 +200,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun refreshToken(refreshToken: String): Result<AuthData> = runCatching {
         api.refreshToken(refreshToken)
     }.mapCatching { it.toDomain() }
+
 
     override suspend fun putProfileUrl(url: String) {
         dataStore.edit { prefs ->

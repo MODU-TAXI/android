@@ -35,24 +35,28 @@ class BearerInterceptor @Inject constructor(
                     getNewAccessToken(token).onSuccess {
                         dataStoreManager.putAccessToken(it.tokenResponse.accessToken)
                         dataStoreManager.putRefreshToken(it.tokenResponse.refreshToken)
-                        dataStoreManager.putGender(it.memberInfoResponse.gender)
+                        dataStoreManager.putMemberGender(it.memberInfoResponse.gender)
                         dataStoreManager.putMemberId(it.memberInfoResponse.id)
-                        dataStoreManager.putProfileImg(it.memberInfoResponse.imageUrl)
+                        dataStoreManager.putProfileUrl(it.memberInfoResponse.imageUrl)
+                        dataStoreManager.putMatchingCount(it.memberInfoResponse.matchingCount.toString())
+                        dataStoreManager.putMemberPhoneNumber(it.memberInfoResponse.phoneNumber)
+                        dataStoreManager.putMemberEmail(it.memberInfoResponse.email.toString())
+                        dataStoreManager.putMemberName(it.memberInfoResponse.name)
+                        dataStoreManager.putMemberBlocked(it.memberInfoResponse.blocked.toString())
                         newAccessToken = it.tokenResponse.accessToken
-
 
                     }.onFailure {
                         dataStoreManager.deleteAccessToken()
                         dataStoreManager.deleteRefreshToken()
                         dataStoreManager.deleteMemberName()
-                        dataStoreManager.deletePhoneNumber()
-                        dataStoreManager.deleteEmail()
+                        dataStoreManager.deleteMemberPhoneNumber()
+                        dataStoreManager.deleteMemberEmail()
                         dataStoreManager.deleteMatchingCount()
-                        dataStoreManager.deleteBlocked()
+                        dataStoreManager.deleteMemberBlocked()
                         dataStoreManager.deleteProfileUrl()
-                        dataStoreManager.deleteGender()
+                        dataStoreManager.deleteMemberGender()
                         dataStoreManager.deleteMemberId()
-                        dataStoreManager.deleteProfileImg()
+                        dataStoreManager.deleteProfileUrl()
                     }
                 }
             }

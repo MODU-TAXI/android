@@ -124,7 +124,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 // 로그인 성공 부분
                 else if (token != null) {
                     Log.d(TAG, "앱 로그인 성공 ${token.accessToken}")
-                    viewModel.memberCheck(token.accessToken)
+                    viewModel.kakaoLogin(token.accessToken)
                 }
             }
         } else {
@@ -142,7 +142,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             Log.e(TAG, "이메일 로그인 실패 $error")
         } else if (token != null) {
             Log.d(TAG, "이메일 로그인 성공 ${token.accessToken}")
-            viewModel.memberCheck(token.accessToken)
+            viewModel.kakaoLogin(token.accessToken)
         }
     }
 
