@@ -80,7 +80,7 @@
                 style="@style/TextLargeSemibold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{vm.uiState.usageDetailUiData.departureArrival}"
+                android:text='@{vm.uiState.usageDetailUiData.departureName + " -> " + vm.uiState.usageDetailUiData.arrivalName}'
                 tools:text="인하대학교 -> 주안역"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -92,7 +92,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="@{vm.uiState.usageDetailUiData.departureDate}"
+                android:text="@{vm.uiState.usageDetailUiData.departureTime}"
                 android:textColor="@color/mx_gray500"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_departure_arrival"
@@ -122,13 +122,13 @@
 
             <ImageView
                 android:id="@+id/iv_room_manager"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_marginTop="16dp"
+                app:profileImgUrl="@{vm.uiState.usageDetailUiData.owner.imageUrl}"
                 tools:src="@drawable/ic_person"
                 app:layout_constraintTop_toBottomOf="@id/tv_room_manager_label"
-                app:layout_constraintStart_toStartOf="parent"
-                app:profileImgUrl="@{vm.uiState.owner.profileImage}" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/tv_room_manager_nickname"
@@ -136,7 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:text="@{vm.uiState.owner.nickname}"
+                android:text="@{vm.uiState.usageDetailUiData.owner.nickname}"
                 app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
                 app:layout_constraintStart_toEndOf="@id/iv_room_manager"
                 app:layout_constraintTop_toTopOf="@id/iv_room_manager"
@@ -148,6 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:text="(나)"
+                android:visibility="@{vm.uiState.usageDetailUiData.owner.me ? View.VISIBLE : View.GONE}"
                 android:textColor="@color/mx_gray500"
                 app:layout_constraintBottom_toBottomOf="@id/tv_room_manager_nickname"
                 app:layout_constraintStart_toEndOf="@id/tv_room_manager_nickname"
@@ -159,10 +160,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mx_gray500"
+                android:text="@{String.valueOf(vm.uiState.owner.portionCharge)}"
                 app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/iv_room_manager"
-                tools:text="36.5c" />
+                tools:text="8,900" />
 
             <TextView
                 android:id="@+id/tv_participant_label"
@@ -215,7 +217,8 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_participant_label"
-                app:list="@{vm.uiState.participants}"
+                app:layout_constraintEnd_toEndOf="parent"
+                list="@{vm.uiState.participants}"
                 tools:listitem="@layout/item_participant" />
 
 
@@ -246,8 +249,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.wholeFee)}"
                 android:textColor="@color/mx_gray900"
+                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.totalCharge)}"
                 app:layout_constraintBottom_toBottomOf="@id/total_price_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/total_price_label"
@@ -270,7 +273,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.feePerPerson)}"
+                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.portionCharge)}"
                 android:textColor="@color/mx_gray900"
                 app:layout_constraintBottom_toBottomOf="@id/matching_price_label"
                 app:layout_constraintEnd_toEndOf="parent"
