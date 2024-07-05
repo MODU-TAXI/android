@@ -154,9 +154,9 @@
                     android:layout_height="237dp"
                     android:layout_marginTop="18dp"
                     android:layout_marginRight="8dp"
-                    android:background="@color/mx_gray200"
+                    android:scaleType="centerCrop"
                     android:onClick="@{() -> vm.navigateToCreateParty()}"
-                    android:src="@drawable/ic_example"
+                    android:src="@drawable/image_home_create"
                     app:layout_constraintEnd_toStartOf="@id/iv_find_taxipot"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -167,9 +167,10 @@
                     android:layout_height="237dp"
                     android:layout_marginLeft="8dp"
                     android:onClick="@{() -> vm.navigateToShowParty()}"
+                    android:scaleType="centerCrop"
+
                     android:layout_marginTop="18dp"
-                    android:background="@color/mx_gray500"
-                    android:src="@drawable/ic_example"
+                    android:src="@drawable/image_home_find"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                     app:layout_constraintStart_toEndOf="@id/iv_make_taxipot"
                     app:layout_constraintTop_toTopOf="parent" />
