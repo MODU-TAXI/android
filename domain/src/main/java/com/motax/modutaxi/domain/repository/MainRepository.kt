@@ -16,6 +16,7 @@ import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import java.net.URI
 import com.motax.modutaxi.domain.model.UpdateMemberData
 import com.motax.modutaxi.domain.model.UploadImageData
+import com.motax.modutaxi.domain.model.UsageDetailData
 import java.io.File
 
 interface MainRepository {
@@ -123,4 +124,8 @@ interface MainRepository {
     suspend fun getMonthlyUsageHistory(
         year: Int, month: Int
     ): Result<MonthlyUsageHistoryData>
+
+    suspend fun getUsageDetail(
+        id: Long
+    ): Result<UsageDetailData>
 }

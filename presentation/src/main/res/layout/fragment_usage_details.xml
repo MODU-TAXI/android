@@ -125,7 +125,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginTop="16dp"
-                app:profileImgUrl="@{vm.uiState.usageDetailUiData.owner.imageUrl}"
+                app:profileImgUrl="@{vm.uiState.owner.imageUrl}"
                 tools:src="@drawable/ic_person"
                 app:layout_constraintTop_toBottomOf="@id/tv_room_manager_label"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -136,7 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:text="@{vm.uiState.usageDetailUiData.owner.nickname}"
+                android:text="@{vm.uiState.owner.nickname}"
                 app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
                 app:layout_constraintStart_toEndOf="@id/iv_room_manager"
                 app:layout_constraintTop_toTopOf="@id/iv_room_manager"
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:text="(나)"
-                android:visibility="@{vm.uiState.usageDetailUiData.owner.me ? View.VISIBLE : View.GONE}"
+                android:visibility="@{vm.uiState.owner.me ? View.VISIBLE : View.GONE}"
                 android:textColor="@color/mx_gray500"
                 app:layout_constraintBottom_toBottomOf="@id/tv_room_manager_nickname"
                 app:layout_constraintStart_toEndOf="@id/tv_room_manager_nickname"
@@ -176,37 +176,6 @@
                 android:text="참여멤버"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_room_manager" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_no_participants"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                tools:visibility="invisible"
-                android:visibility="@{vm.uiState.participants.empty ? View.VISIBLE : View.GONE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_participant_label">
-
-                <ImageView
-                    android:id="@+id/iv_no_participants"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_person"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    style="@style/TextLargeRegular"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="현재 참여 멤버가 없어요"
-                    android:textColor="@color/mx_gray500"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_no_participants"
-                    app:layout_constraintStart_toEndOf="@id/iv_no_participants"
-                    app:layout_constraintTop_toTopOf="@id/iv_no_participants" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_participants"

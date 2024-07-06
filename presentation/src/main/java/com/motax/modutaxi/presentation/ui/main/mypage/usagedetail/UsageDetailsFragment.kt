@@ -7,6 +7,7 @@ import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentUsageDetailsBinding
+import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.adapter.UsageParticipantAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

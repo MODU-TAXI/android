@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.mypage.usagedetail
+package com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

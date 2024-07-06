@@ -17,6 +17,7 @@ import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.UpdateMemberData
 import com.motax.modutaxi.domain.model.UploadImageData
+import com.motax.modutaxi.domain.model.UsageDetailData
 import com.motax.modutaxi.domain.repository.MainRepository
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -170,5 +171,11 @@ class MainRepositoryImpl @Inject constructor(
         return runCatching {
             api.getMonthlyUsageHistory(year, month)
         }.mapCatching { it.toDomain() }
+    }
+
+    override suspend fun getUsageDetail(id: Long): Result<UsageDetailData> {
+        return runCatching {
+            api.getUsageDetail(id).toDomain()
+        }
     }
 }

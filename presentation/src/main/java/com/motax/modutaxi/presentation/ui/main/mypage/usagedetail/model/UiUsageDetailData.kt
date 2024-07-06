@@ -8,6 +8,4 @@ data class UiUsageDetailData(
     val arrivalName: String = "",
     val totalCharge: Int = 0,
     val portionCharge: Int = 0,
-    val owner: UiUsageParticipantItem? = null,
-    val participantList: List<UiUsageParticipantItem> = emptyList()
 )

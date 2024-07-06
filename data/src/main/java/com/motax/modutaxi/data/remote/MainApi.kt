@@ -15,6 +15,7 @@ import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.UpdateMemberResponse
 import com.motax.modutaxi.data.model.response.UploadImageResponse
+import com.motax.modutaxi.data.model.response.UsageDetailResponse
 import com.motax.modutaxi.data.model.response.UsageHistoryResponse
 import com.motax.modutaxi.domain.model.BaseState
 import okhttp3.MultipartBody
@@ -151,4 +152,8 @@ interface MainApi {
         @Query("month") month: Int
     ): UsageHistoryResponse
 
+    @GET("api/histories/{id}")
+    suspend fun getUsageDetail(
+        @Path("id") id: Long
+    ): UsageDetailResponse
 }

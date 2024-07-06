@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.mypage.usagedetail
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
@@ -29,52 +30,58 @@ class UsageDetailsViewModel @Inject constructor(
 
     fun loadUsageDetail(id: Long) {
         viewModelScope.launch {
-            val dummyData = UiUsageDetailData(
-                historyId = id,
-                roomId = 29,
-                departureTime = "2024-07-02T17:57:33",
-                departureName = "홈플러스",
-                arrivalName = "주안역",
-                totalCharge = 8900,
-                portionCharge = 8900,
-                owner = UiUsageParticipantItem(
-                    id = 7,
-                    nickname = "아르껜지운",
-                    name = "(j*)",
-                    imageUrl = "https://cdn.modutaxi.shop/testserver/ext/MT_E_2024-07-02-22-04-14.303-uw.jpg",
-                    status = "COMPLETE",
-                    me = true,
-                    portionCharge = 3600
-                ),
-                participantList = listOf(
-                    UiUsageParticipantItem(
-                        id = 8,
-                        nickname = "참가자1",
-                        name = "참가자1",
-                        imageUrl = "https://example.com/image1.jpg",
-                        status = "COMPLETE",
-                        me = false,
-                        portionCharge = 3600
-                    ),
-                    UiUsageParticipantItem(
-                        id = 9,
-                        nickname = "참가자2",
-                        name = "참가자2",
-                        imageUrl = "https://example.com/image2.jpg",
-                        status = "COMPLETE",
-                        me = false,
-                        portionCharge = 3600
-                    )
-                )
-            )
+            mainRepository.getUsageDetail(id)
+                .onSuccess { response ->
+                    val participantsList = response.paymentMemberListData.participantList
+                    val owner = participantsList[0]
+                    val participants =
+                        if (participantsList.size > 1) {
+                            participantsList.drop(1).map {
+                                UiUsageParticipantItem(
+                                    id = it.id,
+                                    nickname = it.nickName,
+                                    name = it.name,
+                                    imageUrl = it.imageUrl ?: "", // 기본 URL 설정
+                                    status = it.status,
+                                    me = it.me,
+                                    portionCharge = it.portionCharge
+                                )
+                            }
+                        } else {
+                            emptyList()
+                        }
 
-            _uiState.update {
-                it.copy(
-                    usageDetailUiData = dummyData,
-                    owner = dummyData.owner,
-                    participants = dummyData.participantList
-                )
-            }
+                    val usageDetailUiData = UiUsageDetailData(
+                        historyId = response.historyId,
+                        roomId = response.roomId,
+                        departureTime = response.departureTime,
+                        departureName = response.departureName,
+                        arrivalName = response.arrivalName,
+                        totalCharge = response.totalCharge,
+                        portionCharge = response.portionCharge,
+                    )
+
+                    val uiOwner = owner.let { ownerParticipant ->
+                        UiUsageParticipantItem(
+                            id = ownerParticipant.id,
+                            nickname = ownerParticipant.nickName,
+                            name = ownerParticipant.name,
+                            imageUrl = ownerParticipant.imageUrl ?: "",
+                            status = ownerParticipant.status,
+                            me = ownerParticipant.me,
+                            portionCharge = response.portionCharge
+                        )
+                    }
+
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            usageDetailUiData = usageDetailUiData,
+                            owner = uiOwner,
+                            participants = participants
+                        )
+                    }
+                }
+                .onFailure { }
         }
     }
 }
