@@ -190,7 +190,6 @@
                 list="@{vm.uiState.participants}"
                 tools:listitem="@layout/item_participant" />
 
-
             <View
                 android:id="@+id/iv_dash_line2"
                 android:layout_width="match_parent"
@@ -266,7 +265,6 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_participate"
-
             style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -280,7 +278,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
