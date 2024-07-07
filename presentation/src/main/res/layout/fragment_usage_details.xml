@@ -257,27 +257,29 @@
             android:layout_height="wrap_content"
             android:text="채팅방은 2주가 지나면 읽을 수 없어요"
             android:textColor="#9C9C9C"
+            android:layout_marginBottom="8dp"
             style="@style/TextSmallMedium"
-            app:layout_constraintTop_toBottomOf="@id/layout_usage"
             android:gravity="center"
-            android:layout_marginTop="108dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_participate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_participate"
+
             style="@style/TextLargeSemibold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="8dp"
+            android:background="@drawable/rect_nofill_sub500stroke_61radius"
             android:gravity="center"
             android:text="채팅방 입장하기"
             android:paddingVertical="16dp"
             android:visibility="visible"
+            android:layout_marginBottom="14dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_chat_label" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
