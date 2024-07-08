@@ -102,19 +102,6 @@ class ChatRoomViewModel @Inject constructor(
             val lastMessage = uiState.value.chatMessage.first()
 
             if (lastMessage.sentTime.isNotBlank() && (lastMessage.memberId == newMessage.memberId && lastMessage.sentTime == newMessage.sentTime)) {
-                _uiState.update { state ->
-                    state.copy(
-                        chatMessage = uiState.value.chatMessage.mapIndexed { index, uiChatMessage ->
-                            if (index == 0) {
-                                uiChatMessage.copy(
-                                    sentTime = ""
-                                )
-                            } else {
-                                uiChatMessage.copy()
-                            }
-                        }
-                    )
-                }
                 newMessages.first().sentTime = ""
                 newMessage.profileImgUrl = ""
             }

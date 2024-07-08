@@ -101,6 +101,10 @@ fun List<ChatMessageItemData>.toUiChatMessageList(
                 }
 
                 newList.add(laterChat)
+
+                if(i + 2 == list.size){
+                    newList.add(pastChat)
+                }
             }
         }
     }

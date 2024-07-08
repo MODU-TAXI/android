@@ -36,7 +36,7 @@ class ChatMessageAdapter :
                 oldItem: UiChatMessage,
                 newItem: UiChatMessage
             ): Boolean {
-                return oldItem == newItem
+                return false
             }
         }
     }
@@ -117,6 +117,7 @@ class ChatMessageAdapter :
 class OtherChatViewHolder(private val binding: ItemChatBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: UiChatMessage) {
+        binding.root.visibility = View.GONE
         binding.item =item
 
         if(item.sender == "모두의 택시 봇"){
@@ -162,6 +163,8 @@ class OtherChatViewHolder(private val binding: ItemChatBinding) :
 
             }
         }
+        binding.executePendingBindings()
+        binding.root.visibility = View.VISIBLE
     }
 
 }
@@ -169,14 +172,20 @@ class OtherChatViewHolder(private val binding: ItemChatBinding) :
 class MyChatViewHolder(private val binding: ItemMychatBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: UiChatMessage) {
+        binding.root.visibility = View.GONE
         binding.item =item
+        binding.executePendingBindings()
+        binding.root.visibility = View.VISIBLE
     }
 }
 
 class OtherChatImageViewHolder(private val binding: ItemChatImageBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: UiChatMessage) {
+        binding.root.visibility = View.GONE
         binding.item =item
+        binding.executePendingBindings()
+        binding.root.visibility = View.VISIBLE
     }
 
 }
@@ -184,7 +193,10 @@ class OtherChatImageViewHolder(private val binding: ItemChatImageBinding) :
 class MyChatImageViewHolder(private val binding: ItemMychatImageBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: UiChatMessage) {
+        binding.root.visibility = View.GONE
         binding.item =item
+        binding.executePendingBindings()
+        binding.root.visibility = View.VISIBLE
     }
 
 }
@@ -192,6 +204,9 @@ class MyChatImageViewHolder(private val binding: ItemMychatImageBinding) :
 class JoinAndLeaveViewHolder(private val binding: ItemChatJoinLeaveBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: UiChatMessage) {
+        binding.root.visibility = View.GONE
         binding.item =item
+        binding.executePendingBindings()
+        binding.root.visibility = View.VISIBLE
     }
 }
