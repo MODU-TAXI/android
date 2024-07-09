@@ -160,4 +160,7 @@ interface MainApi {
 
     @DELETE("api/members")
     suspend fun deleteMember()
+
+    @POST("api/logout")
+    suspend fun logout()
 }

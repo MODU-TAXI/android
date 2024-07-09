@@ -130,4 +130,6 @@ interface MainRepository {
     ): Result<UsageDetailData>
 
     suspend fun deleteMember(): Result<Unit>
+
+    suspend fun logout(): Result<Unit>
 }

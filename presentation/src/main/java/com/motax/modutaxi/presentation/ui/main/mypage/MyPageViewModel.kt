@@ -38,6 +38,7 @@ sealed class MyPageEvent {
     data object NavigateToInquiry : MyPageEvent()
     data object NavigateToUsageHistory : MyPageEvent()
     data object NavigateToWithdrawal : MyPageEvent()
+    data object NavigateToSplash : MyPageEvent()
 }
 
 @HiltViewModel
@@ -131,6 +132,15 @@ class MyPageViewModel @Inject constructor(
 
             mainRepository.updateMemberProfile(profileData).onSuccess {
                 _event.emit(MyPageEvent.ShowToastMessage("프로필 변경 성공"))
+            }.onFailure { }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            mainRepository.logout().onSuccess {
+                dataStoreManager.clearUserData()
+                _event.emit(MyPageEvent.NavigateToSplash)
             }.onFailure { }
         }
     }

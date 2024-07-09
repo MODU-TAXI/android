@@ -182,4 +182,8 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun deleteMember(): Result<Unit> = runCatching {
         api.deleteMember()
     }
+
+    override suspend fun logout(): Result<Unit> = runCatching {
+        api.logout()
+    }
 }
