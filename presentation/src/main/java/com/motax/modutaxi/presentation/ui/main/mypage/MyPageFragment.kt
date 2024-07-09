@@ -85,6 +85,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                     is MyPageEvent.NavigateToNotification -> findNavController().toNotification()
                     is MyPageEvent.NavigateToInquiry -> findNavController().toInquiry()
                     is MyPageEvent.NavigateToUsageHistory -> findNavController().toUsageHistory()
+                    is MyPageEvent.NavigateToWithdrawal -> findNavController().toWithdrawal()
                     is MyPageEvent.ShowToastMessage -> {
                         Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
                     }
@@ -120,6 +121,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     private fun NavController.toUsageHistory() {
         val action = MyPageFragmentDirections.actionMyPageToUsageHistory()
+        navigate(action)
+    }
+
+    private fun NavController.toWithdrawal() {
+        val action = MyPageFragmentDirections.actionMyPageToWithdrawal()
         navigate(action)
     }
 }

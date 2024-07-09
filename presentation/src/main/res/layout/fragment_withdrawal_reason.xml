@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
-
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.reason.ReasonViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,6 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="36dp"
+            android:text='@{vm.uiState.nickname + "님,"}'
             android:textColor="@color/mx_gray900"
             app:layout_constraintStart_toStartOf="@id/layout_toolbar"
             app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
@@ -74,74 +78,96 @@
             app:layout_constraintStart_toStartOf="@id/tv_nickname"
             app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
 
-        <RadioButton
-            android:id="@+id/rb_not_use"
-            style="@style/TextRegularMedium"
+        <RadioGroup
+            android:id="@+id/rg_reason"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="16dp"
-            android:text="  택시를 잘 이용하지 않아요"
-            android:textColor="@color/mx_gray700"
-            app:layout_constraintStart_toStartOf="@id/layout_toolbar"
-            app:layout_constraintTop_toBottomOf="@id/tv_reason_label" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_reason_label">
 
-        <RadioButton
-            android:id="@+id/rb_dont_know"
-            style="@style/TextRegularMedium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="  앱 사용 방법을 모르겠어요"
-            android:textColor="@color/mx_gray700"
-            app:layout_constraintStart_toStartOf="@id/rb_not_use"
-            app:layout_constraintTop_toBottomOf="@id/rb_not_use" />
+            <RadioButton
+                android:theme="@style/CustomRadioButton"
+                android:id="@+id/rb_not_use"
+                style="@style/TextRegularMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="16dp"
+                android:text="  택시를 잘 이용하지 않아요"
+                android:textColor="@color/mx_gray700" />
 
-        <RadioButton
-            android:id="@+id/rb_error"
-            style="@style/TextRegularMedium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="  앱 오류가 많아요"
-            android:textColor="@color/mx_gray700"
-            app:layout_constraintStart_toStartOf="@id/rb_not_use"
-            app:layout_constraintTop_toBottomOf="@id/rb_dont_know" />
+            <RadioButton
+                android:theme="@style/CustomRadioButton"
+                android:id="@+id/rb_dont_know"
+                style="@style/TextRegularMedium"
+                android:layout_marginLeft="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  앱 사용 방법을 모르겠어요"
+                android:textColor="@color/mx_gray700"/>
 
-        <RadioButton
-            android:id="@+id/rb_resignup"
-            style="@style/TextRegularMedium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="  재가입이 필요해요"
-            android:textColor="@color/mx_gray700"
-            app:layout_constraintStart_toStartOf="@id/rb_not_use"
-            app:layout_constraintTop_toBottomOf="@id/rb_error" />
+            <RadioButton
+                android:theme="@style/CustomRadioButton"
+                android:id="@+id/rb_error"
+                style="@style/TextRegularMedium"
+                android:layout_marginLeft="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  앱 오류가 많아요"
+                android:textColor="@color/mx_gray700"/>
 
-        <RadioButton
-            android:id="@+id/rb_etc"
-            style="@style/TextRegularMedium"
+            <RadioButton
+                android:theme="@style/CustomRadioButton"
+                android:id="@+id/rb_resignup"
+                style="@style/TextRegularMedium"
+                android:layout_marginLeft="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  재가입이 필요해요"
+                android:textColor="@color/mx_gray700"/>
+
+            <RadioButton
+                android:theme="@style/CustomRadioButton"
+                android:id="@+id/rb_etc"
+                style="@style/TextRegularMedium"
+                android:layout_marginLeft="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  기타"
+                android:textColor="@color/mx_gray700"/>
+        </RadioGroup>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="  기타"
-            android:textColor="@color/mx_gray700"
-            app:layout_constraintStart_toStartOf="@id/rb_not_use"
-            app:layout_constraintTop_toBottomOf="@id/rb_resignup" />
+            android:layout_height="136dp"
+            android:background="@drawable/rect_gray100fill_nostroke_12radius"
+            android:visibility="@{vm.uiState.showEtcReason ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="@id/layout_toolbar"
+            app:layout_constraintStart_toStartOf="@id/rg_reason"
+            app:layout_constraintTop_toBottomOf="@id/rg_reason">
 
         <EditText
+            android:id="@+id/tv_etc_reason"
             style="@style/TextSmallMedium"
             android:layout_width="0dp"
-            android:layout_height="130dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/rect_gray100fill_nostroke_12radius"
             android:gravity="top"
             android:hint="이유를 입력해주세요"
+            android:inputType="textMultiLine"
+            android:background="@null"
+            android:backgroundTint="@android:color/transparent"
             android:maxLines="5"
             android:paddingHorizontal="16dp"
             android:paddingVertical="12dp"
+            android:layout_marginHorizontal="4dp"
             android:text=""
-            android:textColor="@color/mx_gray500"
-            app:layout_constraintEnd_toEndOf="@id/layout_toolbar"
-            app:layout_constraintStart_toStartOf="@id/rb_etc"
-            app:layout_constraintTop_toBottomOf="@id/rb_etc" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/mx_gray500" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/TextLargeSemibold"
@@ -154,6 +180,7 @@
             android:gravity="center"
             android:paddingHorizontal="96dp"
             android:paddingVertical="10dp"
+            android:onClick="@{() -> vm.navigateToConfirm() }"
             android:text="다음"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

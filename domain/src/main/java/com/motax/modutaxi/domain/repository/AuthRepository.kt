@@ -14,7 +14,7 @@ interface AuthRepository {
     suspend fun getMatchingCount(): Int?
     suspend fun getMemberBlocked(): Boolean?
     suspend fun getProfileUrl(): String?
-
+    suspend fun getMemberNickName(): String?
     suspend fun putAccessToken(token: String)
     suspend fun putRefreshToken(token: String)
     suspend fun putMemberId(memberId: Long)
@@ -25,6 +25,7 @@ interface AuthRepository {
     suspend fun putMatchingCount(matchingCount: Int)
     suspend fun putMemberBlocked(blocked: Boolean)
     suspend fun putProfileUrl(url: String)
+    suspend fun putMemberNickName(nickName: String)
 
     suspend fun deleteAccessToken()
     suspend fun deleteRefreshToken()
@@ -36,6 +37,7 @@ interface AuthRepository {
     suspend fun deleteMatchingCount()
     suspend fun deleteMemberBlocked()
     suspend fun deleteProfileUrl()
+    suspend fun deleteMemberNickName()
 
     suspend fun refreshToken(refreshToken: String): Result<AuthData>
 

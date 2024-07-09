@@ -128,4 +128,6 @@ interface MainRepository {
     suspend fun getUsageDetail(
         id: Long
     ): Result<UsageDetailData>
+
+    suspend fun deleteMember(): Result<Unit>
 }

@@ -178,4 +178,8 @@ class MainRepositoryImpl @Inject constructor(
             api.getUsageDetail(id).toDomain()
         }
     }
+
+    override suspend fun deleteMember(): Result<Unit> = runCatching {
+        api.deleteMember()
+    }
 }

@@ -20,6 +20,7 @@ import com.motax.modutaxi.data.model.response.UsageHistoryResponse
 import com.motax.modutaxi.domain.model.BaseState
 import okhttp3.MultipartBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -156,4 +157,7 @@ interface MainApi {
     suspend fun getUsageDetail(
         @Path("id") id: Long
     ): UsageDetailResponse
+
+    @DELETE("api/members")
+    suspend fun deleteMember()
 }

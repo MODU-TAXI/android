@@ -12,37 +12,6 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="20dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_toolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingVertical="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_backward"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_header"
-                style="@style/TextTitle3Semibold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="회원탈퇴"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <ImageView
             android:id="@+id/iv_check"
             android:layout_width="64dp"
@@ -67,7 +36,6 @@
             app:layout_constraintTop_toBottomOf="@id/iv_check"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_check"
