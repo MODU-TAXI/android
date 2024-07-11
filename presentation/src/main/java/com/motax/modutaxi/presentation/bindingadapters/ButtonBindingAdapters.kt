@@ -110,9 +110,9 @@ fun bindMatchingParticipateBtnState(btn: AppCompatButton, roomState: RoomState) 
 }
 
 @BindingAdapter("reportBtnState")
-fun bindReportBtnState(btn: AppCompatButton, isReportTypeSelected: Boolean) {
-    btn.isEnabled = isReportTypeSelected
-    if (isReportTypeSelected) {
+fun bindReportBtnState(btn: AppCompatButton, isButtonEnabled: Boolean) {
+    btn.isEnabled = isButtonEnabled
+    if (isButtonEnabled) {
         btn.setBackgroundResource(R.drawable.rect_sub500fill_nostroke_61radius)
     } else {
         btn.setBackgroundResource(R.drawable.rect_gray300fill_nostroke_61radius)

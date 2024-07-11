@@ -81,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textColor="@color/mx_gray800"
+            android:text="@{vm.uiState.nickName}"
             app:layout_constraintEnd_toStartOf="@id/guide_48_vertical"
             app:layout_constraintTop_toBottomOf="@id/iv_report"
             tools:text="헤일/이하연" />
@@ -122,6 +123,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mx_gray700"
+                android:text='@{vm.uiState.departureName + " -> " + vm.uiState.arrivalName  }'
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="인하대학교 -> 주안역" />
@@ -131,12 +133,17 @@
                 style="@style/TextRegularRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text='@{"-" + vm.uiState.expectedChargePerPerson}'
                 android:textColor="@color/mx_gray700"
+                app:layout_constraintBottom_toBottomOf="@id/tv_departure_arrival"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+
                 tools:text="-4,500원" />
 
             <TextView
+                android:text="@{vm.uiState.departureTime}"
                 style="@style/TextSmallRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -202,6 +209,7 @@
             android:background="@drawable/rect_nofill_gray400stroke_12radius">
 
             <EditText
+                android:id="@+id/et_content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="top"
@@ -248,9 +256,10 @@
             android:gravity="center"
             android:paddingHorizontal="96dp"
             android:paddingVertical="16dp"
+            android:onClick="@{() -> vm.postReport()}"
             android:text="확인"
             android:textColor="#FFFFFF"
-            reportBtnState="@{vm.uiState.isReportTypeSelected}"
+            reportBtnState="@{vm.uiState.buttonEnabled}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

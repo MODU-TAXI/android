@@ -132,4 +132,11 @@ interface MainRepository {
     suspend fun deleteMember(): Result<Unit>
 
     suspend fun logout(): Result<Unit>
+
+    suspend fun postReport(
+        roomId: Long,
+        targetId: Long,
+        type: String,
+        content: String
+    ): Result<Unit>
 }

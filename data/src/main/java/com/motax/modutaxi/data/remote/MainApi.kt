@@ -1,6 +1,7 @@
 package com.motax.modutaxi.data.remote
 
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.request.ReportRequest
 import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
@@ -163,4 +164,9 @@ interface MainApi {
 
     @POST("api/logout")
     suspend fun logout()
+
+    @POST("api/reports")
+    suspend fun postReport(
+        @Body reportRequest: ReportRequest
+    ): Unit
 }

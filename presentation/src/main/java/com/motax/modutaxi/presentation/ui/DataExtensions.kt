@@ -131,3 +131,13 @@ fun Double.toDistanceString(): String {
 
 fun Double.to8Round(): Double = round(this * 100000000) / 100000000
 
+fun String.shortenAddress(): String {
+    val regex = Regex("""(\S+동) (\S+로\d*번길)(\d+)""")
+    val matchResult = regex.find(this)
+    return if (matchResult != null) {
+        val (dong, road, number) = matchResult.destructured
+        "$dong $road $number"
+    } else {
+        this
+    }
+}

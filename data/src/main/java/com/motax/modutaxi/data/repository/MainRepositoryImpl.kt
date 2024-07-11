@@ -2,6 +2,7 @@ package com.motax.modutaxi.data.repository
 
 import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.request.ReportRequest
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.MemberDetailData
@@ -185,5 +186,15 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun logout(): Result<Unit> = runCatching {
         api.logout()
+    }
+
+    override suspend fun postReport(
+        roomId: Long,
+        targetId: Long,
+        type: String,
+        content: String
+    ): Result<Unit> = runCatching {
+        val reportRequest = ReportRequest(roomId, targetId, type, content)
+        api.postReport(reportRequest)
     }
 }

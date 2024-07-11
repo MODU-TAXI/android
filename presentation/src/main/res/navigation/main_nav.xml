@@ -292,6 +292,12 @@
         android:id="@+id/reportFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.report.ReportFragment"
         android:label="report">
+        <argument
+            android:name="targetId"
+            app:argType="long"/>
+        <argument
+            android:name="roomId"
+            app:argType="long"/>
     </fragment>
 
 
