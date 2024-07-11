@@ -37,4 +37,7 @@
     <color name="search_divider">#EBEBEB</color>
 
     <color name="gray_4F4F4F">#4F4F4F</color>
+
+    <color name="hint_color">#AFAFAF</color>
+    <color name="selected_text_color">#1F1F1F</color>
 </resources>

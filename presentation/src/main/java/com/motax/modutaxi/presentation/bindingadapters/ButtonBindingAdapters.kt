@@ -86,7 +86,7 @@ fun bindMyPagePhoneAuthHelperText(tv: TextView, state: MyPageAuthBtnState) {
 
 @BindingAdapter("matchingParticipateBtnState")
 fun bindMatchingParticipateBtnState(btn: AppCompatButton, roomState: RoomState) {
-    when(roomState){
+    when (roomState) {
         RoomState.PARTICIPANT, RoomState.OWNER -> {
             btn.setBackgroundResource(R.drawable.rect_nofill_sub500stroke_61radius)
             btn.setTextColor(ContextCompat.getColor(btn.context, R.color.mx_sub500))
@@ -104,6 +104,17 @@ fun bindMatchingParticipateBtnState(btn: AppCompatButton, roomState: RoomState) 
             btn.setTextColor(ContextCompat.getColor(btn.context, R.color.white))
             btn.text = "매칭 참여하기"
         }
-        else ->{}
+
+        else -> {}
+    }
+}
+
+@BindingAdapter("reportBtnState")
+fun bindReportBtnState(btn: AppCompatButton, isReportTypeSelected: Boolean) {
+    btn.isEnabled = isReportTypeSelected
+    if (isReportTypeSelected) {
+        btn.setBackgroundResource(R.drawable.rect_sub500fill_nostroke_61radius)
+    } else {
+        btn.setBackgroundResource(R.drawable.rect_gray300fill_nostroke_61radius)
     }
 }
