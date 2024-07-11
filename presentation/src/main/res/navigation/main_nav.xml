@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/reportFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -286,6 +286,12 @@
         android:id="@+id/withdrawalCompleteFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.complete.CompleteFragment"
         android:label="complete">
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.report.ReportFragment"
+        android:label="report">
     </fragment>
 
 
