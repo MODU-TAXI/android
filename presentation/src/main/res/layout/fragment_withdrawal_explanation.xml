@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.explanation.ExplanationViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_backward"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_header"
+                style="@style/TextTitle3Semibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원탈퇴"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="델로델로님,"
+            android:text='@{vm.uiState.nickname  + "님,"}'
+            style="@style/TextTitle3Semibold"
+            android:textColor="@color/mx_gray900"
+            android:layout_marginTop="36dp"
+            android:layout_marginLeft="4dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
+            app:layout_constraintStart_toStartOf="@id/layout_toolbar"/>
+
+        <TextView
+            android:id="@+id/tv_wait"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="잠시만요!"
+            style="@style/TextTitle3Semibold"
+            android:textColor="@color/mx_gray900"
+            app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+            app:layout_constraintStart_toStartOf="@id/tv_nickname"/>
+
+        <TextView
+            android:id="@+id/tv_if_withdraw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="모두의 택시를 탈퇴하면,"
+            style="@style/TextRegularMedium"
+            android:textColor="#FF4949"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@id/tv_nickname"
+            app:layout_constraintTop_toBottomOf="@id/tv_wait"/>
+
+        <TextView
+            android:id="@+id/tv_explain_first"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="•   [델로델로델로]님의 데이터는 비활성화 후 30일 동안 보관돼요"
+            android:text='@{"•  " + vm.uiState.nickname  + "님의 데이터는 비활성화 후 30일 동안 보관돼요"}'
+            style="@style/TextSmallMedium"
+            android:textColor="@color/mx_gray700"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_if_withdraw"
+            app:layout_constraintStart_toStartOf="@id/tv_nickname"/>
+
+        <TextView
+            android:id="@+id/tv_explain_second"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="•   30일이 지나기 전까지는 언제든지 로그인해서 계정을 활성화할 수 있어요"
+            style="@style/TextSmallMedium"
+            android:textColor="@color/mx_gray700"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_explain_first"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_nickname"/>
+
+        <TextView
+            android:id="@+id/tv_explain_third"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="•   30일이 지나면 모두의 택시에서 이용했던 모든 기록이 사라져요"
+            style="@style/TextSmallMedium"
+            android:textColor="@color/mx_gray700"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_explain_second"
+            app:layout_constraintStart_toStartOf="@id/tv_nickname"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@drawable/rect_sub500fill_nostroke_61radius"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="96dp"
+            android:layout_marginLeft="34dp"
+            android:layout_marginRight="34dp"
+            android:text="다음"
+            android:onClick="@{() -> vm.navigateToReason()}"
+            style="@style/TextLargeSemibold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginBottom="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

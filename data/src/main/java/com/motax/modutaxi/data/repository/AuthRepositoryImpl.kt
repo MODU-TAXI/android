@@ -27,6 +27,7 @@ class AuthRepositoryImpl @Inject constructor(
         private val REFRESH_TOKEN_KEY = stringPreferencesKey(Constants.REFRESH_TOKEN)
         private val MEMBER_ID_KEY = longPreferencesKey(Constants.MEMBER_ID)
         private val MEMBER_NAME_KEY = stringPreferencesKey(Constants.MEMBER_NAME)
+        private val MEMBER_NICKNAME_KEY = stringPreferencesKey(Constants.MEMBER_NICKNAME)
         private val MEMBER_GENDER_KEY = stringPreferencesKey(Constants.MEMBER_GENDER)
         private val MEMBER_PHONE_KEY = stringPreferencesKey(Constants.MEMBER_PHONE_NUMBER)
         private val MEMBER_EMAIL_KEY = stringPreferencesKey(Constants.MEMBER_EMAIL)
@@ -89,6 +90,12 @@ class AuthRepositoryImpl @Inject constructor(
         }.first()
     }
 
+    override suspend fun getMemberNickName(): String? {
+        return dataStore.data.map { prefs ->
+            prefs[MEMBER_NICKNAME_KEY]
+        }.first()
+    }
+
     override suspend fun putAccessToken(token: String) {
         dataStore.edit { prefs ->
             prefs[ACCESS_TOKEN_KEY] = token
@@ -143,6 +150,12 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun putMemberNickName(nickName: String) {
+        dataStore.edit { prefs ->
+            prefs[MEMBER_NICKNAME_KEY] = nickName
+        }
+    }
+
     override suspend fun deleteAccessToken() {
         dataStore.edit { prefs ->
             prefs.remove(ACCESS_TOKEN_KEY)
@@ -194,6 +207,12 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun deleteMemberBlocked() {
         dataStore.edit { prefs ->
             prefs.remove(MEMBER_BLOCKED_KEY)
+        }
+    }
+
+    override suspend fun deleteMemberNickName() {
+        dataStore.edit { prefs ->
+            prefs.remove(MEMBER_NICKNAME_KEY)
         }
     }
 

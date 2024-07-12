@@ -2,6 +2,7 @@ package com.motax.modutaxi.data.repository
 
 import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.request.ReportRequest
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.MemberDetailData
@@ -17,6 +18,7 @@ import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.UpdateMemberData
 import com.motax.modutaxi.domain.model.UploadImageData
+import com.motax.modutaxi.domain.model.UsageDetailData
 import com.motax.modutaxi.domain.repository.MainRepository
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -170,5 +172,29 @@ class MainRepositoryImpl @Inject constructor(
         return runCatching {
             api.getMonthlyUsageHistory(year, month)
         }.mapCatching { it.toDomain() }
+    }
+
+    override suspend fun getUsageDetail(id: Long): Result<UsageDetailData> {
+        return runCatching {
+            api.getUsageDetail(id).toDomain()
+        }
+    }
+
+    override suspend fun deleteMember(): Result<Unit> = runCatching {
+        api.deleteMember()
+    }
+
+    override suspend fun logout(): Result<Unit> = runCatching {
+        api.logout()
+    }
+
+    override suspend fun postReport(
+        roomId: Long,
+        targetId: Long,
+        type: String,
+        content: String
+    ): Result<Unit> = runCatching {
+        val reportRequest = ReportRequest(roomId, targetId, type, content)
+        api.postReport(reportRequest)
     }
 }

@@ -24,6 +24,13 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
             stringPreferencesKey(Constants.MEMBER_MATCHING_COUNT)
         private val MEMBER_BLOCKED_KEY = stringPreferencesKey(Constants.MEMBER_BLOCKED)
         private val PROFILE_URL_KEY = stringPreferencesKey(Constants.PROFILE_URL)
+        private val MEMBER_NICKNAME_KEY = stringPreferencesKey(Constants.MEMBER_NICKNAME)
+    }
+
+    suspend fun clearUserData() {
+        dataStore.edit { pref ->
+            pref.clear()
+        }
     }
 
     suspend fun getAccessToken(): String? {
@@ -47,6 +54,12 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
     suspend fun getMemberName(): String? {
         return dataStore.data.map { prefs ->
             prefs[MEMBER_NAME_KEY]
+        }.first()
+    }
+
+    suspend fun getMemberNickName(): String? {
+        return dataStore.data.map { prefs ->
+            prefs[MEMBER_NICKNAME_KEY]
         }.first()
     }
 
@@ -101,6 +114,12 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
     suspend fun putMemberName(name: String) {
         dataStore.edit { prefs ->
             prefs[MEMBER_NAME_KEY] = name
+        }
+    }
+
+    suspend fun putMemberNickName(name: String) {
+        dataStore.edit { prefs ->
+            prefs[MEMBER_NICKNAME_KEY] = name
         }
     }
 
@@ -204,5 +223,11 @@ class DataStoreManager @Inject constructor(private val dataStore: DataStore<Pref
         return dataStore.data.map { prefs ->
             prefs[PROFILE_URL_KEY]
         }.first()
+    }
+
+    suspend fun deleteMemberNickName() {
+        dataStore.edit { prefs ->
+            prefs.remove(MEMBER_NICKNAME_KEY)
+        }
     }
 }

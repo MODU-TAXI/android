@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/reportFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -109,6 +109,9 @@
         <action
             android:id="@+id/action_myPage_to_inquiry"
             app:destination="@id/inquiryFragment"/>
+        <action
+            android:id="@+id/action_myPage_to_withdrawal"
+            app:destination="@id/withdrawalExplanationFragment"/>
     </fragment>
 
     <fragment
@@ -249,6 +252,52 @@
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.notification.NotificationSettingsFragment"
         android:label="myPageNotification">
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/withdrawalExplanationFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.explanation.ExplanationFragment"
+        android:label="explanation">
+        <action
+            android:id="@+id/action_explanation_to_reason"
+            app:destination="@id/withdrawalReasonFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/withdrawalReasonFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.reason.ReasonFragment"
+        android:label="reason">
+        <action
+            android:id="@+id/action_reason_to_confirm"
+            app:destination="@id/withdrawalConfirmFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/withdrawalConfirmFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.confirm.ConfirmFragment"
+        android:label="confirm">
+        <action
+            android:id="@+id/action_confirm_to_complete"
+            app:destination="@id/withdrawalCompleteFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/withdrawalCompleteFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.complete.CompleteFragment"
+        android:label="complete">
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.report.ReportFragment"
+        android:label="report">
+        <argument
+            android:name="targetId"
+            app:argType="long"/>
+        <argument
+            android:name="roomId"
+            app:argType="long"/>
     </fragment>
 
 
