@@ -16,5 +16,5 @@ object Constants {
     const val MEMBER_BLOCKED = "BLOCKED"
     const val PROFILE_URL = "PROFILE_URL"
     const val SNS_ID = "SNS_ID"
-
+    const val MEMBER_NICKNAME = "MEMBER_NICKNAME"
 }

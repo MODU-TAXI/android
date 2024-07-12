@@ -16,6 +16,7 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMypageBinding
 import com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickEvent
+import com.motax.modutaxi.presentation.ui.splash.SplashActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -85,6 +86,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                     is MyPageEvent.NavigateToNotification -> findNavController().toNotification()
                     is MyPageEvent.NavigateToInquiry -> findNavController().toInquiry()
                     is MyPageEvent.NavigateToUsageHistory -> findNavController().toUsageHistory()
+                    is MyPageEvent.NavigateToWithdrawal -> findNavController().toWithdrawal()
+                    is MyPageEvent.NavigateToSplash -> navigateToSplash()
                     is MyPageEvent.ShowToastMessage -> {
                         Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
                     }
@@ -121,5 +124,16 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     private fun NavController.toUsageHistory() {
         val action = MyPageFragmentDirections.actionMyPageToUsageHistory()
         navigate(action)
+    }
+
+    private fun NavController.toWithdrawal() {
+        val action = MyPageFragmentDirections.actionMyPageToWithdrawal()
+        navigate(action)
+    }
+
+    private fun navigateToSplash() {
+        val intent = Intent(requireContext(), SplashActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 }

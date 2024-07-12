@@ -5,6 +5,7 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
+        <item name="android:dropDownListViewStyle">@style/SpinnerStyle</item>
     </style>
 
     <style name="Theme.Modutaxi" parent="Base.Theme.Modutaxi" />

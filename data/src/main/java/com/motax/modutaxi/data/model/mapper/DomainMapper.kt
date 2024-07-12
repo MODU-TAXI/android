@@ -12,6 +12,7 @@ import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
 import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
+import com.motax.modutaxi.data.model.response.PaymentMemberListResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
@@ -25,8 +26,10 @@ import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.TokenResponse
 import com.motax.modutaxi.data.model.response.UpdateMemberResponse
 import com.motax.modutaxi.data.model.response.UploadImageResponse
+import com.motax.modutaxi.data.model.response.UsageDetailResponse
 import com.motax.modutaxi.data.model.response.UsageHistoryItemResponse
 import com.motax.modutaxi.data.model.response.UsageHistoryResponse
+import com.motax.modutaxi.data.model.response.UsageParticipantResponse
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
 import com.motax.modutaxi.domain.model.AddressFromGeoData
@@ -49,6 +52,7 @@ import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NearSpotItemData
 import com.motax.modutaxi.domain.model.PathData
+import com.motax.modutaxi.domain.model.PaymentMemberListData
 import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.domain.model.SearchResultListData
 import com.motax.modutaxi.domain.model.SpotListData
@@ -65,7 +69,9 @@ import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.TokenData
 import com.motax.modutaxi.domain.model.UpdateMemberData
 import com.motax.modutaxi.domain.model.UploadImageData
+import com.motax.modutaxi.domain.model.UsageDetailData
 import com.motax.modutaxi.domain.model.UsageHistoryDataItem
+import com.motax.modutaxi.domain.model.UsageParticipantData
 
 fun TokenResponse.toDomain() = TokenData(
     accessToken = accessToken,
@@ -342,3 +348,35 @@ fun UsageHistoryItemResponse.toDomain() = UsageHistoryDataItem(
     arrivalName = this.arrivalName,
     portionCharge = this.portionCharge
 )
+
+fun UsageDetailResponse.toDomain(): UsageDetailData {
+    return UsageDetailData(
+        managerId = managerId,
+        historyId = historyId,
+        roomId = roomId,
+        departureTime = departureTime,
+        departureName = departureName,
+        arrivalName = arrivalName,
+        totalCharge = totalCharge,
+        portionCharge = portionCharge,
+        paymentMemberListData = paymentMemberListResponse.toDomain()
+    )
+}
+
+fun PaymentMemberListResponse.toDomain(): PaymentMemberListData {
+    return PaymentMemberListData(
+        participantList = participantList.map { it.toDomain() }
+    )
+}
+
+fun UsageParticipantResponse.toDomain(): UsageParticipantData {
+    return UsageParticipantData(
+        id = id,
+        nickName = nickName,
+        name = name,
+        imageUrl = imageUrl ?: "",
+        status = status,
+        me = me,
+        portionCharge = portionCharge
+    )
+}

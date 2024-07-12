@@ -37,6 +37,8 @@ sealed class MyPageEvent {
     data object NavigateToNotification : MyPageEvent()
     data object NavigateToInquiry : MyPageEvent()
     data object NavigateToUsageHistory : MyPageEvent()
+    data object NavigateToWithdrawal : MyPageEvent()
+    data object NavigateToSplash : MyPageEvent()
 }
 
 @HiltViewModel
@@ -134,6 +136,15 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
+    fun logout() {
+        viewModelScope.launch {
+            mainRepository.logout().onSuccess {
+                dataStoreManager.clearUserData()
+                _event.emit(MyPageEvent.NavigateToSplash)
+            }.onFailure { }
+        }
+    }
+
     private fun uriToFile(uri: Uri): File {
         val contentResolver: ContentResolver = getApplication<Application>().contentResolver
         val inputStream: InputStream? = contentResolver.openInputStream(uri)
@@ -185,6 +196,13 @@ class MyPageViewModel @Inject constructor(
     fun navigateToUsageHistory() {
         viewModelScope.launch {
             _event.emit(MyPageEvent.NavigateToUsageHistory)
+        }
+    }
+
+    fun navigateToWithdrawal() {
+        viewModelScope.launch {
+            _event.emit(MyPageEvent.NavigateToWithdrawal)
+
         }
     }
 }

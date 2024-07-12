@@ -43,6 +43,7 @@ class BearerInterceptor @Inject constructor(
                         dataStoreManager.putMemberEmail(it.memberInfoResponse.email.toString())
                         dataStoreManager.putMemberName(it.memberInfoResponse.name)
                         dataStoreManager.putMemberBlocked(it.memberInfoResponse.blocked.toString())
+                        dataStoreManager.putMemberNickName(it.memberInfoResponse.nickname.toString())
                         newAccessToken = it.tokenResponse.accessToken
 
                     }.onFailure {
@@ -57,6 +58,7 @@ class BearerInterceptor @Inject constructor(
                         dataStoreManager.deleteMemberGender()
                         dataStoreManager.deleteMemberId()
                         dataStoreManager.deleteProfileUrl()
+                        dataStoreManager.deleteMemberNickName()
                     }
                 }
             }

@@ -4,4 +4,26 @@
         <item name="android:popupBackground">#EFEFEFEF</item>
         <item name="android:textColor">#5D5D5D</item>
     </style>
+
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/mx_gray400</item>
+        <item name="strokeWidth">0.5dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+    </style>
+
+    <style name="changeBackgroundColor"  parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <item name="android:radius">8dp</item>
+    </style>
+
+    <style name="SpinnerStyle" parent="Widget.AppCompat.ListView.DropDown">
+        <item name="android:divider">#D9D9D9</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+
 </resources>
+

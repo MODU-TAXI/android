@@ -11,4 +11,15 @@
     <string name="not_recent">"<u>인증번호 재전송"</u>"</string>
     <string name="onboarding_complete_one">"<font color='#FF7A00'>"가입완료!"</font>"</string>
     <string name="onboarding_complete_two">지금 바로 탑승하러 가볼까요?</string>
+    <string name="spinner_hint">신고 유형을 선택해주세요</string>
+
+    <string-array name="report_type_array">
+        <item>중간에 채팅방을 나갔어요</item>
+        <item>제 시간에 도착하지 않았어요</item>
+        <item>먼저 출발했어요</item>
+        <item>연락이 되지 않아요</item>
+        <item>정산 금액이 예상과 달라요</item>
+        <item>정산 금액을 보내주지 않았어요</item>
+        <item>기타 (직접 입력할게요)</item>
+    </string-array>
 </resources>

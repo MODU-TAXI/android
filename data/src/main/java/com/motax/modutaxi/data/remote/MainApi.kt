@@ -1,6 +1,7 @@
 package com.motax.modutaxi.data.remote
 
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.request.ReportRequest
 import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
@@ -15,10 +16,12 @@ import com.motax.modutaxi.data.model.response.TaxiPotPreviewResponse
 import com.motax.modutaxi.data.model.response.TaxiPotWaitingMembers
 import com.motax.modutaxi.data.model.response.UpdateMemberResponse
 import com.motax.modutaxi.data.model.response.UploadImageResponse
+import com.motax.modutaxi.data.model.response.UsageDetailResponse
 import com.motax.modutaxi.data.model.response.UsageHistoryResponse
 import com.motax.modutaxi.domain.model.BaseState
 import okhttp3.MultipartBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -151,4 +154,19 @@ interface MainApi {
         @Query("month") month: Int
     ): UsageHistoryResponse
 
+    @GET("api/histories/{id}")
+    suspend fun getUsageDetail(
+        @Path("id") id: Long
+    ): UsageDetailResponse
+
+    @DELETE("api/members")
+    suspend fun deleteMember()
+
+    @POST("api/logout")
+    suspend fun logout()
+
+    @POST("api/reports")
+    suspend fun postReport(
+        @Body reportRequest: ReportRequest
+    ): Unit
 }
