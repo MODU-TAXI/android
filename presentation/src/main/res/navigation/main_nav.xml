@@ -109,6 +109,9 @@
         <action
             android:id="@+id/action_myPage_to_withdrawal"
             app:destination="@id/withdrawalExplanationFragment"/>
+        <action
+            android:id="@+id/action_myPage_to_account"
+            app:destination="@id/accountFragment"/>
     </fragment>
 
     <fragment
@@ -290,5 +293,11 @@
             app:argType="long"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.account.AccountFragment"
+        android:label="account">
+
+    </fragment>
 
 </navigation>

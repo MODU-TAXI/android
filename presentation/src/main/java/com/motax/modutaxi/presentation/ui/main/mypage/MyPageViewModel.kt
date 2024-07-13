@@ -38,6 +38,7 @@ sealed class MyPageEvent {
     data object NavigateToUsageHistory : MyPageEvent()
     data object NavigateToWithdrawal : MyPageEvent()
     data object NavigateToSplash : MyPageEvent()
+    data object NavigateToAccount : MyPageEvent()
 }
 
 @HiltViewModel
@@ -196,6 +197,12 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             _event.emit(MyPageEvent.NavigateToWithdrawal)
 
+        }
+    }
+
+    fun navigateToAccount() {
+        viewModelScope.launch {
+            _event.emit(MyPageEvent.NavigateToAccount)
         }
     }
 }
