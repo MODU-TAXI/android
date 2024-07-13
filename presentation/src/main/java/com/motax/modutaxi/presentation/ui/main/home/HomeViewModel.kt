@@ -23,6 +23,7 @@ data class HomeUiState(
     val participatingTaxiPot: TaxiPotPreviewData? = null,
     val roomId: String? = null,
     val isParticipating: Boolean = false,
+    val isRealtimeTaxipotListEmpty: Boolean = true,
     val memberId: String = "",
     val nickname: String = ""
 )
@@ -74,7 +75,11 @@ class HomeViewModel @Inject constructor(
                     )
                 }
                 _uiState.update { state ->
-                    state.copy(realtimeTaxiPotList = items)
+                    state.copy(
+
+                        realtimeTaxiPotList = items,
+                        isRealtimeTaxipotListEmpty = items.isEmpty()
+                    )
                 }
             }
                 .onFailure { throwable ->
