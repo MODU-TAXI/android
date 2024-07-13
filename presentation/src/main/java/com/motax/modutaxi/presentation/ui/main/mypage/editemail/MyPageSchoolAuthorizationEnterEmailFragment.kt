@@ -36,7 +36,7 @@ class MyPageSchoolAuthorizationEnterEmailFragment :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is MyPageSchoolAuthorizationEnterEmailEvent.NavigateToMyPageComplete -> findNavController().toMyPageComplete()
+                    is MyPageSchoolAuthorizationEnterEmailEvent.NavigateToMyPage -> findNavController().navigateUp()
                     is MyPageSchoolAuthorizationEnterEmailEvent.NavigateToEnterCode -> findNavController().toEmailAuth(it.email)
                     is MyPageSchoolAuthorizationEnterEmailEvent.ShowToastMessage -> showToastMessage(
                         it.msg
@@ -44,12 +44,6 @@ class MyPageSchoolAuthorizationEnterEmailFragment :
                 }
             }
         }
-    }
-
-    private fun NavController.toMyPageComplete() {
-        val action =
-            MyPageSchoolAuthorizationEnterEmailFragmentDirections.actionEmailAuthFragmentToMyPageFragment()
-        navigate(action)
     }
 
     private fun NavController.toEmailAuth(email : String) {

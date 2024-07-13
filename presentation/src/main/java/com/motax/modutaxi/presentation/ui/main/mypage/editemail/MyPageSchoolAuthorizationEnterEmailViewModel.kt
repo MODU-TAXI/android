@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 sealed class MyPageSchoolAuthorizationEnterEmailEvent {
     data class NavigateToEnterCode(val email : String) : MyPageSchoolAuthorizationEnterEmailEvent()
-    data object NavigateToMyPageComplete : MyPageSchoolAuthorizationEnterEmailEvent()
+    data object NavigateToMyPage : MyPageSchoolAuthorizationEnterEmailEvent()
     data class ShowToastMessage(val msg: String) : MyPageSchoolAuthorizationEnterEmailEvent()
 }
 
@@ -69,9 +69,9 @@ class MyPageSchoolAuthorizationEnterEmailViewModel @Inject constructor(
         }
     }
 
-    fun navigateToMyPageComplete() {
+    fun navigateToMyPage() {
         viewModelScope.launch {
-            _event.emit(MyPageSchoolAuthorizationEnterEmailEvent.NavigateToMyPageComplete)
+            _event.emit(MyPageSchoolAuthorizationEnterEmailEvent.NavigateToMyPage)
         }
     }
 

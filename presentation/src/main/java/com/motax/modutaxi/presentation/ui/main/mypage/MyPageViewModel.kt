@@ -34,7 +34,6 @@ sealed class MyPageEvent {
     data object NavigateToEditNick : MyPageEvent()
     data object NavigateToUpdateProfile : MyPageEvent()
     data object NavigateToEditEmail : MyPageEvent()
-    data object NavigateToNotification : MyPageEvent()
     data object NavigateToInquiry : MyPageEvent()
     data object NavigateToUsageHistory : MyPageEvent()
     data object NavigateToWithdrawal : MyPageEvent()
@@ -178,12 +177,6 @@ class MyPageViewModel @Inject constructor(
     fun navigateToEditEmail() {
         viewModelScope.launch {
             _event.emit(MyPageEvent.NavigateToEditEmail)
-        }
-    }
-
-    fun navigateToNotification() {
-        viewModelScope.launch {
-            _event.emit(MyPageEvent.NavigateToNotification)
         }
     }
 

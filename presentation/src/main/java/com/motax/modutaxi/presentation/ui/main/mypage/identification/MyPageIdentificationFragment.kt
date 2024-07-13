@@ -60,6 +60,7 @@ class MyPageIdentificationFragment :
                     is MyPageIdentificationEvent.NavigateToPhoneAuth -> {
                         findNavController().toPhoneAuth()
                     }
+                    is MyPageIdentificationEvent.NavigateToMyPage -> findNavController().navigateUp()
                 }
             }
         }

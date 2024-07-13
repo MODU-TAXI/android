@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentInquiryBinding
@@ -28,6 +29,7 @@ class InquiryFragment : BaseFragment<FragmentInquiryBinding>(R.layout.fragment_i
             viewModel.event.collect { event ->
                 when (event) {
                     is InquiryEvent.OpenKakao -> openKakaoChat()
+                    is InquiryEvent.NavigateToMyPage -> findNavController().navigateUp()
                 }
             }
         }

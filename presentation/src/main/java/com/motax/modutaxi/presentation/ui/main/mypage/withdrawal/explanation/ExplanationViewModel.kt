@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.explanation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.data.config.DataStoreManager
+import com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +21,7 @@ data class ExplanationUiState(
 
 sealed class ExplanationEvent {
     data object NavigateToReason : ExplanationEvent()
+    data object NavigateToMyPage : ExplanationEvent()
 }
 
 @HiltViewModel
@@ -49,6 +51,12 @@ class ExplanationViewModel @Inject constructor(
     fun navigateToReason() {
         viewModelScope.launch {
             _event.emit(ExplanationEvent.NavigateToReason)
+        }
+    }
+
+    fun navigateToMyPage() {
+        viewModelScope.launch {
+            _event.emit(ExplanationEvent.NavigateToMyPage)
         }
     }
 }

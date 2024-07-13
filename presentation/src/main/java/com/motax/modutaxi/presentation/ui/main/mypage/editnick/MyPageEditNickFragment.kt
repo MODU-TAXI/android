@@ -2,16 +2,19 @@ package com.motax.modutaxi.presentation.ui.main.mypage.editnick
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMypageEditNickBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MyPageEditNickFragment: BaseFragment<FragmentMypageEditNickBinding>(R.layout.fragment_mypage_edit_nick) {
+class MyPageEditNickFragment :
+    BaseFragment<FragmentMypageEditNickBinding>(R.layout.fragment_mypage_edit_nick) {
 
     private val viewModel: MyPageEditNickViewModel by viewModels()
 
@@ -23,24 +26,16 @@ class MyPageEditNickFragment: BaseFragment<FragmentMypageEditNickBinding>(R.layo
         initEventObserve()
     }
 
-    private fun initEventObserve(){
+    private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect{
-                when(it){
-                    is MyPageEditNickEvent.NavigateToMyPage -> {
-                        findNavController().toMyPage()
-                        showToastMessage(it.msg)
+            viewModel.event.collect {
+                when (it) {
+                    is MyPageEditNickEvent.NavigateToMyPage -> findNavController().navigateUp()
+                    is MyPageEditNickEvent.ShowToastMessage -> {
+                        Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
                     }
-
                 }
-
             }
         }
     }
-
-    private fun NavController.toMyPage(){
-        val action = MyPageEditNickFragmentDirections.actionEditNickToMypage()
-        navigate(action)
-    }
-
 }

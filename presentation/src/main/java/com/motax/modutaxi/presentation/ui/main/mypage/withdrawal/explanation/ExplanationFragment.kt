@@ -30,6 +30,7 @@ class ExplanationFragment :BaseFragment<FragmentWithdrawalExplanationBinding>(R.
             viewModel.event.collect {
                 when(it) {
                     is ExplanationEvent.NavigateToReason -> findNavController().toReason()
+                    is ExplanationEvent.NavigateToMyPage -> findNavController().navigateUp()
                 }
             }
         }
