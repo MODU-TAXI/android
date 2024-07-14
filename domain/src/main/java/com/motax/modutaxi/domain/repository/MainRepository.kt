@@ -1,11 +1,14 @@
 package com.motax.modutaxi.domain.repository
 
+import com.motax.modutaxi.domain.model.AccountData
 import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
+import com.motax.modutaxi.domain.model.NotificationCountData
+import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
@@ -139,4 +142,17 @@ interface MainRepository {
         type: String,
         content: String
     ): Result<Unit>
+
+    suspend fun getAccounts() : Result<AccountData>
+
+    suspend fun deleteAccounts(
+        id : Long
+    ) : Result<Unit>
+
+    suspend fun getNotifications(
+        page: Int, size: Int
+    ) : Result<NotificationData>
+
+    suspend fun getNotificationCounts()
+    : Result<NotificationCountData>
 }

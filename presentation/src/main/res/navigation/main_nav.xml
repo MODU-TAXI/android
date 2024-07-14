@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/reportFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -18,7 +18,9 @@
         <action
             android:id="@+id/action_homeFragment_to_matchDetailFragment"
             app:destination="@id/matchDetailFragment" />
-
+        <action
+            android:id="@+id/action_homeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
 
     </fragment>
 
@@ -101,9 +103,6 @@
             android:id="@+id/action_myPage_to_authorize_school"
             app:destination="@id/myPageEnterEmailFragment"/>
         <action
-            android:id="@+id/action_myPage_to_notification_settings"
-            app:destination="@id/myPageNotificationSettingsFragment"/>
-        <action
             android:id="@+id/action_myPage_to_usage_history"
             app:destination="@id/usageHistoryFragment"/>
         <action
@@ -112,6 +111,9 @@
         <action
             android:id="@+id/action_myPage_to_withdrawal"
             app:destination="@id/withdrawalExplanationFragment"/>
+        <action
+            android:id="@+id/action_myPage_to_account"
+            app:destination="@id/accountFragment"/>
     </fragment>
 
     <fragment
@@ -248,13 +250,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/myPageNotificationSettingsFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.mypage.notification.NotificationSettingsFragment"
-        android:label="myPageNotification">
-
-    </fragment>
-
-    <fragment
         android:id="@+id/withdrawalExplanationFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.explanation.ExplanationFragment"
         android:label="explanation">
@@ -300,5 +295,21 @@
             app:argType="long"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.mypage.account.AccountFragment"
+        android:label="account">
+    </fragment>
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.notification.NotificationFragment"
+        android:label="notification">
+
+        <action
+            android:id="@+id/action_notification_to_matchdetail"
+            app:destination="@id/matchDetailFragment"/>
+
+    </fragment>
 
 </navigation>

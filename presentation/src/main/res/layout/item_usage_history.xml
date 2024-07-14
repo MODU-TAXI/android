@@ -17,15 +17,26 @@
         android:layout_marginBottom="12dp">
 
         <TextView
-            android:id="@+id/tv_place_name"
-            style="@style/TextRegularMedium"
+            android:id="@+id/tv_departure"
+            style="@style/TextSmallMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/mx_gray700"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="인하대학교 -> 주안역"
-            android:text='@{item.departureName +  "->" + item.arrivalName}' />
+            tools:text="인하대학교"
+            android:text='@{item.departureName}' />
+
+        <TextView
+            android:id="@+id/tv_arrival"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text='@{"➡ " + item.arrivalName}'
+            android:textColor="@color/mx_gray700"
+            tools:text="-> 주안역"
+            style="@style/TextSmallMedium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_departure"/>
 
         <TextView
             android:id="@+id/tv_departure_datetime"
@@ -35,7 +46,7 @@
             android:layout_marginTop="2dp"
             android:textColor="@color/mx_gray400"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_place_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_arrival"
             tools:text="2024.06.30"
             android:text="@{item.departureTime}" />
 

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
+import com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,7 @@ data class MyPageIdentificationUiState(
 
 sealed class MyPageIdentificationEvent {
     data object NavigateToPhoneAuth : MyPageIdentificationEvent()
+    data object NavigateToMyPage : MyPageIdentificationEvent()
 }
 
 @HiltViewModel
@@ -51,7 +53,6 @@ class MyPageIdentificationViewModel @Inject constructor() : ViewModel() {
 
     fun navigateToPhoneAuth() {
         viewModelScope.launch {
-            //Log.d("debugging", SignUpData.key)
             SignUpData.setSignUpGender(gender.value)
             SignUpData.setSignUpName(name.value)
             SignUpData.setSignUpPhoneNumber(phoneNumber.value)
@@ -88,6 +89,12 @@ class MyPageIdentificationViewModel @Inject constructor() : ViewModel() {
             state.copy(
                 myPageFocusedField = MyPageFocusedField.PHONE
             )
+        }
+    }
+
+    fun navigateToMyPage() {
+        viewModelScope.launch {
+            _event.emit(MyPageIdentificationEvent.NavigateToMyPage)
         }
     }
 }

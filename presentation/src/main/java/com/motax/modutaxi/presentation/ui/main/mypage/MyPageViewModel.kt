@@ -34,11 +34,11 @@ sealed class MyPageEvent {
     data object NavigateToEditNick : MyPageEvent()
     data object NavigateToUpdateProfile : MyPageEvent()
     data object NavigateToEditEmail : MyPageEvent()
-    data object NavigateToNotification : MyPageEvent()
     data object NavigateToInquiry : MyPageEvent()
     data object NavigateToUsageHistory : MyPageEvent()
     data object NavigateToWithdrawal : MyPageEvent()
     data object NavigateToSplash : MyPageEvent()
+    data object NavigateToAccount : MyPageEvent()
 }
 
 @HiltViewModel
@@ -181,12 +181,6 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun navigateToNotification() {
-        viewModelScope.launch {
-            _event.emit(MyPageEvent.NavigateToNotification)
-        }
-    }
-
     fun navigateToInquiry() {
         viewModelScope.launch {
             _event.emit(MyPageEvent.NavigateToInquiry)
@@ -203,6 +197,12 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             _event.emit(MyPageEvent.NavigateToWithdrawal)
 
+        }
+    }
+
+    fun navigateToAccount() {
+        viewModelScope.launch {
+            _event.emit(MyPageEvent.NavigateToAccount)
         }
     }
 }

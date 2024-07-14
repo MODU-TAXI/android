@@ -10,6 +10,7 @@ import com.motax.modutaxi.presentation.util.DefaultDiffUtil
 
 class RealtimeTaxiPotAdapter :
     ListAdapter<UiRealtimeTaxiPotItem, RealtimeTaxiPotViewHolder>(DefaultDiffUtil<UiRealtimeTaxiPotItem>()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RealtimeTaxiPotViewHolder =
         RealtimeTaxiPotViewHolder(
             ItemRealtimeTaxipotBinding.inflate(

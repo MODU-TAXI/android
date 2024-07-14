@@ -4,11 +4,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
+import com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickEvent
 import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UiUsageParticipantItem
 import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UiUsageDetailData
+import com.motax.modutaxi.presentation.ui.shortenAddress
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,6 +25,10 @@ data class UsageDetailUiState(
     val participants: List<UiUsageParticipantItem> = emptyList()
 )
 
+sealed class UsageDetailEvent {
+    data object NavigateToMyPage : UsageDetailEvent()
+}
+
 @HiltViewModel
 class UsageDetailsViewModel @Inject constructor(
     private val mainRepository: MainRepository
@@ -27,6 +36,9 @@ class UsageDetailsViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(UsageDetailUiState())
     val uiState: StateFlow<UsageDetailUiState> = _uiState.asStateFlow()
+
+    private val _event = MutableSharedFlow<UsageDetailEvent>()
+    val event: SharedFlow<UsageDetailEvent> = _event.asSharedFlow()
 
     fun loadUsageDetail(id: Long) {
         viewModelScope.launch {
@@ -41,7 +53,7 @@ class UsageDetailsViewModel @Inject constructor(
                                     id = it.id,
                                     nickname = it.nickName,
                                     name = it.name,
-                                    imageUrl = it.imageUrl ?: "", // 기본 URL 설정
+                                    imageUrl = it.imageUrl ?: "",
                                     status = it.status,
                                     me = it.me,
                                     portionCharge = it.portionCharge
@@ -55,7 +67,7 @@ class UsageDetailsViewModel @Inject constructor(
                         historyId = response.historyId,
                         roomId = response.roomId,
                         departureTime = response.departureTime,
-                        departureName = response.departureName,
+                        departureName = response.departureName.shortenAddress(),
                         arrivalName = response.arrivalName,
                         totalCharge = response.totalCharge,
                         portionCharge = response.portionCharge,
@@ -82,6 +94,12 @@ class UsageDetailsViewModel @Inject constructor(
                     }
                 }
                 .onFailure { }
+        }
+    }
+
+    fun navigateToMyPage() {
+        viewModelScope.launch {
+            _event.emit(UsageDetailEvent.NavigateToMyPage)
         }
     }
 }

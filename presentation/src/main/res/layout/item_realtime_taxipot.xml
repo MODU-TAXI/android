@@ -71,26 +71,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tv_departure"
-            style="@style/TextRegularSemibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@{item.departureSpot}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_departure_time"
-            tools:text="인하대학교" />
-
         <ImageView
-            android:id="@+id/ic_arrow"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:src="@drawable/ic_arrow"
-            app:layout_constraintBottom_toBottomOf="@id/tv_departure"
-            app:layout_constraintStart_toEndOf="@id/tv_departure"
-            app:layout_constraintTop_toTopOf="@id/tv_departure" />
+            android:id="@+id/ic_flag"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_flag"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_departure_time" />
 
         <TextView
             style="@style/TextRegularSemibold"
@@ -98,19 +86,19 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="@{item.arrivalSpot}"
-            app:layout_constraintBottom_toBottomOf="@id/tv_departure"
-            app:layout_constraintStart_toEndOf="@id/ic_arrow"
-            app:layout_constraintTop_toTopOf="@id/tv_departure"
+            app:layout_constraintBottom_toBottomOf="@id/ic_flag"
+            app:layout_constraintStart_toEndOf="@id/ic_flag"
+            app:layout_constraintTop_toTopOf="@id/ic_flag"
             tools:text="주안역" />
 
         <ImageView
             android:id="@+id/iv_person_fill"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:src="@drawable/ic_person_fill"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_departure" />
+            app:layout_constraintTop_toBottomOf="@id/ic_flag" />
 
         <TextView
             android:id="@+id/tv_cur_head_count"
