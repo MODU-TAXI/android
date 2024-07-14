@@ -18,7 +18,9 @@
         <action
             android:id="@+id/action_homeFragment_to_matchDetailFragment"
             app:destination="@id/matchDetailFragment" />
-
+        <action
+            android:id="@+id/action_homeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
 
     </fragment>
 
@@ -297,6 +299,12 @@
         android:id="@+id/accountFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.account.AccountFragment"
         android:label="account">
+    </fragment>
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.notification.NotificationFragment"
+        android:label="notification">
 
     </fragment>
 

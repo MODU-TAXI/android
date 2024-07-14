@@ -11,6 +11,7 @@ import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
+import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
@@ -208,4 +209,12 @@ class MainRepositoryImpl @Inject constructor(
     ): Result<Unit> = runCatching {
         api.deleteAccounts(id)
     }
+
+    override suspend fun getNotifications(
+        page: Int, size: Int
+    ): Result<NotificationData> = runCatching {
+        api.getNotifications(
+            page, size
+            )
+    }.mapCatching { it.toDomain() }
 }

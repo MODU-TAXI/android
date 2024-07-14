@@ -61,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:paddingRight="10dp"
+                    android:onClick="@{() -> vm.navigateToNotification()}"
                     android:src="@drawable/ic_notification"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical1"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.bindingadapters
 
+import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
@@ -117,4 +118,14 @@ fun bindReportBtnState(btn: AppCompatButton, isButtonEnabled: Boolean) {
     } else {
         btn.setBackgroundResource(R.drawable.rect_gray300fill_nostroke_61radius)
     }
+}
+
+@BindingAdapter("backgroundColorBasedOnChecked")
+fun setBackgroundColorBasedOnChecked(view: View, checked: Boolean) {
+    val color = if (!checked) {
+        Color.parseColor("#F5F8FF")
+    } else {
+        Color.parseColor("#FFFFFF")
+    }
+    view.setBackgroundColor(color)
 }

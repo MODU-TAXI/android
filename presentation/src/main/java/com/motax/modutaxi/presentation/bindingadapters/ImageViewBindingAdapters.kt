@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.util.Bank
+import com.motax.modutaxi.presentation.util.NotificationType
 
 @BindingAdapter("imgUrl")
 fun bindImg(imageView: ImageView, url: String) {
@@ -29,4 +30,10 @@ fun bindProfileImg(imageView: ImageView, url: String?) {
 fun setBankLogo(imageView: ImageView, bankName: String) {
     val logoResId = Bank.getLogoResource(bankName)
     imageView.setImageResource(logoResId)
+}
+
+@BindingAdapter("imageFromType")
+fun setImageFromType(view: ImageView, type: String) {
+    val drawableResId = NotificationType.getIconResId(type)
+    view.setImageResource(drawableResId)
 }

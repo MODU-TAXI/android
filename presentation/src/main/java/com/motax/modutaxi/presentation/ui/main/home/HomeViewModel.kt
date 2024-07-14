@@ -32,6 +32,7 @@ sealed class HomeEvent {
     data object NavigateToCreateParty : HomeEvent()
     data object NavigateToShowParty : HomeEvent()
     data class NavigateToMatchDetail(val id: Long) : HomeEvent()
+    data object NavigateToNotification : HomeEvent()
 }
 
 @HiltViewModel
@@ -154,6 +155,12 @@ class HomeViewModel @Inject constructor(
     fun navigateToMatchDetail(id: Long) {
         viewModelScope.launch {
             _event.emit(HomeEvent.NavigateToMatchDetail(id))
+        }
+    }
+
+    fun navigateToNotification() {
+        viewModelScope.launch {
+            _event.emit(HomeEvent.NavigateToNotification)
         }
     }
 }
