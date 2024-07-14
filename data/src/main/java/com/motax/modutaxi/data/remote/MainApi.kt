@@ -9,6 +9,7 @@ import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
+import com.motax.modutaxi.data.model.response.NotificationCountResponse
 import com.motax.modutaxi.data.model.response.NotificationResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
@@ -186,4 +187,8 @@ interface MainApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): NotificationResponse
+
+    @GET("api/alarms/counts")
+    suspend fun getNotificationCounts()
+    :NotificationCountResponse
 }

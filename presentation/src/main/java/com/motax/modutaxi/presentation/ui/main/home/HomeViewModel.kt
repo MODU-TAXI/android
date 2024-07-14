@@ -25,7 +25,9 @@ data class HomeUiState(
     val isParticipating: Boolean = false,
     val isRealtimeTaxipotListEmpty: Boolean = true,
     val memberId: String = "",
-    val nickname: String = ""
+    val nickname: String = "",
+    val notificationCount: Int = 0,
+    val isNotificationExist: Boolean = false
 )
 
 sealed class HomeEvent {
@@ -46,12 +48,7 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    init {
-        getIsParticipating()
-        getRealtimeTaxiPots()
-    }
-
-    private fun getRealtimeTaxiPots() {
+    fun getRealtimeTaxiPots() {
         viewModelScope.launch {
             repository.getTaxiPotList(
                 filter = mapOf<String, Long>(),
@@ -89,7 +86,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getIsParticipating() {
+    fun getIsParticipating() {
         viewModelScope.launch {
             repository.getChatsInfo()
                 .onSuccess {
@@ -110,7 +107,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getParticipatingRoomInfo(roomId: String?) {
+    fun getParticipatingRoomInfo(roomId: String?) {
         viewModelScope.launch {
             if (roomId != null) {
                 repository.getTaxiPotPreview(roomId.toLong())
@@ -124,7 +121,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getNickname() {
+    fun getNickname() {
         viewModelScope.launch {
             repository.getMemberProfile(_uiState.value.memberId.toLong())
                 .onSuccess {
@@ -136,6 +133,21 @@ class HomeViewModel @Inject constructor(
 
                 }.onFailure {
 
+                }
+        }
+    }
+
+    fun getNotificationCount() {
+        viewModelScope.launch {
+            repository.getNotificationCounts()
+                .onSuccess {
+                    Log.d("debugging", "$it.count")
+                    _uiState.update { state ->
+                        state.copy(
+                            notificationCount = it.counts,
+                            isNotificationExist = it.counts!= 0
+                        )
+                    }
                 }
         }
     }

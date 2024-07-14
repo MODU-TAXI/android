@@ -11,6 +11,7 @@ import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
+import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
@@ -216,5 +217,9 @@ class MainRepositoryImpl @Inject constructor(
         api.getNotifications(
             page, size
             )
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun getNotificationCounts(): Result<NotificationCountData> = runCatching {
+        api.getNotificationCounts()
     }.mapCatching { it.toDomain() }
 }

@@ -14,6 +14,7 @@ import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
 import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
+import com.motax.modutaxi.data.model.response.NotificationCountResponse
 import com.motax.modutaxi.data.model.response.NotificationResponse
 import com.motax.modutaxi.data.model.response.NotificationResponseItem
 import com.motax.modutaxi.data.model.response.PaymentMemberListResponse
@@ -57,6 +58,7 @@ import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NearSpotItemData
+import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.NotificationDataItem
 import com.motax.modutaxi.domain.model.PathData
@@ -417,5 +419,11 @@ fun NotificationResponseItem.toDomain(): NotificationDataItem {
         resourceId = resourceId,
         dateTime = dateTime,
         checked = checked
+    )
+}
+
+fun NotificationCountResponse.toDomain(): NotificationCountData {
+    return NotificationCountData(
+        counts = counts
     )
 }
