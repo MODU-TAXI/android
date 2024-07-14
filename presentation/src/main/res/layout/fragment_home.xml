@@ -30,7 +30,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_scrollFlags="scroll|enterAlways">
+                app:layout_scrollFlags="scroll|enterAlways"
+                tools:background="@drawable/bg_header_nav_sub500">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guide_04_vertical1"
@@ -55,15 +56,48 @@
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical1"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/ic_notification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:paddingRight="10dp"
-                    android:src="@drawable/ic_notification"
-                    app:layout_constraintEnd_toStartOf="@id/guide_96_vertical1"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:onClick="@{() -> vm.navigateToNotification()}"
+
+                    app:layout_constraintEnd_toEndOf="@id/guide_96_vertical1"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_app_name"
+                    app:layout_constraintTop_toTopOf="@id/tv_app_name">
+
+                    <ImageView
+                        android:id="@+id/ic_notification"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_notification"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:visibility="@{vm.uiState.isNotificationExist ? View.VISIBLE : View.GONE}"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/oval_redfill_nostroke"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            style="@style/TextSmallMedium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(vm.uiState.notificationCount)}"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="33" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tv_welcome_message"
@@ -154,25 +188,27 @@
                     android:layout_height="237dp"
                     android:layout_marginTop="18dp"
                     android:layout_marginRight="8dp"
-                    android:scaleType="centerCrop"
                     android:onClick="@{() -> vm.navigateToCreateParty()}"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/image_home_create"
                     app:layout_constraintEnd_toStartOf="@id/iv_find_taxipot"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="invisible" />
 
                 <ImageView
                     android:id="@+id/iv_find_taxipot"
                     android:layout_width="0dp"
                     android:layout_height="237dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginTop="18dp"
                     android:onClick="@{() -> vm.navigateToShowParty()}"
                     android:scaleType="centerCrop"
-                    android:layout_marginTop="18dp"
                     android:src="@drawable/image_home_find"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                     app:layout_constraintStart_toEndOf="@id/iv_make_taxipot"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone" />
 
                 <View
                     android:id="@+id/iv_contour_first"
@@ -200,24 +236,33 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/rect_gray100fill_nostroke_12radius"
-                    android:padding="66dp"
+                    android:background="@drawable/rect_nofill_gray200stroke_12radius"
+                    android:padding="44dp"
                     android:visibility="@{vm.uiState.isParticipating ? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/tv_participating_taxipot">
 
-                    <TextView
-                        style="@style/TextRegularSemibold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="아직 참여중인 택시팟이 없어요 😥"
-                        android:textColor="@color/mx_gray600"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                    <ImageView
+                        android:id="@+id/iv_sad"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_sad"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/TextSmallMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="아직 참여중인 택시팟이 없어요"
+                        android:textColor="@color/mx_gray200"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_sad" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -375,10 +420,10 @@
                         android:layout_marginTop="16dp"
                         android:background="@drawable/rect_nofill_sub500stroke_8radius"
                         android:gravity="center"
+                        android:onClick="@{() -> vm.navigateToMatchDetail(vm.uiState.participatingTaxiPot.roomId)}"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
-                        android:onClick="@{() -> vm.navigateToMatchDetail(vm.uiState.participatingTaxiPot.roomId)}"
-                        android:text="매칭방 바로가기"
+                        android:text="채팅방 바로가기"
                         android:textColor="@color/mx_sub500"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -408,18 +453,78 @@
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/iv_contour_second" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_realtime_taxipot_list"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_realtime_taxipot"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="20dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_realtime_taxipot"
-                    app:list="@{vm.uiState.realtimeTaxiPotList}"
-                    tools:listitem="@layout/item_realtime_taxipot" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_realtime_taxipot">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guide_04_vertical2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.04" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guide_96_vertical2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.96" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rect_nofill_gray200stroke_12radius"
+                        android:padding="44dp"
+                        android:visibility="@{vm.uiState.realtimeTaxipotListEmpty ? View.VISIBLE : View.INVISIBLE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/guide_96_vertical2"
+                        app:layout_constraintStart_toStartOf="@id/guide_04_vertical2"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/iv_sad_two"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_sad"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            style="@style/TextSmallMedium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:text="실시간 택시팟이 없어요!"
+                            android:textColor="@color/mx_gray200"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/iv_sad_two" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_realtime_taxipot_list"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:visibility="@{vm.uiState.realtimeTaxipotListEmpty ? View.INVISIBLE : View.VISIBLE}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:list="@{vm.uiState.realtimeTaxiPotList}"
+                        tools:listitem="@layout/item_realtime_taxipot" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <View
                     android:id="@+id/iv_contour_third"
@@ -429,7 +534,7 @@
                     android:background="#F2F2F2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_realtime_taxipot_list" />
+                    app:layout_constraintTop_toBottomOf="@id/layout_realtime_taxipot" />
 
                 <TextView
                     android:id="@+id/tv_usage_history"

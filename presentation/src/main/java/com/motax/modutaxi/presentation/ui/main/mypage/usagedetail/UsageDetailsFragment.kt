@@ -3,11 +3,13 @@ package com.motax.modutaxi.presentation.ui.main.mypage.usagedetail
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentUsageDetailsBinding
 import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.adapter.UsageParticipantAdapter
+import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.UsageHistoryEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +29,18 @@ class UsageDetailsFragment : BaseFragment<FragmentUsageDetailsBinding>(R.layout.
 
         viewModel.loadUsageDetail(args.id)
 
+        initEventObserve()
+
+    }
+
+    private fun initEventObserve() {
+        repeatOnStarted {
+            viewModel.event.collect {
+                when (it) {
+                    is UsageDetailEvent.NavigateToMyPage -> findNavController().navigateUp()
+                }
+            }
+        }
     }
 
 }

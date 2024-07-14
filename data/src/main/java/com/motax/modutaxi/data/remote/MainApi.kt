@@ -2,12 +2,15 @@ package com.motax.modutaxi.data.remote
 
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.model.request.ReportRequest
+import com.motax.modutaxi.data.model.response.AccountResponse
 import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
+import com.motax.modutaxi.data.model.response.NotificationCountResponse
+import com.motax.modutaxi.data.model.response.NotificationResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
@@ -169,4 +172,23 @@ interface MainApi {
     suspend fun postReport(
         @Body reportRequest: ReportRequest
     ): Unit
+
+    @GET("api/accounts")
+    suspend fun getAccounts()
+    : AccountResponse
+
+    @DELETE("api/accounts/{id}")
+    suspend fun deleteAccounts(
+        @Path("id") id: Long
+    ): Unit
+
+    @GET("api/alarms")
+    suspend fun getNotifications(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): NotificationResponse
+
+    @GET("api/alarms/counts")
+    suspend fun getNotificationCounts()
+    :NotificationCountResponse
 }

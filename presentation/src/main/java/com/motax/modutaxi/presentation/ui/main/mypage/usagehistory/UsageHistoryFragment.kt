@@ -3,9 +3,11 @@ package com.motax.modutaxi.presentation.ui.main.mypage.usagehistory
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navOptions
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentUsageHistoryBinding
@@ -37,12 +39,14 @@ class UsageHistoryFragment : BaseFragment<FragmentUsageHistoryBinding>(R.layout.
             viewModel.event.collect {
                 when (it) {
                     is UsageHistoryEvent.NavigateToUsageDetail -> findNavController().toUsageDetail(it.id)
+                    is UsageHistoryEvent.NavigateToMyPage -> findNavController().navigateUp()
                 }
             }
         }
     }
 
     private fun NavController.toUsageDetail(id: Long) {
+
         val action = UsageHistoryFragmentDirections.actionHistoryToDetail(id)
         navigate(action)
     }

@@ -41,7 +41,7 @@ class MyPageSchoolAuthorizationEnterCodeFragment :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is MyPageEmailAuthEvent.NavigateToComplete -> findNavController().toMyPageComplete()
+                    is MyPageEmailAuthEvent.NavigateToComplete -> findNavController().navigateUp()
                 }
             }
         }
@@ -55,12 +55,6 @@ class MyPageSchoolAuthorizationEnterCodeFragment :
         inputMethodManager?.showSoftInput(
             binding.etAuthorizationCode, InputMethodManager.SHOW_IMPLICIT
         )
-    }
-
-    private fun NavController.toMyPageComplete() {
-        val action =
-            MyPageSchoolAuthorizationEnterCodeFragmentDirections.actionMyPageEmailAuthFragmentToMyPageFragment()
-        navigate(action)
     }
 
     private fun hideKeyboard() {

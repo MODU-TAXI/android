@@ -5,6 +5,6 @@ data class UsageHistoryUiItem(
     val departureTime: String = "",
     val departureName: String = "",
     val arrivalName: String = "",
-    val portionCharge: Int = 0,
+    val portionCharge: String = "",
     val navigateToUsageDetail: (Long) -> Unit
 )

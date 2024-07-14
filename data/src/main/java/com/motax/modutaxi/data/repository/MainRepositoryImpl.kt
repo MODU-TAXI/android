@@ -4,12 +4,15 @@ import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.model.request.ReportRequest
 import com.motax.modutaxi.data.remote.MainApi
+import com.motax.modutaxi.domain.model.AccountData
 import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
+import com.motax.modutaxi.domain.model.NotificationCountData
+import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
@@ -197,4 +200,26 @@ class MainRepositoryImpl @Inject constructor(
         val reportRequest = ReportRequest(roomId, targetId, type, content)
         api.postReport(reportRequest)
     }
+
+    override suspend fun getAccounts() : Result<AccountData> = runCatching {
+        api.getAccounts()
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun deleteAccounts(
+        id: Long
+    ): Result<Unit> = runCatching {
+        api.deleteAccounts(id)
+    }
+
+    override suspend fun getNotifications(
+        page: Int, size: Int
+    ): Result<NotificationData> = runCatching {
+        api.getNotifications(
+            page, size
+            )
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun getNotificationCounts(): Result<NotificationCountData> = runCatching {
+        api.getNotificationCounts()
+    }.mapCatching { it.toDomain() }
 }
