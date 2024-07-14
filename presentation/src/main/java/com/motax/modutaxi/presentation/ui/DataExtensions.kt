@@ -108,6 +108,18 @@ fun String.toChatSentTime() : String{
     }
 }
 
+fun String.toDateTime() : String{
+    val time = this.substring(0..18)
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("HHmm", Locale.getDefault())
+
+    inputFormat.parse(time)?.let{
+        return outputFormat.format(it)
+    } ?: run{
+        return ""
+    }
+}
+
 fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
     val R = 6371e3 // 지구 반지름 (미터)
     val phi1 = lat1 * (PI / 180)

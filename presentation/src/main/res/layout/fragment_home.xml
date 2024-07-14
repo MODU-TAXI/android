@@ -168,7 +168,6 @@
                     android:layout_marginLeft="8dp"
                     android:onClick="@{() -> vm.navigateToShowParty()}"
                     android:scaleType="centerCrop"
-
                     android:layout_marginTop="18dp"
                     android:src="@drawable/image_home_find"
                     app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
@@ -379,7 +378,7 @@
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
                         android:onClick="@{() -> vm.navigateToMatchDetail(vm.uiState.participatingTaxiPot.roomId)}"
-                        android:text="채팅방 바로가기"
+                        android:text="매칭방 바로가기"
                         android:textColor="@color/mx_sub500"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -408,14 +407,6 @@
                     android:text="실시간 택시팟을 알려드려요!"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/iv_contour_second" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_navigate_next"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_realtime_taxipot"
-                    app:layout_constraintEnd_toEndOf="@id/guide_96_vertical"
-                    app:layout_constraintTop_toTopOf="@id/tv_realtime_taxipot" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_realtime_taxipot_list"

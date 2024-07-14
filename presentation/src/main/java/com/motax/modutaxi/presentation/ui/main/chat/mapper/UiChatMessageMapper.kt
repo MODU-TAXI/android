@@ -4,6 +4,7 @@ import com.motax.modutaxi.domain.model.ChatMessageItemData
 import com.motax.modutaxi.presentation.chatmanager.model.ChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.model.UiChatMessage
 import com.motax.modutaxi.presentation.ui.toChatSentTime
+import com.motax.modutaxi.presentation.ui.toDateTime
 import com.motax.modutaxi.presentation.util.Constants.JOIN_LEAVE
 import com.motax.modutaxi.presentation.util.Constants.MY_CHAT
 import com.motax.modutaxi.presentation.util.Constants.MY_IMAGE_CHAT
@@ -38,6 +39,7 @@ fun ChatMessage.toUiChatMessage(
     content = content ?: "",
     imageUrl = imageUrl ?: "",
     sentTime = dateTime.toChatSentTime(),
+    dateTime = dateTime.toDateTime(),
     memberId = memberId.toLong()
 )
 
@@ -68,6 +70,7 @@ fun ChatMessageItemData.toUiChatMessage(
     content = content,
     imageUrl = imageUrl ?: "",
     sentTime = dateTime.toChatSentTime(),
+    dateTime = dateTime.toDateTime(),
     memberId = memberId.toLong()
 )
 
@@ -90,11 +93,10 @@ fun List<ChatMessageItemData>.toUiChatMessageList(
             if (i + 1 < list.size) {
                 val laterChat = list[i]
                 val pastChat = list[i + 1]
-
-                if (laterChat.sentTime.isNotBlank() &&
+                if (laterChat.dateTime.isNotBlank() &&
                     laterChat.messageType == pastChat.messageType &&
                     laterChat.memberId == pastChat.memberId &&
-                    laterChat.sentTime == pastChat.sentTime
+                    laterChat.dateTime == pastChat.dateTime
                 ) {
                     pastChat.sentTime = ""
                     laterChat.profileImgUrl = ""
