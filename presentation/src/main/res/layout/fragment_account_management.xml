@@ -7,6 +7,9 @@
         <variable
             name="vm"
             type="com.motax.modutaxi.presentation.ui.main.mypage.account.AccountViewModel" />
+        <import type="android.view.View" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +31,7 @@
             app:layout_constraintGuide_percent="0.94" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="24dp"
             android:id="@+id/layout_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -73,6 +77,19 @@
             app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
             list="@{vm.uiState.accountList}"
             tools:listitem="@layout/item_account"/>
+1
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide_06_vertical"
+            app:layout_constraintEnd_toEndOf="@id/guide_94_vertical"
+            android:gravity="center"
+            style="@style/TextRegularMedium"
+            android:textColor="@color/mx_gray500"
+            android:text="등록된 계좌가 없어요"
+            android:visibility="@{vm.uiState.isEmpty ? View.VISIBLE : View.INVISIBLE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

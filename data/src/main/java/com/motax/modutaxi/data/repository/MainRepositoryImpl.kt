@@ -4,6 +4,7 @@ import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.model.request.ReportRequest
 import com.motax.modutaxi.data.remote.MainApi
+import com.motax.modutaxi.domain.model.AccountData
 import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.ChatInfoData
@@ -196,5 +197,15 @@ class MainRepositoryImpl @Inject constructor(
     ): Result<Unit> = runCatching {
         val reportRequest = ReportRequest(roomId, targetId, type, content)
         api.postReport(reportRequest)
+    }
+
+    override suspend fun getAccounts() : Result<AccountData> = runCatching {
+        api.getAccounts()
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun deleteAccounts(
+        id: Long
+    ): Result<Unit> = runCatching {
+        api.deleteAccounts(id)
     }
 }

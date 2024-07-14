@@ -22,7 +22,7 @@ class AccountFragment :
 
         binding.vm = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        adapter = AccountAdapter()
+        adapter = AccountAdapter(viewModel)
         binding.rvAccount.adapter = adapter
 
         initEventObserve()

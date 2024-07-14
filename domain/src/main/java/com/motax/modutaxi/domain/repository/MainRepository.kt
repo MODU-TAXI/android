@@ -1,5 +1,6 @@
 package com.motax.modutaxi.domain.repository
 
+import com.motax.modutaxi.domain.model.AccountData
 import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.MemberProfileData
@@ -139,4 +140,10 @@ interface MainRepository {
         type: String,
         content: String
     ): Result<Unit>
+
+    suspend fun getAccounts() : Result<AccountData>
+
+    suspend fun deleteAccounts(
+        id : Long
+    ) : Result<Unit>
 }

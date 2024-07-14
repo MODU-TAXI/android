@@ -22,20 +22,6 @@
             app:layout_constraintGuide_percent="0.09" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_72_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.72" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_81_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.81" />
-
-        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_08_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,6 +52,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="0dp"
+            android:layout_marginTop="24dp"
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +74,7 @@
                 style="@style/TextTitle3Semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="회원탈퇴"
+                android:text="학교 이메일 인증"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,19 +84,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#D9D9D9"
-            android:max="3"
-            android:progress="1"
-            android:progressTint="@color/mx_sub500"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_toolbar" />
 
         <TextView
             android:id="@+id/tv_identification_description"
@@ -117,6 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
             android:text="@string/school_authorization_percent_up"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -172,21 +147,6 @@
             app:layout_constraintStart_toEndOf="@id/guide_08_vertical"
             app:layout_constraintTop_toBottomOf="@id/layout_enter_email" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_authorization_next_time"
-            style="@style/TextLargeSemibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rect_nofill_greystroke_61radius"
-            android:gravity="center"
-            android:onClick="@{() -> vm.navigateToMyPage()}"
-            android:paddingVertical="16dp"
-            android:text="다음에 할래요"
-            android:textColor="#C0C0C0"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
-            app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_72_horizontal" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_authorization_check"
@@ -201,9 +161,10 @@
             android:text="확인"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
+            android:layout_marginBottom="24dp"
             app:layout_constraintEnd_toStartOf="@id/guide_90_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_10_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_81_horizontal" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

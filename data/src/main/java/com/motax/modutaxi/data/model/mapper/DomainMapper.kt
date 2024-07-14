@@ -1,6 +1,8 @@
 package com.motax.modutaxi.data.model.mapper
 
 import android.text.Html
+import com.motax.modutaxi.data.model.response.AccountResponseItem
+import com.motax.modutaxi.data.model.response.AccountResponse
 import com.motax.modutaxi.data.model.response.AddressFromGeoResponse
 import com.motax.modutaxi.data.model.response.AuthResponse
 import com.motax.modutaxi.data.model.response.CertificateResponse
@@ -30,6 +32,8 @@ import com.motax.modutaxi.data.model.response.UsageDetailResponse
 import com.motax.modutaxi.data.model.response.UsageHistoryItemResponse
 import com.motax.modutaxi.data.model.response.UsageHistoryResponse
 import com.motax.modutaxi.data.model.response.UsageParticipantResponse
+import com.motax.modutaxi.domain.model.AccountData
+import com.motax.modutaxi.domain.model.AccountDataItem
 import com.motax.modutaxi.domain.model.AddressFromGeoAreaData
 import com.motax.modutaxi.domain.model.AddressFromGeoCodeData
 import com.motax.modutaxi.domain.model.AddressFromGeoData
@@ -313,6 +317,7 @@ fun MemberProfileResponse.toDomain() = MemberProfileData(
     imageUrl = imageUrl,
     certified = certified
 )
+
 fun MemberDetailResponse.toDomain() = MemberDetailData(
     id = this.id,
     nickname = this.nickname,
@@ -378,5 +383,19 @@ fun UsageParticipantResponse.toDomain(): UsageParticipantData {
         status = status,
         me = me,
         portionCharge = portionCharge
+    )
+}
+
+fun AccountResponse.toDomain(): AccountData {
+    return AccountData(
+        accounts = this.accounts.map { it.toDomain() }
+    )
+}
+
+fun AccountResponseItem.toDomain(): AccountDataItem {
+    return AccountDataItem(
+        id = id,
+        accountNumber = accountNumber,
+        bank = bank
     )
 }

@@ -17,7 +17,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class AccountUiState(
-    val accountList: List<UiAccountItem> = emptyList()
+    val accountList: List<UiAccountItem> = emptyList(),
+    val isEmpty: Boolean = false
 )
 
 sealed class AccountEvent {
@@ -41,13 +42,22 @@ class AccountViewModel @Inject constructor(
 
     private fun loadAccounts() {
         viewModelScope.launch {
-            val dummyAccounts = listOf(
-                UiAccountItem(id = 1, bankName = Bank.getDisplayName("KAKAO").toString(), accountNumber = "3333081489543"),
-                UiAccountItem(id = 2, bankName = Bank.getDisplayName("NH").toString(), accountNumber = "3012312312323")
-            )
-            _uiState.update {
-                it.copy(accountList = dummyAccounts)
-            }
+            repository.getAccounts()
+                .onSuccess {response ->
+                    val uiAccounts = response.accounts.map {
+                        UiAccountItem(
+                            id = it.id,
+                            accountNumber = it.accountNumber,
+                            bankName = Bank.getDisplayName(it.bank)
+                        )
+                    }
+                    _uiState.update {
+                        it.copy(
+                            accountList = uiAccounts,
+                            isEmpty = uiAccounts.isEmpty()
+                        )
+                    }
+                }
         }
     }
 
@@ -59,10 +69,23 @@ class AccountViewModel @Inject constructor(
 
     fun deleteAccount(account: UiAccountItem) {
         viewModelScope.launch {
-            val updatedList = _uiState.value.accountList.toMutableList().apply {
-                remove(account)
+
+            val result = repository.deleteAccounts(account.id)
+
+            if(result.isSuccess) {
+                val updateList = _uiState.value.accountList.toMutableList().apply {
+                    remove(account)
+                }
+                _uiState.update {
+                    it.copy(
+                        accountList = updateList,
+                        isEmpty = updateList.isEmpty()
+                    )
+                }
+
             }
-            _uiState.value = _uiState.value.copy(accountList = updatedList)
         }
     }
+
+
 }
