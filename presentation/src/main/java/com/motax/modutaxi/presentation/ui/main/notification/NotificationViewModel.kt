@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.notification
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
@@ -23,6 +24,8 @@ data class NotificationUiState(
 
 sealed class NotificationEvent {
     data object NavigateToHome : NotificationEvent()
+    data class NavigateToMatchingDetail(val id: Long) : NotificationEvent()
+    data object ShowAlertAndNavigateHome: NotificationEvent()
 }
 
 @HiltViewModel
@@ -64,6 +67,29 @@ class NotificationViewModel @Inject constructor(
     fun navigateToHome() {
         viewModelScope.launch {
             _event.emit(NotificationEvent.NavigateToHome)
+        }
+    }
+
+    fun onNotificationItemClicked(id: Long, type: String) {
+        viewModelScope.launch {
+            when (type) {
+                "REPORT_SUCCESS" -> {
+                    // 화면 이동 없음
+                    Log.d("debugging", "화면이동없음")
+                }
+                "PARTICIPATE_REQUEST", "MATCHING_SUCCESS", "MATCHING_COMPLETE",
+                "PAYMENT_REQUEST", "PAYMENT_REQUEST_COMPLETE", "PAYMENT_ALL_COMPLETE" -> {
+                    val result = repository.getTaxiPotDetail(id)
+                    if (result.isSuccess) {
+                        _event.emit(NotificationEvent.NavigateToMatchingDetail(id))
+                    } else {
+                        _event.emit(NotificationEvent.ShowAlertAndNavigateHome)
+                    }
+                }
+                else -> {
+                    Log.d("debugging", "알림 이동에러")
+                }
+            }
         }
     }
 

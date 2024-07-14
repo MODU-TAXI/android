@@ -306,6 +306,10 @@
         android:name="com.motax.modutaxi.presentation.ui.main.notification.NotificationFragment"
         android:label="notification">
 
+        <action
+            android:id="@+id/action_notification_to_matchdetail"
+            app:destination="@id/matchDetailFragment"/>
+
     </fragment>
 
 </navigation>
