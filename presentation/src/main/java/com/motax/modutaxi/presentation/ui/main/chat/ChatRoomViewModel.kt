@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.chat
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
@@ -8,8 +9,11 @@ import com.motax.modutaxi.presentation.chatmanager.model.ChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessageList
 import com.motax.modutaxi.presentation.ui.main.chat.model.UiChatMessage
+import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
+import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiTaxiPotListItem
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,21 +29,22 @@ import javax.inject.Inject
 
 data class ChatRoomUiState(
     val chatMessage: List<UiChatMessage> = emptyList(),
-    val chatInfo: UiTaxiPotListItem = UiTaxiPotListItem{}
+    val chatInfo: UiParticipatingTaxiPot = UiParticipatingTaxiPot(),
+    val isManager: Boolean = false
 )
 
-sealed class ChatRoomEvent{
-    data class SendMessage(val msg: String): ChatRoomEvent()
-    data class SendImage(val img: String): ChatRoomEvent()
-    data object ScrollBottom: ChatRoomEvent()
-    data object GoToGallery: ChatRoomEvent()
+sealed class ChatRoomEvent {
+    data class SendMessage(val msg: String) : ChatRoomEvent()
+    data class SendImage(val img: String) : ChatRoomEvent()
+    data object ScrollBottom : ChatRoomEvent()
+    data object GoToGallery : ChatRoomEvent()
 }
 
 @HiltViewModel
 class ChatRoomViewModel @Inject constructor(
     private val repository: MainRepository,
     private val authRepository: AuthRepository
-): ViewModel(){
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatRoomUiState())
     val uiState: StateFlow<ChatRoomUiState> = _uiState.asStateFlow()
@@ -51,33 +56,35 @@ class ChatRoomViewModel @Inject constructor(
 
     private var myId: Long = 0
 
-    init{
+    init {
         setMyId()
     }
 
-    private fun setMyId(){
+    private fun setMyId() {
         viewModelScope.launch {
-            authRepository.getMemberId()?.let{
+            authRepository.getMemberId()?.let {
                 myId = it
             }
         }
     }
 
-    fun getMatchInfo(roomId: Long){
+    fun getMatchInfo(roomId: Long) {
         viewModelScope.launch {
             repository.getTaxiPotPreview(roomId).onSuccess {
                 _uiState.update { state ->
                     state.copy(
-                        chatInfo = it.toUiTaxiPotListItem{}
+                        chatInfo = it.toUiParticipatingTaxiPot(),
+                        isManager = it.managerId == myId
                     )
                 }
+
             }.onFailure {
 
             }
         }
     }
 
-    fun getChatMessages(roomId: Long){
+    fun getChatMessages(roomId: Long) {
         viewModelScope.launch {
             repository.getChatMessages(roomId).onSuccess {
                 _uiState.update { state ->
@@ -94,7 +101,7 @@ class ChatRoomViewModel @Inject constructor(
 
     fun newChatMessage(
         message: ChatMessage
-    ){
+    ) {
         val newMessages = uiState.value.chatMessage.toMutableList()
         val newMessage = message.toUiChatMessage(myId)
 
@@ -117,11 +124,13 @@ class ChatRoomViewModel @Inject constructor(
         scrollBottom()
     }
 
-    fun sendMessage(){
+    fun sendMessage() {
         viewModelScope.launch {
-            _event.emit(ChatRoomEvent.SendMessage(
-                chatMessage.value
-            ))
+            _event.emit(
+                ChatRoomEvent.SendMessage(
+                    chatMessage.value
+                )
+            )
 
             chatMessage.emit("")
         }
@@ -134,7 +143,7 @@ class ChatRoomViewModel @Inject constructor(
         }
     }
 
-    fun goToGallery(){
+    fun goToGallery() {
         viewModelScope.launch {
             _event.emit(ChatRoomEvent.GoToGallery)
         }

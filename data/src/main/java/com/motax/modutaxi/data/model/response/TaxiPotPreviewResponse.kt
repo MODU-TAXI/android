@@ -2,6 +2,7 @@ package com.motax.modutaxi.data.model.response
 
 data class TaxiPotPreviewResponse(
     val roomId: Long,
+    val managerId: Long,
     val departureTime: String,
     val departureName: String,
     val arrivalName: String,

@@ -5,6 +5,7 @@ import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 
 fun TaxiPotPreviewData.toUiParticipatingTaxiPot() = UiParticipatingTaxiPot(
     roomId = roomId,
+    managerId = managerId,
     departureTime = departureTime,
     arrivalName = arrivalName,
     roomStatus = roomStatus,

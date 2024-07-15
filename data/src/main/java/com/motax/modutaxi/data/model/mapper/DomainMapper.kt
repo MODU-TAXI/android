@@ -270,6 +270,7 @@ fun TaxiPotListRadiusResponse.toDomain() = TaxiPotListRadiusData(
 
 fun TaxiPotPreviewResponse.toDomain() = TaxiPotPreviewData(
     roomId = roomId,
+    managerId = managerId,
     departureTime = departureTime,
     departureName = departureName,
     arrivalName = arrivalName,

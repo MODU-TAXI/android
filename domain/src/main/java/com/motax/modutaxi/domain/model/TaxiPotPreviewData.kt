@@ -2,6 +2,7 @@ package com.motax.modutaxi.domain.model
 
 data class TaxiPotPreviewData(
     val roomId: Long,
+    val managerId: Long,
     val departureTime: String,
     val departureName: String,
     val arrivalName: String,
