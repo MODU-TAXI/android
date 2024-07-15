@@ -88,6 +88,17 @@ class MatchDetailViewModel @Inject constructor(
                         }
                     )
                 }
+
+                if (uiState.value.participants.isEmpty()) {
+                    _uiState.update { state ->
+                        state.copy(
+                            participants = listOf(
+                                UiParticipantItem(nickname = "현재 참여 멤버가 없어요", isEmpty = true)
+                            )
+                        )
+                    }
+                }
+
             }.onFailure { }
         }
     }
@@ -99,6 +110,19 @@ class MatchDetailViewModel @Inject constructor(
                     state.copy(
                         waitingMembers = it.waitingList.map { data -> data.toUiWaitingMemberItem(::approveEnterTaxiPot) }
                     )
+                }
+
+                if (uiState.value.waitingMembers.isEmpty()) {
+                    _uiState.update { state ->
+                        state.copy(
+                            waitingMembers = listOf(
+                                UiWaitingMemberItem(
+                                    nickname = "현재 대기 멤버가 없어요",
+                                    isEmpty = true
+                                ) {}
+                            )
+                        )
+                    }
                 }
             }.onFailure {
 

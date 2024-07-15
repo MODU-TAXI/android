@@ -20,7 +20,7 @@ fun bindImg(imageView: ImageView, url: String) {
 fun bindProfileImg(imageView: ImageView, url: String?) {
     val imageUrl = url?: ""
     Glide.with(imageView.context)
-        .load(if (imageUrl.isEmpty()) R.drawable.ic_person else imageUrl)
+        .load(imageUrl.ifEmpty { R.drawable.ic_no_person_profile })
         .error(R.drawable.ic_person)
         .circleCrop()
         .into(imageView)
