@@ -30,6 +30,7 @@ import javax.inject.Inject
 data class ChatRoomUiState(
     val chatMessage: List<UiChatMessage> = emptyList(),
     val chatInfo: UiParticipatingTaxiPot = UiParticipatingTaxiPot(),
+    val roomStatus: String = "",
     val isManager: Boolean = false
 )
 
@@ -74,7 +75,8 @@ class ChatRoomViewModel @Inject constructor(
                 _uiState.update { state ->
                     state.copy(
                         chatInfo = it.toUiParticipatingTaxiPot(),
-                        isManager = it.managerId == myId
+                        isManager = it.managerId == myId,
+                        roomStatus = it.roomStatus
                     )
                 }
 
@@ -91,6 +93,10 @@ class ChatRoomViewModel @Inject constructor(
                     state.copy(
                         chatMessage = it.messages.toUiChatMessageList(myId)
                     )
+                }
+
+                uiState.value.chatMessage.forEach {
+                    Log.d(TAG, it.toString())
                 }
 
             }.onFailure {
@@ -119,6 +125,32 @@ class ChatRoomViewModel @Inject constructor(
             state.copy(
                 chatMessage = newMessages
             )
+        }
+
+        when (message.messageType) {
+            "PAYMENT_REQUEST" -> {
+                _uiState.update { state ->
+                    state.copy(
+                        roomStatus = "AFTER_MATCHING"
+                    )
+                }
+            }
+
+            "PAYMENT_REQUEST_COMPLETE" -> {
+                _uiState.update { state ->
+                    state.copy(
+                        roomStatus = "BEFORE_PAYMENT"
+                    )
+                }
+            }
+
+            "PAYMENT_ALL_COMPLETE" -> {
+                _uiState.update { state ->
+                    state.copy(
+                        roomStatus = "AFTER_PAYMENT"
+                    )
+                }
+            }
         }
 
         scrollBottom()

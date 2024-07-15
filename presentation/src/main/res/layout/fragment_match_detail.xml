@@ -272,7 +272,7 @@
                     style="@style/TextTitle3Semibold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="64dp"
+                    android:layout_marginTop="40dp"
                     android:text="참여멤버"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/iv_room_manager" />
@@ -373,7 +373,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_waiting_member"
                     android:layout_width="0dp"
@@ -390,7 +389,7 @@
                     android:id="@+id/iv_dash_line2"
                     android:layout_width="0dp"
                     android:layout_height="1.5dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="64dp"
                     android:layerType="software"
                     android:src="@drawable/dash_line_gray200"
                     app:layout_constraintEnd_toEndOf="parent"

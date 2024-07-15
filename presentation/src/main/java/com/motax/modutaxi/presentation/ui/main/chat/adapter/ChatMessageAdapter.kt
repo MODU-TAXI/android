@@ -121,52 +121,28 @@ class OtherChatViewHolder(private val binding: ItemChatBinding) :
         binding.item =item
 
         if(item.sender == "모두의 택시 봇"){
+            binding.ivProfile.visibility = View.VISIBLE
+            binding.tvNick.visibility = View.VISIBLE
             binding.ivProfile.setImageResource(R.drawable.ic_chatbot)
 
-            binding.btnAction.visibility = View.VISIBLE
         } else {
-            Glide.with(binding.ivProfile.context)
-                .load(item.imageUrl)
-                .error(R.drawable.ic_person)
-                .circleCrop()
-                .into(binding.ivProfile)
-
-            binding.btnAction.visibility = View.GONE
-        }
-
-        when(item.messageType){
-            "CALL_TAXI" -> {
-                binding.btnAction.text = "택시 부르러 가기"
-            }
-
-            "MATCHING_COMPLETE" -> {
-                binding.btnAction.text = "매칭완료"
-            }
-
-            "CHAT_BOT" -> {
-                binding.btnAction.visibility = View.GONE
-            }
-
-            "PAYMENT_REQUEST" -> {
-                binding.btnAction.text = "정산완료"
-            }
-
-            "PAYMENT_REQUEST_COMPLETE" -> {
-                binding.btnAction.text = "정산완료"
-            }
-
-            "PAYMENT_COMPLETE" -> {
-                binding.btnAction.text = "정산완료"
-            }
-
-            "PAYMENT_ALL_COMPLETE" -> {
-
+            if(item.profileImgUrl.isBlank()){
+                binding.ivProfile.visibility = View.GONE
+                binding.tvNick.visibility = View.GONE
+            } else {
+                binding.ivProfile.visibility = View.VISIBLE
+                binding.tvNick.visibility = View.VISIBLE
+                Glide.with(binding.ivProfile.context)
+                    .load(item.profileImgUrl)
+                    .error(R.drawable.ic_person)
+                    .circleCrop()
+                    .into(binding.ivProfile)
             }
         }
+
         binding.executePendingBindings()
         binding.root.visibility = View.VISIBLE
     }
-
 }
 
 class MyChatViewHolder(private val binding: ItemMychatBinding) :

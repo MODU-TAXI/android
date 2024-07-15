@@ -90,7 +90,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:roomStatus="@{vm.uiState.chatInfo.roomStatus}"
+                app:roomStatus="@{vm.uiState.roomStatus}"
                 tools:src="@drawable/group_calculate_complete" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -104,7 +104,7 @@
                 android:paddingVertical="12dp"
                 android:textColor="@color/white"
                 app:btnIsManager="@{vm.uiState.manager}"
-                app:btnRoomStatus="@{vm.uiState.chatInfo.roomStatus}"
+                app:btnRoomStatus="@{vm.uiState.roomStatus}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_room_status"
