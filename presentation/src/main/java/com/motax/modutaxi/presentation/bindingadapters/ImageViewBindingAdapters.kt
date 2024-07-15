@@ -37,3 +37,26 @@ fun setImageFromType(view: ImageView, type: String) {
     val drawableResId = NotificationType.getIconResId(type)
     view.setImageResource(drawableResId)
 }
+
+@BindingAdapter("roomStatus")
+fun setRoomStatus(iv: ImageView, type: String){
+    when(type){
+        "BEFORE_MATCHING" -> {
+            iv.setImageResource(R.drawable.group_matching)
+        }
+
+        "AFTER_MATCHING" -> {
+            iv.setImageResource(R.drawable.group_matching_complete)
+        }
+
+        "BEFORE_PAYMENT" -> {
+            iv.setImageResource(R.drawable.group_calculating)
+        }
+
+        "AFTER_PAYMENT" -> {
+            iv.setImageResource(R.drawable.group_calculate_complete)
+        }
+
+        else -> {}
+    }
+}

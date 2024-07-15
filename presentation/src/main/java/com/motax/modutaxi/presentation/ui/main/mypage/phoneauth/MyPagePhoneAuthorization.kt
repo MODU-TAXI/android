@@ -37,7 +37,7 @@ class MyPagePhoneAuthorization :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is MyPagePhoneAuthEvent.NavigateToMyPage -> findNavController().toMyPage()
+                    is MyPagePhoneAuthEvent.NavigateToMyPage -> findNavController().navigateUp()
                     is MyPagePhoneAuthEvent.GoBackToInit -> {
                         val intent = Intent(requireContext(), IntroActivity::class.java)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -50,10 +50,6 @@ class MyPagePhoneAuthorization :
         }
     }
 
-    private fun NavController.toMyPage() {
-        val action = MyPagePhoneAuthorizationDirections.actionPhoneAuthToMypage()
-        navigate(action)
-    }
 
     private fun requestFocusAndShowKeyboard() {
         binding.etAuthorizationCode.requestFocus()
