@@ -114,6 +114,7 @@
                     android:id="@+id/layout_search"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> vm.navigateToShowPartySearch()}"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="18dp"
                     android:background="@drawable/rect_white0_fill_nostroke_12_radius"

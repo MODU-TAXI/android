@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_homeFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_showPartySearchFragment"
+            app:destination="@id/showPartySearchFragment" />
 
     </fragment>
 
@@ -194,7 +197,11 @@
     <fragment
         android:id="@+id/showPartySearchFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchFragment"
-        android:label="ShowPartySearchFragment" />
+        android:label="ShowPartySearchFragment" >
+        <action
+            android:id="@+id/action_showPartySearchFragment_to_showPartyFragment"
+            app:destination="@id/showPartyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chatRoomFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.ChatRoomFragment"

@@ -3,7 +3,6 @@ package com.motax.modutaxi.presentation.ui.main.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
 import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
@@ -37,6 +36,7 @@ sealed class HomeEvent {
     data object NavigateToShowParty : HomeEvent()
     data class NavigateToMatchDetail(val id: Long) : HomeEvent()
     data object NavigateToNotification : HomeEvent()
+    data object NavigateToShowPartySearch: HomeEvent()
 }
 
 @HiltViewModel
@@ -175,6 +175,12 @@ class HomeViewModel @Inject constructor(
     fun navigateToNotification() {
         viewModelScope.launch {
             _event.emit(HomeEvent.NavigateToNotification)
+        }
+    }
+
+    fun navigateToShowPartySearch(){
+        viewModelScope.launch {
+            _event.emit(HomeEvent.NavigateToShowPartySearch)
         }
     }
 }

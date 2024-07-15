@@ -10,6 +10,7 @@ import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
 import com.motax.modutaxi.presentation.R
@@ -58,7 +59,7 @@ class ShowPartySearchFragment :
                 when (it) {
                     is ShowPartySearchEvent.NavigateToBack -> findNavController().navigateUp()
                     is ShowPartySearchEvent.SelectLocation -> {
-                        findNavController().navigateUp()
+                        findNavController().toShowParty()
                         showPartyViewModel.selectLocationFromSearch(
                             it.latitude,
                             it.longitude,
@@ -105,5 +106,11 @@ class ShowPartySearchFragment :
         val inputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    private fun NavController.toShowParty() {
+        val action =
+            ShowPartySearchFragmentDirections.actionShowPartySearchFragmentToShowPartyFragment()
+        navigate(action)
     }
 }
