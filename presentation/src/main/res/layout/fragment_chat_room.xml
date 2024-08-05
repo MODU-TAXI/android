@@ -101,6 +101,7 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/rect_sub500fill_nostroke_8radius"
                 android:gravity="center"
+                android:onClick="@{() -> vm.clickManageBtn()}"
                 android:paddingVertical="12dp"
                 android:textColor="@color/white"
                 app:btnIsManager="@{vm.uiState.manager}"

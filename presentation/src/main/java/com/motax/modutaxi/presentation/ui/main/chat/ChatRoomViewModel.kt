@@ -156,6 +156,36 @@ class ChatRoomViewModel @Inject constructor(
         scrollBottom()
     }
 
+    fun clickManageBtn(){
+        when(uiState.value.roomStatus){
+            "" -> {
+                viewModelScope.launch {
+                    repository.matchComplete(uiState.value.chatInfo.roomId).onSuccess {
+                        _uiState.update { state ->
+                            state.copy(
+                                roomStatus = "AFTER_MATCHING"
+                            )
+                        }
+                    }.onFailure {
+
+                    }
+                }
+            }
+
+            "AFTER_MATCHING" -> {
+
+            }
+
+            "BEFORE_PAYMENT" -> {
+
+            }
+
+            "AFTER_PAYMENT" -> {
+
+            }
+        }
+    }
+
     fun sendMessage() {
         viewModelScope.launch {
             _event.emit(
