@@ -3,6 +3,7 @@ package com.motax.modutaxi.domain.repository
 import com.motax.modutaxi.domain.model.AccountData
 import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.ChatInfoData
+import com.motax.modutaxi.domain.model.MatchCompleteData
 import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
@@ -155,4 +156,9 @@ interface MainRepository {
 
     suspend fun getNotificationCounts()
     : Result<NotificationCountData>
+
+
+    suspend fun matchComplete(
+        id: Long
+    ): Result<MatchCompleteData>
 }
