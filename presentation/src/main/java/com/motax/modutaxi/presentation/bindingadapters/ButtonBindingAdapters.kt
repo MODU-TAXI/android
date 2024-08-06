@@ -135,6 +135,7 @@ fun bindBtnRoomStatus(btn: AppCompatButton, type: String, isManager:Boolean) {
 
         "BEFORE_PAYMENT" -> {
             btn.text = "정산현황"
+            btn.visibility = View.VISIBLE
             if(isManager){
                 btn.text = "정산현황"
             } else {

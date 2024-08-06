@@ -158,7 +158,7 @@ class ChatRoomViewModel @Inject constructor(
 
     fun clickManageBtn(){
         when(uiState.value.roomStatus){
-            "" -> {
+            "BEFORE_MATCHING" -> {
                 viewModelScope.launch {
                     repository.matchComplete(uiState.value.chatInfo.roomId).onSuccess {
                         _uiState.update { state ->
