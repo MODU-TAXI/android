@@ -1,6 +1,7 @@
 package com.motax.modutaxi.presentation.ui.main.createparty.arrival
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -13,6 +14,7 @@ import com.motax.modutaxi.presentation.databinding.FragmentArrivalMapBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.CameraUpdate
@@ -94,6 +96,8 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
                     }
 
                     is ArrivalMapEvent.MoveCamera -> {
+                        Log.d(TAG,it.start.toString())
+                        Log.d(TAG,it.end.toString())
                         val bounds = LatLngBounds.Builder()
                             .include(it.start)
                             .include(it.end)

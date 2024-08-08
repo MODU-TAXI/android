@@ -22,6 +22,7 @@
             android:id="@+id/iv_room_manager"
             android:layout_width="22dp"
             android:layout_height="22dp"
+            android:scaleType="centerCrop"
             app:profileImgUrl="@{item.profileImage}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

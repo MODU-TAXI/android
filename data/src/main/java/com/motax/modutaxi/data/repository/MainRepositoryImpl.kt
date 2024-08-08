@@ -8,6 +8,7 @@ import com.motax.modutaxi.domain.model.AccountData
 import com.motax.modutaxi.domain.model.ChatMessageData
 import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.ChatInfoData
+import com.motax.modutaxi.domain.model.MatchCompleteData
 import com.motax.modutaxi.domain.model.MemberProfileData
 import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
@@ -146,7 +147,8 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getChatMessages(roomId: Long): Result<ChatMessageData> = runCatching {
         api.getChatMessages(roomId)
     }.mapCatching { it.toDomain() }
-    override suspend fun getChatsInfo() :Result<ChatInfoData> =
+
+    override suspend fun getChatsInfo(): Result<ChatInfoData> =
         runCatching {
             api.getChatsInfo()
         }.mapCatching { it.toDomain() }
@@ -155,6 +157,7 @@ class MainRepositoryImpl @Inject constructor(
         runCatching {
             api.getMemberProfile(memberId)
         }.mapCatching { it.toDomain() }
+
     override suspend fun getMemberDetail(memberId: Long): Result<MemberDetailData> =
         runCatching {
             api.getMemberDetail(memberId)
@@ -171,7 +174,10 @@ class MainRepositoryImpl @Inject constructor(
         return runCatching { api.uploadFile(body, "PROFILE").toDomain() }
     }
 
-    override suspend fun getMonthlyUsageHistory(year: Int, month: Int): Result<MonthlyUsageHistoryData> {
+    override suspend fun getMonthlyUsageHistory(
+        year: Int,
+        month: Int
+    ): Result<MonthlyUsageHistoryData> {
         return runCatching {
             api.getMonthlyUsageHistory(year, month)
         }.mapCatching { it.toDomain() }
@@ -201,7 +207,7 @@ class MainRepositoryImpl @Inject constructor(
         api.postReport(reportRequest)
     }
 
-    override suspend fun getAccounts() : Result<AccountData> = runCatching {
+    override suspend fun getAccounts(): Result<AccountData> = runCatching {
         api.getAccounts()
     }.mapCatching { it.toDomain() }
 
@@ -216,10 +222,14 @@ class MainRepositoryImpl @Inject constructor(
     ): Result<NotificationData> = runCatching {
         api.getNotifications(
             page, size
-            )
+        )
     }.mapCatching { it.toDomain() }
 
     override suspend fun getNotificationCounts(): Result<NotificationCountData> = runCatching {
         api.getNotificationCounts()
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun matchComplete(id: Long): Result<MatchCompleteData> = runCatching {
+        api.matchComplete(id)
     }.mapCatching { it.toDomain() }
 }

@@ -20,7 +20,7 @@ fun bindImg(imageView: ImageView, url: String) {
 fun bindProfileImg(imageView: ImageView, url: String?) {
     val imageUrl = url?: ""
     Glide.with(imageView.context)
-        .load(if (imageUrl.isEmpty()) R.drawable.ic_person else imageUrl)
+        .load(imageUrl.ifEmpty { R.drawable.ic_no_person_profile })
         .error(R.drawable.ic_person)
         .circleCrop()
         .into(imageView)
@@ -36,4 +36,27 @@ fun setBankLogo(imageView: ImageView, bankName: String) {
 fun setImageFromType(view: ImageView, type: String) {
     val drawableResId = NotificationType.getIconResId(type)
     view.setImageResource(drawableResId)
+}
+
+@BindingAdapter("roomStatus")
+fun setRoomStatus(iv: ImageView, type: String){
+    when(type){
+        "BEFORE_MATCHING" -> {
+            iv.setImageResource(R.drawable.group_matching)
+        }
+
+        "AFTER_MATCHING" -> {
+            iv.setImageResource(R.drawable.group_matching_complete)
+        }
+
+        "BEFORE_PAYMENT" -> {
+            iv.setImageResource(R.drawable.group_calculating)
+        }
+
+        "AFTER_PAYMENT" -> {
+            iv.setImageResource(R.drawable.group_calculate_complete)
+        }
+
+        else -> {}
+    }
 }

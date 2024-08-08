@@ -46,9 +46,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     is HomeEvent.NavigateToCreateParty -> findNavController().toCreateParty()
                     is HomeEvent.NavigateToMatchDetail -> findNavController().toMatchDetail(it.id)
                     is HomeEvent.NavigateToNotification -> findNavController().toNotification()
+                    is HomeEvent.NavigateToShowPartySearch -> findNavController().toShowPartySearch()
                 }
             }
         }
+    }
+
+    private fun NavController.toShowPartySearch(){
+        val action = HomeFragmentDirections.actionHomeFragmentToShowPartySearchFragment()
+        navigate(action)
     }
 
     private fun NavController.toShowParty() {

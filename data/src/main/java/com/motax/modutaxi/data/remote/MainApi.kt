@@ -7,6 +7,7 @@ import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
+import com.motax.modutaxi.data.model.response.MatchCompleteResponse
 import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.NotificationCountResponse
@@ -191,4 +192,9 @@ interface MainApi {
     @GET("api/alarms/counts")
     suspend fun getNotificationCounts()
     :NotificationCountResponse
+
+    @PATCH("/api/rooms/finish/matching/{id}")
+    suspend fun matchComplete(
+        @Path("id") id: Long
+    ):MatchCompleteResponse
 }

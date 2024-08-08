@@ -272,7 +272,7 @@
                     style="@style/TextTitle3Semibold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="64dp"
+                    android:layout_marginTop="40dp"
                     android:text="참여멤버"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/iv_room_manager" />
@@ -290,35 +290,6 @@
                     app:layout_constraintTop_toTopOf="@id/tv_participant_label"
                     tools:text="2" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_no_participants"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{vm.uiState.participants.empty ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/tv_participant_label">
-
-                    <ImageView
-                        android:id="@+id/iv_no_participants"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:src="@drawable/ic_person"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        style="@style/TextLargeRegular"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="현재 참여 멤버가 없어요"
-                        android:textColor="@color/mx_gray500"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_no_participants"
-                        app:layout_constraintStart_toEndOf="@id/iv_no_participants"
-                        app:layout_constraintTop_toTopOf="@id/iv_no_participants" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_participants"
@@ -338,41 +309,10 @@
                     style="@style/TextTitle3Semibold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="64dp"
+                    android:layout_marginTop="40dp"
                     android:text="대기멤버"
                     app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                     app:layout_constraintTop_toBottomOf="@id/rv_participants" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_no_waiting_member"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{vm.uiState.waitingMembers.empty ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/tv_waiting_member_label">
-
-                    <ImageView
-                        android:id="@+id/iv_no_waiting_member"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:src="@drawable/ic_person"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        style="@style/TextLargeRegular"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="현재 대기 멤버가 없어요"
-                        android:textColor="@color/mx_gray500"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_no_waiting_member"
-                        app:layout_constraintStart_toEndOf="@id/iv_no_waiting_member"
-                        app:layout_constraintTop_toTopOf="@id/iv_no_waiting_member" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_waiting_member"

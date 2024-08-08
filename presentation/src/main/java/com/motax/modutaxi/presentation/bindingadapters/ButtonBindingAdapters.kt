@@ -110,6 +110,43 @@ fun bindMatchingParticipateBtnState(btn: AppCompatButton, roomState: RoomState) 
     }
 }
 
+@BindingAdapter("btnRoomStatus", "btnIsManager")
+fun bindBtnRoomStatus(btn: AppCompatButton, type: String, isManager:Boolean) {
+    when (type) {
+        "BEFORE_MATCHING" -> {
+            btn.text = "매칭완료"
+            if(isManager){
+                btn.visibility = View.VISIBLE
+            } else {
+                btn.visibility = View.GONE
+            }
+        }
+
+        "AFTER_MATCHING" -> {
+            btn.text = "정산하기"
+
+            if(isManager){
+                btn.visibility = View.VISIBLE
+            } else {
+                btn.visibility = View.GONE
+            }
+        }
+
+
+        "BEFORE_PAYMENT" -> {
+            btn.text = "정산현황"
+            btn.visibility = View.VISIBLE
+            if(isManager){
+                btn.text = "정산현황"
+            } else {
+                btn.text = "돈보내기"
+            }
+        }
+
+        else -> {}
+    }
+}
+
 @BindingAdapter("reportBtnState")
 fun bindReportBtnState(btn: AppCompatButton, isButtonEnabled: Boolean) {
     btn.isEnabled = isButtonEnabled

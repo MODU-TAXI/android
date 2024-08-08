@@ -10,6 +10,7 @@ import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
+import com.motax.modutaxi.data.model.response.MatchCompleteResponse
 import com.motax.modutaxi.data.model.response.MemberCheckResponse
 import com.motax.modutaxi.data.model.response.MemberInfo
 import com.motax.modutaxi.data.model.response.MemberDetailResponse
@@ -51,6 +52,7 @@ import com.motax.modutaxi.domain.model.ChatMessageItemData
 import com.motax.modutaxi.domain.model.ChatInfoData
 import com.motax.modutaxi.domain.model.CoordinateData
 import com.motax.modutaxi.domain.model.CoordinateReferenceSystemData
+import com.motax.modutaxi.domain.model.MatchCompleteData
 import com.motax.modutaxi.domain.model.MemberCheckData
 import com.motax.modutaxi.domain.model.MemberDetailData
 import com.motax.modutaxi.domain.model.MemberInfoData
@@ -114,7 +116,7 @@ fun TaxiPotItem.toDomain() = TaxiPotListItemData(
 )
 
 fun TaxiPotListResponse.toDomain() = TaxiPotListData(
-    rooms = result.map { it.toDomain() }
+    rooms = rooms.map { it.toDomain() }
 )
 
 fun SearchResultItem.toDomain() = SearchResultData(
@@ -270,6 +272,7 @@ fun TaxiPotListRadiusResponse.toDomain() = TaxiPotListRadiusData(
 
 fun TaxiPotPreviewResponse.toDomain() = TaxiPotPreviewData(
     roomId = roomId,
+    managerId = managerId,
     departureTime = departureTime,
     departureName = departureName,
     arrivalName = arrivalName,
@@ -425,5 +428,11 @@ fun NotificationResponseItem.toDomain(): NotificationDataItem {
 fun NotificationCountResponse.toDomain(): NotificationCountData {
     return NotificationCountData(
         counts = counts
+    )
+}
+
+fun MatchCompleteResponse.toDomain(): MatchCompleteData {
+    return MatchCompleteData(
+        isUpdated = isUpdated
     )
 }

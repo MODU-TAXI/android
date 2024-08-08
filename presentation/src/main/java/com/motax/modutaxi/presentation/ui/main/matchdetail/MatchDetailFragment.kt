@@ -136,7 +136,9 @@ class MatchDetailFragment :
         val list = viewModel.uiState.value.matchDetailUiData.path
         path.coords = list
 
-        path.color = Color.RED
+        path.width = 20
+        path.outlineColor = ContextCompat.getColor(requireContext(),R.color.mx_sub500)
+        path.color = ContextCompat.getColor(requireContext(),R.color.mx_sub500)
         path.map = naverMap
 
         moveCamera(

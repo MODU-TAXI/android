@@ -1,10 +1,12 @@
 package com.motax.modutaxi.presentation.ui.main.createparty.departure
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.NaverMapRepository
 import com.motax.modutaxi.presentation.ui.toAddressString
 import com.motax.modutaxi.presentation.ui.toBuildingName
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -66,6 +68,11 @@ class DepartureMapViewModel @Inject constructor(
                 "roadaddr",
             ).onSuccess {
                 val response = it.results
+                _uiState.update { state ->
+                    state.copy(
+                        isFromSearch = false
+                    )
+                }
 
                 if (response.isNotEmpty()) {
                     _uiState.update { state ->
@@ -117,6 +124,12 @@ class DepartureMapViewModel @Inject constructor(
                     isSelectBtnEnable = false
                 )
             }
+        } else if(uiState.value.isFromSearch){
+            _uiState.update { state ->
+                state.copy(
+                    isSelectBtnEnable = true
+                )
+            }
         }
     }
 
@@ -132,6 +145,7 @@ class DepartureMapViewModel @Inject constructor(
         landMark: String,
         address: String
     ) {
+        Log.d(TAG,"selectLocation")
         _uiState.update { state ->
             state.copy(
                 latitude = latitude,

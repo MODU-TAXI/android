@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.showparty
 import android.Manifest
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +21,7 @@ import com.motax.modutaxi.presentation.ui.main.showparty.bottomsheet.TaxiPotList
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import com.motax.modutaxi.presentation.ui.toMatchDetail
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -77,6 +79,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
                     }
 
                     is ShowPartyEvent.SetMarkers -> {
+
                         removeMarkers()
                         it.list.forEach { data ->
                             setMarker(data)
@@ -214,6 +217,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
 
 
     private fun setMarker(data: UiTaxiPotListItem) {
+        Log.d(TAG,data.arrivalName)
         val marker = Marker()
         binding.partyMarker.text = data.arrivalName
         marker.position = LatLng(data.departureLatitude, data.departureLongitude)

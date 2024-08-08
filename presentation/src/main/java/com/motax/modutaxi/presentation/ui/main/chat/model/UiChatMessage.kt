@@ -9,4 +9,5 @@ data class UiChatMessage(
     val imageUrl: String = "",
     var sentTime: String = "",
     val memberId: Long = 0,
+    val dateTime: String = ""
 )

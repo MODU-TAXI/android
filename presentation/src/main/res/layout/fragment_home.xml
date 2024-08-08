@@ -61,8 +61,8 @@
                     android:layout_height="32dp"
                     android:onClick="@{() -> vm.navigateToNotification()}"
 
-                    app:layout_constraintEnd_toEndOf="@id/guide_96_vertical1"
                     app:layout_constraintBottom_toBottomOf="@id/tv_app_name"
+                    app:layout_constraintEnd_toEndOf="@id/guide_96_vertical1"
                     app:layout_constraintTop_toTopOf="@id/tv_app_name">
 
                     <ImageView
@@ -74,10 +74,10 @@
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:visibility="@{vm.uiState.isNotificationExist ? View.VISIBLE : View.GONE}"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:background="@drawable/oval_redfill_nostroke"
+                        android:visibility="@{vm.uiState.isNotificationExist ? View.VISIBLE : View.GONE}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -85,9 +85,9 @@
                             style="@style/TextSmallMedium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@{String.valueOf(vm.uiState.notificationCount)}"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -114,6 +114,7 @@
                     android:id="@+id/layout_search"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> vm.navigateToShowPartySearch()}"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="18dp"
                     android:background="@drawable/rect_white0_fill_nostroke_12_radius"
@@ -132,18 +133,20 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/et_search"
                         style="@style/TextRegularMedium"
                         android:layout_width="0dp"
                         android:layout_height="44dp"
                         android:layout_marginLeft="4dp"
                         android:background="@null"
+                        android:gravity="center_vertical"
                         android:hint="우리 오늘 어디로 떠날까요?"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/ic_search"
                         app:layout_constraintTop_toTopOf="parent" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -326,35 +329,14 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/tv_departure"
+                        android:id="@+id/tv_arrival"
                         style="@style/TextRegularSemibold"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@{vm.uiState.participatingTaxiPot.departureName}"
+                        android:text="@{vm.uiState.participatingTaxiPot.arrivalName}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/layout_departure_time"
-                        tools:text="인하대학교" />
-
-                    <ImageView
-                        android:id="@+id/ic_arrow"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:src="@drawable/ic_arrow"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_departure"
-                        app:layout_constraintStart_toEndOf="@id/tv_departure"
-                        app:layout_constraintTop_toTopOf="@id/tv_departure" />
-
-                    <TextView
-                        style="@style/TextRegularSemibold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="@{vm.uiState.participatingTaxiPot.arrivalName}"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_departure"
-                        app:layout_constraintStart_toEndOf="@id/ic_arrow"
-                        app:layout_constraintTop_toTopOf="@id/tv_departure"
                         tools:text="주안역" />
 
                     <ImageView
@@ -364,7 +346,7 @@
                         android:layout_marginTop="10dp"
                         android:src="@drawable/ic_person_fill"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_departure" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_arrival" />
 
                     <TextView
                         android:id="@+id/tv_participants"
@@ -372,7 +354,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text='@{String.valueOf(vm.uiState.participatingTaxiPot.currentHeadcount) + "/" + String.valueOf(vm.uiState.participatingTaxiPot.wishHeadcount)}'
+                        android:text='@{String.valueOf(vm.uiState.participatingTaxiPot.currentHeadCount) + "/" + String.valueOf(vm.uiState.participatingTaxiPot.wishHeadCount)}'
                         android:textColor="#969DA4"
                         app:layout_constraintBottom_toBottomOf="@id/iv_person_fill"
                         app:layout_constraintStart_toEndOf="@id/iv_person_fill"
@@ -413,6 +395,16 @@
                         app:layout_constraintTop_toTopOf="@id/iv_person_fill"
                         tools:text="8,300원" />
 
+                    <ImageView
+                        android:id="@+id/iv_room_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_person_fill"
+                        app:roomStatus="@{vm.uiState.participatingTaxiPot.roomStatus}" />
+
                     <androidx.appcompat.widget.AppCompatButton
                         style="@style/TextSmallMedium"
                         android:layout_width="0dp"
@@ -423,11 +415,11 @@
                         android:onClick="@{() -> vm.navigateToMatchDetail(vm.uiState.participatingTaxiPot.roomId)}"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
-                        android:text="채팅방 바로가기"
+                        android:text="매칭방 바로가기"
                         android:textColor="@color/mx_sub500"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/iv_person_fill" />
+                        app:layout_constraintTop_toBottomOf="@id/iv_room_status" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

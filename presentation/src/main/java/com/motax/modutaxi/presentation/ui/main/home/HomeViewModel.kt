@@ -3,9 +3,10 @@ package com.motax.modutaxi.presentation.ui.main.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.motax.modutaxi.domain.model.TaxiPotPreviewData
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
+import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
+import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +21,7 @@ import javax.inject.Inject
 
 data class HomeUiState(
     val realtimeTaxiPotList: List<UiRealtimeTaxiPotItem> = emptyList(),
-    val participatingTaxiPot: TaxiPotPreviewData? = null,
+    val participatingTaxiPot: UiParticipatingTaxiPot = UiParticipatingTaxiPot(),
     val roomId: String? = null,
     val isParticipating: Boolean = false,
     val isRealtimeTaxipotListEmpty: Boolean = true,
@@ -35,6 +36,7 @@ sealed class HomeEvent {
     data object NavigateToShowParty : HomeEvent()
     data class NavigateToMatchDetail(val id: Long) : HomeEvent()
     data object NavigateToNotification : HomeEvent()
+    data object NavigateToShowPartySearch: HomeEvent()
 }
 
 @HiltViewModel
@@ -107,13 +109,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getParticipatingRoomInfo(roomId: String?) {
+    private fun getParticipatingRoomInfo(roomId: String?) {
         viewModelScope.launch {
             if (roomId != null) {
                 repository.getTaxiPotPreview(roomId.toLong())
                     .onSuccess {
                         _uiState.update { state ->
-                            state.copy(participatingTaxiPot = it)
+                            state.copy(participatingTaxiPot = it.toUiParticipatingTaxiPot())
                         }
                     }
                     .onFailure { }
@@ -145,7 +147,7 @@ class HomeViewModel @Inject constructor(
                     _uiState.update { state ->
                         state.copy(
                             notificationCount = it.counts,
-                            isNotificationExist = it.counts!= 0
+                            isNotificationExist = it.counts != 0
                         )
                     }
                 }
@@ -173,6 +175,12 @@ class HomeViewModel @Inject constructor(
     fun navigateToNotification() {
         viewModelScope.launch {
             _event.emit(HomeEvent.NavigateToNotification)
+        }
+    }
+
+    fun navigateToShowPartySearch(){
+        viewModelScope.launch {
+            _event.emit(HomeEvent.NavigateToShowPartySearch)
         }
     }
 }

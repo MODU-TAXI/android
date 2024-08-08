@@ -7,5 +7,6 @@ data class UiWaitingMemberItem (
     val matchingCount: String = "",
     val certified: Boolean = false,
     val thisIsMe: Boolean = false,
-    val acceptParticipant: (Long) -> Unit
+    val isEmpty: Boolean = false,
+    val acceptParticipant: (Long) -> Unit,
 )
