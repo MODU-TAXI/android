@@ -39,7 +39,9 @@ sealed class ChatRoomEvent {
     data class SendImage(val img: String) : ChatRoomEvent()
     data object ScrollBottom : ChatRoomEvent()
     data object GoToGallery : ChatRoomEvent()
-    data object NavigateToCalculateSplash: ChatRoomEvent()
+    data object NavigateToCalculateSplash : ChatRoomEvent()
+    data object NavigateToPayment : ChatRoomEvent()
+    data object NavigateToPaymentState : ChatRoomEvent()
 }
 
 @HiltViewModel
@@ -157,8 +159,8 @@ class ChatRoomViewModel @Inject constructor(
         scrollBottom()
     }
 
-    fun clickManageBtn(){
-        when(uiState.value.roomStatus){
+    fun clickManageBtn() {
+        when (uiState.value.roomStatus) {
             "BEFORE_MATCHING" -> {
                 viewModelScope.launch {
                     repository.matchComplete(uiState.value.chatInfo.roomId).onSuccess {
@@ -180,7 +182,13 @@ class ChatRoomViewModel @Inject constructor(
             }
 
             "BEFORE_PAYMENT" -> {
-
+                viewModelScope.launch {
+                    if (uiState.value.isManager) {
+                        _event.emit(ChatRoomEvent.NavigateToPaymentState)
+                    } else {
+                        _event.emit(ChatRoomEvent.NavigateToPayment)
+                    }
+                }
             }
 
             "AFTER_PAYMENT" -> {

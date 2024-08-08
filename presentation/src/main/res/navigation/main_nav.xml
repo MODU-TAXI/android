@@ -213,6 +213,12 @@
         <action
             android:id="@+id/action_chatRoomFragment_to_calculateSplashFragment"
             app:destination="@id/calculateSplashFragment" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_paymentStateFragment"
+            app:destination="@id/paymentStateFragment" />
 
     </fragment>
     <dialog
@@ -300,5 +306,13 @@
         android:id="@+id/calculateSplashFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.CalculateSplashFragment"
         android:label="CalculateSplashFragment" />
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.payment.PaymentFragment"
+        android:label="PaymentFragment" />
+    <fragment
+        android:id="@+id/paymentStateFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.paymentstate.PaymentStateFragment"
+        android:label="PaymentStateFragment" />
 
 </navigation>

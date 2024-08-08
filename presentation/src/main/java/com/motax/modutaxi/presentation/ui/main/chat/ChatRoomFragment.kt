@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment_chat_room) {
 
-    private val chatManager : ChatManager by activityViewModels()
+    private val chatManager: ChatManager by activityViewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: ChatRoomViewModel by viewModels()
     private val args: ChatRoomFragmentArgs by navArgs()
@@ -41,31 +41,32 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         initImageObserve()
     }
 
-    private fun initChatObserve(){
+    private fun initChatObserve() {
         repeatOnStarted {
-            chatManager.newChat.collect{
+            chatManager.newChat.collect {
                 viewModel.newChatMessage(it)
             }
         }
     }
 
-    private fun initEventObserve(){
+    private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect{
-                when(it){
+            viewModel.event.collect {
+                when (it) {
                     is ChatRoomEvent.SendMessage -> chatManager.sendMessage(roomId, it.msg, "CHAT")
                     is ChatRoomEvent.SendImage -> chatManager.sendMessage(roomId, it.img, "IMAGE")
                     is ChatRoomEvent.ScrollBottom -> scrollRecyclerViewBottom()
                     is ChatRoomEvent.GoToGallery -> parentViewModel.goToGallery()
                     is ChatRoomEvent.NavigateToCalculateSplash -> findNavController().toCalculateSplash()
+                    is ChatRoomEvent.NavigateToPayment -> findNavController().toPayment()
                 }
             }
         }
     }
 
-    private fun initImageObserve(){
+    private fun initImageObserve() {
         repeatOnStarted {
-            parentViewModel.imageUrl.collect{
+            parentViewModel.imageUrl.collect {
                 chatManager.sendMessage(roomId, it, "IMAGE")
             }
         }
@@ -81,8 +82,13 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         chatManager.disconnectChat()
     }
 
-    private fun NavController.toCalculateSplash(){
+    private fun NavController.toCalculateSplash() {
         val action = ChatRoomFragmentDirections.actionChatRoomFragmentToCalculateSplashFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toPayment() {
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToPaymentFragment()
         navigate(action)
     }
 
