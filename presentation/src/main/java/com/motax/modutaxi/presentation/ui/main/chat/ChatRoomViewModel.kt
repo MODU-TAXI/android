@@ -39,6 +39,7 @@ sealed class ChatRoomEvent {
     data class SendImage(val img: String) : ChatRoomEvent()
     data object ScrollBottom : ChatRoomEvent()
     data object GoToGallery : ChatRoomEvent()
+    data object NavigateToCalculateSplash: ChatRoomEvent()
 }
 
 @HiltViewModel
@@ -173,7 +174,9 @@ class ChatRoomViewModel @Inject constructor(
             }
 
             "AFTER_MATCHING" -> {
-
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.NavigateToCalculateSplash)
+                }
             }
 
             "BEFORE_PAYMENT" -> {

@@ -210,6 +210,9 @@
         <argument
             android:name="id"
             app:argType="long" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_calculateSplashFragment"
+            app:destination="@id/calculateSplashFragment" />
 
     </fragment>
     <dialog
@@ -293,5 +296,9 @@
             app:destination="@id/matchDetailFragment"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/calculateSplashFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.CalculateSplashFragment"
+        android:label="CalculateSplashFragment" />
 
 </navigation>

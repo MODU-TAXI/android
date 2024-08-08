@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
@@ -55,6 +57,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
                     is ChatRoomEvent.SendImage -> chatManager.sendMessage(roomId, it.img, "IMAGE")
                     is ChatRoomEvent.ScrollBottom -> scrollRecyclerViewBottom()
                     is ChatRoomEvent.GoToGallery -> parentViewModel.goToGallery()
+                    is ChatRoomEvent.NavigateToCalculateSplash -> findNavController().toCalculateSplash()
                 }
             }
         }
@@ -76,6 +79,11 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         super.onDestroyView()
         ChatState.inChat = false
         chatManager.disconnectChat()
+    }
+
+    private fun NavController.toCalculateSplash(){
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToCalculateSplashFragment()
+        navigate(action)
     }
 
 }
