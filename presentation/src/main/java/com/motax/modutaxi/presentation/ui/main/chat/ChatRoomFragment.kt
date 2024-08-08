@@ -59,6 +59,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
                     is ChatRoomEvent.GoToGallery -> parentViewModel.goToGallery()
                     is ChatRoomEvent.NavigateToCalculateSplash -> findNavController().toCalculateSplash()
                     is ChatRoomEvent.NavigateToPayment -> findNavController().toPayment()
+                    is ChatRoomEvent.NavigateToPaymentState -> findNavController().toPaymentState()
                 }
             }
         }
@@ -89,6 +90,11 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
 
     private fun NavController.toPayment() {
         val action = ChatRoomFragmentDirections.actionChatRoomFragmentToPaymentFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toPaymentState() {
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToPaymentStateFragment()
         navigate(action)
     }
 
