@@ -305,7 +305,11 @@
     <fragment
         android:id="@+id/calculateSplashFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.CalculateSplashFragment"
-        android:label="CalculateSplashFragment" />
+        android:label="CalculateSplashFragment" >
+        <action
+            android:id="@+id/action_calculateSplashFragment_to_calculateEditAmountFragment"
+            app:destination="@id/calculateEditAmountFragment" />
+    </fragment>
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.payment.PaymentFragment"
@@ -314,5 +318,9 @@
         android:id="@+id/paymentStateFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.paymentstate.PaymentStateFragment"
         android:label="PaymentStateFragment" />
+    <fragment
+        android:id="@+id/calculateEditAmountFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.editamount.CalculateEditAmountFragment"
+        android:label="CalculateEditAmountFragment" />
 
 </navigation>
