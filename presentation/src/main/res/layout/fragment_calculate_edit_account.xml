@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.chat.calculate.editaccount.CalculateEditAccountViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,76 +86,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_announce" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_first_recommend_bank"
+        <ImageView
+            android:id="@+id/iv_selected_bank"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_account"
+            tools:src="@drawable/ic_toss_bank" />
+
+        <TextView
+            style="@style/TextLargeMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/rect_bank_select_46radius"
-            android:gravity="center_vertical"
-            android:paddingVertical="4dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="16dp"
-            app:layout_constraintStart_toStartOf="@id/et_account"
-            app:layout_constraintTop_toBottomOf="@id/et_account">
-
-            <ImageView
-                android:id="@+id/iv_first_bank"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_kakao_bank"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_first_bank"
-                style="@style/TextCaptionMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="카카오뱅크"
-                android:textColor="@color/mx_gray800"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_first_bank"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_second_recommend_bank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/rect_bank_select_46radius"
-            android:gravity="center_vertical"
-            android:paddingVertical="4dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="16dp"
-            app:layout_constraintStart_toEndOf="@id/layout_first_recommend_bank"
-            app:layout_constraintTop_toBottomOf="@id/et_account">
-
-            <ImageView
-                android:id="@+id/iv_second_bank"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_toss_bank"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_second_bank"
-                style="@style/TextCaptionMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="토스뱅크"
-                android:textColor="@color/mx_gray800"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_second_bank"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintBottom_toBottomOf="@id/iv_selected_bank"
+            app:layout_constraintStart_toEndOf="@id/iv_selected_bank"
+            app:layout_constraintTop_toTopOf="@id/iv_selected_bank"
+            tools:text="신한" />
 
         <TextView
             android:id="@+id/tv_choose_bank"
@@ -174,23 +126,20 @@
             android:text="등록된 계좌로 정산할까요?"
             android:textColor="@color/mx_gray600"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_account" />
+            app:layout_constraintTop_toBottomOf="@id/tv_choose_bank" />
 
-        <TextView
-            android:id="@+id/tv_registered_account"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_account_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rect_nofill_gray300stroke_16radius"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="20dp"
-            android:textColorHint="@color/mx_gray500"
-            android:textSize="16dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_mini_announce" />
+            app:layout_constraintTop_toBottomOf="@id/tv_mini_announce"
+            tools:listitem="@layout/item_registered_account" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_confirm"

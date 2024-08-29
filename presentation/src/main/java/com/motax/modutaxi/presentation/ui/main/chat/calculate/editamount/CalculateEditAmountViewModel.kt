@@ -13,6 +13,7 @@ import javax.inject.Inject
 
 sealed class CalculateEditAmountEvents {
     data object NavigateToCalculateEditAccount : CalculateEditAmountEvents()
+    data object NavigateBack : CalculateEditAmountEvents()
 }
 
 @HiltViewModel
@@ -28,6 +29,12 @@ class CalculateEditAmountViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             CalculateForm.totalCharge = amount.value.toInt()
             _event.emit(CalculateEditAmountEvents.NavigateToCalculateEditAccount)
+        }
+    }
+
+    fun navigateBack(){
+        viewModelScope.launch {
+            _event.emit(CalculateEditAmountEvents.NavigateBack)
         }
     }
 

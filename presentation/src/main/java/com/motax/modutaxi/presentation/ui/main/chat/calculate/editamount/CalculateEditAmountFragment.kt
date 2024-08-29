@@ -28,6 +28,7 @@ class CalculateEditAmountFragment :
             viewModel.event.collect {
                 when (it) {
                     is CalculateEditAmountEvents.NavigateToCalculateEditAccount -> findNavController().toCalculateEditAccount()
+                    is CalculateEditAmountEvents.NavigateBack -> findNavController().navigateUp()
                 }
             }
         }
