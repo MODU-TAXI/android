@@ -53,11 +53,11 @@
             app:layout_constraintTop_toTopOf="@id/tv_room_manager_nickname" />
 
         <ImageView
-            android:id="@+id/btn_delete"
+            android:id="@+id/btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:src="@drawable/ic_delete_participant"
+            android:src="@drawable/ic_plus_participant"
             app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_room_manager" />

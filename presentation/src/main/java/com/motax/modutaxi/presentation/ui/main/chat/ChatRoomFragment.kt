@@ -13,6 +13,7 @@ import com.motax.modutaxi.presentation.chatmanager.ChatManager
 import com.motax.modutaxi.presentation.databinding.FragmentChatRoomBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageAdapter
+import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
 import com.motax.modutaxi.presentation.util.ChatState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,6 +30,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        CalculateForm.roomId = roomId
         ChatState.inChat = true
         binding.vm = viewModel
         binding.rvChat.adapter = adapter

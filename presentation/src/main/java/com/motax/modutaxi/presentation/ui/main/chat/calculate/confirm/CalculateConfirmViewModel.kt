@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
+import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
+import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiCalculateParticipant
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
+import com.motax.modutaxi.presentation.ui.main.chat.model.UiCalculateParticipantItem
 import com.motax.modutaxi.presentation.util.Bank
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +19,13 @@ import javax.inject.Inject
 
 data class CalculateConfirmUiState(
     val nick: String = "",
+    val calculateMembers: List<UiCalculateParticipantItem> = emptyList(),
+    val nonCalculateMembers: List<UiCalculateParticipantItem> = emptyList(),
+    val calculateMemebrCount: Int = 0,
+    val totalAmount: Int = 0,
+    val amountPerCount: Int = 0,
+    val totalAmountString: String = "",
+    val amountPerCountString: String = ""
 )
 
 @HiltViewModel
@@ -27,22 +37,131 @@ class CalculateConfirmViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CalculateConfirmUiState())
     val uiState: StateFlow<CalculateConfirmUiState> = _uiState.asStateFlow()
 
-
     init {
         viewModelScope.launch {
-            authRepository.getMemberNickName()?.let{
+            authRepository.getMemberNickName()?.let {
                 _uiState.update { state ->
                     state.copy(
                         nick = it,
+                        totalAmount = CalculateForm.totalCharge,
+                        totalAmountString = CalculateForm.totalCharge.formatNumberWithCommas()
                     )
                 }
-            } ?:run{
+
+                getParticipants()
+            } ?: run {
+            }
+        }
+    }
+
+    private fun getParticipants() {
+        viewModelScope.launch {
+            val counts = 4
+            _uiState.update { state ->
+                state.copy(
+                    calculateMembers = listOf(
+                        UiCalculateParticipantItem(
+                            1,
+                            "",
+                            "진성",
+                            "5000",
+                            true,
+                            true,
+                            ::changeParticipantState
+                        ),
+                        UiCalculateParticipantItem(
+                            2,
+                            "",
+                            "하연",
+                            "5000",
+                            false,
+                            true,
+                            ::changeParticipantState
+                        ),
+                        UiCalculateParticipantItem(
+                            3,
+                            "",
+                            "민우",
+                            "5000",
+                            false,
+                            true,
+                            ::changeParticipantState
+                        ),
+                        UiCalculateParticipantItem(
+                            4,
+                            "",
+                            "진로",
+                            "5000",
+                            false,
+                            true,
+                            ::changeParticipantState
+                        )
+                    ),
+                    amountPerCount = uiState.value.totalAmount / counts,
+                    amountPerCountString = (uiState.value.totalAmount / counts).formatNumberWithCommas(),
+                    calculateMemebrCount = counts
+                )
+            }
+
+            repository.getTaxiPotParticipants(CalculateForm.roomId).onSuccess {
+                val count = it.inList.size
+                _uiState.update { state ->
+                    state.copy(
+                        calculateMembers = it.inList.map { data ->
+                            data.toUiCalculateParticipant(::changeParticipantState)
+                        },
+                        amountPerCount = uiState.value.totalAmount / count,
+                        amountPerCountString = (uiState.value.totalAmount / count).toInt()
+                            .formatNumberWithCommas(),
+                        calculateMemebrCount = count
+                    )
+                }
+
+
+            }.onFailure {
 
             }
         }
     }
 
-    private fun requestCalculate(){
+    private fun changeParticipantState(item: UiCalculateParticipantItem) {
+        if (item.isCalculate) {
+            if (uiState.value.calculateMemebrCount > 1) {
+                val newCount = uiState.value.calculateMemebrCount - 1
+                _uiState.update { state ->
+                    state.copy(
+                        calculateMembers = uiState.value.calculateMembers.filter {
+                            it.memberId != item.memberId
+                        },
+                        nonCalculateMembers = uiState.value.nonCalculateMembers + item.copy(
+                            isCalculate = false
+                        ),
+                        calculateMemebrCount = newCount,
+                        amountPerCount = uiState.value.totalAmount / newCount,
+                        amountPerCountString = (uiState.value.totalAmount / newCount).formatNumberWithCommas(),
+                    )
+                }
+            } else {
+                // 뺄수 없음 모달
+            }
+
+        } else {
+            val newCount = uiState.value.calculateMemebrCount + 1
+            _uiState.update { state ->
+                state.copy(
+                    nonCalculateMembers = uiState.value.nonCalculateMembers.filter {
+                        it.memberId != item.memberId
+                    },
+                    calculateMemebrCount = newCount,
+                    amountPerCount = uiState.value.totalAmount / newCount,
+                    amountPerCountString = (uiState.value.totalAmount / newCount).formatNumberWithCommas(),
+                    calculateMembers = uiState.value.calculateMembers + item.copy(isCalculate = true)
+                )
+            }
+        }
+    }
+
+    private fun requestCalculate() {
         viewModelScope.launch {
 //            repository.requestCalculate().onSuccess {
 //

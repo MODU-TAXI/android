@@ -7,6 +7,8 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentCalculateConfirmBinding
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
+import com.motax.modutaxi.presentation.ui.main.chat.adapter.CalculateParticipantAdapter
+import com.motax.modutaxi.presentation.ui.main.chat.adapter.NonCalculateParticipantAdapter
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,12 +22,13 @@ class CalculateConfirmFragment: BaseFragment<FragmentCalculateConfirmBinding>(R.
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
+        binding.rvParticipants.itemAnimator = null
+        binding.rvNonCalculateMember.itemAnimator = null
+        binding.rvParticipants.adapter = CalculateParticipantAdapter()
+        binding.rvNonCalculateMember.adapter = NonCalculateParticipantAdapter()
         binding.ivBank.setImageResource(CalculateForm.bank.logoResId)
         binding.tvBankName.text = CalculateForm.bank.displayName
         binding.tvAccount.text = CalculateForm.accountString
-        binding.tvAmount.text = CalculateForm.totalCharge.formatNumberWithCommas()
     }
-
-
 
 }

@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.chat.model
 import com.motax.modutaxi.presentation.util.Bank
 
 object CalculateForm {
+    var roomId = 0L
     var totalCharge = 0
     var bank = Bank.EMPTY
     var accountString = ""
