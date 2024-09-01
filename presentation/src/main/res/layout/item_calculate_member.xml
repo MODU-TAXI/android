@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiParticipantItem" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:paddingVertical="6dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_room_manager"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:scaleType="centerCrop"
+            app:profileImgUrl="@{item.profileImage}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_room_manager_nickname"
+            style="@style/TextLargeMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:text="@{item.nickname}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
+            app:layout_constraintStart_toEndOf="@id/iv_room_manager"
+            app:layout_constraintTop_toTopOf="@id/iv_room_manager"
+            tools:text="버스를 놓친 사자" />
+
+        <TextView
+            style="@style/TextLargeMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="(나)"
+            android:textColor="@color/mx_gray500"
+            android:visibility="@{item.thisIsMe ? View.VISIBLE : View.GONE }"
+            app:layout_constraintBottom_toBottomOf="@id/tv_room_manager_nickname"
+            app:layout_constraintStart_toEndOf="@id/tv_room_manager_nickname"
+            app:layout_constraintTop_toTopOf="@id/tv_room_manager_nickname" />
+
+        <TextView
+            android:id="@+id/tv_matching_count"
+            style="@style/TextLargeRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mx_gray500"
+            android:text="@{item.matchingCount}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_room_manager"
+            tools:text="7회" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -20,6 +20,7 @@ import com.motax.modutaxi.data.model.response.NotificationResponse
 import com.motax.modutaxi.data.model.response.NotificationResponseItem
 import com.motax.modutaxi.data.model.response.PaymentMemberListResponse
 import com.motax.modutaxi.data.model.response.RegisterAccountResponse
+import com.motax.modutaxi.data.model.response.RequestCalculateResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
@@ -67,6 +68,7 @@ import com.motax.modutaxi.domain.model.NotificationDataItem
 import com.motax.modutaxi.domain.model.PathData
 import com.motax.modutaxi.domain.model.PaymentMemberListData
 import com.motax.modutaxi.domain.model.RegisterAccountData
+import com.motax.modutaxi.domain.model.RequestCalculateData
 import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.domain.model.SearchResultListData
 import com.motax.modutaxi.domain.model.SpotListData
@@ -446,5 +448,11 @@ fun NotificationCountResponse.toDomain(): NotificationCountData {
 fun MatchCompleteResponse.toDomain(): MatchCompleteData {
     return MatchCompleteData(
         isUpdated = isUpdated
+    )
+}
+
+fun RequestCalculateResponse.toDomain() : RequestCalculateData{
+    return RequestCalculateData(
+        paymentRoomId = paymentRoomId
     )
 }

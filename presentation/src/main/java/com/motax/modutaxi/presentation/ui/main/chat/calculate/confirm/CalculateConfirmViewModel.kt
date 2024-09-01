@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.chat.calculate.confirm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
+import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
 import com.motax.modutaxi.presentation.util.Bank
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ data class CalculateConfirmUiState(
 
 @HiltViewModel
 class CalculateConfirmViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val repository: MainRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CalculateConfirmUiState())
@@ -37,6 +39,14 @@ class CalculateConfirmViewModel @Inject constructor(
             } ?:run{
 
             }
+        }
+    }
+
+    private fun requestCalculate(){
+        viewModelScope.launch {
+//            repository.requestCalculate().onSuccess {
+//
+//            }.onFailure {  }
         }
     }
 

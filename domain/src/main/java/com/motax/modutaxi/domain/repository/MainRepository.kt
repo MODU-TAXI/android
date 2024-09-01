@@ -11,6 +11,7 @@ import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.RegisterAccountData
+import com.motax.modutaxi.domain.model.RequestCalculateData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
@@ -52,7 +53,7 @@ interface MainRepository {
         longitude: Double,
         sortType: String,
         roomTags: List<String>,
-        isImminent : Boolean
+        isImminent: Boolean
     ): Result<TaxiPotListData>
 
     suspend fun getTaxiPotPreview(
@@ -145,7 +146,7 @@ interface MainRepository {
         content: String
     ): Result<Unit>
 
-    suspend fun getAccounts() : Result<AccountData>
+    suspend fun getAccounts(): Result<AccountData>
 
     suspend fun registerAccount(
         accountNumber: String,
@@ -154,18 +155,25 @@ interface MainRepository {
     ): Result<RegisterAccountData>
 
     suspend fun deleteAccounts(
-        id : Long
-    ) : Result<Unit>
+        id: Long
+    ): Result<Unit>
 
     suspend fun getNotifications(
         page: Int, size: Int
-    ) : Result<NotificationData>
+    ): Result<NotificationData>
 
     suspend fun getNotificationCounts()
-    : Result<NotificationCountData>
-
+            : Result<NotificationCountData>
 
     suspend fun matchComplete(
         id: Long
     ): Result<MatchCompleteData>
+
+    suspend fun requestCalculate(
+        roomId: Long,
+        accountId: Long,
+        totalCharge: Int,
+        participantList: List<Long>,
+        nonParticipantList: List<Long>
+    ): Result<RequestCalculateData>
 }

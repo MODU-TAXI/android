@@ -3,6 +3,7 @@ package com.motax.modutaxi.data.remote
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
 import com.motax.modutaxi.data.model.request.RegisterAccountRequest
 import com.motax.modutaxi.data.model.request.ReportRequest
+import com.motax.modutaxi.data.model.request.RequestCalculateRequest
 import com.motax.modutaxi.data.model.response.AccountResponse
 import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
@@ -15,6 +16,7 @@ import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.NotificationCountResponse
 import com.motax.modutaxi.data.model.response.NotificationResponse
 import com.motax.modutaxi.data.model.response.RegisterAccountResponse
+import com.motax.modutaxi.data.model.response.RequestCalculateResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
@@ -196,6 +198,11 @@ interface MainApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): NotificationResponse
+
+    @POST("/api/payment-rooms")
+    suspend fun requestCalculate(
+        @Body params : RequestCalculateRequest
+    ): RequestCalculateResponse
 
     @GET("api/alarms/counts")
     suspend fun getNotificationCounts()
