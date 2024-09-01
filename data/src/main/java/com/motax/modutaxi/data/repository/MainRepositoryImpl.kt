@@ -2,6 +2,7 @@ package com.motax.modutaxi.data.repository
 
 import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.request.RegisterAccountRequest
 import com.motax.modutaxi.data.model.request.ReportRequest
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.domain.model.AccountData
@@ -14,6 +15,7 @@ import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
+import com.motax.modutaxi.domain.model.RegisterAccountData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
@@ -209,6 +211,14 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getAccounts(): Result<AccountData> = runCatching {
         api.getAccounts()
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun registerAccount(
+        accountNumber: String,
+        bank: String,
+        ownerName: String
+    ): Result<RegisterAccountData> = runCatching {
+        api.registerAccount(RegisterAccountRequest(accountNumber, bank, ownerName))
     }.mapCatching { it.toDomain() }
 
     override suspend fun deleteAccounts(

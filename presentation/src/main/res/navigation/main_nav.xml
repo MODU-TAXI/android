@@ -329,6 +329,14 @@
     <fragment
         android:id="@+id/calculateEditAccountFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.editaccount.CalculateEditAccountFragment"
-        android:label="CalculateEditAccountFragment" />
+        android:label="CalculateEditAccountFragment" >
+        <action
+            android:id="@+id/action_calculateEditAccountFragment_to_calculateConfirmFragment"
+            app:destination="@id/calculateConfirmFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculateConfirmFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.confirm.CalculateConfirmFragment"
+        android:label="CalculateConfirmFragment" />
 
 </navigation>

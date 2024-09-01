@@ -10,6 +10,7 @@ import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
+import com.motax.modutaxi.domain.model.RegisterAccountData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
@@ -145,6 +146,12 @@ interface MainRepository {
     ): Result<Unit>
 
     suspend fun getAccounts() : Result<AccountData>
+
+    suspend fun registerAccount(
+        accountNumber: String,
+        bank: String,
+        ownerName: String
+    ): Result<RegisterAccountData>
 
     suspend fun deleteAccounts(
         id : Long

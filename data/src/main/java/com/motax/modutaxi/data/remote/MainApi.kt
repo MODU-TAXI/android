@@ -1,6 +1,7 @@
 package com.motax.modutaxi.data.remote
 
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.request.RegisterAccountRequest
 import com.motax.modutaxi.data.model.request.ReportRequest
 import com.motax.modutaxi.data.model.response.AccountResponse
 import com.motax.modutaxi.data.model.response.ChatMessageResponse
@@ -13,6 +14,7 @@ import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.NotificationCountResponse
 import com.motax.modutaxi.data.model.response.NotificationResponse
+import com.motax.modutaxi.data.model.response.RegisterAccountResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
@@ -178,6 +180,11 @@ interface MainApi {
     @GET("api/accounts")
     suspend fun getAccounts()
     : AccountResponse
+
+    @POST("api/accounts")
+    suspend fun registerAccount(
+        @Body params: RegisterAccountRequest
+    ): RegisterAccountResponse
 
     @DELETE("api/accounts/{id}")
     suspend fun deleteAccounts(

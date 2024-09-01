@@ -2,6 +2,7 @@ package com.motax.modutaxi.presentation.ui.main.chat.calculate.editaccount
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiAccountItem
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
@@ -28,7 +29,8 @@ sealed class CalculateEditAccountEvents {
 
 @HiltViewModel
 class CalculateEditAccountViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CalculateEditAccountUiState())
@@ -38,6 +40,8 @@ class CalculateEditAccountViewModel @Inject constructor(
     val event: SharedFlow<CalculateEditAccountEvents> = _event.asSharedFlow()
 
     val selectedBank = MutableStateFlow(Bank.EMPTY)
+
+    val accountString = MutableStateFlow("")
 
     fun selectBank(bank: Bank) {
         selectedBank.update {
@@ -51,7 +55,7 @@ class CalculateEditAccountViewModel @Inject constructor(
                 _uiState.update { state ->
                     state.copy(
                         registeredBank = it.accounts.map { data ->
-                            data.toUiAccountItem()
+                            data.toUiAccountItem(::selectRegisteredAccount)
                         }
                     )
                 }
@@ -61,10 +65,28 @@ class CalculateEditAccountViewModel @Inject constructor(
         }
     }
 
+    private fun selectRegisteredAccount(bank: Bank, account: String) {
+        selectedBank.value = bank
+        accountString.value = account
+    }
+
     fun navigateToConfirm() {
         viewModelScope.launch {
-            CalculateForm.bank = selectedBank.value
-            _event.emit(CalculateEditAccountEvents.NavigateToConfirm)
+
+            authRepository.getMemberName()?.let {
+                repository.registerAccount(accountString.value, selectedBank.value.toString(), it)
+                    .onSuccess { data ->
+                        CalculateForm.bank = selectedBank.value
+                        CalculateForm.accountString = accountString.value
+                        CalculateForm.accountId = data.id
+                        _event.emit(CalculateEditAccountEvents.NavigateToConfirm)
+                    }.onFailure {
+
+                }
+            } ?: run {
+
+            }
+
         }
     }
 

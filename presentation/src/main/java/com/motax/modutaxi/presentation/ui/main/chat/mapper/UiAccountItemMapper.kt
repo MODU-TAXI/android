@@ -6,7 +6,10 @@ import com.motax.modutaxi.presentation.ui.main.chat.model.UiAccountItem
 import com.motax.modutaxi.presentation.util.Bank
 
 
-fun AccountDataItem.toUiAccountItem() = UiAccountItem(
+fun AccountDataItem.toUiAccountItem(
+    selectAccount: (Bank, String) -> Unit
+) = UiAccountItem(
     bank = Bank.fromName(bank),
-    account = accountNumber
+    account = accountNumber,
+    selectAccount = selectAccount
 )

@@ -79,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
+            android:text="@={vm.accountString}"
             android:background="@drawable/rect_nofill_gray300stroke_16radius"
             android:hint="'-' 빼고 입력"
             android:inputType="number"

@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.chat.calculate.editaccount
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
@@ -50,9 +51,14 @@ class CalculateEditAccountFragment :
         repeatOnStarted {
             viewModel.event.collect{
                 when(it){
-                    is CalculateEditAccountEvents.NavigateToConfirm -> findNavController()
+                    is CalculateEditAccountEvents.NavigateToConfirm -> findNavController().toCalculateConfirm()
                 }
             }
         }
+    }
+
+    private fun NavController.toCalculateConfirm(){
+        val action = CalculateEditAccountFragmentDirections.actionCalculateEditAccountFragmentToCalculateConfirmFragment()
+        navigate(action)
     }
 }

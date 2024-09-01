@@ -30,6 +30,9 @@ class RegisteredAccountViewHolder(private val binding: ItemRegisteredAccountBind
         binding.tvBankName.text = item.bank.displayName
         binding.ivBank.setImageResource(item.bank.logoResId)
         binding.tvAccountName.text = item.account
+        binding.root.setOnClickListener {
+            item.selectAccount(item.bank, item.account)
+        }
     }
 
 }

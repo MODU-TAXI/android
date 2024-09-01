@@ -19,6 +19,7 @@ import com.motax.modutaxi.data.model.response.NotificationCountResponse
 import com.motax.modutaxi.data.model.response.NotificationResponse
 import com.motax.modutaxi.data.model.response.NotificationResponseItem
 import com.motax.modutaxi.data.model.response.PaymentMemberListResponse
+import com.motax.modutaxi.data.model.response.RegisterAccountResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
@@ -65,6 +66,7 @@ import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.NotificationDataItem
 import com.motax.modutaxi.domain.model.PathData
 import com.motax.modutaxi.domain.model.PaymentMemberListData
+import com.motax.modutaxi.domain.model.RegisterAccountData
 import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.domain.model.SearchResultListData
 import com.motax.modutaxi.domain.model.SpotListData
@@ -403,6 +405,15 @@ fun AccountResponse.toDomain(): AccountData {
 
 fun AccountResponseItem.toDomain(): AccountDataItem {
     return AccountDataItem(
+        id = id,
+        accountNumber = accountNumber,
+        bank = bank,
+        ownerName = ownerName
+    )
+}
+
+fun RegisterAccountResponse.toDomain(): RegisterAccountData {
+    return RegisterAccountData(
         id = id,
         accountNumber = accountNumber,
         bank = bank,
