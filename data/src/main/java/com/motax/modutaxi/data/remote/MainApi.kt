@@ -5,6 +5,7 @@ import com.motax.modutaxi.data.model.request.ReportRequest
 import com.motax.modutaxi.data.model.response.AccountResponse
 import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
+import com.motax.modutaxi.data.model.response.GetAccountsResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MatchCompleteResponse

@@ -1,9 +1,13 @@
 package com.motax.modutaxi.presentation.customview
 
+import android.app.Dialog
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet.Constraint
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.motax.modutaxi.presentation.databinding.DialogBankBottomsheetBinding
 import com.motax.modutaxi.presentation.util.Bank
@@ -19,6 +23,13 @@ class BankBottomSheetDialog(
         binding = DialogBankBottomsheetBinding.inflate(LayoutInflater.from(context))
         setContentView(binding.root)
         setBottomSheetListener()
+        setupRatio()
+    }
+
+    private fun setupRatio(){
+        val bottomSheet = this.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as View
+        val behavior = BottomSheetBehavior.from(bottomSheet)
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     private fun setBottomSheetListener(){

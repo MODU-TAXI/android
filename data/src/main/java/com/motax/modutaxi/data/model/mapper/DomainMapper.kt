@@ -405,7 +405,8 @@ fun AccountResponseItem.toDomain(): AccountDataItem {
     return AccountDataItem(
         id = id,
         accountNumber = accountNumber,
-        bank = bank
+        bank = bank,
+        ownerName = ownerName
     )
 }
 

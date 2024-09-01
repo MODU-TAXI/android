@@ -7,5 +7,6 @@ data class AccountData(
 data class AccountDataItem(
     val id: Long,
     val accountNumber: String,
-    val bank: String
+    val bank: String,
+    val ownerName: String
 )
