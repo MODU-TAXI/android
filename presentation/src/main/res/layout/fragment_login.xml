@@ -46,31 +46,27 @@
             app:layout_constraintGuide_percent="0.90" />
 
         <!--스타일 적용 전-->
-        <TextView
+        <ImageView
             android:id="@+id/tv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:text="모두의 택시"
-            android:textColor="@color/black"
-            android:textSize="50sp"
-            app:layout_constraintBottom_toTopOf="@id/guide36"
+            android:src="@drawable/iv_login_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guide27" />
+            app:layout_constraintTop_toBottomOf="@id/guide36" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login_kakao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:gravity="center"
             android:background="@drawable/ic_kakao_login"
+            android:gravity="center"
             android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/guide_90_vertical"
             app:layout_constraintStart_toStartOf="@id/guide_10_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide78"
-            app:layout_constraintEnd_toEndOf="@id/guide_90_vertical"/>
-
+            app:layout_constraintTop_toBottomOf="@id/guide78" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
