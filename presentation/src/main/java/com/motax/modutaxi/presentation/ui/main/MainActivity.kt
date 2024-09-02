@@ -2,6 +2,9 @@ package com.motax.modutaxi.presentation.ui.main
 
 import android.Manifest
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -30,10 +33,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.security.Permission
 
 @AndroidEntryPoint
-class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
-    private val viewModel : MainViewModel by viewModels()
-    private val chatManager : ChatManager by viewModels()
+    private val viewModel: MainViewModel by viewModels()
+    private val chatManager: ChatManager by viewModels()
 
     private lateinit var neededPermissionList: MutableList<String>
 
@@ -60,7 +63,8 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
     }
 
     private fun setBnv() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         with(binding) {
             bottomNavigationView.apply {
@@ -74,7 +78,7 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
             }
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                if(destination.id == R.id.homeFragment  || destination.id == R.id.myPageFragment ){
+                if (destination.id == R.id.homeFragment || destination.id == R.id.myPageFragment) {
                     bottomNavigationView.visibility = View.VISIBLE
                 } else {
                     bottomNavigationView.visibility = View.GONE
@@ -83,10 +87,10 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
         }
     }
 
-    private fun initEventObserve(){
+    private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect{
-                when(it){
+            viewModel.event.collect {
+                when (it) {
                     is MainEvent.FullScreenMode -> {
                         setStatusBarFullScreen()
                     }
@@ -99,6 +103,8 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
                     is MainEvent.GoToGallery -> {
                         onCheckStoragePermissions()
                     }
+
+                    is MainEvent.CopyClipBoard -> copyInClipBoard(it.account)
                 }
             }
         }
@@ -167,7 +173,7 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
         }
 
 
-    private fun setStatusBarFullScreen(){
+    private fun setStatusBarFullScreen() {
         window.apply {
             statusBarColor = Color.TRANSPARENT
             decorView.systemUiVisibility =
@@ -175,12 +181,19 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
         }
     }
 
-    private fun setStatusBarNotFullScreen(){
+    private fun setStatusBarNotFullScreen() {
         window.apply {
             statusBarColor = Color.WHITE
             decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
+    }
+
+    private fun copyInClipBoard(text: String) {
+        val clipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("계좌번호", text)
+        clipboard.setPrimaryClip(clip)
+        showToastMessage("클립보드에 복사 완료")
     }
 
 

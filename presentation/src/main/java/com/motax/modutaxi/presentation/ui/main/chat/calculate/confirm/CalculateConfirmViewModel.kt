@@ -10,8 +10,11 @@ import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
 import com.motax.modutaxi.presentation.ui.main.chat.model.UiCalculateParticipantItem
 import com.motax.modutaxi.presentation.util.Bank
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,6 +31,10 @@ data class CalculateConfirmUiState(
     val amountPerCountString: String = ""
 )
 
+sealed class CalculateConfirmEvent {
+    data object CopyClipBoard : CalculateConfirmEvent()
+}
+
 @HiltViewModel
 class CalculateConfirmViewModel @Inject constructor(
     private val authRepository: AuthRepository,
@@ -36,6 +43,9 @@ class CalculateConfirmViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(CalculateConfirmUiState())
     val uiState: StateFlow<CalculateConfirmUiState> = _uiState.asStateFlow()
+
+    private val _events = MutableSharedFlow<CalculateConfirmEvent>()
+    val events: SharedFlow<CalculateConfirmEvent> = _events.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -158,6 +168,12 @@ class CalculateConfirmViewModel @Inject constructor(
                     calculateMembers = uiState.value.calculateMembers + item.copy(isCalculate = true)
                 )
             }
+        }
+    }
+
+    fun copyClipBoard() {
+        viewModelScope.launch {
+            _events.emit(CalculateConfirmEvent.CopyClipBoard)
         }
     }
 

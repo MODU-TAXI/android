@@ -117,6 +117,7 @@
             android:id="@+id/iv_clip_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> vm.copyClipBoard()}"
             android:layout_marginEnd="20dp"
             android:src="@drawable/ic_clip_board"
             app:layout_constraintBottom_toBottomOf="@id/tv_account"
