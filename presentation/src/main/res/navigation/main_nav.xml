@@ -345,6 +345,10 @@
     <fragment
         android:id="@+id/calculateCompleteFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.complete.CalculateCompleteFragment"
-        android:label="CalculateCompleteFragment" />
+        android:label="CalculateCompleteFragment" >
+        <action
+            android:id="@+id/action_calculateCompleteFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
+    </fragment>
 
 </navigation>

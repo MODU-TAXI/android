@@ -8,7 +8,6 @@ import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiCalculateParticipant
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
 import com.motax.modutaxi.presentation.ui.main.chat.model.UiCalculateParticipantItem
-import com.motax.modutaxi.presentation.util.Bank
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +32,7 @@ data class CalculateConfirmUiState(
 
 sealed class CalculateConfirmEvent {
     data object CopyClipBoard : CalculateConfirmEvent()
-    data object NavigateToCalculateConfirm : CalculateConfirmEvent()
+    data object NavigateToCalculateComplete : CalculateConfirmEvent()
 }
 
 @HiltViewModel
@@ -178,11 +177,17 @@ class CalculateConfirmViewModel @Inject constructor(
         }
     }
 
-    private fun requestCalculate() {
+    fun requestCalculate() {
         viewModelScope.launch {
-//            repository.requestCalculate().onSuccess {
-//
-//            }.onFailure {  }
+            repository.requestCalculate(
+                CalculateForm.roomId,
+                CalculateForm.accountId,
+                CalculateForm.totalCharge,
+                uiState.value.calculateMembers.map { it.memberId },
+                uiState.value.nonCalculateMembers.map { it.memberId }
+            ).onSuccess {
+                _events.emit(CalculateConfirmEvent.NavigateToCalculateComplete)
+            }.onFailure { }
         }
     }
 

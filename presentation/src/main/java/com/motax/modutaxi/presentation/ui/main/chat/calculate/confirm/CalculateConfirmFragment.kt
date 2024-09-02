@@ -1,10 +1,7 @@
 package com.motax.modutaxi.presentation.ui.main.chat.calculate.confirm
 
-import android.content.ClipboardManager
-import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -12,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentCalculateConfirmBinding
-import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.CalculateParticipantAdapter
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.NonCalculateParticipantAdapter
@@ -50,13 +46,13 @@ class CalculateConfirmFragment :
                         CalculateForm.accountString
                     )
 
-                    is CalculateConfirmEvent.NavigateToCalculateConfirm -> findNavController().toCalculateConfirm()
+                    is CalculateConfirmEvent.NavigateToCalculateComplete -> findNavController().toCalculateComplete()
                 }
             }
         }
     }
 
-    private fun NavController.toCalculateConfirm() {
+    private fun NavController.toCalculateComplete() {
         val action =
             CalculateConfirmFragmentDirections.actionCalculateConfirmFragmentToCalculateCompleteFragment()
         navigate(action)
