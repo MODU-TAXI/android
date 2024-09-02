@@ -33,6 +33,7 @@ data class CalculateConfirmUiState(
 
 sealed class CalculateConfirmEvent {
     data object CopyClipBoard : CalculateConfirmEvent()
+    data object NavigateToCalculateConfirm : CalculateConfirmEvent()
 }
 
 @HiltViewModel

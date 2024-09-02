@@ -337,6 +337,14 @@
     <fragment
         android:id="@+id/calculateConfirmFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.confirm.CalculateConfirmFragment"
-        android:label="CalculateConfirmFragment" />
+        android:label="CalculateConfirmFragment" >
+        <action
+            android:id="@+id/action_calculateConfirmFragment_to_calculateCompleteFragment"
+            app:destination="@id/calculateCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculateCompleteFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.complete.CalculateCompleteFragment"
+        android:label="CalculateCompleteFragment" />
 
 </navigation>

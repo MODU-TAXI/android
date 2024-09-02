@@ -7,6 +7,8 @@ import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentCalculateConfirmBinding
@@ -47,9 +49,17 @@ class CalculateConfirmFragment :
                     is CalculateConfirmEvent.CopyClipBoard -> parentViewModel.copyClipBoard(
                         CalculateForm.accountString
                     )
+
+                    is CalculateConfirmEvent.NavigateToCalculateConfirm -> findNavController().toCalculateConfirm()
                 }
             }
         }
+    }
+
+    private fun NavController.toCalculateConfirm() {
+        val action =
+            CalculateConfirmFragmentDirections.actionCalculateConfirmFragmentToCalculateCompleteFragment()
+        navigate(action)
     }
 
 
