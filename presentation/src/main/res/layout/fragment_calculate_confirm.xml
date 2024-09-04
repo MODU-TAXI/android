@@ -70,6 +70,30 @@
             app:layout_constraintTop_toBottomOf="@id/layout_toolbar" />
 
         <TextView
+            android:id="@+id/tv_name_label"
+            style="@style/TextRegularMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="예금주"
+            android:textColor="@color/mx_gray700"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_announce" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextRegularMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="@{vm.uiState.name}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_name_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_name_label"
+            tools:text="김민우" />
+
+        <TextView
             android:id="@+id/tv_account_label"
             style="@style/TextRegularMedium"
             android:layout_width="wrap_content"
@@ -79,7 +103,7 @@
             android:text="계좌번호"
             android:textColor="@color/mx_gray700"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_announce" />
+            app:layout_constraintTop_toBottomOf="@id/tv_name_label" />
 
         <ImageView
             android:id="@+id/iv_bank"

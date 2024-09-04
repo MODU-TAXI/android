@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CalculateConfirmUiState(
-    val nick: String = "",
+    val name: String = "",
     val calculateMembers: List<UiCalculateParticipantItem> = emptyList(),
     val nonCalculateMembers: List<UiCalculateParticipantItem> = emptyList(),
     val calculateMemebrCount: Int = 0,
@@ -49,10 +49,10 @@ class CalculateConfirmViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            authRepository.getMemberNickName()?.let {
+            authRepository.getMemberName()?.let {
                 _uiState.update { state ->
                     state.copy(
-                        nick = it,
+                        name = it,
                         totalAmount = CalculateForm.totalCharge,
                         totalAmountString = CalculateForm.totalCharge.formatNumberWithCommas()
                     )
