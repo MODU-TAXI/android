@@ -66,8 +66,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:lineSpacingExtra="4dp"
-            android:text="목적지 도착 완료!\n총 얼마가 나왔는지 알려주세요"
             android:textSize="20dp"
+            android:text="목적지 도착 완료!\n총 얼마가 나왔는지 알려주세요"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_toolbar" />
 
