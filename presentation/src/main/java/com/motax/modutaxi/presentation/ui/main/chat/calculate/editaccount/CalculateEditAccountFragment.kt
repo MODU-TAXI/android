@@ -58,7 +58,7 @@ class CalculateEditAccountFragment :
     }
 
     private fun NavController.toCalculateConfirm(){
-        val action = CalculateEditAccountFragmentDirections.actionCalculateEditAccountFragmentToCalculateConfirmFragment()
+        val action = CalculateEditAccountFragmentDirections.actionCalculateEditAccountFragmentToCalculateEditAccountOwnerFragment()
         navigate(action)
     }
 }

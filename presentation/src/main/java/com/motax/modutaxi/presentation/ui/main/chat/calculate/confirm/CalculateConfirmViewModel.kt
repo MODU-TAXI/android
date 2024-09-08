@@ -52,7 +52,7 @@ class CalculateConfirmViewModel @Inject constructor(
             authRepository.getMemberName()?.let {
                 _uiState.update { state ->
                     state.copy(
-                        name = it,
+                        name = CalculateForm.accountOwner,
                         totalAmount = CalculateForm.totalCharge,
                         totalAmountString = CalculateForm.totalCharge.formatNumberWithCommas()
                     )

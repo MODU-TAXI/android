@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.chat.calculate.accountowner.CalculateEditAccountOwnerViewModel" />
 
     </data>
 
@@ -87,6 +90,8 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@android:color/transparent"
+            android:text="@={vm.ownerName}"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_announce_account_owner"
             app:layout_constraintTop_toBottomOf="@id/tv_announce" />

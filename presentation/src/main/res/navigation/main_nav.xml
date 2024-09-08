@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/calculateSplashFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -331,8 +331,8 @@
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.editaccount.CalculateEditAccountFragment"
         android:label="CalculateEditAccountFragment" >
         <action
-            android:id="@+id/action_calculateEditAccountFragment_to_calculateConfirmFragment"
-            app:destination="@id/calculateConfirmFragment" />
+            android:id="@+id/action_calculateEditAccountFragment_to_calculateEditAccountOwnerFragment"
+            app:destination="@id/calculateEditAccountOwnerFragment" />
     </fragment>
     <fragment
         android:id="@+id/calculateConfirmFragment"
@@ -349,6 +349,14 @@
         <action
             android:id="@+id/action_calculateCompleteFragment_to_chatRoomFragment"
             app:destination="@id/chatRoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculateEditAccountOwnerFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.accountowner.CalculateEditAccountOwnerFragment"
+        android:label="CalculateEditAccountOwnerFragment" >
+        <action
+            android:id="@+id/action_calculateEditAccountOwnerFragment_to_calculateConfirmFragment"
+            app:destination="@id/calculateConfirmFragment" />
     </fragment>
 
 </navigation>

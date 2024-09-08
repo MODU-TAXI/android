@@ -6,6 +6,7 @@ object CalculateForm {
     var roomId = 0L
     var totalCharge = 0
     var bank = Bank.EMPTY
+    var accountOwner = ""
     var accountString = ""
     var accountId = 0L
 }
