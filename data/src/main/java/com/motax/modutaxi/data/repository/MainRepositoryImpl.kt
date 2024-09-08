@@ -18,6 +18,7 @@ import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
+import com.motax.modutaxi.domain.model.PaymentInfoData
 import com.motax.modutaxi.domain.model.RegisterAccountData
 import com.motax.modutaxi.domain.model.RequestCalculateData
 import com.motax.modutaxi.domain.model.SpotListData
@@ -264,5 +265,9 @@ class MainRepositoryImpl @Inject constructor(
                 nonParticipantList.map { UserItem(it) }
             )
         )
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun getPaymentInfo(roomId: Long): Result<PaymentInfoData> = runCatching {
+        api.getPaymentInfo(roomId)
     }.mapCatching { it.toDomain() }
 }

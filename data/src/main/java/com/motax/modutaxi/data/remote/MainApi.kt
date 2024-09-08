@@ -15,6 +15,9 @@ import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.NotificationCountResponse
 import com.motax.modutaxi.data.model.response.NotificationResponse
+import com.motax.modutaxi.data.model.response.PaymentInfoResponse
+import com.motax.modutaxi.data.model.response.PaymentMemberListResponse
+import com.motax.modutaxi.data.model.response.PaymentMembersStateResponse
 import com.motax.modutaxi.data.model.response.RegisterAccountResponse
 import com.motax.modutaxi.data.model.response.RequestCalculateResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
@@ -212,4 +215,14 @@ interface MainApi {
     suspend fun matchComplete(
         @Path("id") id: Long
     ):MatchCompleteResponse
+
+    @GET("/api/payment-rooms")
+    suspend fun getPaymentInfo(
+        @Query("roomId") roomId : Long
+    ):  PaymentInfoResponse
+
+    @GET("/api/payment-members")
+    suspend fun getPaymentMembersState(
+        @Query("roomId") roomId : Long
+    ):  PaymentMembersStateResponse
 }

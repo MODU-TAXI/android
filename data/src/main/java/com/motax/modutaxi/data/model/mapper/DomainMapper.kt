@@ -18,7 +18,9 @@ import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.NotificationCountResponse
 import com.motax.modutaxi.data.model.response.NotificationResponse
 import com.motax.modutaxi.data.model.response.NotificationResponseItem
+import com.motax.modutaxi.data.model.response.PaymentInfoResponse
 import com.motax.modutaxi.data.model.response.PaymentMemberListResponse
+import com.motax.modutaxi.data.model.response.PaymentMembersStateResponse
 import com.motax.modutaxi.data.model.response.RegisterAccountResponse
 import com.motax.modutaxi.data.model.response.RequestCalculateResponse
 import com.motax.modutaxi.data.model.response.SearchResultItem
@@ -66,7 +68,10 @@ import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.NotificationDataItem
 import com.motax.modutaxi.domain.model.PathData
+import com.motax.modutaxi.domain.model.PaymentInfoData
 import com.motax.modutaxi.domain.model.PaymentMemberListData
+import com.motax.modutaxi.domain.model.PaymentMembersItemData
+import com.motax.modutaxi.domain.model.PaymentMembersStateData
 import com.motax.modutaxi.domain.model.RegisterAccountData
 import com.motax.modutaxi.domain.model.RequestCalculateData
 import com.motax.modutaxi.domain.model.SearchResultData
@@ -451,8 +456,33 @@ fun MatchCompleteResponse.toDomain(): MatchCompleteData {
     )
 }
 
-fun RequestCalculateResponse.toDomain() : RequestCalculateData{
+fun RequestCalculateResponse.toDomain(): RequestCalculateData {
     return RequestCalculateData(
         paymentRoomId = paymentRoomId
+    )
+}
+
+fun PaymentInfoResponse.toDomain(): PaymentInfoData {
+    return PaymentInfoData(
+        accountNumber = accountNumber,
+        bank = bank,
+        ownerName = ownerName,
+        totalCharge = totalCharge,
+        status = status
+    )
+}
+
+fun PaymentMembersStateResponse.toDomain(): PaymentMembersStateData {
+    return PaymentMembersStateData(
+        participantList = participantList.map {
+            PaymentMembersItemData(
+                id = it.id,
+                nickName = it.nickName,
+                name = it.name,
+                imageUrl = it.imageUrl,
+                status = it.status,
+                me = it.me
+            )
+        }
     )
 }
