@@ -9,7 +9,7 @@
 
         <variable
             name="item"
-            type="com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiParticipantItem" />
+            type="com.motax.modutaxi.presentation.ui.main.chat.model.UiPaymentParticipantItem" />
 
     </data>
 
@@ -23,7 +23,7 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:scaleType="centerCrop"
-            app:profileImgUrl="@{item.profileImage}"
+            app:profileImgUrl="@{item.profile}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -33,7 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
-            android:text="@{item.nickname}"
+            android:text="@{item.nickName}"
             app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
             app:layout_constraintStart_toEndOf="@id/iv_room_manager"
             app:layout_constraintTop_toTopOf="@id/iv_room_manager"
@@ -45,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
-            android:text="@{item.nickname}"
+            android:text="@{item.name}"
             app:layout_constraintBottom_toBottomOf="@id/tv_room_manager_nickname"
             app:layout_constraintStart_toEndOf="@id/tv_room_manager_nickname"
             app:layout_constraintTop_toTopOf="@id/tv_room_manager_nickname"
@@ -64,16 +64,16 @@
             app:layout_constraintTop_toTopOf="@id/tv_name" />
 
         <TextView
-            android:id="@+id/tv_price"
+            android:id="@+id/tv_state"
             style="@style/TextLargeRegular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@{item.state}"
             android:textColor="@color/mx_gray500"
-            android:text="@{item.matchingCount}"
             app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_room_manager"
-            tools:text="2,650원" />
+            tools:text="완료" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -19,6 +19,7 @@ import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.PaymentInfoData
+import com.motax.modutaxi.domain.model.PaymentMembersStateData
 import com.motax.modutaxi.domain.model.RegisterAccountData
 import com.motax.modutaxi.domain.model.RequestCalculateData
 import com.motax.modutaxi.domain.model.SpotListData
@@ -269,5 +270,9 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getPaymentInfo(roomId: Long): Result<PaymentInfoData> = runCatching {
         api.getPaymentInfo(roomId)
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun getPaymentMembersState(roomId: Long): Result<PaymentMembersStateData> = runCatching {
+        api.getPaymentMembersState(roomId)
     }.mapCatching { it.toDomain() }
 }

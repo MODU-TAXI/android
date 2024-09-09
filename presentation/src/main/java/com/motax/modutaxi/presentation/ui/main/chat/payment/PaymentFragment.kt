@@ -6,12 +6,26 @@ import androidx.fragment.app.viewModels
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentPaymentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class PaymentFragment: BaseFragment<FragmentPaymentBinding>(R.layout.fragment_payment) {
+@AndroidEntryPoint
+class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_payment) {
 
-    private val viewModel : PaymentViewModel by viewModels()
+    private val viewModel: PaymentViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.vm = viewModel
+        viewModel.getPaymentInfo()
+        initBankObserve()
+    }
+
+    private fun initBankObserve() {
+        repeatOnStarted {
+            viewModel.bankLogo.collect {
+                binding.ivBank.setImageResource(it)
+            }
+        }
     }
 }

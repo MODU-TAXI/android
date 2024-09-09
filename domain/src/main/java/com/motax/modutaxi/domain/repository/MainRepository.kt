@@ -11,6 +11,7 @@ import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
 import com.motax.modutaxi.domain.model.PaymentInfoData
+import com.motax.modutaxi.domain.model.PaymentMembersStateData
 import com.motax.modutaxi.domain.model.RegisterAccountData
 import com.motax.modutaxi.domain.model.RequestCalculateData
 import com.motax.modutaxi.domain.model.SpotListData
@@ -181,4 +182,8 @@ interface MainRepository {
     suspend fun getPaymentInfo(
         roomId: Long
     ): Result<PaymentInfoData>
+
+    suspend fun getPaymentMembersState(
+        roomId : Long
+    ):  Result<PaymentMembersStateData>
 }
