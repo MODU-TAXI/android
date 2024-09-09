@@ -42,6 +42,7 @@ sealed class ChatRoomEvent {
     data object NavigateToCalculateSplash : ChatRoomEvent()
     data object NavigateToPayment : ChatRoomEvent()
     data object NavigateToPaymentState : ChatRoomEvent()
+    data object NavigateToBack: ChatRoomEvent()
 }
 
 @HiltViewModel
@@ -84,7 +85,9 @@ class ChatRoomViewModel @Inject constructor(
                 }
 
             }.onFailure {
-
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.NavigateToBack)
+                }
             }
         }
     }
@@ -103,7 +106,9 @@ class ChatRoomViewModel @Inject constructor(
                 }
 
             }.onFailure {
-
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.NavigateToBack)
+                }
             }
         }
     }
@@ -192,7 +197,9 @@ class ChatRoomViewModel @Inject constructor(
             }
 
             "AFTER_PAYMENT" -> {
-
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.NavigateToBack)
+                }
             }
         }
     }

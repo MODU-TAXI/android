@@ -18,6 +18,7 @@ class CalculateCompleteFragment :
         binding.btnConfirm.setOnClickListener {
             findNavController().toChatFragment()
         }
+
     }
 
     private fun NavController.toChatFragment() {

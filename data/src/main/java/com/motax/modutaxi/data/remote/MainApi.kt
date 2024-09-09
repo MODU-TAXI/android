@@ -216,6 +216,11 @@ interface MainApi {
         @Path("id") id: Long
     ):MatchCompleteResponse
 
+    @DELETE("/api/rooms/{id}")
+    suspend fun deleteRoom(
+        @Path("id") id: Long
+    ): Unit
+
     @GET("/api/payment-rooms")
     suspend fun getPaymentInfo(
         @Query("roomId") roomId : Long
@@ -225,4 +230,9 @@ interface MainApi {
     suspend fun getPaymentMembersState(
         @Query("roomId") roomId : Long
     ):  PaymentMembersStateResponse
+
+    @PATCH("/api/payment-members")
+    suspend fun paymentComplete(
+        @Query("roomId") roomId : Long
+    ): Unit
 }

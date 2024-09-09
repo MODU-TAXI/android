@@ -62,6 +62,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
                     is ChatRoomEvent.NavigateToCalculateSplash -> findNavController().toCalculateSplash()
                     is ChatRoomEvent.NavigateToPayment -> findNavController().toPayment()
                     is ChatRoomEvent.NavigateToPaymentState -> findNavController().toPaymentState()
+                    is ChatRoomEvent.NavigateToBack -> findNavController().navigateUp()
                 }
             }
         }

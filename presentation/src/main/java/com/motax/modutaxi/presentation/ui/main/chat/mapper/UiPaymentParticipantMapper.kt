@@ -9,7 +9,7 @@ fun PaymentMembersItemData.toUiPaymentParticipant(): UiPaymentParticipantItem {
         id = id,
         profile = imageUrl,
         name = name,
-        state = status,
+        state = if (status == "INCOMPLETE") "미완료" else "완료",
         thisIsMe = me,
         nickName = nickName
     )

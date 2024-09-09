@@ -21,6 +21,13 @@ class CalculateEditAmountFragment :
 
         binding.vm = viewModel
         initEventObserve()
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.btnCancel.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun initEventObserve() {

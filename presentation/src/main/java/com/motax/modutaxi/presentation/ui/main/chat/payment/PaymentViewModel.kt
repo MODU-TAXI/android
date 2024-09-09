@@ -7,8 +7,11 @@ import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
 import com.motax.modutaxi.presentation.util.Bank
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -21,6 +24,11 @@ data class PaymentUiState(
     val accountString: String = ""
 )
 
+sealed class PaymentEvent{
+    data object NavigateBack : PaymentEvent()
+    data class CopyClipBoard(val accountString: String) : PaymentEvent()
+}
+
 @HiltViewModel
 class PaymentViewModel @Inject constructor(
     private val repository: MainRepository
@@ -28,6 +36,9 @@ class PaymentViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(PaymentUiState())
     val uiState: StateFlow<PaymentUiState> = _uiState.asStateFlow()
+
+    private val _event = MutableSharedFlow<PaymentEvent>()
+    val event: SharedFlow<PaymentEvent> = _event.asSharedFlow()
 
     var totalCharge = 0
 
@@ -46,7 +57,7 @@ class PaymentViewModel @Inject constructor(
 
                 totalCharge = it.totalCharge
 
-                bankLogo.value = Bank.getLogoResource(it.bank)
+                bankLogo.value = Bank.fromName(it.bank).logoResId
 
                 getPaymentMember()
             }.onFailure {
@@ -72,6 +83,22 @@ class PaymentViewModel @Inject constructor(
             }.onFailure {
 
             }
+        }
+    }
+
+    fun paymentComplete(){
+        viewModelScope.launch {
+            repository.paymentComplete(CalculateForm.roomId).onSuccess {
+                _event.emit(PaymentEvent.NavigateBack)
+            }.onFailure {
+
+            }
+        }
+    }
+
+    fun copyClipBoard(){
+        viewModelScope.launch {
+            _event.emit(PaymentEvent.CopyClipBoard(uiState.value.accountString))
         }
     }
 

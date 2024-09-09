@@ -32,6 +32,14 @@ class CalculateEditAccountFragment :
         binding.tvChooseBank.setOnClickListener {
             BankBottomSheetDialog(requireContext(), ::selectBank).show()
         }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.btnCancel.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun selectBank(bank: Bank) {

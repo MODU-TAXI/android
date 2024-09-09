@@ -34,6 +34,14 @@ class CalculateEditAccountOwnerFragment :
             findNavController().toCalculateConfirm()
         }
 
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.btnCancel.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         viewModel.getName()
     }
 

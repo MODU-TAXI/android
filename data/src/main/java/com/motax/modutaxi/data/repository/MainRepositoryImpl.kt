@@ -275,4 +275,12 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getPaymentMembersState(roomId: Long): Result<PaymentMembersStateData> = runCatching {
         api.getPaymentMembersState(roomId)
     }.mapCatching { it.toDomain() }
+
+    override suspend fun paymentComplete(roomId: Long): Result<Unit> = runCatching {
+        api.paymentComplete(roomId)
+    }
+
+    override suspend fun deleteRoom(id: Long): Result<Unit> = runCatching {
+        api.deleteRoom(id)
+    }
 }

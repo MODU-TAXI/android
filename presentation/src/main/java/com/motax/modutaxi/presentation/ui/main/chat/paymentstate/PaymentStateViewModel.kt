@@ -49,7 +49,7 @@ class PaymentStateViewModel @Inject constructor(
                     )
                 }
 
-                bankLogo.value = Bank.getLogoResource(it.bank)
+                bankLogo.value = Bank.fromName(it.bank).logoResId
 
                 getPaymentMember()
 

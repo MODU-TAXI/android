@@ -47,6 +47,10 @@
         <action
             android:id="@+id/action_createPartyFragment_to_arrivalSearchFragment"
             app:destination="@id/arrivalSearchFragment" />
+        <action
+            android:id="@+id/action_createPartyFragment_to_matchDetailFragment"
+            app:destination="@id/matchDetailFragment"
+            app:popUpTo="@id/homeFragment"/>
     </fragment>
 
     <fragment
@@ -193,7 +197,7 @@
 
     <action
         android:id="@+id/global_action_to_matchDetailFragment"
-        app:destination="@id/matchDetailFragment" />
+        app:destination="@id/matchDetailFragment"/>
     <fragment
         android:id="@+id/showPartySearchFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchFragment"
@@ -348,7 +352,8 @@
         android:label="CalculateCompleteFragment" >
         <action
             android:id="@+id/action_calculateCompleteFragment_to_chatRoomFragment"
-            app:destination="@id/chatRoomFragment" />
+            app:destination="@id/chatRoomFragment"
+            app:popUpTo="@id/matchDetailFragment"/>
     </fragment>
     <fragment
         android:id="@+id/calculateEditAccountOwnerFragment"

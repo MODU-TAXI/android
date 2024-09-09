@@ -36,7 +36,7 @@ class CreatePartyFragment :
                     is CreatePartyEvent.NavigateToArrivalSearch -> findNavController().toArrivalSearch()
                     is CreatePartyEvent.NavigateToDepartureMap -> findNavController().toDepartureMap()
                     is CreatePartyEvent.ShowTimePicker -> showTimePicker(it.hour, it.minute)
-                    is CreatePartyEvent.NavigateToMatchDetail -> findNavController().toMatchDetail(
+                    is CreatePartyEvent.NavigateToMatchDetail -> findNavController().toMatchDetails(
                         it.id
                     )
 
@@ -58,6 +58,11 @@ class CreatePartyFragment :
         }
 
         picker.show(parentFragmentManager, "tag")
+    }
+
+    private fun NavController.toMatchDetails(id: Long){
+        val action = CreatePartyFragmentDirections.actionCreatePartyFragmentToMatchDetailFragment(id)
+        navigate(action)
     }
 
     private fun NavController.toDepartureMap() {

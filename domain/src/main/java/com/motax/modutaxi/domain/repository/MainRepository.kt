@@ -186,4 +186,12 @@ interface MainRepository {
     suspend fun getPaymentMembersState(
         roomId : Long
     ):  Result<PaymentMembersStateData>
+
+    suspend fun paymentComplete(
+        roomId : Long
+    ): Result<Unit>
+
+    suspend fun deleteRoom(
+        id: Long
+    ): Result<Unit>
 }
