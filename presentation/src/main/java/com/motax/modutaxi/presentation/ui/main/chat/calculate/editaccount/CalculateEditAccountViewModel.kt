@@ -25,6 +25,7 @@ data class CalculateEditAccountUiState(
 
 sealed class CalculateEditAccountEvents {
     data object NavigateToConfirm : CalculateEditAccountEvents()
+    data object NavigateBack: CalculateEditAccountEvents()
 }
 
 @HiltViewModel
@@ -87,6 +88,12 @@ class CalculateEditAccountViewModel @Inject constructor(
 
             }
 
+        }
+    }
+
+    fun navigateBack(){
+        viewModelScope.launch {
+            _event.emit(CalculateEditAccountEvents.NavigateBack)
         }
     }
 

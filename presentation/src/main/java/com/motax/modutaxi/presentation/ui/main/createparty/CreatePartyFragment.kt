@@ -41,6 +41,7 @@ class CreatePartyFragment :
                     )
 
                     is CreatePartyEvent.ShowToast -> showToastMessage(it.msg)
+                    is CreatePartyEvent.NavigateBack -> findNavController().navigateUp()
                 }
             }
         }

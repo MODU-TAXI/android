@@ -33,6 +33,7 @@ data class CalculateConfirmUiState(
 sealed class CalculateConfirmEvent {
     data object CopyClipBoard : CalculateConfirmEvent()
     data object NavigateToCalculateComplete : CalculateConfirmEvent()
+    data object NavigateBack: CalculateConfirmEvent()
 }
 
 @HiltViewModel
@@ -188,6 +189,12 @@ class CalculateConfirmViewModel @Inject constructor(
             ).onSuccess {
                 _events.emit(CalculateConfirmEvent.NavigateToCalculateComplete)
             }.onFailure { }
+        }
+    }
+
+    fun navigateBack(){
+        viewModelScope.launch {
+            _events.emit(CalculateConfirmEvent.NavigateBack)
         }
     }
 

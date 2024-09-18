@@ -137,6 +137,10 @@ class MatchDetailFragment :
                 else -> {}
             }
         }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun setPath() {

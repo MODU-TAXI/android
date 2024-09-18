@@ -33,6 +33,7 @@
                 android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> vm.navigateBack()}"
                 android:src="@drawable/ic_backward"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,14 +50,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/btn_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_xmark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -79,12 +72,12 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
-            android:text="@={vm.accountString}"
             android:background="@drawable/rect_nofill_gray300stroke_16radius"
             android:hint="'-' 빼고 입력"
             android:inputType="number"
             android:paddingHorizontal="16dp"
             android:paddingVertical="20dp"
+            android:text="@={vm.accountString}"
             android:textColorHint="@color/mx_gray500"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"

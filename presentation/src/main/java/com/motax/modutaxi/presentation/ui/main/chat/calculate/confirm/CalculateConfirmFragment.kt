@@ -35,13 +35,6 @@ class CalculateConfirmFragment :
         binding.tvBankName.text = CalculateForm.bank.displayName
         binding.tvAccount.text = CalculateForm.accountString
 
-        binding.btnBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
-        binding.btnCancel.setOnClickListener {
-            findNavController().navigateUp()
-        }
 
         initEventObserve()
     }
@@ -55,6 +48,7 @@ class CalculateConfirmFragment :
                     )
 
                     is CalculateConfirmEvent.NavigateToCalculateComplete -> findNavController().toCalculateComplete()
+                    is CalculateConfirmEvent.NavigateBack -> findNavController().navigateUp()
                 }
             }
         }
