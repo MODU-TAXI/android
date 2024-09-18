@@ -19,6 +19,8 @@ import javax.inject.Inject
 
 data class NotificationUiState(
     val notificationList: List<UiNotificationItem> = emptyList(),
+    val hasNext: Boolean = true,
+    val page: Int = 0,
     val isEmpty: Boolean = false
 )
 
@@ -39,28 +41,49 @@ class NotificationViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(NotificationUiState())
     val uiState: StateFlow<NotificationUiState> = _uiState.asStateFlow()
 
+    fun refresh(){
+        _uiState.update{ state ->
+            state.copy(
+                notificationList = emptyList(),
+                hasNext = true,
+                page = 0,
+                isEmpty = false
+            )
+        }
+
+        loadNotifications()
+    }
 
     fun loadNotifications() {
         viewModelScope.launch {
-            val response = repository.getNotifications(0, 10)
-            if (response.isSuccess) {
-                val notifications = response.getOrNull()?.result?.map {
-                    UiNotificationItem(
-                        type = it.type,
-                        message = it.message,
-                        id = it.resourceId,
-                        dateTime = it.dateTime.substringBefore("T").replace("-", "."),
-                        checked = it.checked
-                    )
-                } ?: emptyList()
+            if(uiState.value.hasNext){
+                repository.getNotifications(uiState.value.page, 10).onSuccess {
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            notificationList = uiState.value.notificationList + it.result.map { data ->
+                                UiNotificationItem(
+                                    type = data.type,
+                                    message = data.message,
+                                    id = data.resourceId,
+                                    dateTime = data.dateTime.substringBefore("T").replace("-", "."),
+                                    checked = data.checked,
+                                )
+                            },
+                            hasNext = it.hasNext,
+                            page = it.page + 1
+                        )
+                    }
 
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        notificationList = notifications,
-                        isEmpty = notifications.isEmpty()
-                    )
+                    _uiState.update { state ->
+                        state.copy(
+                            isEmpty = uiState.value.notificationList.isEmpty()
+                        )
+                    }
+                }.onFailure {
+
                 }
             }
+
         }
     }
 

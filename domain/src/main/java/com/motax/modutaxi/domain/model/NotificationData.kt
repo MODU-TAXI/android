@@ -1,6 +1,8 @@
 package com.motax.modutaxi.domain.model
 
 data class NotificationData(
+    val page: Int,
+    val hasNext: Boolean,
     val result: List<NotificationDataItem>
 )
 

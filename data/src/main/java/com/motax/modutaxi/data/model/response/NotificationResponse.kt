@@ -1,6 +1,8 @@
 package com.motax.modutaxi.data.model.response
 
 data class NotificationResponse (
+    val page: Int,
+    val hasNext: Boolean,
     val result: List<NotificationResponseItem>
 )
 

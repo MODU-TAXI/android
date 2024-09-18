@@ -430,6 +430,8 @@ fun RegisterAccountResponse.toDomain(): RegisterAccountData {
 
 fun NotificationResponse.toDomain(): NotificationData {
     return NotificationData(
+        hasNext = hasNext,
+        page = page,
         result = this.result.map { it.toDomain() }
     )
 }
