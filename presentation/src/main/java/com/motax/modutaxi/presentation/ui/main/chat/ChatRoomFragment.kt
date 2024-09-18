@@ -41,6 +41,10 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         initChatObserve()
         initEventObserve()
         initImageObserve()
+
+        binding.btnMore.setOnClickListener {
+            viewModel.deleteRoom(roomId)
+        }
     }
 
     private fun initChatObserve() {

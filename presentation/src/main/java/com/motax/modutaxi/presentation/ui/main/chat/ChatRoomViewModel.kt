@@ -228,4 +228,14 @@ class ChatRoomViewModel @Inject constructor(
             _event.emit(ChatRoomEvent.GoToGallery)
         }
     }
+
+    fun deleteRoom(roomId: Long){
+        viewModelScope.launch {
+            repository.deleteRoom(roomId).onSuccess {
+
+            }.onFailure {
+
+            }
+        }
+    }
 }

@@ -12,4 +12,7 @@ object Constants {
     const val OTHER_CHAT = 3
     const val OTHER_IMAGE_CHAT = 4
     const val STORAGE_PERMISSION = 1001
+
+    const val POPUP_WIDTH_DP = 220
+    const val TWO_POPUP_HEIGHT_DP = 90
 }
