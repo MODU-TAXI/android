@@ -15,7 +15,7 @@ class CalculateSplashFragment: BaseFragment<FragmentCalculateSplashBinding>(R.la
         super.onViewCreated(view, savedInstanceState)
 
         repeatOnStarted {
-            delay(2000)
+            delay(1500)
             findNavController().toCalculateEditAmount()
         }
     }
