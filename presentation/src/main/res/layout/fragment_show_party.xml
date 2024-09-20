@@ -68,6 +68,7 @@
             android:background="@drawable/rect_whitefill_nostroke_12radius"
             android:drawableStart="@drawable/ic_magnifying_glass_mint"
             android:drawablePadding="10dp"
+            android:hint="@{vm.nickName + `님 우리 어디로 떠날까요?`}"
             android:gravity="center_vertical"
             android:onClick="@{() -> vm.navigateToSearch()}"
             android:paddingHorizontal="10dp"
