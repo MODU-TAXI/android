@@ -101,7 +101,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text='@{vm.uiState.isParticipating ? (vm.uiState.nickname + "님, 모두의 택시를 이용중이시네요!") : ("반가워요, " + vm.uiState.nickname + "님!")}'
+                android:text='@{vm.uiState.isParticipating ? (vm.uiState.nickname + "님,택시 이용중이에요!") : ("반가워요, " + vm.uiState.nickname + "님!")}'
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@id/guide_04_vertical1"
                 app:layout_constraintTop_toBottomOf="@id/tv_app_name" />
