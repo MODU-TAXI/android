@@ -78,7 +78,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                if (destination.id == R.id.homeFragment || destination.id == R.id.myPageFragment) {
+                if (destination.id == R.id.homeFragment || destination.id == R.id.myPageFragment || destination.id == R.id.showPartyFragment) {
                     bottomNavigationView.visibility = View.VISIBLE
                 } else {
                     bottomNavigationView.visibility = View.GONE
