@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 data class HomeUiState(
@@ -30,7 +31,9 @@ data class HomeUiState(
     val notificationCount: Int = 0,
     val isNotificationExist: Boolean = false,
     val name: String = "",
-    val matchingCount: String = ""
+    val matchingCount: String = "",
+    val savePrice: String = "",
+    val currentMonth: String = LocalDate.now().monthValue.toString()
 )
 
 sealed class HomeEvent {
@@ -55,6 +58,7 @@ class HomeViewModel @Inject constructor(
 
     init{
         getNameAndMatchingCount()
+        getMonthData()
     }
 
     private fun getNameAndMatchingCount(){
@@ -62,8 +66,26 @@ class HomeViewModel @Inject constructor(
             _uiState.update { state ->
                 state.copy(
                     name = authRepository.getMemberName().toString(),
-                    matchingCount = authRepository.getMatchingCount().toString() + "회"
+                    matchingCount = authRepository.getMatchingCount().toString() + "회",
+                    nickname = authRepository.getMemberNickName().toString()
                 )
+            }
+        }
+    }
+
+    private fun getMonthData(){
+        viewModelScope.launch {
+            repository.getMonthlyUsageHistory(
+                LocalDate.now().year,
+                LocalDate.now().monthValue
+            ).onSuccess {
+                _uiState.update { state ->
+                    state.copy(
+                        savePrice = (it.totalCharge - it.accumulatePortionCharge).formatNumberWithCommas()
+                    )
+                }
+            }.onFailure {
+
             }
         }
     }
@@ -115,7 +137,6 @@ class HomeViewModel @Inject constructor(
                             memberId = it.memberId
                         )
                     }
-                    getNickname()
                     if (it.roomId != "null") {
                         getParticipatingRoomInfo(it.roomId)
                     }
@@ -136,22 +157,6 @@ class HomeViewModel @Inject constructor(
                     }
                     .onFailure { }
             }
-        }
-    }
-
-    fun getNickname() {
-        viewModelScope.launch {
-            repository.getMemberProfile(_uiState.value.memberId.toLong())
-                .onSuccess {
-                    _uiState.update { state ->
-                        state.copy(
-                            nickname = it.nickname
-                        )
-                    }
-
-                }.onFailure {
-
-                }
         }
     }
 
