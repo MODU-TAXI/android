@@ -92,7 +92,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -574,20 +573,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
-                            android:text="5"
+                            android:text="5월 아낀금액"
                             android:textColor="@color/mx_gray700"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/ic_recipt"
                             app:layout_constraintTop_toTopOf="@id/ic_recipt"
                             tools:text="5" />
-
-                        <TextView
-                            style="@style/TextSmallMedium"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="월 한 달 동안"
-                            android:textColor="@color/mx_gray700"
-                            app:layout_constraintStart_toEndOf="@id/tv_month"
-                            app:layout_constraintTop_toTopOf="@id/tv_month" />
 
                         <TextView
                             android:id="@+id/tv_saved_money"
@@ -595,34 +586,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="16,700"
+                            android:text="16,700원"
                             android:textColor="#10A2F4"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/tv_month"
                             app:layout_constraintTop_toBottomOf="@id/tv_month"
-                            tools:text="16,700" />
-
-                        <TextView
-                            android:id="@+id/tv_won"
-                            style="@style/TextRegularSemibold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="원"
-                            android:textColor="#10A2F4"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_saved_money"
-                            app:layout_constraintStart_toEndOf="@id/tv_saved_money"
-                            app:layout_constraintTop_toTopOf="@id/tv_saved_money" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="2dp"
-                            android:text="아꼈어요!"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_won"
-                            app:layout_constraintStart_toEndOf="@id/tv_won"
-                            app:layout_constraintTop_toTopOf="@id/tv_won" />
+                            tools:text="16,700원" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
@@ -645,67 +616,28 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tv_now"
+                            android:id="@+id/tv_announce"
                             style="@style/TextSmallMedium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
-                            android:text="현재 상위 "
+                            android:text="@{vm.uiState.name + `님의 매칭횟수`}"
                             android:textColor="@color/mx_gray700"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/ic_popper"
                             app:layout_constraintTop_toTopOf="@id/ic_popper" />
 
                         <TextView
-                            android:id="@+id/tv_percent_sign"
-                            style="@style/TextSmallMedium"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="1"
-                            android:textColor="@color/mx_gray700"
-                            app:layout_constraintStart_toEndOf="@id/tv_now"
-                            app:layout_constraintTop_toTopOf="@id/tv_now"
-                            tools:text="1" />
-
-                        <TextView
-                            style="@style/TextSmallMedium"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="%에요!"
-                            android:textColor="@color/mx_gray700"
-                            app:layout_constraintStart_toEndOf="@id/tv_percent_sign"
-                            app:layout_constraintTop_toTopOf="@id/tv_percent_sign" />
-
-                        <TextView
-                            android:id="@+id/tv_matching_percent"
-                            style="@style/TextRegularSemibold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="매칭률"
-                            android:textColor="#10A2F4"
-                            app:layout_constraintStart_toStartOf="@id/tv_now"
-                            app:layout_constraintTop_toBottomOf="@id/tv_now" />
-
-                        <TextView
-                            android:id="@+id/tv_percent"
+                            android:id="@+id/tv_matching_count"
                             style="@style/TextRegularSemibold"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
-                            android:text="97"
+                            android:text="@{vm.uiState.matchingCount}"
                             android:textColor="#10A2F4"
-                            app:layout_constraintStart_toEndOf="@id/tv_matching_percent"
-                            app:layout_constraintTop_toTopOf="@id/tv_matching_percent"
-                            tools:text="97" />
-
-                        <TextView
-                            style="@style/TextRegularSemibold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="%"
-                            android:textColor="#10A2F4"
-                            app:layout_constraintStart_toEndOf="@id/tv_percent"
-                            app:layout_constraintTop_toTopOf="@id/tv_percent" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ic_popper"
+                            app:layout_constraintTop_toBottomOf="@id/tv_announce" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -713,9 +645,7 @@
 
             </androidx.core.widget.NestedScrollView>
 
-
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

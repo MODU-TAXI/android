@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
 import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
@@ -27,7 +28,9 @@ data class HomeUiState(
     val memberId: String = "",
     val nickname: String = "",
     val notificationCount: Int = 0,
-    val isNotificationExist: Boolean = false
+    val isNotificationExist: Boolean = false,
+    val name: String = "",
+    val matchingCount: String = ""
 )
 
 sealed class HomeEvent {
@@ -40,7 +43,8 @@ sealed class HomeEvent {
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<HomeEvent>()
@@ -48,6 +52,21 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+
+    init{
+        getNameAndMatchingCount()
+    }
+
+    private fun getNameAndMatchingCount(){
+        viewModelScope.launch {
+            _uiState.update { state ->
+                state.copy(
+                    name = authRepository.getMemberName().toString(),
+                    matchingCount = authRepository.getMatchingCount().toString() + "회"
+                )
+            }
+        }
+    }
 
     fun getRealtimeTaxiPots() {
         viewModelScope.launch {
