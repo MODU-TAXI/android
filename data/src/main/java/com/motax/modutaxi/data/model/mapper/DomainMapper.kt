@@ -27,6 +27,7 @@ import com.motax.modutaxi.data.model.response.SearchResultItem
 import com.motax.modutaxi.data.model.response.SearchResultListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotItem
+import com.motax.modutaxi.data.model.response.TaxiPotListIntegrationResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotMemberItem
@@ -125,7 +126,11 @@ fun TaxiPotItem.toDomain() = TaxiPotListItemData(
 )
 
 fun TaxiPotListResponse.toDomain() = TaxiPotListData(
-    rooms = rooms.map { it.toDomain() }
+    result = result.map { it.toDomain() }
+)
+
+fun TaxiPotListIntegrationResponse.toDomain() = TaxiPotListData(
+    result = rooms.map { it.toDomain() }
 )
 
 fun SearchResultItem.toDomain() = SearchResultData(

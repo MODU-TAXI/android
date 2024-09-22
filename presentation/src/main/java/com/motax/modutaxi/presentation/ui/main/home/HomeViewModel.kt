@@ -24,7 +24,6 @@ data class HomeUiState(
     val participatingTaxiPot: UiParticipatingTaxiPot = UiParticipatingTaxiPot(),
     val roomId: String? = null,
     val isParticipating: Boolean = false,
-    val isRealtimeTaxipotListEmpty: Boolean = true,
     val memberId: String = "",
     val nickname: String = "",
     val notificationCount: Int = 0,
@@ -36,7 +35,7 @@ sealed class HomeEvent {
     data object NavigateToShowParty : HomeEvent()
     data class NavigateToMatchDetail(val id: Long) : HomeEvent()
     data object NavigateToNotification : HomeEvent()
-    data object NavigateToShowPartySearch: HomeEvent()
+    data object NavigateToShowPartySearch : HomeEvent()
 }
 
 @HiltViewModel
@@ -55,32 +54,30 @@ class HomeViewModel @Inject constructor(
             repository.getTaxiPotList(
                 filter = mapOf<String, Long>(),
                 page = 0,
-                size = 5,
+                size = 10,
                 radius = 5000000,
                 longitude = 126.65915614333,
                 latitude = 37.450354677762,
                 sortType = "NEW",
                 roomTags = listOf<String>()
             ).onSuccess { response ->
-                val items = response.rooms.map { responseItem ->
-                    UiRealtimeTaxiPotItem(
-                        roomId = responseItem.roomId,
-                        curHeadCount = responseItem.currentHeadcount,
-                        wishHeadCount = responseItem.wishHeadcount,
-                        feePerPerson = "${responseItem.expectedChargePerPerson.formatNumberWithCommas()}원",
-                        departureSpot = responseItem.departureName,
-                        arrivalSpot = responseItem.arrivalName,
-                        departTime = responseItem.departureTime,
-                        navigateToMatchDetail = { roomId -> navigateToMatchDetail(roomId) }
-                    )
-                }
                 _uiState.update { state ->
                     state.copy(
-
-                        realtimeTaxiPotList = items,
-                        isRealtimeTaxipotListEmpty = items.isEmpty()
+                        realtimeTaxiPotList = response.result.map { responseItem ->
+                            UiRealtimeTaxiPotItem(
+                                roomId = responseItem.roomId,
+                                curHeadCount = responseItem.currentHeadcount,
+                                wishHeadCount = responseItem.wishHeadcount,
+                                feePerPerson = "${responseItem.expectedChargePerPerson.formatNumberWithCommas()}원",
+                                departureSpot = responseItem.departureName,
+                                arrivalSpot = responseItem.arrivalName,
+                                departTime = responseItem.departureTime,
+                                navigateToMatchDetail = ::navigateToMatchDetail
+                            )
+                        },
                     )
                 }
+
             }
                 .onFailure { throwable ->
                     Log.e("debugging", "$throwable")
@@ -178,7 +175,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun navigateToShowPartySearch(){
+    fun navigateToShowPartySearch() {
         viewModelScope.launch {
             _event.emit(HomeEvent.NavigateToShowPartySearch)
         }

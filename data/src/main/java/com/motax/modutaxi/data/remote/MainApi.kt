@@ -21,6 +21,7 @@ import com.motax.modutaxi.data.model.response.PaymentMembersStateResponse
 import com.motax.modutaxi.data.model.response.RegisterAccountResponse
 import com.motax.modutaxi.data.model.response.RequestCalculateResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
+import com.motax.modutaxi.data.model.response.TaxiPotListIntegrationResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotParticipants
@@ -75,7 +76,7 @@ interface MainApi {
         @Query("sortType") sortType: String,
         @Query("roomTags") roomTags: List<String>,
         @Query("isImminent") isImminent: Boolean
-    ): TaxiPotListResponse
+    ): TaxiPotListIntegrationResponse
 
     @GET("/api/rooms/preview/{id}")
     suspend fun getTaxiPotPreview(

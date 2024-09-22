@@ -46,7 +46,6 @@ class MatchDetailViewModel @Inject constructor(
     fun getTaxiPotData(id: Long) {
         roomId = id
         getTaxiPotDetail(roomId)
-
     }
 
     private fun getTaxiPotDetail(roomId: Long) {
