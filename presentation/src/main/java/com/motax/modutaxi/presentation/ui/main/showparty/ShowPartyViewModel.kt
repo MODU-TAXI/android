@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.showparty
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
 import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiTaxiPotListItem
@@ -52,7 +53,8 @@ sealed class ShowPartyEvent {
 
 @HiltViewModel
 class ShowPartyViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     companion object {
@@ -82,8 +84,11 @@ class ShowPartyViewModel @Inject constructor(
 
     private var spotFilterId: Long = 0
 
+    val nickName = MutableStateFlow("")
+
     init {
         setBottomSheetFilter()
+        getNickName()
     }
 
     fun changeBottomSheetState(state: Int) {
@@ -94,6 +99,11 @@ class ShowPartyViewModel @Inject constructor(
         bottomSheetHeight.value = height
     }
 
+    private fun getNickName(){
+        viewModelScope.launch {
+            nickName.value = authRepository.getMemberNickName().toString()
+        }
+    }
 
     private fun setBottomSheetFilter() {
         _bottomSheetUiState.update { state ->

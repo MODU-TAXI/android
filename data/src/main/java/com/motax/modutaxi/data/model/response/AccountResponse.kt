@@ -7,5 +7,6 @@ data class AccountResponse(
 data class AccountResponseItem(
     val id: Long,
     val accountNumber: String,
-    val bank: String
+    val bank: String,
+    val ownerName: String
 )

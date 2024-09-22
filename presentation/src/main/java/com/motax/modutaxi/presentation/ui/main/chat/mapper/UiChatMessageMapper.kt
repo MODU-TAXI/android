@@ -24,7 +24,7 @@ fun ChatMessage.toUiChatMessage(
                 OTHER_IMAGE_CHAT
             }
         }
-        "CHAT" -> {
+        "CHAT", "PAYMENT_REQUEST_COMPLETE" -> {
             if(memberId.toLong() == myId){
                 MY_CHAT
             } else {
@@ -55,7 +55,7 @@ fun ChatMessageItemData.toUiChatMessage(
                 OTHER_IMAGE_CHAT
             }
         }
-        "CHAT" -> {
+        "CHAT", "PAYMENT_REQUEST_COMPLETE"  -> {
             if(memberId.toLong() == myId){
                 MY_CHAT
             } else {

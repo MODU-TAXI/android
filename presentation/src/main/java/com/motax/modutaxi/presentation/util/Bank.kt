@@ -23,7 +23,8 @@ enum class Bank(val displayName: String, val logoResId: Int) {
     SUHYUP("수협", R.drawable.ic_bank_suhyup),
     JEONBUK("전북", R.drawable.ic_bank_jeonbuk),
     SB("저축은행", R.drawable.ic_bank_sb),
-    JEJU("제주", R.drawable.ic_bank_jeju);
+    JEJU("제주", R.drawable.ic_bank_jeju),
+    EMPTY("",R.drawable.ic_bank_bnk);
 
     companion object {
         // displayname을 넣으면 enum값 반환

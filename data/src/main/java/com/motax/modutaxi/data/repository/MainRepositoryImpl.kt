@@ -1,8 +1,12 @@
 package com.motax.modutaxi.data.repository
 
+import android.service.autofill.UserData
 import com.motax.modutaxi.data.model.mapper.toDomain
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.request.RegisterAccountRequest
 import com.motax.modutaxi.data.model.request.ReportRequest
+import com.motax.modutaxi.data.model.request.RequestCalculateRequest
+import com.motax.modutaxi.data.model.request.UserItem
 import com.motax.modutaxi.data.remote.MainApi
 import com.motax.modutaxi.domain.model.AccountData
 import com.motax.modutaxi.domain.model.ChatMessageData
@@ -14,6 +18,10 @@ import com.motax.modutaxi.domain.model.MonthlyUsageHistoryData
 import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NotificationCountData
 import com.motax.modutaxi.domain.model.NotificationData
+import com.motax.modutaxi.domain.model.PaymentInfoData
+import com.motax.modutaxi.domain.model.PaymentMembersStateData
+import com.motax.modutaxi.domain.model.RegisterAccountData
+import com.motax.modutaxi.domain.model.RequestCalculateData
 import com.motax.modutaxi.domain.model.SpotListData
 import com.motax.modutaxi.domain.model.TaxiPotDetailData
 import com.motax.modutaxi.domain.model.TaxiPotListData
@@ -23,6 +31,7 @@ import com.motax.modutaxi.domain.model.TaxiPotWaitingMembersData
 import com.motax.modutaxi.domain.model.UpdateMemberData
 import com.motax.modutaxi.domain.model.UploadImageData
 import com.motax.modutaxi.domain.model.UsageDetailData
+import com.motax.modutaxi.domain.model.UserIdData
 import com.motax.modutaxi.domain.repository.MainRepository
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -211,6 +220,14 @@ class MainRepositoryImpl @Inject constructor(
         api.getAccounts()
     }.mapCatching { it.toDomain() }
 
+    override suspend fun registerAccount(
+        accountNumber: String,
+        bank: String,
+        ownerName: String
+    ): Result<RegisterAccountData> = runCatching {
+        api.registerAccount(RegisterAccountRequest(accountNumber, bank, ownerName))
+    }.mapCatching { it.toDomain() }
+
     override suspend fun deleteAccounts(
         id: Long
     ): Result<Unit> = runCatching {
@@ -232,4 +249,38 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun matchComplete(id: Long): Result<MatchCompleteData> = runCatching {
         api.matchComplete(id)
     }.mapCatching { it.toDomain() }
+
+    override suspend fun requestCalculate(
+        roomId: Long,
+        accountId: Long,
+        totalCharge: Int,
+        participantList: List<Long>,
+        nonParticipantList: List<Long>
+    ): Result<RequestCalculateData> = runCatching {
+        api.requestCalculate(
+            RequestCalculateRequest(
+                roomId,
+                accountId,
+                totalCharge,
+                participantList.map { UserItem(it) },
+                nonParticipantList.map { UserItem(it) }
+            )
+        )
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun getPaymentInfo(roomId: Long): Result<PaymentInfoData> = runCatching {
+        api.getPaymentInfo(roomId)
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun getPaymentMembersState(roomId: Long): Result<PaymentMembersStateData> = runCatching {
+        api.getPaymentMembersState(roomId)
+    }.mapCatching { it.toDomain() }
+
+    override suspend fun paymentComplete(roomId: Long): Result<Unit> = runCatching {
+        api.paymentComplete(roomId)
+    }
+
+    override suspend fun deleteRoom(id: Long): Result<Unit> = runCatching {
+        api.deleteRoom(id)
+    }
 }

@@ -36,6 +36,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     viewBinding {
@@ -91,5 +92,8 @@ dependencies {
     // rx
     implementation("io.reactivex.rxjava2:rxjava:2.2.5")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.0")
+
+    // refresh
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
 }

@@ -1,10 +1,13 @@
 package com.motax.modutaxi.data.remote
 
 import com.motax.modutaxi.data.model.request.CreateTaxiPotRequest
+import com.motax.modutaxi.data.model.request.RegisterAccountRequest
 import com.motax.modutaxi.data.model.request.ReportRequest
+import com.motax.modutaxi.data.model.request.RequestCalculateRequest
 import com.motax.modutaxi.data.model.response.AccountResponse
 import com.motax.modutaxi.data.model.response.ChatMessageResponse
 import com.motax.modutaxi.data.model.response.ChatInfoResponse
+import com.motax.modutaxi.data.model.response.GetAccountsResponse
 import com.motax.modutaxi.data.model.response.GetNearSpotResponse
 import com.motax.modutaxi.data.model.response.GetSpotListResponse
 import com.motax.modutaxi.data.model.response.MatchCompleteResponse
@@ -12,6 +15,11 @@ import com.motax.modutaxi.data.model.response.MemberDetailResponse
 import com.motax.modutaxi.data.model.response.MemberProfileResponse
 import com.motax.modutaxi.data.model.response.NotificationCountResponse
 import com.motax.modutaxi.data.model.response.NotificationResponse
+import com.motax.modutaxi.data.model.response.PaymentInfoResponse
+import com.motax.modutaxi.data.model.response.PaymentMemberListResponse
+import com.motax.modutaxi.data.model.response.PaymentMembersStateResponse
+import com.motax.modutaxi.data.model.response.RegisterAccountResponse
+import com.motax.modutaxi.data.model.response.RequestCalculateResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
@@ -178,6 +186,11 @@ interface MainApi {
     suspend fun getAccounts()
     : AccountResponse
 
+    @POST("api/accounts")
+    suspend fun registerAccount(
+        @Body params: RegisterAccountRequest
+    ): RegisterAccountResponse
+
     @DELETE("api/accounts/{id}")
     suspend fun deleteAccounts(
         @Path("id") id: Long
@@ -189,6 +202,11 @@ interface MainApi {
         @Query("size") size: Int,
     ): NotificationResponse
 
+    @POST("/api/payment-rooms")
+    suspend fun requestCalculate(
+        @Body params : RequestCalculateRequest
+    ): RequestCalculateResponse
+
     @GET("api/alarms/counts")
     suspend fun getNotificationCounts()
     :NotificationCountResponse
@@ -197,4 +215,24 @@ interface MainApi {
     suspend fun matchComplete(
         @Path("id") id: Long
     ):MatchCompleteResponse
+
+    @DELETE("/api/rooms/{id}")
+    suspend fun deleteRoom(
+        @Path("id") id: Long
+    ): Unit
+
+    @GET("/api/payment-rooms")
+    suspend fun getPaymentInfo(
+        @Query("roomId") roomId : Long
+    ):  PaymentInfoResponse
+
+    @GET("/api/payment-members")
+    suspend fun getPaymentMembersState(
+        @Query("roomId") roomId : Long
+    ):  PaymentMembersStateResponse
+
+    @PATCH("/api/payment-members")
+    suspend fun paymentComplete(
+        @Query("roomId") roomId : Long
+    ): Unit
 }

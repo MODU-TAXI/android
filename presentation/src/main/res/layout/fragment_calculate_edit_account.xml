@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.motax.modutaxi.presentation.util.Bank" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.chat.calculate.editaccount.CalculateEditAccountViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> vm.navigateBack()}"
+                android:src="@drawable/ic_backward"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_header"
+                style="@style/TextTitle3Semibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="도착완료 정산하기"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_announce"
+            style="@style/TextLargeSemibold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="4dp"
+            android:text="정산 받을\n계좌번호를 알려주세요!"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar" />
+
+        <EditText
+            android:id="@+id/et_account"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rect_nofill_gray300stroke_16radius"
+            android:hint="'-' 빼고 입력"
+            android:inputType="number"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="20dp"
+            android:text="@={vm.accountString}"
+            android:textColorHint="@color/mx_gray500"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_announce" />
+
+        <ImageView
+            android:id="@+id/iv_selected_bank"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_account"
+            tools:src="@drawable/ic_bank_toss" />
+
+        <TextView
+            android:id="@+id/tv_selected_bank"
+            style="@style/TextLargeMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_selected_bank"
+            app:layout_constraintStart_toEndOf="@id/iv_selected_bank"
+            app:layout_constraintTop_toTopOf="@id/iv_selected_bank"
+            tools:text="신한" />
+
+        <TextView
+            android:id="@+id/tv_choose_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="40dp"
+            android:text="은행 직접 선택하기"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_account" />
+
+        <TextView
+            android:id="@+id/tv_mini_announce"
+            style="@style/TextSmallMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="등록된 계좌로 정산할까요?"
+            android:textColor="@color/mx_gray600"
+            android:visibility="@{vm.uiState.registeredBank.empty ? View.INVISIBLE : View.VISIBLE }"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_choose_bank" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_account_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_mini_announce"
+            app:list="@{vm.uiState.registeredBank}"
+            tools:listitem="@layout/item_registered_account" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_confirm"
+            style="@style/TextLargeSemibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rect_sub500fill_nostroke_61radius"
+            android:enabled="@{vm.selectedBank == Bank.EMPTY ? false : true}"
+            android:gravity="center"
+            android:onClick="@{() -> vm.navigateToConfirm()}"
+            android:paddingVertical="16dp"
+            android:text="확인"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

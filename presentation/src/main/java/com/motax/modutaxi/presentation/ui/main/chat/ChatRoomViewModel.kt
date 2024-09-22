@@ -39,6 +39,10 @@ sealed class ChatRoomEvent {
     data class SendImage(val img: String) : ChatRoomEvent()
     data object ScrollBottom : ChatRoomEvent()
     data object GoToGallery : ChatRoomEvent()
+    data object NavigateToCalculateSplash : ChatRoomEvent()
+    data object NavigateToPayment : ChatRoomEvent()
+    data object NavigateToPaymentState : ChatRoomEvent()
+    data object NavigateToBack: ChatRoomEvent()
 }
 
 @HiltViewModel
@@ -81,7 +85,9 @@ class ChatRoomViewModel @Inject constructor(
                 }
 
             }.onFailure {
-
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.NavigateToBack)
+                }
             }
         }
     }
@@ -100,7 +106,9 @@ class ChatRoomViewModel @Inject constructor(
                 }
 
             }.onFailure {
-
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.NavigateToBack)
+                }
             }
         }
     }
@@ -156,8 +164,8 @@ class ChatRoomViewModel @Inject constructor(
         scrollBottom()
     }
 
-    fun clickManageBtn(){
-        when(uiState.value.roomStatus){
+    fun clickManageBtn() {
+        when (uiState.value.roomStatus) {
             "BEFORE_MATCHING" -> {
                 viewModelScope.launch {
                     repository.matchComplete(uiState.value.chatInfo.roomId).onSuccess {
@@ -173,15 +181,25 @@ class ChatRoomViewModel @Inject constructor(
             }
 
             "AFTER_MATCHING" -> {
-
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.NavigateToCalculateSplash)
+                }
             }
 
             "BEFORE_PAYMENT" -> {
-
+                viewModelScope.launch {
+                    if (uiState.value.isManager) {
+                        _event.emit(ChatRoomEvent.NavigateToPaymentState)
+                    } else {
+                        _event.emit(ChatRoomEvent.NavigateToPayment)
+                    }
+                }
             }
 
             "AFTER_PAYMENT" -> {
-
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.NavigateToBack)
+                }
             }
         }
     }
@@ -208,6 +226,16 @@ class ChatRoomViewModel @Inject constructor(
     fun goToGallery() {
         viewModelScope.launch {
             _event.emit(ChatRoomEvent.GoToGallery)
+        }
+    }
+
+    fun deleteRoom(roomId: Long){
+        viewModelScope.launch {
+            repository.deleteRoom(roomId).onSuccess {
+
+            }.onFailure {
+
+            }
         }
     }
 }

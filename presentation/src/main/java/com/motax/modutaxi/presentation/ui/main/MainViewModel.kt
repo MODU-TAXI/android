@@ -17,6 +17,7 @@ sealed class MainEvent{
     data object FullScreenMode: MainEvent()
     data object NotFullScreenMode: MainEvent()
     data object GoToGallery: MainEvent()
+    data class CopyClipBoard(val account: String) : MainEvent()
 }
 
 @HiltViewModel
@@ -62,6 +63,12 @@ class MainViewModel @Inject constructor(
             }.onFailure {
 
             }
+        }
+    }
+
+    fun copyClipBoard(account: String){
+        viewModelScope.launch {
+            _event.emit(MainEvent.CopyClipBoard(account))
         }
     }
 

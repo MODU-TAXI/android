@@ -40,6 +40,7 @@ sealed class CreatePartyEvent {
     data object NavigateToArrivalSearch : CreatePartyEvent()
     data class NavigateToMatchDetail(val id: Long) : CreatePartyEvent()
     data class ShowToast(val msg: String) : CreatePartyEvent()
+    data object NavigateBack: CreatePartyEvent()
 }
 
 @HiltViewModel
@@ -156,6 +157,12 @@ class CreatePartyViewModel @Inject constructor(
     fun navigateToArrivalSearch() {
         viewModelScope.launch {
             _event.emit(CreatePartyEvent.NavigateToArrivalSearch)
+        }
+    }
+
+    fun navigateToBack(){
+        viewModelScope.launch {
+            _event.emit(CreatePartyEvent.NavigateBack)
         }
     }
 

@@ -47,6 +47,7 @@ class MatchDetailFragment :
         binding.vm = viewModel
         binding.rvParticipants.adapter = ParticipantAdapter()
         initMapView()
+        onRefresh()
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -63,6 +64,13 @@ class MatchDetailFragment :
                 }
 
         mapFragment.getMapAsync(this)
+    }
+
+    private fun onRefresh() {
+        binding.refreshView.setOnRefreshListener {
+            viewModel.getTaxiPotData(roomId)
+            binding.refreshView.isRefreshing = false
+        }
     }
 
     override fun onMapReady(nM: NaverMap) {
@@ -128,6 +136,10 @@ class MatchDetailFragment :
 
                 else -> {}
             }
+        }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

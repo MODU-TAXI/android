@@ -98,7 +98,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     private fun initStateObserve() {
         repeatOnStarted {
             viewModel.bottomSheetHeight.collect {
-                lastButtonMargin = 300 + (it * 1600).toInt()
+                lastButtonMargin = 500 + (it * 1390).toInt()
                 setButtonsMargin(lastButtonMargin)
             }
         }

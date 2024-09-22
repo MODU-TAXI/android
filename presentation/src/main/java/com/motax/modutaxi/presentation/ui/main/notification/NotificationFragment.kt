@@ -6,6 +6,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentNotificationBinding
@@ -29,6 +31,8 @@ class NotificationFragment :
 
         viewModel.loadNotifications()
         initEventObserve()
+        setScrollEventListener()
+        onRefresh()
     }
 
     private fun initEventObserve() {
@@ -43,6 +47,31 @@ class NotificationFragment :
                     is NotificationEvent.ShowAlertAndNavigateHome -> showAlertAndNavigateHome()
                 }
             }
+        }
+    }
+
+    private fun setScrollEventListener() {
+
+        binding.rvNotification.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItemPosition =
+                    (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+                val itemTotalCount = recyclerView.adapter?.itemCount?.minus(1)
+
+                if (lastVisibleItemPosition == itemTotalCount) {
+                    viewModel.loadNotifications()
+                }
+            }
+        })
+    }
+
+    private fun onRefresh() {
+        binding.refreshLayout.setOnRefreshListener {
+            viewModel.refresh()
+            binding.refreshLayout.isRefreshing = false
         }
     }
 

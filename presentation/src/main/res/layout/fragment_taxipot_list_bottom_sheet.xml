@@ -24,7 +24,7 @@
             android:nestedScrollingEnabled="true"
             app:behavior_fitToContents="false"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="90dp"
+            app:behavior_peekHeight="160dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <ImageView

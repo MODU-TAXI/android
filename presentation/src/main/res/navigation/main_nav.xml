@@ -47,6 +47,10 @@
         <action
             android:id="@+id/action_createPartyFragment_to_arrivalSearchFragment"
             app:destination="@id/arrivalSearchFragment" />
+        <action
+            android:id="@+id/action_createPartyFragment_to_matchDetailFragment"
+            app:destination="@id/matchDetailFragment"
+            app:popUpTo="@id/homeFragment"/>
     </fragment>
 
     <fragment
@@ -193,7 +197,7 @@
 
     <action
         android:id="@+id/global_action_to_matchDetailFragment"
-        app:destination="@id/matchDetailFragment" />
+        app:destination="@id/matchDetailFragment"/>
     <fragment
         android:id="@+id/showPartySearchFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchFragment"
@@ -210,6 +214,15 @@
         <argument
             android:name="id"
             app:argType="long" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_calculateSplashFragment"
+            app:destination="@id/calculateSplashFragment" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_paymentStateFragment"
+            app:destination="@id/paymentStateFragment" />
 
     </fragment>
     <dialog
@@ -292,6 +305,63 @@
             android:id="@+id/action_notification_to_matchdetail"
             app:destination="@id/matchDetailFragment"/>
 
+    </fragment>
+    <fragment
+        android:id="@+id/calculateSplashFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.CalculateSplashFragment"
+        android:label="CalculateSplashFragment" >
+        <action
+            android:id="@+id/action_calculateSplashFragment_to_calculateEditAmountFragment"
+            app:destination="@id/calculateEditAmountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.payment.PaymentFragment"
+        android:label="PaymentFragment" />
+    <fragment
+        android:id="@+id/paymentStateFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.paymentstate.PaymentStateFragment"
+        android:label="PaymentStateFragment" />
+    <fragment
+        android:id="@+id/calculateEditAmountFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.editamount.CalculateEditAmountFragment"
+        android:label="CalculateEditAmountFragment" >
+        <action
+            android:id="@+id/action_calculateEditAmountFragment_to_calculateEditAccountFragment"
+            app:destination="@id/calculateEditAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculateEditAccountFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.editaccount.CalculateEditAccountFragment"
+        android:label="CalculateEditAccountFragment" >
+        <action
+            android:id="@+id/action_calculateEditAccountFragment_to_calculateEditAccountOwnerFragment"
+            app:destination="@id/calculateEditAccountOwnerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculateConfirmFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.confirm.CalculateConfirmFragment"
+        android:label="CalculateConfirmFragment" >
+        <action
+            android:id="@+id/action_calculateConfirmFragment_to_calculateCompleteFragment"
+            app:destination="@id/calculateCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calculateCompleteFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.complete.CalculateCompleteFragment"
+        android:label="CalculateCompleteFragment" >
+        <action
+            android:id="@+id/action_calculateCompleteFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment"
+            app:popUpTo="@id/matchDetailFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/calculateEditAccountOwnerFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.accountowner.CalculateEditAccountOwnerFragment"
+        android:label="CalculateEditAccountOwnerFragment" >
+        <action
+            android:id="@+id/action_calculateEditAccountOwnerFragment_to_calculateConfirmFragment"
+            app:destination="@id/calculateConfirmFragment" />
     </fragment>
 
 </navigation>
