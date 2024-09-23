@@ -20,13 +20,15 @@ import javax.inject.Inject
 data class PaymentUiState(
     val name: String = "",
     val chargeString: String = "",
+    val charge: String = "",
     val bankName: String = "",
     val accountString: String = ""
 )
 
-sealed class PaymentEvent{
+sealed class PaymentEvent {
     data object NavigateBack : PaymentEvent()
     data class CopyClipBoard(val accountString: String) : PaymentEvent()
+    data object MoveToToss : PaymentEvent()
 }
 
 @HiltViewModel
@@ -76,7 +78,8 @@ class PaymentViewModel @Inject constructor(
 
                 _uiState.update { state ->
                     state.copy(
-                        chargeString = (totalCharge / count).formatNumberWithCommas() + "원"
+                        chargeString = (totalCharge / count).formatNumberWithCommas() + "원",
+                        charge = (totalCharge / count).toString()
                     )
                 }
 
@@ -86,7 +89,13 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
-    fun paymentComplete(){
+    fun moveToToss(){
+        viewModelScope.launch {
+            _event.emit(PaymentEvent.MoveToToss)
+        }
+    }
+
+    fun paymentComplete() {
         viewModelScope.launch {
             repository.paymentComplete(CalculateForm.roomId).onSuccess {
                 _event.emit(PaymentEvent.NavigateBack)
@@ -96,7 +105,7 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
-    fun copyClipBoard(){
+    fun copyClipBoard() {
         viewModelScope.launch {
             _event.emit(PaymentEvent.CopyClipBoard(uiState.value.accountString))
         }
