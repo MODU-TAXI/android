@@ -11,8 +11,6 @@ import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessageList
 import com.motax.modutaxi.presentation.ui.main.chat.model.UiChatMessage
 import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
-import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiTaxiPotListItem
-import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem
 import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -43,6 +41,10 @@ sealed class ChatRoomEvent {
     data object NavigateToPayment : ChatRoomEvent()
     data object NavigateToPaymentState : ChatRoomEvent()
     data object NavigateToBack: ChatRoomEvent()
+    data object ShowPopUp: ChatRoomEvent()
+    data object ShowParticipantPopUp: ChatRoomEvent()
+    data object NavigateToHome: ChatRoomEvent()
+    data class ShowToastMessage(val msg: String): ChatRoomEvent()
 }
 
 @HiltViewModel
@@ -164,6 +166,17 @@ class ChatRoomViewModel @Inject constructor(
         scrollBottom()
     }
 
+    fun showPopUp(){
+        viewModelScope.launch {
+            if(myId == uiState.value.chatInfo.managerId){
+                _event.emit(ChatRoomEvent.ShowPopUp)
+            } else {
+                _event.emit(ChatRoomEvent.ShowParticipantPopUp)
+            }
+
+        }
+    }
+
     fun clickManageBtn() {
         when (uiState.value.roomStatus) {
             "BEFORE_MATCHING" -> {
@@ -232,7 +245,19 @@ class ChatRoomViewModel @Inject constructor(
     fun deleteRoom(roomId: Long){
         viewModelScope.launch {
             repository.deleteRoom(roomId).onSuccess {
+                _event.emit(ChatRoomEvent.ShowToastMessage("방이 삭제 되었습니다"))
+                _event.emit(ChatRoomEvent.NavigateToHome)
+            }.onFailure {
 
+            }
+        }
+    }
+
+    fun exitRoom(){
+        viewModelScope.launch {
+            repository.exitRoom().onSuccess {
+                _event.emit(ChatRoomEvent.ShowToastMessage("방을 나갔습니다"))
+                _event.emit(ChatRoomEvent.NavigateToHome)
             }.onFailure {
 
             }

@@ -15,4 +15,5 @@ object Constants {
 
     const val POPUP_WIDTH_DP = 220
     const val TWO_POPUP_HEIGHT_DP = 90
+    const val ONE_POPUP_HEIGHT_DP = 45
 }

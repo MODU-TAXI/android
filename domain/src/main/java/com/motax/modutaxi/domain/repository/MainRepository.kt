@@ -194,4 +194,6 @@ interface MainRepository {
     suspend fun deleteRoom(
         id: Long
     ): Result<Unit>
+
+    suspend fun exitRoom(): Result<Unit>
 }

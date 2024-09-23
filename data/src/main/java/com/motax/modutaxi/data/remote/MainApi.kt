@@ -222,6 +222,9 @@ interface MainApi {
         @Path("id") id: Long
     ): Unit
 
+    @DELETE("/api/rooms")
+    suspend fun exitRoom(): Unit
+
     @GET("/api/payment-rooms")
     suspend fun getPaymentInfo(
         @Query("roomId") roomId : Long
