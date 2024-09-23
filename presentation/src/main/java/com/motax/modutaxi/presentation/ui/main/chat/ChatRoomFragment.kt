@@ -114,7 +114,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
     }
 
     private fun editRoom() {
-
+        findNavController().toEditRoom()
     }
 
     private fun deleteRoom() {
@@ -148,6 +148,11 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
 
     private fun NavController.toHome() {
         val action = ChatRoomFragmentDirections.actionChatRoomFragmentToHomeFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toEditRoom(){
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToEditRoomFragment(roomId)
         navigate(action)
     }
 

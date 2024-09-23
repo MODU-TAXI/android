@@ -195,5 +195,16 @@ interface MainRepository {
         id: Long
     ): Result<Unit>
 
+    suspend fun patchRoom(
+        id: Long,
+        spotId: Long,
+        roomTagBitMask: List<String>,
+        departureLongitude: Double,
+        departureLatitude: Double,
+        departureTime: String,
+        departureName: String,
+        wishHeadcount: Int
+    ): Result<Unit>
+
     suspend fun exitRoom(): Result<Unit>
 }

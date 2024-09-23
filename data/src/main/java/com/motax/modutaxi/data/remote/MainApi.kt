@@ -222,6 +222,12 @@ interface MainApi {
         @Path("id") id: Long
     ): Unit
 
+    @PATCH("/api/rooms/{id}")
+    suspend fun patchRoom(
+        @Path("id") id: Long,
+        @Body params: CreateTaxiPotRequest
+    ): Unit
+
     @DELETE("/api/rooms")
     suspend fun exitRoom(): Unit
 

@@ -285,6 +285,30 @@ class MainRepositoryImpl @Inject constructor(
         api.deleteRoom(id)
     }
 
+    override suspend fun patchRoom(
+        id: Long,
+        spotId: Long,
+        roomTagBitMask: List<String>,
+        departureLongitude: Double,
+        departureLatitude: Double,
+        departureTime: String,
+        departureName: String,
+        wishHeadcount: Int
+    ): Result<Unit> = runCatching {
+        api.patchRoom(
+            id,
+            CreateTaxiPotRequest(
+                spotId,
+                roomTagBitMask,
+                departureLongitude,
+                departureLatitude,
+                departureTime,
+                departureName,
+                wishHeadcount
+            )
+        )
+    }
+
     override suspend fun exitRoom(): Result<Unit> = runCatching {
         api.exitRoom()
     }
