@@ -272,9 +272,10 @@ class MainRepositoryImpl @Inject constructor(
         api.getPaymentInfo(roomId)
     }.mapCatching { it.toDomain() }
 
-    override suspend fun getPaymentMembersState(roomId: Long): Result<PaymentMembersStateData> = runCatching {
-        api.getPaymentMembersState(roomId)
-    }.mapCatching { it.toDomain() }
+    override suspend fun getPaymentMembersState(roomId: Long): Result<PaymentMembersStateData> =
+        runCatching {
+            api.getPaymentMembersState(roomId)
+        }.mapCatching { it.toDomain() }
 
     override suspend fun paymentComplete(roomId: Long): Result<Unit> = runCatching {
         api.paymentComplete(roomId)
@@ -282,5 +283,33 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun deleteRoom(id: Long): Result<Unit> = runCatching {
         api.deleteRoom(id)
+    }
+
+    override suspend fun patchRoom(
+        id: Long,
+        spotId: Long,
+        roomTagBitMask: List<String>,
+        departureLongitude: Double,
+        departureLatitude: Double,
+        departureTime: String,
+        departureName: String,
+        wishHeadcount: Int
+    ): Result<Unit> = runCatching {
+        api.patchRoom(
+            id,
+            CreateTaxiPotRequest(
+                spotId,
+                roomTagBitMask,
+                departureLongitude,
+                departureLatitude,
+                departureTime,
+                departureName,
+                wishHeadcount
+            )
+        )
+    }
+
+    override suspend fun exitRoom(): Result<Unit> = runCatching {
+        api.exitRoom()
     }
 }
