@@ -251,4 +251,9 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
         val action = ShowPartyFragmentDirections.actionShowPartyFragmentToSelectSpotFilterBottomSheetFragment()
         navigate(action)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.bottomSheetHeight.value = 0F
+    }
 }

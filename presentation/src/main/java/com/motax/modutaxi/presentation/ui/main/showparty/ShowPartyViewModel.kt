@@ -225,7 +225,7 @@ class ShowPartyViewModel @Inject constructor(
             ).onSuccess {
                 _uiState.update { state ->
                     state.copy(
-                        taxiPotList = it.rooms.map { data ->
+                        taxiPotList = it.result.map { data ->
                             data.toUiTaxiPotListItem(
                                 ::navigateToMatchDetail
                             )

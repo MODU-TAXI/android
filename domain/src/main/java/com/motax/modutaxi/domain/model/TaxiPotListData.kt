@@ -1,7 +1,7 @@
 package com.motax.modutaxi.domain.model
 
 data class TaxiPotListData(
-    val rooms: List<TaxiPotListItemData>
+    val result: List<TaxiPotListItemData>
 )
 
 data class TaxiPotListItemData(

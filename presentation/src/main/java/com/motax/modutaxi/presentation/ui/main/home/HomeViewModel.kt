@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
 import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 data class HomeUiState(
@@ -24,11 +26,14 @@ data class HomeUiState(
     val participatingTaxiPot: UiParticipatingTaxiPot = UiParticipatingTaxiPot(),
     val roomId: String? = null,
     val isParticipating: Boolean = false,
-    val isRealtimeTaxipotListEmpty: Boolean = true,
     val memberId: String = "",
     val nickname: String = "",
     val notificationCount: Int = 0,
-    val isNotificationExist: Boolean = false
+    val isNotificationExist: Boolean = false,
+    val name: String = "",
+    val matchingCount: String = "",
+    val savePrice: String = "",
+    val currentMonth: String = LocalDate.now().monthValue.toString()
 )
 
 sealed class HomeEvent {
@@ -36,12 +41,13 @@ sealed class HomeEvent {
     data object NavigateToShowParty : HomeEvent()
     data class NavigateToMatchDetail(val id: Long) : HomeEvent()
     data object NavigateToNotification : HomeEvent()
-    data object NavigateToShowPartySearch: HomeEvent()
+    data object NavigateToShowPartySearch : HomeEvent()
 }
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<HomeEvent>()
@@ -50,37 +56,69 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
+    init{
+        getNameAndMatchingCount()
+        getMonthData()
+    }
+
+    private fun getNameAndMatchingCount(){
+        viewModelScope.launch {
+            _uiState.update { state ->
+                state.copy(
+                    name = authRepository.getMemberName().toString(),
+                    matchingCount = authRepository.getMatchingCount().toString() + "회",
+                    nickname = authRepository.getMemberNickName().toString()
+                )
+            }
+        }
+    }
+
+    private fun getMonthData(){
+        viewModelScope.launch {
+            repository.getMonthlyUsageHistory(
+                LocalDate.now().year,
+                LocalDate.now().monthValue
+            ).onSuccess {
+                _uiState.update { state ->
+                    state.copy(
+                        savePrice = (it.totalCharge - it.accumulatePortionCharge).formatNumberWithCommas()
+                    )
+                }
+            }.onFailure {
+
+            }
+        }
+    }
+
     fun getRealtimeTaxiPots() {
         viewModelScope.launch {
             repository.getTaxiPotList(
                 filter = mapOf<String, Long>(),
                 page = 0,
-                size = 5,
+                size = 10,
                 radius = 5000000,
                 longitude = 126.65915614333,
                 latitude = 37.450354677762,
                 sortType = "NEW",
                 roomTags = listOf<String>()
             ).onSuccess { response ->
-                val items = response.rooms.map { responseItem ->
-                    UiRealtimeTaxiPotItem(
-                        roomId = responseItem.roomId,
-                        curHeadCount = responseItem.currentHeadcount,
-                        wishHeadCount = responseItem.wishHeadcount,
-                        feePerPerson = "${responseItem.expectedChargePerPerson.formatNumberWithCommas()}원",
-                        departureSpot = responseItem.departureName,
-                        arrivalSpot = responseItem.arrivalName,
-                        departTime = responseItem.departureTime,
-                        navigateToMatchDetail = { roomId -> navigateToMatchDetail(roomId) }
-                    )
-                }
                 _uiState.update { state ->
                     state.copy(
-
-                        realtimeTaxiPotList = items,
-                        isRealtimeTaxipotListEmpty = items.isEmpty()
+                        realtimeTaxiPotList = response.result.map { responseItem ->
+                            UiRealtimeTaxiPotItem(
+                                roomId = responseItem.roomId,
+                                curHeadCount = responseItem.currentHeadcount,
+                                wishHeadCount = responseItem.wishHeadcount,
+                                feePerPerson = "${responseItem.expectedChargePerPerson.formatNumberWithCommas()}원",
+                                departureSpot = responseItem.departureName,
+                                arrivalSpot = responseItem.arrivalName,
+                                departTime = responseItem.departureTime,
+                                navigateToMatchDetail = ::navigateToMatchDetail
+                            )
+                        },
                     )
                 }
+
             }
                 .onFailure { throwable ->
                     Log.e("debugging", "$throwable")
@@ -99,7 +137,6 @@ class HomeViewModel @Inject constructor(
                             memberId = it.memberId
                         )
                     }
-                    getNickname()
                     if (it.roomId != "null") {
                         getParticipatingRoomInfo(it.roomId)
                     }
@@ -120,22 +157,6 @@ class HomeViewModel @Inject constructor(
                     }
                     .onFailure { }
             }
-        }
-    }
-
-    fun getNickname() {
-        viewModelScope.launch {
-            repository.getMemberProfile(_uiState.value.memberId.toLong())
-                .onSuccess {
-                    _uiState.update { state ->
-                        state.copy(
-                            nickname = it.nickname
-                        )
-                    }
-
-                }.onFailure {
-
-                }
         }
     }
 
@@ -178,7 +199,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun navigateToShowPartySearch(){
+    fun navigateToShowPartySearch() {
         viewModelScope.launch {
             _event.emit(HomeEvent.NavigateToShowPartySearch)
         }

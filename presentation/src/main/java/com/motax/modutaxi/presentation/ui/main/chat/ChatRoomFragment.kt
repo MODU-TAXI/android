@@ -10,6 +10,8 @@ import androidx.navigation.fragment.navArgs
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.chatmanager.ChatManager
+import com.motax.modutaxi.presentation.customview.EditDeletePopUpMenu
+import com.motax.modutaxi.presentation.customview.ExitPopUpMenu
 import com.motax.modutaxi.presentation.databinding.FragmentChatRoomBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageAdapter
@@ -26,6 +28,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
     private val args: ChatRoomFragmentArgs by navArgs()
     private val adapter = ChatMessageAdapter()
     private val roomId by lazy { args.id }
+    private val popupLocation = IntArray(2)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,6 +70,10 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
                     is ChatRoomEvent.NavigateToPayment -> findNavController().toPayment()
                     is ChatRoomEvent.NavigateToPaymentState -> findNavController().toPaymentState()
                     is ChatRoomEvent.NavigateToBack -> findNavController().navigateUp()
+                    is ChatRoomEvent.ShowPopUp -> showPopup()
+                    is ChatRoomEvent.ShowToastMessage -> showToastMessage(it.msg)
+                    is ChatRoomEvent.NavigateToHome -> findNavController().toHome()
+                    is ChatRoomEvent.ShowParticipantPopUp -> showParticipantPopup()
                 }
             }
         }
@@ -78,6 +85,40 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
                 chatManager.sendMessage(roomId, it, "IMAGE")
             }
         }
+    }
+
+    private fun showPopup() {
+        val moreBtn = binding.btnMore
+        moreBtn.getLocationOnScreen(popupLocation)
+        val left = popupLocation[0] + moreBtn.left.toFloat()
+        val top = popupLocation[1] + moreBtn.bottom.toFloat()
+        EditDeletePopUpMenu(requireContext(), ::editRoom, ::deleteRoom).show(
+            left.toInt(),
+            top.toInt()
+        )
+    }
+
+    private fun showParticipantPopup() {
+        val moreBtn = binding.btnMore
+        moreBtn.getLocationOnScreen(popupLocation)
+        val left = popupLocation[0] + moreBtn.left.toFloat()
+        val top = popupLocation[1] + moreBtn.bottom.toFloat()
+        ExitPopUpMenu(requireContext(), ::exitRoom).show(
+            left.toInt(),
+            top.toInt()
+        )
+    }
+
+    private fun exitRoom(){
+        viewModel.exitRoom()
+    }
+
+    private fun editRoom() {
+        findNavController().toEditRoom()
+    }
+
+    private fun deleteRoom() {
+        viewModel.deleteRoom(roomId)
     }
 
     private fun scrollRecyclerViewBottom() {
@@ -102,6 +143,16 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
 
     private fun NavController.toPaymentState() {
         val action = ChatRoomFragmentDirections.actionChatRoomFragmentToPaymentStateFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toHome() {
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToHomeFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toEditRoom(){
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToEditRoomFragment(roomId)
         navigate(action)
     }
 

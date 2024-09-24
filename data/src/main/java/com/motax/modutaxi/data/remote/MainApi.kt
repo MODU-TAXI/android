@@ -21,6 +21,7 @@ import com.motax.modutaxi.data.model.response.PaymentMembersStateResponse
 import com.motax.modutaxi.data.model.response.RegisterAccountResponse
 import com.motax.modutaxi.data.model.response.RequestCalculateResponse
 import com.motax.modutaxi.data.model.response.TaxiPotDetailResponse
+import com.motax.modutaxi.data.model.response.TaxiPotListIntegrationResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListRadiusResponse
 import com.motax.modutaxi.data.model.response.TaxiPotListResponse
 import com.motax.modutaxi.data.model.response.TaxiPotParticipants
@@ -75,7 +76,7 @@ interface MainApi {
         @Query("sortType") sortType: String,
         @Query("roomTags") roomTags: List<String>,
         @Query("isImminent") isImminent: Boolean
-    ): TaxiPotListResponse
+    ): TaxiPotListIntegrationResponse
 
     @GET("/api/rooms/preview/{id}")
     suspend fun getTaxiPotPreview(
@@ -220,6 +221,15 @@ interface MainApi {
     suspend fun deleteRoom(
         @Path("id") id: Long
     ): Unit
+
+    @PATCH("/api/rooms/{id}")
+    suspend fun patchRoom(
+        @Path("id") id: Long,
+        @Body params: CreateTaxiPotRequest
+    ): Unit
+
+    @DELETE("/api/rooms")
+    suspend fun exitRoom(): Unit
 
     @GET("/api/payment-rooms")
     suspend fun getPaymentInfo(

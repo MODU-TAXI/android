@@ -223,6 +223,14 @@
         <action
             android:id="@+id/action_chatRoomFragment_to_paymentStateFragment"
             app:destination="@id/paymentStateFragment" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_chatRoomFragment_to_editRoomFragment"
+            app:destination="@id/editRoomFragment" />
 
     </fragment>
     <dialog
@@ -362,6 +370,15 @@
         <action
             android:id="@+id/action_calculateEditAccountOwnerFragment_to_calculateConfirmFragment"
             app:destination="@id/calculateConfirmFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editRoomFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.editroom.EditRoomFragment"
+        android:label="EditRoomFragment" >
+        <argument
+            app:argType="long"
+            android:name="roomId"/>
+
     </fragment>
 
 </navigation>
