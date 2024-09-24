@@ -15,7 +15,9 @@ import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMypageIdentificationBinding
 import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import com.motax.modutaxi.presentation.util.Constants.TAG
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyPageIdentificationFragment :
     BaseFragment<FragmentMypageIdentificationBinding>(R.layout.fragment_mypage_identification) {
 
@@ -69,13 +71,6 @@ class MyPageIdentificationFragment :
     private fun setListeners() {
 
         binding.etPhoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
-
-        binding.rgGender.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.radioButtonMale -> viewModel.updateGender("MALE")
-                R.id.radioButtonFemale -> viewModel.updateGender("FEMALE")
-            }
-        }
 
         binding.etName.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) viewModel.focusOnName()

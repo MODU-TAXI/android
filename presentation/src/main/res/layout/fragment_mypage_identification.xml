@@ -83,27 +83,15 @@
                 style="@style/TextTitle3Semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="회원탈퇴"
+                android:text="개인정보 수정"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tv_identification_description"
-            style="@style/TextTitle1Semibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="모두의 택시 이용을 위해\n본인 인증을 진행새주세요!"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guide_09_horizontal" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_name"
@@ -117,7 +105,7 @@
             android:paddingVertical="16dp"
             app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-            app:layout_constraintTop_toBottomOf="@id/tv_identification_description">
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar">
 
             <TextView
                 android:id="@+id/tv_name_label"
@@ -149,58 +137,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_gender"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@{vm.uiState.myPageFocusedField == MyPageFocusedField.GENDER ? @drawable/rect_nofill_blackstroke_12radius : @drawable/rect_nofill_gray500stroke_12radius}"
-            android:onClick="@{() -> vm.focusOnGender()}"
-            android:paddingHorizontal="22dp"
-            android:paddingVertical="16dp"
-            app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
-            app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-            app:layout_constraintTop_toBottomOf="@id/layout_name">
 
-            <TextView
-                android:id="@+id/tv_gender"
-                style="@style/TextRegularMedium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="성별"
-                android:textColor="@color/mx_grey3"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <RadioGroup
-                android:id="@+id/rg_gender"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="-5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_gender">
-
-                <RadioButton
-                    android:id="@+id/radioButtonMale"
-                    style="@style/TextLargeMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="남자" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonFemale"
-                    style="@style/TextLargeMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="여자" />
-
-            </RadioGroup>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_phone_number"
@@ -213,7 +150,7 @@
             android:paddingVertical="16dp"
             app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
-            app:layout_constraintTop_toBottomOf="@id/layout_gender">
+            app:layout_constraintTop_toBottomOf="@id/layout_name">
 
             <TextView
                 android:id="@+id/tv_phone_number"
