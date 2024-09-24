@@ -57,9 +57,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_p
         }
 
         // Intent를 처리할 수 있는 앱이 있는지 확인
-        if (intent.resolveActivity(requireContext().packageManager) != null) {
+        try{
             startActivity(intent)
-        } else {
+        }catch (e: Exception){
             showToastMessage("앱이 설치되어 있지 않습니다")
         }
     }
