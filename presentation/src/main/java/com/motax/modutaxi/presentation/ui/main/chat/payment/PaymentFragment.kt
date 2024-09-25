@@ -51,16 +51,16 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_p
     private fun moveToToss() {
         val url =
             "supertoss://send?bank=${viewModel.uiState.value.bankName}&accountNo=${viewModel.uiState.value.accountString}&origin=linkgen&amount=${viewModel.uiState.value.charge}"
-
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(url)
         }
-
-        // Intent를 처리할 수 있는 앱이 있는지 확인
-        try{
+        try {
             startActivity(intent)
-        }catch (e: Exception){
-            showToastMessage("앱이 설치되어 있지 않습니다")
+        } catch (e: Exception) {
+            val installUrl = "https://play.google.com/store/apps/details?id=viva.republica.toss"
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(installUrl)
+            })
         }
     }
 }
