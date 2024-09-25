@@ -25,6 +25,12 @@ import com.motax.modutaxi.presentation.util.Constants.TAG
 class ChatMessageAdapter :
     ListAdapter<UiChatMessage, RecyclerView.ViewHolder>(diffCallback) {
 
+    var listener: ChatMessageInterface? = null
+
+    fun setInterface(ls: ChatMessageInterface) {
+        listener = ls
+    }
+
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<UiChatMessage>() {
             override fun areItemsTheSame(
@@ -103,11 +109,11 @@ class ChatMessageAdapter :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItem(position).type) {
-            MY_CHAT -> (holder as MyChatViewHolder).bind(getItem(position))
-            OTHER_CHAT -> (holder as OtherChatViewHolder).bind(getItem(position))
-            MY_IMAGE_CHAT -> (holder as MyChatImageViewHolder).bind(getItem(position))
-            OTHER_IMAGE_CHAT -> (holder as OtherChatImageViewHolder).bind(getItem(position))
-            JOIN_LEAVE -> (holder as JoinAndLeaveViewHolder).bind(getItem(position))
+            MY_CHAT -> (holder as MyChatViewHolder).bind(getItem(position), listener)
+            OTHER_CHAT -> (holder as OtherChatViewHolder).bind(getItem(position), listener)
+            MY_IMAGE_CHAT -> (holder as MyChatImageViewHolder).bind(getItem(position), listener)
+            OTHER_IMAGE_CHAT -> (holder as OtherChatImageViewHolder).bind(getItem(position), listener)
+            JOIN_LEAVE -> (holder as JoinAndLeaveViewHolder).bind(getItem(position), listener)
         }
     }
 
@@ -118,17 +124,17 @@ class ChatMessageAdapter :
 
 class OtherChatViewHolder(private val binding: ItemChatBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: UiChatMessage) {
+    fun bind(item: UiChatMessage, listener: ChatMessageInterface?) {
         binding.root.visibility = View.GONE
-        binding.item =item
+        binding.item = item
 
-        if(item.sender == "모두의 택시 봇"){
+        if (item.sender == "모두의 택시 봇") {
             binding.ivProfile.visibility = View.VISIBLE
             binding.tvNick.visibility = View.VISIBLE
             binding.ivProfile.setImageResource(R.drawable.ic_chatbot)
 
         } else {
-            if(item.profileImgUrl.isBlank()){
+            if (item.profileImgUrl.isBlank()) {
                 binding.ivProfile.visibility = View.GONE
                 binding.tvNick.visibility = View.GONE
             } else {
@@ -149,9 +155,9 @@ class OtherChatViewHolder(private val binding: ItemChatBinding) :
 
 class MyChatViewHolder(private val binding: ItemMychatBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: UiChatMessage) {
+    fun bind(item: UiChatMessage, listener: ChatMessageInterface?) {
         binding.root.visibility = View.GONE
-        binding.item =item
+        binding.item = item
         binding.executePendingBindings()
         binding.root.visibility = View.VISIBLE
     }
@@ -159,32 +165,38 @@ class MyChatViewHolder(private val binding: ItemMychatBinding) :
 
 class OtherChatImageViewHolder(private val binding: ItemChatImageBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: UiChatMessage) {
-        Log.d(TAG,item.toString())
+    fun bind(item: UiChatMessage, listener: ChatMessageInterface?) {
+        Log.d(TAG, item.toString())
         binding.root.visibility = View.GONE
-        binding.item =item
+        binding.item = item
         binding.executePendingBindings()
         binding.root.visibility = View.VISIBLE
+        binding.ivImage.setOnClickListener{
+            listener?.enlargeImage(item.content)
+        }
     }
 
 }
 
 class MyChatImageViewHolder(private val binding: ItemMychatImageBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: UiChatMessage) {
+    fun bind(item: UiChatMessage, listener: ChatMessageInterface?) {
         binding.root.visibility = View.GONE
-        binding.item =item
+        binding.item = item
         binding.executePendingBindings()
         binding.root.visibility = View.VISIBLE
+        binding.ivImage.setOnClickListener{
+            listener?.enlargeImage(item.content)
+        }
     }
 
 }
 
 class JoinAndLeaveViewHolder(private val binding: ItemChatJoinLeaveBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: UiChatMessage) {
+    fun bind(item: UiChatMessage, listener: ChatMessageInterface?) {
         binding.root.visibility = View.GONE
-        binding.item =item
+        binding.item = item
         binding.executePendingBindings()
         binding.root.visibility = View.VISIBLE
     }

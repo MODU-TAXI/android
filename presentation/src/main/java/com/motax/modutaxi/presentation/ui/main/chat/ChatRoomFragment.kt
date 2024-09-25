@@ -15,12 +15,13 @@ import com.motax.modutaxi.presentation.customview.ExitPopUpMenu
 import com.motax.modutaxi.presentation.databinding.FragmentChatRoomBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageAdapter
+import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageInterface
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
 import com.motax.modutaxi.presentation.util.ChatState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment_chat_room) {
+class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment_chat_room), ChatMessageInterface {
 
     private val chatManager: ChatManager by activityViewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
@@ -36,6 +37,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         CalculateForm.roomId = roomId
         ChatState.inChat = true
         binding.vm = viewModel
+        adapter.setInterface(this)
         binding.rvChat.adapter = adapter
         binding.rvChat.itemAnimator = null
         chatManager.connectChat(roomId)
@@ -133,6 +135,14 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         chatManager.disconnectChat()
     }
 
+    override fun enlargeImage(url: String) {
+        findNavController().toImageEnLarge(url)
+    }
+
+    override fun showProfile() {
+        TODO("Not yet implemented")
+    }
+
     private fun NavController.toCalculateSplash() {
         val action = ChatRoomFragmentDirections.actionChatRoomFragmentToCalculateSplashFragment()
         navigate(action)
@@ -157,5 +167,12 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         val action = ChatRoomFragmentDirections.actionChatRoomFragmentToEditRoomFragment(roomId)
         navigate(action)
     }
+
+    private fun NavController.toImageEnLarge(url: String){
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToImageEnlargeFragment(url)
+        navigate(action)
+    }
+
+
 
 }

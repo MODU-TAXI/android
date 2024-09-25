@@ -231,6 +231,9 @@
         <action
             android:id="@+id/action_chatRoomFragment_to_editRoomFragment"
             app:destination="@id/editRoomFragment" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_imageEnlargeFragment"
+            app:destination="@id/imageEnlargeFragment" />
 
     </fragment>
     <dialog
@@ -378,6 +381,16 @@
         <argument
             app:argType="long"
             android:name="roomId"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/imageEnlargeFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.image.ImageEnlargeFragment"
+        android:label="ImageEnlargeFragment" >
+
+        <argument
+            app:argType="string"
+            android:name="imageUrl"/>
 
     </fragment>
 
