@@ -62,8 +62,8 @@ fun String.toRoomTag(): RoomTag {
         RoomTag.ONLY_WOMAN
     } else if (this == "STUDENT_CERTIFICATION") {
         RoomTag.STUDENT_CERTIFICATION
-    } else if (this == "MANNER") {
-        RoomTag.MANNER
+    } else if (this == "QUIET") {
+        RoomTag.QUIET
     } else {
         RoomTag.EMPTY
     }

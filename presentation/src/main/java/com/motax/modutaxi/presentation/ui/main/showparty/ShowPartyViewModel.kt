@@ -29,6 +29,7 @@ data class ShowPartyUiState(
     val curZoomLevel: Double = 0.0,
     val isFromSearch: Boolean = false,
     val searchKeyword: String = "",
+    val isCertified: Boolean = true,
     val taxiPotList: List<UiTaxiPotListItem> = emptyList(),
     val selectedTaxiPotData: UiTaxiPotListItem = UiTaxiPotListItem() {},
 )
@@ -39,7 +40,8 @@ data class ShowPartyBottomSheetUiState(
     val spotFilter: String = "",
     val isImminent: Boolean = false,
     val roomTagFilter: List<RoomTag> = emptyList(),
-    val showBottomSheet: Boolean = true
+    val showBottomSheet: Boolean = true,
+    val isCertified: Boolean = true
 )
 
 sealed class ShowPartyEvent {
@@ -88,7 +90,6 @@ class ShowPartyViewModel @Inject constructor(
 
     init {
         setBottomSheetFilter()
-        getNickName()
     }
 
     fun changeBottomSheetState(state: Int) {
@@ -108,24 +109,38 @@ class ShowPartyViewModel @Inject constructor(
         getTaxiPotData()
     }
 
-    private fun getNickName() {
+    fun getUserInfo() {
         viewModelScope.launch {
             nickName.value = authRepository.getMemberNickName().toString()
+            authRepository.getMemberId()?.let {
+                repository.getMemberProfile(it).onSuccess {
+                    _uiState.update { state ->
+                        state.copy(
+                            isCertified = it.certified
+                        )
+                    }
+
+                    setBottomSheetFilter()
+                }.onFailure {
+
+                }
+            }
         }
     }
 
     private fun setBottomSheetFilter() {
         _bottomSheetUiState.update { state ->
             state.copy(
-                filterList = listOf(
+                filterList = if (uiState.value.isCertified) listOf(
                     UiTaxiPotListFilterItem(
                         RoomTag.STUDENT_CERTIFICATION, false, ::setFilter
                     ),
                     UiTaxiPotListFilterItem(
-                        RoomTag.ONLY_WOMAN, false, ::setFilter
+                        RoomTag.QUIET, false, ::setFilter
                     ),
+                ) else listOf(
                     UiTaxiPotListFilterItem(
-                        RoomTag.MANNER, false, ::setFilter
+                        RoomTag.QUIET, false, ::setFilter
                     ),
                 )
             )
@@ -238,6 +253,12 @@ class ShowPartyViewModel @Inject constructor(
                             data.toUiTaxiPotListItem(
                                 ::navigateToMatchDetail
                             )
+                        }.filter {
+                            if (!uiState.value.isCertified) {
+                                !it.roomTags.contains(RoomTag.STUDENT_CERTIFICATION)
+                            } else {
+                                true
+                            }
                         }
                     )
                 }

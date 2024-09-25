@@ -2,6 +2,7 @@ package com.motax.modutaxi.presentation.ui.main.createparty
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.getCurHour
 import com.motax.modutaxi.presentation.ui.getCurMinute
@@ -29,9 +30,9 @@ data class CreatePartyUiState(
     val departureHour: Int = getCurHour(),
     val departureMinute: Int = getCurMinute(),
     val studentCertificationRoomTag: Boolean = false,
-    val onlyWomanRoomTag: Boolean = false,
-    val mannerRoomTag: Boolean = false,
-    val todayDate: String = getTodayDate()
+    val quiteTag: Boolean = false,
+    val todayDate: String = getTodayDate(),
+    val isCertified: Boolean = false
 )
 
 sealed class CreatePartyEvent {
@@ -47,7 +48,8 @@ sealed class CreatePartyEvent {
 
 @HiltViewModel
 class CreatePartyViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CreatePartyUiState())
@@ -64,6 +66,7 @@ class CreatePartyViewModel @Inject constructor(
     val departureName = MutableStateFlow("")
     val wishHeadCount = MutableStateFlow(WishHeadCount.EMPTY)
 
+
     val isDataReady = combine(
         spotId,
         departureName,
@@ -75,12 +78,27 @@ class CreatePartyViewModel @Inject constructor(
         viewModelScope, SharingStarted.WhileSubscribed(), false
     )
 
+    fun getMemberSource(){
+        viewModelScope.launch {
+            authRepository.getMemberId()?.let{
+                repository.getMemberProfile(it).onSuccess {
+                    _uiState.update { state ->
+                        state.copy(
+                            isCertified = it.certified
+                        )
+                    }
+                }.onFailure {  }
+            }
+
+
+        }
+    }
+
     fun createTaxiPot() {
         viewModelScope.launch {
             val roomTag = mutableListOf<String>()
             if (uiState.value.studentCertificationRoomTag) roomTag.add(RoomTag.STUDENT_CERTIFICATION.text)
-            if (uiState.value.onlyWomanRoomTag) roomTag.add(RoomTag.ONLY_WOMAN.text)
-            if (uiState.value.mannerRoomTag) roomTag.add(RoomTag.MANNER.text)
+            if (uiState.value.quiteTag) roomTag.add(RoomTag.QUIET.text)
             _event.emit(CreatePartyEvent.ShowLoading)
 
             repository.createTaxiPot(
@@ -183,12 +201,8 @@ class CreatePartyViewModel @Inject constructor(
                 state.copy(studentCertificationRoomTag = !uiState.value.studentCertificationRoomTag)
             }
 
-            RoomTag.ONLY_WOMAN -> _uiState.update { state ->
-                state.copy(onlyWomanRoomTag = !uiState.value.onlyWomanRoomTag)
-            }
-
-            RoomTag.MANNER -> _uiState.update { state ->
-                state.copy(mannerRoomTag = !uiState.value.mannerRoomTag)
+            RoomTag.QUIET-> _uiState.update { state ->
+                state.copy(quiteTag = !uiState.value.quiteTag)
             }
 
             else -> {
@@ -211,6 +225,6 @@ enum class RoomTag(val text: String, val uiText: String) {
     ONLY_WOMAN("ONLY_WOMAN","여자만"),
     ONLY_MAN("ONLY_MAN","남자만"),
     MANNER("MANNER","매너탑승"),
-    QUIET("QUIET","조용한"),
+    QUIET("QUIET","조용히"),
     STUDENT_CERTIFICATION("STUDENT_CERTIFICATION","학생인증")
 }

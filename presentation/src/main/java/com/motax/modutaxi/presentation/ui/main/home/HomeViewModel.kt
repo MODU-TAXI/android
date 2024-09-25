@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
+import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
 import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem
@@ -33,6 +34,7 @@ data class HomeUiState(
     val name: String = "",
     val matchingCount: String = "",
     val savePrice: String = "",
+    val isCertified: Boolean = true,
     val currentMonth: String = LocalDate.now().monthValue.toString()
 )
 
@@ -57,18 +59,32 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     init{
-        getNameAndMatchingCount()
+        getUserInfo()
         getMonthData()
     }
 
-    private fun getNameAndMatchingCount(){
+    private fun getUserInfo() {
         viewModelScope.launch {
+
             _uiState.update { state ->
                 state.copy(
                     name = authRepository.getMemberName().toString(),
                     matchingCount = authRepository.getMatchingCount().toString() + "회",
                     nickname = authRepository.getMemberNickName().toString()
                 )
+            }
+            authRepository.getMemberId()?.let {
+                repository.getMemberProfile(it).onSuccess {
+                    _uiState.update { state ->
+                        state.copy(
+                            isCertified = it.certified
+                        )
+                    }
+
+                    getRealtimeTaxiPots()
+                }.onFailure {
+
+                }
             }
         }
     }
@@ -113,9 +129,16 @@ class HomeViewModel @Inject constructor(
                                 departureSpot = responseItem.departureName,
                                 arrivalSpot = responseItem.arrivalName,
                                 departTime = responseItem.departureTime,
-                                navigateToMatchDetail = ::navigateToMatchDetail
+                                navigateToMatchDetail = ::navigateToMatchDetail,
+                                roomTags = responseItem.roomTagBitMaskList
                             )
-                        },
+                        }.filter {
+                            if (!uiState.value.isCertified) {
+                                !it.roomTags.contains("STUDENT_CERTIFICATION")
+                            } else {
+                                true
+                            }
+                        }
                     )
                 }
 

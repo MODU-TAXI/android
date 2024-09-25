@@ -60,6 +60,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
 
         binding.vm = viewModel
         parentViewModel.setFullScreenMode()
+        viewModel.getUserInfo()
         initEventObserve()
         initStateObserve()
         initMapView()

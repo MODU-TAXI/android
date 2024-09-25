@@ -413,8 +413,7 @@
                     android:onClick="@{() -> vm.selectRoomTag(RoomTag.STUDENT_CERTIFICATION)}"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
-                    app:layout_constraintEnd_toStartOf="@id/layout_only_female"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    android:visibility="@{vm.uiState.certified ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_description_select_category">
 
@@ -444,12 +443,12 @@
                     android:id="@+id/layout_only_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
-                    android:background="@{vm.uiState.onlyWomanRoomTag ? @drawable/rect_nofill_sub500stroke_12radius : @drawable/rect_nofill_gray300stroke_12radius}"
-                    android:onClick="@{() -> vm.selectRoomTag(RoomTag.ONLY_WOMAN)}"
+                    android:background="@{vm.uiState.quiteTag ? @drawable/rect_nofill_sub500stroke_12radius : @drawable/rect_nofill_gray300stroke_12radius}"
+                    android:onClick="@{() -> vm.selectRoomTag(RoomTag.QUIET)}"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
-                    app:layout_constraintEnd_toStartOf="@id/layout_manner"
                     app:layout_constraintStart_toEndOf="@id/layout_student_certification"
                     app:layout_constraintTop_toBottomOf="@id/tv_description_select_category">
 
@@ -457,7 +456,7 @@
                         android:id="@+id/iv_only_female_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@{vm.uiState.onlyWomanRoomTag ? @drawable/ic_checkbox_on : @drawable/ic_checkbox_off}"
+                        android:src="@{vm.uiState.quiteTag ? @drawable/ic_checkbox_on : @drawable/ic_checkbox_off}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -467,46 +466,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="여자만"
-                        android:textColor="@{vm.uiState.onlyWomanRoomTag ? @color/mx_sub500 : @color/mx_gray700}"
+                        android:text="조용히"
+                        android:textColor="@{vm.uiState.quiteTag ? @color/mx_sub500 : @color/mx_gray700}"
                         app:layout_constraintBottom_toBottomOf="@id/iv_only_female_checkbox"
                         app:layout_constraintStart_toEndOf="@id/iv_only_female_checkbox"
                         app:layout_constraintTop_toTopOf="@id/iv_only_female_checkbox" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_manner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@{vm.uiState.mannerRoomTag ? @drawable/rect_nofill_sub500stroke_12radius : @drawable/rect_nofill_gray300stroke_12radius}"
-                    android:onClick="@{() -> vm.selectRoomTag(RoomTag.MANNER)}"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/layout_only_female"
-                    app:layout_constraintTop_toBottomOf="@id/tv_description_select_category">
-
-                    <ImageView
-                        android:id="@+id/iv_manner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@{vm.uiState.mannerRoomTag ? @drawable/ic_checkbox_on : @drawable/ic_checkbox_off}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_manner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="매너탑승"
-                        android:textColor="@{vm.uiState.mannerRoomTag ? @color/mx_sub500 : @color/mx_gray700}"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_manner"
-                        app:layout_constraintStart_toEndOf="@id/iv_manner"
-                        app:layout_constraintTop_toTopOf="@id/iv_manner" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

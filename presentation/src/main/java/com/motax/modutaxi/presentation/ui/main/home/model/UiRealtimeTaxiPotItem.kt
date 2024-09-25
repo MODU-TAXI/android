@@ -1,5 +1,7 @@
 package com.motax.modutaxi.presentation.ui.main.home.model
 
+import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+
 data class UiRealtimeTaxiPotItem(
     val roomId: Long = -1L,
     val curHeadCount: Int = 0,
@@ -8,5 +10,6 @@ data class UiRealtimeTaxiPotItem(
     val departureSpot: String = "",
     val arrivalSpot: String = "",
     val departTime: String = "",
-    val navigateToMatchDetail: (Long) -> Unit
+    val navigateToMatchDetail: (Long) -> Unit,
+    val roomTags: List<String> = emptyList()
 )

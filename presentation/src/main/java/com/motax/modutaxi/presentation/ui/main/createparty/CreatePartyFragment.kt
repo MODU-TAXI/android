@@ -26,6 +26,7 @@ class CreatePartyFragment :
 
         binding.vm = viewModel
         parentViewModel.setNotFullScreenMode()
+        viewModel.getMemberSource()
         initEventObserve()
     }
 

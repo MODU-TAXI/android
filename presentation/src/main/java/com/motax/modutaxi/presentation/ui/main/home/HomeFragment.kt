@@ -33,7 +33,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.rvRealtimeTaxipotList.adapter = adapter
 
         viewModel.getIsParticipating()
-        viewModel.getRealtimeTaxiPots()
         viewModel.getNotificationCount()
         initEventObserve()
         onRefresh()
