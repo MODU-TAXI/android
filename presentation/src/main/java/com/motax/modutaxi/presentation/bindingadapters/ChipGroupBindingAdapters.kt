@@ -27,6 +27,8 @@ fun setTaxiPotFilterChips(chipGroup: ChipGroup, items: List<RoomTag>) {
                 }
             }
 
+            RoomTag.EMPTY -> {}
+
             else -> {
                 chip.apply {
                     setBackgroundResource(R.drawable.rect_gray100fill_nostroke_4radius)

@@ -30,7 +30,7 @@ data class ShowPartyUiState(
     val isFromSearch: Boolean = false,
     val searchKeyword: String = "",
     val taxiPotList: List<UiTaxiPotListItem> = emptyList(),
-    val selectedTaxiPotData: UiTaxiPotListItem = UiTaxiPotListItem() {}
+    val selectedTaxiPotData: UiTaxiPotListItem = UiTaxiPotListItem() {},
 )
 
 data class ShowPartyBottomSheetUiState(
@@ -99,7 +99,16 @@ class ShowPartyViewModel @Inject constructor(
         bottomSheetHeight.value = height
     }
 
-    private fun getNickName(){
+    fun setFilter(sortType: TaxiPotSortType) {
+        _bottomSheetUiState.update { state ->
+            state.copy(
+                sortType = sortType
+            )
+        }
+        getTaxiPotData()
+    }
+
+    private fun getNickName() {
         viewModelScope.launch {
             nickName.value = authRepository.getMemberNickName().toString()
         }
@@ -110,13 +119,13 @@ class ShowPartyViewModel @Inject constructor(
             state.copy(
                 filterList = listOf(
                     UiTaxiPotListFilterItem(
-                        RoomTag.STUDENT_CERTIFICATION, false,::setFilter
+                        RoomTag.STUDENT_CERTIFICATION, false, ::setFilter
                     ),
                     UiTaxiPotListFilterItem(
-                        RoomTag.ONLY_WOMAN, false,::setFilter
+                        RoomTag.ONLY_WOMAN, false, ::setFilter
                     ),
                     UiTaxiPotListFilterItem(
-                        RoomTag.MANNER, false,::setFilter
+                        RoomTag.MANNER, false, ::setFilter
                     ),
                 )
             )
@@ -156,7 +165,7 @@ class ShowPartyViewModel @Inject constructor(
         }
     }
 
-    fun setIsImminent(){
+    fun setIsImminent() {
         _bottomSheetUiState.update { state ->
             state.copy(
                 isImminent = !bottomSheetUiState.value.isImminent
@@ -166,7 +175,7 @@ class ShowPartyViewModel @Inject constructor(
         getTaxiPotData()
     }
 
-    fun setSpotFilter(id: Long, name: String){
+    fun setSpotFilter(id: Long, name: String) {
         spotFilterId = id
         _bottomSheetUiState.update { state ->
             state.copy(
@@ -177,7 +186,7 @@ class ShowPartyViewModel @Inject constructor(
         getTaxiPotData()
     }
 
-    fun cancelSpotFilter(){
+    fun cancelSpotFilter() {
         spotFilterId = 0
         _bottomSheetUiState.update { state ->
             state.copy(
@@ -232,7 +241,6 @@ class ShowPartyViewModel @Inject constructor(
                         }
                     )
                 }
-
                 _event.emit(ShowPartyEvent.SetMarkers(uiState.value.taxiPotList))
             }.onFailure {
                 Log.d(TAG, it.message.toString())
@@ -305,5 +313,5 @@ class ShowPartyViewModel @Inject constructor(
 enum class TaxiPotSortType(val text: String, val uiText: String) {
     NEW("NEW", "최신순"),
     DISTANCE("DISTANCE", "거리순"),
-    ENDTIME("ENDTIME", "시간순")
+    ENDTIME("ENDTIME", "최근대화")
 }
