@@ -34,6 +34,7 @@ data class UsageHistoryUiState(
 sealed class UsageHistoryEvent {
     data class NavigateToUsageDetail(val id: Long) : UsageHistoryEvent()
     data object NavigateToMyPage : UsageHistoryEvent()
+    data object ShowMonthPicker : UsageHistoryEvent()
 }
 
 @HiltViewModel
@@ -49,6 +50,18 @@ class UsageHistoryViewModel @Inject constructor(
 
     init {
         setCurrentYearMonth()
+        loadMonthlyUsageHistory()
+    }
+
+    fun showMonthPicker() {
+        viewModelScope.launch {
+            _event.emit(UsageHistoryEvent.ShowMonthPicker)
+        }
+    }
+    fun updateYearMonth(year: Int, month: Int) {
+        _uiState.update {
+            it.copy(year = year, month = month)
+        }
         loadMonthlyUsageHistory()
     }
 
