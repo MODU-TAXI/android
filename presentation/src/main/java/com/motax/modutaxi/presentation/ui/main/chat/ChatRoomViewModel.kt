@@ -45,6 +45,8 @@ sealed class ChatRoomEvent {
     data object ShowParticipantPopUp: ChatRoomEvent()
     data object NavigateToHome: ChatRoomEvent()
     data class ShowToastMessage(val msg: String): ChatRoomEvent()
+    data object ShowLoading: ChatRoomEvent()
+    data object DismissLoading: ChatRoomEvent()
 }
 
 @HiltViewModel
@@ -85,7 +87,6 @@ class ChatRoomViewModel @Inject constructor(
                         roomStatus = it.roomStatus
                     )
                 }
-
             }.onFailure {
                 viewModelScope.launch {
                     _event.emit(ChatRoomEvent.ShowToastMessage("정산이 완료되어 방이 삭제되었습니다"))
@@ -251,22 +252,26 @@ class ChatRoomViewModel @Inject constructor(
 
     fun deleteRoom(roomId: Long){
         viewModelScope.launch {
+            _event.emit(ChatRoomEvent.ShowLoading)
             repository.deleteRoom(roomId).onSuccess {
                 _event.emit(ChatRoomEvent.ShowToastMessage("방이 삭제 되었습니다"))
                 _event.emit(ChatRoomEvent.NavigateToHome)
+                _event.emit(ChatRoomEvent.DismissLoading)
             }.onFailure {
-
+                _event.emit(ChatRoomEvent.DismissLoading)
             }
         }
     }
 
     fun exitRoom(){
         viewModelScope.launch {
+            _event.emit(ChatRoomEvent.NavigateToHome)
             repository.exitRoom().onSuccess {
                 _event.emit(ChatRoomEvent.ShowToastMessage("방을 나갔습니다"))
                 _event.emit(ChatRoomEvent.NavigateToHome)
+                _event.emit(ChatRoomEvent.DismissLoading)
             }.onFailure {
-
+                _event.emit(ChatRoomEvent.DismissLoading)
             }
         }
     }

@@ -41,6 +41,8 @@ sealed class CreatePartyEvent {
     data class NavigateToMatchDetail(val id: Long) : CreatePartyEvent()
     data class ShowToast(val msg: String) : CreatePartyEvent()
     data object NavigateBack: CreatePartyEvent()
+    data object ShowLoading: CreatePartyEvent()
+    data object DismissLoading: CreatePartyEvent()
 }
 
 @HiltViewModel
@@ -79,6 +81,7 @@ class CreatePartyViewModel @Inject constructor(
             if (uiState.value.studentCertificationRoomTag) roomTag.add(RoomTag.STUDENT_CERTIFICATION.text)
             if (uiState.value.onlyWomanRoomTag) roomTag.add(RoomTag.ONLY_WOMAN.text)
             if (uiState.value.mannerRoomTag) roomTag.add(RoomTag.MANNER.text)
+            _event.emit(CreatePartyEvent.ShowLoading)
 
             repository.createTaxiPot(
                 spotId.value,
@@ -89,10 +92,14 @@ class CreatePartyViewModel @Inject constructor(
                 departureName.value,
                 wishHeadCount.value.count
             ).onSuccess {
+                _uiState.value = CreatePartyUiState()
+                _event.emit(CreatePartyEvent.DismissLoading)
                 _event.emit(CreatePartyEvent.NavigateToMatchDetail(it.roomId))
             }.onFailure {
+                _event.emit(CreatePartyEvent.DismissLoading)
                 _event.emit(CreatePartyEvent.ShowToast(it.message.toString()))
             }
+
         }
     }
 

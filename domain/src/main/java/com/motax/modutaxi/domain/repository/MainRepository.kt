@@ -207,4 +207,10 @@ interface MainRepository {
     ): Result<Unit>
 
     suspend fun exitRoom(): Result<Unit>
+
+    suspend fun getRadiusSpot(
+        count: Int,
+        longitude: Double,
+        latitude: Double
+    ): Result<NearSpotData>
 }

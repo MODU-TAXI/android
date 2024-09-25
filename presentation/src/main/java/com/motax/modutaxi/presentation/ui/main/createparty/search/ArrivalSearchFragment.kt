@@ -22,6 +22,7 @@ import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.departure.DepartureMapViewModel
 import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AddressSearchResultAdapter
+import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AllSpotAdapter
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,12 +44,15 @@ class ArrivalSearchFragment :
         binding.vm = viewModel
 
         parentViewModel.setNotFullScreenMode()
+        binding.rvSpotList.adapter = AllSpotAdapter()
+        binding.rvSpotList.itemAnimator = null
         binding.rvSearchResult.adapter = AddressSearchResultAdapter()
         binding.rvSearchResult.itemAnimator = null
         binding.etSearch.requestFocus()
         showKeyboard(binding.etSearch)
         initEventObserve()
         checkLocationPermission()
+        viewModel.getAllSpot()
     }
 
     private fun initEventObserve() {

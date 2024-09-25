@@ -17,7 +17,7 @@ class ExitPopUpMenu(
         PopupWindow(
             binding.root,
             Constants.POPUP_WIDTH_DP.toPx(context.resources),
-            Constants.TWO_POPUP_HEIGHT_DP.toPx(context.resources)
+            Constants.ONE_POPUP_HEIGHT_DP.toPx(context.resources)
         ).apply {
             elevation = 10f
         }

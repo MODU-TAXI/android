@@ -4,8 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.domain.repository.NaverRepository
+import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiArrivalSpotItem
 import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiSearchResultItem
+import com.motax.modutaxi.presentation.ui.main.createparty.model.UiArrivalSpotItem
 import com.motax.modutaxi.presentation.ui.main.createparty.model.UiSearchResultItem
+import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiSpotListItem
+import com.motax.modutaxi.presentation.ui.main.showparty.model.UiSpotListItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +29,8 @@ data class ArrivalSearchUiState(
     val curLongitude: Double = 126.6538126,
     val nearSpot: String = "",
     val nearSpotLatitude: Double = 0.0,
-    val nearSpotLongitude: Double = 0.0
+    val nearSpotLongitude: Double = 0.0,
+    val spotList: List<UiArrivalSpotItem> = emptyList()
 )
 
 sealed class ArrivalSearchEvent {
@@ -126,7 +131,32 @@ class ArrivalSearchViewModel @Inject constructor(
                 }
             }
         }
+    }
 
+    fun getAllSpot(){
+        viewModelScope.launch {
+            mainRepository.getRadiusSpot(1000, 126.68045, 37.46504).onSuccess {
+                _uiState.update { state ->
+                    state.copy(
+                        spotList = it.spots.map{ data ->
+                            data.toUiArrivalSpotItem { id, name, longitude, latitude ->
+                                _uiState.update { state ->
+                                    state.copy(
+                                        nearSpotLongitude = longitude,
+                                        nearSpotLatitude = latitude,
+                                        nearSpot = name
+                                    )
+                                }
+
+                                selectSpot()
+                            }
+                        }
+                    )
+                }
+            }.onFailure {
+
+            }
+        }
     }
 
     private fun selectLocation(

@@ -312,4 +312,8 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun exitRoom(): Result<Unit> = runCatching {
         api.exitRoom()
     }
+
+    override suspend fun getRadiusSpot(count: Int, longitude: Double, latitude: Double): Result<NearSpotData> = runCatching {
+        api.getRadiusSpot(count, longitude, latitude)
+    }.mapCatching { it.toDomain() }
 }

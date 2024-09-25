@@ -74,6 +74,8 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
                     is ChatRoomEvent.ShowToastMessage -> showToastMessage(it.msg)
                     is ChatRoomEvent.NavigateToHome -> findNavController().toHome()
                     is ChatRoomEvent.ShowParticipantPopUp -> showParticipantPopup()
+                    is ChatRoomEvent.ShowLoading -> showLoading(requireContext())
+                    is ChatRoomEvent.DismissLoading -> dismissLoading()
                 }
             }
         }
@@ -109,7 +111,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         )
     }
 
-    private fun exitRoom(){
+    private fun exitRoom() {
         viewModel.exitRoom()
     }
 
@@ -151,7 +153,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         navigate(action)
     }
 
-    private fun NavController.toEditRoom(){
+    private fun NavController.toEditRoom() {
         val action = ChatRoomFragmentDirections.actionChatRoomFragmentToEditRoomFragment(roomId)
         navigate(action)
     }

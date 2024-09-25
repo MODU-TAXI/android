@@ -245,4 +245,11 @@ interface MainApi {
     suspend fun paymentComplete(
         @Query("roomId") roomId : Long
     ): Unit
+
+    @GET("/api/spots/map")
+    suspend fun getRadiusSpot(
+        @Query("count") count: Int,
+        @Query("searchLongitude") longitude: Double,
+        @Query("searchLatitude") latitude: Double
+    ): GetNearSpotResponse
 }
