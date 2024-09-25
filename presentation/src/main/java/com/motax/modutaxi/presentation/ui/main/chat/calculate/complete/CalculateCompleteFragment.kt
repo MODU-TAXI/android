@@ -1,6 +1,8 @@
 package com.motax.modutaxi.presentation.ui.main.chat.calculate.complete
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -17,6 +19,14 @@ class CalculateCompleteFragment :
 
         binding.btnConfirm.setOnClickListener {
             findNavController().toChatFragment()
+        }
+
+        binding.btnTurnonPush.setOnClickListener {
+            val intent = Intent().apply {
+                action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+            }
+            startActivity(intent)
         }
 
     }

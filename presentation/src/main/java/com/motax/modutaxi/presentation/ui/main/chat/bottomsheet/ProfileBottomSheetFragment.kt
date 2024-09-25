@@ -47,7 +47,7 @@ class ProfileBottomSheetFragment : BottomSheetDialogFragment() {
     ): View {
         _binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_select_spot_filter_bottom_sheet,
+            R.layout.fragment_profile_bottom_sheet,
             container,
             false
         )

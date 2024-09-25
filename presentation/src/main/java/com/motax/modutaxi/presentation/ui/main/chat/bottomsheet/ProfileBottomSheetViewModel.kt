@@ -14,7 +14,7 @@ import javax.inject.Inject
 data class ProfileBottomSheetUiState(
     val profile: String = "",
     val nick: String = "",
-    val certified: Boolean = false,
+    val certified: Boolean = true,
     val matchingCount: String = ""
 )
 
