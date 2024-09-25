@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.chat.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import com.motax.modutaxi.presentation.util.Constants.MY_CHAT
 import com.motax.modutaxi.presentation.util.Constants.MY_IMAGE_CHAT
 import com.motax.modutaxi.presentation.util.Constants.OTHER_CHAT
 import com.motax.modutaxi.presentation.util.Constants.OTHER_IMAGE_CHAT
+import com.motax.modutaxi.presentation.util.Constants.TAG
 
 class ChatMessageAdapter :
     ListAdapter<UiChatMessage, RecyclerView.ViewHolder>(diffCallback) {
@@ -158,6 +160,7 @@ class MyChatViewHolder(private val binding: ItemMychatBinding) :
 class OtherChatImageViewHolder(private val binding: ItemChatImageBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: UiChatMessage) {
+        Log.d(TAG,item.toString())
         binding.root.visibility = View.GONE
         binding.item =item
         binding.executePendingBindings()

@@ -88,7 +88,8 @@ class ChatRoomViewModel @Inject constructor(
 
             }.onFailure {
                 viewModelScope.launch {
-                    _event.emit(ChatRoomEvent.NavigateToBack)
+                    _event.emit(ChatRoomEvent.ShowToastMessage("정산이 완료되어 방이 삭제되었습니다"))
+                    _event.emit(ChatRoomEvent.NavigateToHome)
                 }
             }
         }
@@ -109,7 +110,8 @@ class ChatRoomViewModel @Inject constructor(
 
             }.onFailure {
                 viewModelScope.launch {
-                    _event.emit(ChatRoomEvent.NavigateToBack)
+                    _event.emit(ChatRoomEvent.ShowToastMessage("정산이 완료되어 방이 삭제되었습니다"))
+                    _event.emit(ChatRoomEvent.NavigateToHome)
                 }
             }
         }
@@ -160,6 +162,11 @@ class ChatRoomViewModel @Inject constructor(
                         roomStatus = "AFTER_PAYMENT"
                     )
                 }
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.ShowToastMessage("정산이 완료되어 방이 삭제되었습니다"))
+                    _event.emit(ChatRoomEvent.NavigateToHome)
+                }
+
             }
         }
 
