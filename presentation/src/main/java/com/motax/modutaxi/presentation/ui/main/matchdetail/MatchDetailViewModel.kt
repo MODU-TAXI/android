@@ -10,8 +10,11 @@ import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiMatchDetailDa
 import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiParticipantItem
 import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiWaitingMemberItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -24,6 +27,11 @@ data class MatchDetailUiState(
     val waitingMembers: List<UiWaitingMemberItem> = emptyList(),
     val roomState: RoomState = RoomState.EMPTY
 )
+
+sealed class MatchDetailEvent{
+    data object ShowLoading: MatchDetailEvent()
+    data object DismissLoading: MatchDetailEvent()
+}
 
 enum class RoomState() {
     OWNER,
@@ -40,6 +48,9 @@ class MatchDetailViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(MatchDetailUiState())
     val uiState: StateFlow<MatchDetailUiState> = _uiState.asStateFlow()
+
+    private val _event = MutableSharedFlow<MatchDetailEvent>()
+    val event: SharedFlow<MatchDetailEvent> = _event.asSharedFlow()
 
     private var roomId: Long = 0
 
@@ -146,11 +157,13 @@ class MatchDetailViewModel @Inject constructor(
 
     private fun approveEnterTaxiPot(memberId: Long) {
         viewModelScope.launch {
+            _event.emit(MatchDetailEvent.ShowLoading)
             repository.approveEnterTaxiPot(roomId, memberId).onSuccess {
                 getWaitingMembers(roomId)
                 getParticipants(roomId)
+                _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
-
+                _event.emit(MatchDetailEvent.DismissLoading)
             }
         }
     }

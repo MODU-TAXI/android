@@ -81,6 +81,7 @@ class MatchDetailFragment :
         }
         viewModel.getTaxiPotData(roomId)
         initStateObserve()
+        initEventObserve()
         setBtnClickListener()
     }
 
@@ -117,6 +118,17 @@ class MatchDetailFragment :
                     binding.rvWaitingMember.adapter = WaitingMemberAdapter()
                 } else {
                     binding.rvWaitingMember.adapter = WaitingMemberParticipantAdapter()
+                }
+            }
+        }
+    }
+
+    private fun initEventObserve(){
+        repeatOnStarted {
+            viewModel.event.collect{
+                when(it){
+                    is MatchDetailEvent.ShowLoading -> showLoading(requireContext())
+                    is MatchDetailEvent.DismissLoading -> dismissLoading()
                 }
             }
         }
