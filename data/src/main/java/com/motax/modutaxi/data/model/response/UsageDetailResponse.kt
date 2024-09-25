@@ -23,5 +23,4 @@ data class UsageParticipantResponse(
     val imageUrl: String?,
     val status: String,
     val me: Boolean,
-    val portionCharge: Int
 )
