@@ -21,7 +21,8 @@ import com.motax.modutaxi.presentation.util.ChatState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment_chat_room), ChatMessageInterface {
+class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment_chat_room),
+    ChatMessageInterface {
 
     private val chatManager: ChatManager by activityViewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
@@ -139,8 +140,14 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         findNavController().toImageEnLarge(url)
     }
 
-    override fun showProfile() {
-        TODO("Not yet implemented")
+    override fun showProfile(id: Long) {
+        findNavController().toProfile(id)
+    }
+
+    private fun NavController.toProfile(id: Long) {
+        val action =
+            ChatRoomFragmentDirections.actionChatRoomFragmentToProfileBottomSheetFragment(id)
+        navigate(action)
     }
 
     private fun NavController.toCalculateSplash() {
@@ -168,11 +175,10 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         navigate(action)
     }
 
-    private fun NavController.toImageEnLarge(url: String){
+    private fun NavController.toImageEnLarge(url: String) {
         val action = ChatRoomFragmentDirections.actionChatRoomFragmentToImageEnlargeFragment(url)
         navigate(action)
     }
-
 
 
 }

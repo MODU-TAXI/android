@@ -234,6 +234,9 @@
         <action
             android:id="@+id/action_chatRoomFragment_to_imageEnlargeFragment"
             app:destination="@id/imageEnlargeFragment" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_profileBottomSheetFragment"
+            app:destination="@id/profileBottomSheetFragment" />
 
     </fragment>
     <dialog
@@ -393,5 +396,14 @@
             android:name="imageUrl"/>
 
     </fragment>
+    <dialog
+        android:id="@+id/profileBottomSheetFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.chat.bottomsheet.ProfileBottomSheetFragment"
+        android:label="ProfileBottomSheetFragment" >
+        <argument
+            app:argType="long"
+            android:name="id"/>
+
+    </dialog>
 
 </navigation>

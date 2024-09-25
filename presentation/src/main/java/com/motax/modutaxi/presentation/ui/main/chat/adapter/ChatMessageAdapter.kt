@@ -128,6 +128,10 @@ class OtherChatViewHolder(private val binding: ItemChatBinding) :
         binding.root.visibility = View.GONE
         binding.item = item
 
+        binding.ivProfile.setOnClickListener {
+            listener?.showProfile(item.memberId)
+        }
+
         if (item.sender == "모두의 택시 봇") {
             binding.ivProfile.visibility = View.VISIBLE
             binding.tvNick.visibility = View.VISIBLE
@@ -173,6 +177,9 @@ class OtherChatImageViewHolder(private val binding: ItemChatImageBinding) :
         binding.root.visibility = View.VISIBLE
         binding.ivImage.setOnClickListener{
             listener?.enlargeImage(item.content)
+        }
+        binding.ivProfile.setOnClickListener {
+            listener?.showProfile(item.memberId)
         }
     }
 

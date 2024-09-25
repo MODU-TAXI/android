@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.motax.modutaxi.presentation.ui.main.chat.bottomsheet.ProfileBottomSheetViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="60dp">
+
+
+        <ImageView
+            android:id="@+id/iv_bottomsheet_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_bottomsheet_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_bottomsheet_top" />
+
+        <TextView
+            android:id="@+id/tv_nick"
+            style="@style/TextTitle3Semibold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile"
+            tools:text="우디" />
+
+        <ImageView
+            android:id="@+id/iv_mark"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_green_badge"
+            app:layout_constraintBottom_toBottomOf="@id/tv_student_certification"
+            app:layout_constraintEnd_toStartOf="@id/tv_student_certification"
+            app:layout_constraintTop_toTopOf="@id/tv_student_certification" />
+
+        <TextView
+            android:id="@+id/tv_student_certification"
+            style="@style/TextRegularRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="50dp"
+            android:text="학생인증 완료"
+            android:textColor="@color/mx_gray700"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@id/tv_matchingCount_label"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_nick" />
+
+        <ImageView
+            android:id="@+id/iv_question_mark"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_gray_question_mark"
+            app:layout_constraintBottom_toBottomOf="@id/tv_matchingCount_label"
+            app:layout_constraintEnd_toStartOf="@id/tv_matchingCount_label"
+            app:layout_constraintTop_toTopOf="@id/tv_matchingCount_label" />
+
+        <TextView
+            android:id="@+id/tv_matchingCount_label"
+            style="@style/TextRegularRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:text="최근 매칭 확률"
+            android:textColor="@color/mx_gray700"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_student_certification"
+            app:layout_constraintTop_toBottomOf="@id/tv_nick" />
+
+        <TextView
+            android:id="@+id/tv_matchingcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_matchingCount_label"
+            app:layout_constraintStart_toEndOf="@id/tv_matchingCount_label"
+            app:layout_constraintTop_toTopOf="@id/tv_matchingCount_label"
+            tools:text="80%" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
