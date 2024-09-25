@@ -1,7 +1,14 @@
 package com.motax.modutaxi.presentation.ui.main.mypage.usagehistory
 
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.NumberPicker
+import android.widget.Spinner
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.navigation.NavController
@@ -40,13 +47,43 @@ class UsageHistoryFragment : BaseFragment<FragmentUsageHistoryBinding>(R.layout.
                 when (it) {
                     is UsageHistoryEvent.NavigateToUsageDetail -> findNavController().toUsageDetail(it.id)
                     is UsageHistoryEvent.NavigateToMyPage -> findNavController().navigateUp()
+                    is UsageHistoryEvent.ShowMonthPicker -> showMonthYearPicker()
                 }
             }
         }
     }
 
-    private fun NavController.toUsageDetail(id: Long) {
+    private fun showMonthYearPicker() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_month_year_picker, null)
+        val monthPicker: NumberPicker = dialogView.findViewById(R.id.picker_month)
+        val yearPicker: NumberPicker = dialogView.findViewById(R.id.picker_year)
+        val okButton: Button = dialogView.findViewById(R.id.button_ok)
 
+        // 초기 설정
+        monthPicker.minValue = 1
+        monthPicker.maxValue = 12
+        yearPicker.minValue = 2024
+        yearPicker.maxValue = 2034
+
+        monthPicker.value = viewModel.uiState.value.month
+        yearPicker.value = viewModel.uiState.value.year
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+
+        okButton.setOnClickListener {
+            val selectedMonth = monthPicker.value
+            val selectedYear = yearPicker.value
+            viewModel.updateYearMonth(selectedYear, selectedMonth)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+
+    private fun NavController.toUsageDetail(id: Long) {
         val action = UsageHistoryFragmentDirections.actionHistoryToDetail(id)
         navigate(action)
     }

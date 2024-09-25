@@ -91,9 +91,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tv_year"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingRight="8dp"
             app:layout_constraintStart_toEndOf="@id/tv_month"
             android:src="@drawable/ic_arrow_down"
-            android:layout_marginLeft="4dp"
+            android:onClick="@{() -> vm.showMonthPicker()}"
             app:layout_constraintBottom_toBottomOf="@id/tv_year"/>
 
         <TextView
