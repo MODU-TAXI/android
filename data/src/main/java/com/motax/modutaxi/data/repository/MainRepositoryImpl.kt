@@ -143,6 +143,10 @@ class MainRepositoryImpl @Inject constructor(
         api.enterTaxiPot(roomId)
     }
 
+    override suspend fun cancelWaitingMembers(roomId: Long): Result<Unit> = runCatching {
+        api.cancelWaitingMembers(roomId)
+    }
+
     override suspend fun getTaxiPotParticipants(roomId: Long): Result<TaxiPotParticipantsData> =
         runCatching {
             api.getTaxiPotParticipants(roomId)

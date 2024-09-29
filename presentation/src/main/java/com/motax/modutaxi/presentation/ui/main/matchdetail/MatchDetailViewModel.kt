@@ -2,6 +2,7 @@ package com.motax.modutaxi.presentation.ui.main.matchdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.main.matchdetail.mapper.toUiMatchDetailData
 import com.motax.modutaxi.presentation.ui.main.matchdetail.mapper.toUiParticipantItem
@@ -43,7 +44,8 @@ enum class RoomState() {
 
 @HiltViewModel
 class MatchDetailViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MatchDetailUiState())
@@ -53,9 +55,15 @@ class MatchDetailViewModel @Inject constructor(
     val event: SharedFlow<MatchDetailEvent> = _event.asSharedFlow()
 
     private var roomId: Long = 0
+    private var memberId: Long = 0
 
     fun getTaxiPotData(id: Long) {
         roomId = id
+        viewModelScope.launch {
+            authRepository.getMemberId()?.let{
+                 memberId = it
+            }
+        }
         getTaxiPotDetail(roomId)
     }
 
@@ -140,8 +148,28 @@ class MatchDetailViewModel @Inject constructor(
         }
     }
 
+    fun cancelWaitingMember(roomId: Long){
+        viewModelScope.launch {
+            _event.emit(MatchDetailEvent.ShowLoading)
+            repository.cancelWaitingMembers(roomId).onSuccess {
+                _uiState.update { state ->
+                    state.copy(
+                        waitingMembers = uiState.value.waitingMembers.filter {
+                            it.memberId != memberId
+                        },
+                        roomState = RoomState.NOTHING
+                    )
+                }
+                _event.emit(MatchDetailEvent.DismissLoading)
+            }.onFailure {
+                _event.emit(MatchDetailEvent.DismissLoading)
+            }
+        }
+    }
+
     fun enterTaxiPot() {
         viewModelScope.launch {
+            _event.emit(MatchDetailEvent.ShowLoading)
             repository.enterTaxiPot(roomId).onSuccess {
                 getWaitingMembers(roomId)
                 _uiState.update { state ->
@@ -149,8 +177,9 @@ class MatchDetailViewModel @Inject constructor(
                         roomState = RoomState.WAITING
                     )
                 }
+                _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
-
+                _event.emit(MatchDetailEvent.DismissLoading)
             }
         }
     }

@@ -118,6 +118,11 @@ interface MainApi {
         @Path("roomId") roomId: Long
     ): TaxiPotWaitingMembers
 
+    @DELETE("/api/rooms/{roomId}/waiting")
+    suspend fun cancelWaitingMembers(
+        @Path("roomId") roomId: Long
+    ): Unit
+
     @POST("/api/rooms/{roomId}/apply")
     suspend fun enterTaxiPot(
         @Path("roomId") roomId: Long

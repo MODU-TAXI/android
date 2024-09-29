@@ -101,6 +101,10 @@ interface MainRepository {
         roomId: Long
     ): Result<Unit>
 
+    suspend fun cancelWaitingMembers(
+        roomId: Long
+    ): Result<Unit>
+
     suspend fun approveEnterTaxiPot(
         roomId: Long,
         memberId: Long

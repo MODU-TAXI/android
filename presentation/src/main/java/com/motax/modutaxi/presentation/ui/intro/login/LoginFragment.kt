@@ -7,10 +7,14 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -124,7 +128,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 // 로그인 성공 부분
                 else if (token != null) {
                     Log.d(TAG, "앱 로그인 성공 ${token.accessToken}")
-                    viewModel.kakaoLogin(token.accessToken)
+                    viewModel.login("KAKAO",token.accessToken)
                 }
             }
         } else {
@@ -142,9 +146,36 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             Log.e(TAG, "이메일 로그인 실패 $error")
         } else if (token != null) {
             Log.d(TAG, "이메일 로그인 성공 ${token.accessToken}")
-            viewModel.kakaoLogin(token.accessToken)
+            viewModel.login(token.accessToken, "KAKAO")
         }
     }
+
+    fun googleLogin() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("172127911640-d623o9op12s7gevmdp5v0n5138g90non.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+        val signInIntent = googleSignInClient.signInIntent
+        resultLauncher.launch(signInIntent)
+    }
+
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            // 로그인 유저정보 불러오기
+
+            try {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                val account = task.getResult(ApiException::class.java)
+                Log.d(TAG, account.email.toString())
+                viewModel.login(account.idToken.toString(),"GOOGLE")
+            } catch (e: ApiException) {
+                Log.d(TAG, e.message.toString())
+                Log.d(TAG, e.status.toString())
+                Log.d(TAG, e.statusCode.toString())
+            }
+
+        }
 
     private fun NavController.toPermission() {
         val action = LoginFragmentDirections.actionLoginFragmentToPermissionFragment()

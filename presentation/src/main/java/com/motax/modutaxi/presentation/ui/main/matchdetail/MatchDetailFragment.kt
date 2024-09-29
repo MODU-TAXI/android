@@ -146,6 +146,10 @@ class MatchDetailFragment :
                     viewModel.enterTaxiPot()
                 }
 
+                RoomState.WAITING -> {
+                    viewModel.cancelWaitingMember(roomId)
+                }
+
                 else -> {}
             }
         }

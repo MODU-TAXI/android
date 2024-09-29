@@ -33,9 +33,9 @@ class LoginViewModel @Inject constructor(
     private val _event = MutableSharedFlow<LoginEvent>()
     val event: SharedFlow<LoginEvent> = _event.asSharedFlow()
 
-    fun kakaoLogin(token: String) {
+    fun login(token: String, type: String) {
         viewModelScope.launch {
-            loginUseCase("KAKAO", token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).let{
+            loginUseCase(type, token, async { MyFirebaseMessagingService().getFirebaseToken() }.await()).let{
                 when(it){
                     is BaseState.Success -> {
                         authRepository.putAccessToken(it.data.tokenData.accessToken)

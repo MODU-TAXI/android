@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
 }
@@ -95,5 +96,9 @@ dependencies {
 
     // refresh
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    // google login
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 
 }

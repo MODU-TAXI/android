@@ -97,7 +97,7 @@ fun bindMatchingParticipateBtnState(btn: AppCompatButton, roomState: RoomState) 
         RoomState.WAITING -> {
             btn.setBackgroundResource(R.drawable.rect_nofill_sub500stroke_61radius)
             btn.setTextColor(ContextCompat.getColor(btn.context, R.color.mx_sub500))
-            btn.text = "방장 수락 대기중"
+            btn.text = "대기 취소하기"
         }
 
         RoomState.NOTHING -> {
