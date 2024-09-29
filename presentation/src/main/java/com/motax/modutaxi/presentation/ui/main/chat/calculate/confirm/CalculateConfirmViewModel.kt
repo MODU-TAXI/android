@@ -5,9 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
+import com.motax.modutaxi.presentation.ui.main.chat.ChatRoomEvent
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiCalculateParticipant
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
 import com.motax.modutaxi.presentation.ui.main.chat.model.UiCalculateParticipantItem
+import com.motax.modutaxi.presentation.util.extractMessageFromErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,6 +36,7 @@ sealed class CalculateConfirmEvent {
     data object CopyClipBoard : CalculateConfirmEvent()
     data object NavigateToCalculateComplete : CalculateConfirmEvent()
     data object NavigateBack: CalculateConfirmEvent()
+    data class ShowToastMessage(val msg: String): CalculateConfirmEvent()
 }
 
 @HiltViewModel
@@ -188,7 +191,16 @@ class CalculateConfirmViewModel @Inject constructor(
                 uiState.value.nonCalculateMembers.map { it.memberId }
             ).onSuccess {
                 _events.emit(CalculateConfirmEvent.NavigateToCalculateComplete)
-            }.onFailure { }
+            }.onFailure {
+                    th ->
+                when(th){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                        _events.emit(CalculateConfirmEvent.ShowToastMessage(message))
+                        getParticipants()
+                    }
+                }
+            }
         }
     }
 

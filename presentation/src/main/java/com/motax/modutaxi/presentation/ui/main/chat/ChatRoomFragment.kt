@@ -171,7 +171,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
     }
 
     private fun NavController.toEditRoom() {
-        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToEditRoomFragment(roomId)
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToCreatePartyFragment(roomId)
         navigate(action)
     }
 

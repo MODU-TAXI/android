@@ -139,7 +139,7 @@ fun bindBtnRoomStatus(btn: AppCompatButton, type: String, isManager:Boolean) {
             if(isManager){
                 btn.text = "정산현황"
             } else {
-                btn.text = "돈보내기"
+                btn.text = "정산하기"
             }
         }
 

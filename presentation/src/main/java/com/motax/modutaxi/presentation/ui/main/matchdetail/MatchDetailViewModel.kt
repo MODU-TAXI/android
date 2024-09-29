@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
+import com.motax.modutaxi.presentation.ui.intro.signup.phoneauth.PhoneAuthEvent
 import com.motax.modutaxi.presentation.ui.main.chat.ChatRoomEvent
 import com.motax.modutaxi.presentation.ui.main.matchdetail.mapper.toUiMatchDetailData
 import com.motax.modutaxi.presentation.ui.main.matchdetail.mapper.toUiParticipantItem
@@ -11,6 +12,7 @@ import com.motax.modutaxi.presentation.ui.main.matchdetail.mapper.toUiWaitingMem
 import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiMatchDetailData
 import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiParticipantItem
 import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiWaitingMemberItem
+import com.motax.modutaxi.presentation.util.extractMessageFromErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -99,6 +101,13 @@ class MatchDetailViewModel @Inject constructor(
                 getParticipants(roomId)
                 getWaitingMembers(roomId)
             }.onFailure {
+                when(it){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        _event.emit(MatchDetailEvent.ShowToastMessage(message))
+                        _event.emit(MatchDetailEvent.NavigateToBack)
+                    }
+                }
             }
         }
     }
@@ -133,7 +142,15 @@ class MatchDetailViewModel @Inject constructor(
                     }
                 }
 
-            }.onFailure { }
+            }.onFailure {
+                when(it){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        _event.emit(MatchDetailEvent.ShowToastMessage(message))
+
+                    }
+                }
+            }
         }
     }
 
@@ -159,7 +176,12 @@ class MatchDetailViewModel @Inject constructor(
                     }
                 }
             }.onFailure {
-
+                when(it){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        _event.emit(MatchDetailEvent.ShowToastMessage(message))
+                    }
+                }
             }
         }
     }
@@ -178,6 +200,19 @@ class MatchDetailViewModel @Inject constructor(
                 }
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
+                when(it){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        _event.emit(MatchDetailEvent.ShowToastMessage(message))
+                        when(it.code()){
+                            400 -> {
+                                getParticipants(roomId)
+                                getWaitingMembers(roomId)
+                            }
+                            409 -> _event.emit(MatchDetailEvent.NavigateToBack)
+                        }
+                    }
+                }
                 _event.emit(MatchDetailEvent.DismissLoading)
             }
         }
@@ -195,6 +230,14 @@ class MatchDetailViewModel @Inject constructor(
                 }
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
+                when(it){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        _event.emit(MatchDetailEvent.ShowToastMessage(message))
+                        getParticipants(roomId)
+                        getWaitingMembers(roomId)
+                    }
+                }
                 _event.emit(MatchDetailEvent.DismissLoading)
             }
         }
@@ -208,6 +251,14 @@ class MatchDetailViewModel @Inject constructor(
                 getParticipants(roomId)
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
+                when(it){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        _event.emit(MatchDetailEvent.ShowToastMessage(message))
+
+                        getWaitingMembers(roomId)
+                    }
+                }
                 _event.emit(MatchDetailEvent.DismissLoading)
             }
         }
@@ -221,6 +272,12 @@ class MatchDetailViewModel @Inject constructor(
                 _event.emit(MatchDetailEvent.NavigateToBack)
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
+                when(it){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        _event.emit(MatchDetailEvent.ShowToastMessage(message))
+                    }
+                }
                 _event.emit(MatchDetailEvent.DismissLoading)
             }
         }
@@ -234,6 +291,12 @@ class MatchDetailViewModel @Inject constructor(
                 _event.emit(MatchDetailEvent.NavigateToBack)
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
+                when(it){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        _event.emit(MatchDetailEvent.ShowToastMessage(message))
+                    }
+                }
                 _event.emit(MatchDetailEvent.DismissLoading)
             }
         }

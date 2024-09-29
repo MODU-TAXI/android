@@ -37,7 +37,7 @@ sealed class MyPageEvent {
     data object NavigateToInquiry : MyPageEvent()
     data object NavigateToUsageHistory : MyPageEvent()
     data object NavigateToWithdrawal : MyPageEvent()
-    data object NavigateToSplash : MyPageEvent()
+    data object NavigateToIntro : MyPageEvent()
     data object NavigateToAccount : MyPageEvent()
 }
 
@@ -140,7 +140,8 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             mainRepository.logout().onSuccess {
                 dataStoreManager.clearUserData()
-                _event.emit(MyPageEvent.NavigateToSplash)
+                _event.emit(MyPageEvent.ShowToastMessage("로그아웃 성공"))
+                _event.emit(MyPageEvent.NavigateToIntro)
             }.onFailure { }
         }
     }

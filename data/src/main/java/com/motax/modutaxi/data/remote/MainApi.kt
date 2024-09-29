@@ -180,7 +180,7 @@ interface MainApi {
     @DELETE("api/members")
     suspend fun deleteMember()
 
-    @POST("api/logout")
+    @POST("api/members/logout")
     suspend fun logout()
 
     @POST("api/reports")

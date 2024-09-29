@@ -1,10 +1,12 @@
 package com.motax.modutaxi.presentation.ui.main.createparty
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.motax.modutaxi.presentation.R
@@ -12,6 +14,7 @@ import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentCreatePartyBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.toMatchDetail
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,13 +23,21 @@ class CreatePartyFragment :
 
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: CreatePartyViewModel by activityViewModels()
+    private val args: CreatePartyFragmentArgs by navArgs()
+    private val roomId by lazy { args.roomId }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d(TAG,roomId.toString())
+
         binding.vm = viewModel
         parentViewModel.setNotFullScreenMode()
         viewModel.getMemberSource()
+        if(roomId != -1L){
+            viewModel.getRoomInfo(roomId)
+            binding.btnCreatePot.text = "매칭팟 수정하기"
+        }
         initEventObserve()
     }
 
@@ -66,8 +77,9 @@ class CreatePartyFragment :
         picker.show(parentFragmentManager, "tag")
     }
 
-    private fun NavController.toMatchDetails(id: Long){
-        val action = CreatePartyFragmentDirections.actionCreatePartyFragmentToMatchDetailFragment(id)
+    private fun NavController.toMatchDetails(id: Long) {
+        val action =
+            CreatePartyFragmentDirections.actionCreatePartyFragmentToMatchDetailFragment(id)
         navigate(action)
     }
 

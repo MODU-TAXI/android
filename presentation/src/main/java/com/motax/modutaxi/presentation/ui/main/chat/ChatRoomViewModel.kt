@@ -9,9 +9,11 @@ import com.motax.modutaxi.presentation.chatmanager.model.ChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessageList
 import com.motax.modutaxi.presentation.ui.main.chat.model.UiChatMessage
+import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyEvent
 import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.util.Constants.TAG
+import com.motax.modutaxi.presentation.util.extractMessageFromErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -196,7 +198,13 @@ class ChatRoomViewModel @Inject constructor(
                             )
                         }
                     }.onFailure {
-
+                            th ->
+                        when(th){
+                            is retrofit2.HttpException -> {
+                                val message = extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                                _event.emit(ChatRoomEvent.ShowToastMessage(message))
+                            }
+                        }
                     }
                 }
             }
@@ -258,6 +266,13 @@ class ChatRoomViewModel @Inject constructor(
                 _event.emit(ChatRoomEvent.NavigateToHome)
                 _event.emit(ChatRoomEvent.DismissLoading)
             }.onFailure {
+                    th ->
+                when(th){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                        _event.emit(ChatRoomEvent.ShowToastMessage(message))
+                    }
+                }
                 _event.emit(ChatRoomEvent.DismissLoading)
             }
         }
@@ -271,8 +286,21 @@ class ChatRoomViewModel @Inject constructor(
                 _event.emit(ChatRoomEvent.NavigateToHome)
                 _event.emit(ChatRoomEvent.DismissLoading)
             }.onFailure {
+                    th ->
+                when(th){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                        _event.emit(ChatRoomEvent.ShowToastMessage(message))
+                    }
+                }
                 _event.emit(ChatRoomEvent.DismissLoading)
             }
+        }
+    }
+
+    fun navigateToBack(){
+        viewModelScope.launch {
+            _event.emit(ChatRoomEvent.NavigateToBack)
         }
     }
 }

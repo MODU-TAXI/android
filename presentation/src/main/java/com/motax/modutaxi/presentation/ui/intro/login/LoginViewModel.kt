@@ -53,9 +53,13 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is BaseState.Error -> {
-                        Log.d("debugging",it.message)
-                        SignUpData.setSignUpKey(it.message)
-                        _event.emit(LoginEvent.NavigateToOnBoard)
+                        if(it.code == "400"){
+                            SignUpData.setSignUpKey(it.message)
+                            _event.emit(LoginEvent.NavigateToOnBoard)
+                        } else {
+                            _event.emit(LoginEvent.ShowToastMessage(it.message))
+                        }
+
                     }
                 }
             }

@@ -85,6 +85,18 @@ interface MainRepository {
         wishHeadcount: Int
     ): Result<TaxiPotDetailData>
 
+
+    suspend fun patchRoom(
+        id: Long,
+        spotId: Long,
+        roomTagBitMask: List<String>,
+        departureLongitude: Double,
+        departureLatitude: Double,
+        departureTime: String,
+        departureName: String,
+        wishHeadcount: Int
+    ): Result<Unit>
+
     suspend fun getTaxiPotDetail(
         roomId: Long
     ): Result<TaxiPotDetailData>
@@ -199,16 +211,6 @@ interface MainRepository {
         id: Long
     ): Result<Unit>
 
-    suspend fun patchRoom(
-        id: Long,
-        spotId: Long,
-        roomTagBitMask: List<String>,
-        departureLongitude: Double,
-        departureLatitude: Double,
-        departureTime: String,
-        departureName: String,
-        wishHeadcount: Int
-    ): Result<Unit>
 
     suspend fun exitRoom(): Result<Unit>
 

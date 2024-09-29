@@ -37,6 +37,13 @@ internal fun Int.formatNumberWithCommas(): String {
     return String.format("%,d", this)
 }
 
+fun extractTimeFromString(timeString: String): Pair<Int, Int> {
+    val parts = timeString.split(":")
+    val hours = parts[0].toInt()
+    val minutes = parts[1].toInt()
+    return Pair(hours, minutes)
+}
+
 internal fun Uri.toMultiPart(context: Context): MultipartBody.Part {
     val file = File(getRealPathFromUri(this, context) ?: "")
     val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())

@@ -4,10 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
+import com.motax.modutaxi.presentation.ui.extractTimeFromString
 import com.motax.modutaxi.presentation.ui.getCurHour
 import com.motax.modutaxi.presentation.ui.getCurMinute
 import com.motax.modutaxi.presentation.ui.getTodayDate
 import com.motax.modutaxi.presentation.ui.getUTCTime
+import com.motax.modutaxi.presentation.ui.main.matchdetail.MatchDetailEvent
+import com.motax.modutaxi.presentation.util.extractMessageFromErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,9 +44,9 @@ sealed class CreatePartyEvent {
     data object NavigateToArrivalSearch : CreatePartyEvent()
     data class NavigateToMatchDetail(val id: Long) : CreatePartyEvent()
     data class ShowToast(val msg: String) : CreatePartyEvent()
-    data object NavigateBack: CreatePartyEvent()
-    data object ShowLoading: CreatePartyEvent()
-    data object DismissLoading: CreatePartyEvent()
+    data object NavigateBack : CreatePartyEvent()
+    data object ShowLoading : CreatePartyEvent()
+    data object DismissLoading : CreatePartyEvent()
 }
 
 @HiltViewModel
@@ -65,6 +68,7 @@ class CreatePartyViewModel @Inject constructor(
     val departureTime = MutableStateFlow("")
     val departureName = MutableStateFlow("")
     val wishHeadCount = MutableStateFlow(WishHeadCount.EMPTY)
+    private var roomId: Long = -1L
 
 
     val isDataReady = combine(
@@ -78,16 +82,67 @@ class CreatePartyViewModel @Inject constructor(
         viewModelScope, SharingStarted.WhileSubscribed(), false
     )
 
-    fun getMemberSource(){
+
+    // Edit 모드일때
+    fun getRoomInfo(id: Long) {
+        roomId = id
         viewModelScope.launch {
-            authRepository.getMemberId()?.let{
+            repository.getTaxiPotDetail(id).onSuccess {
+
+                val hour = extractTimeFromString(it.departureTime).first
+                val minute = extractTimeFromString(it.departureTime).second
+                _uiState.update { state ->
+                    state.copy(
+                        departureName = it.departureName,
+                        arrivalName = it.arrivalName,
+                        departureTime = if (hour >= 12) "오후 " + "${hour % 12}시 ${minute}분" else "오전 " + "${hour % 12}시 ${minute}분",
+                        departureHour = hour,
+                        departureMinute = minute,
+                        studentCertificationRoomTag = it.roomTagBitMaskList.contains("STUDENT_CERTIFICATION"),
+                        quiteTag = it.roomTagBitMaskList.contains("QUIET"),
+                        todayDate = getTodayDate(),
+                        isCertified = false
+                    )
+                }
+
+                departureLongitude.value = it.departureLongitude
+                departureLatitude.value = it.departureLatitude
+                spotId.value = it.spotId
+                departureName.value = it.departureName
+                departureTime.value =
+                    getUTCTime(uiState.value.departureHour, uiState.value.departureMinute)
+
+                wishHeadCount.value = when (it.wishHeadcount) {
+                    2 -> WishHeadCount.ONE
+                    3 -> WishHeadCount.TWO
+                    4 -> WishHeadCount.THREE
+                    else -> WishHeadCount.EMPTY
+                }
+
+            }.onFailure {
+
+            }
+        }
+    }
+
+    fun getMemberSource() {
+        viewModelScope.launch {
+            authRepository.getMemberId()?.let {
                 repository.getMemberProfile(it).onSuccess {
                     _uiState.update { state ->
                         state.copy(
                             isCertified = it.certified
                         )
                     }
-                }.onFailure {  }
+                }.onFailure { th ->
+                    when (th) {
+                        is retrofit2.HttpException -> {
+                            val message =
+                                extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                            _event.emit(CreatePartyEvent.ShowToast(message))
+                        }
+                    }
+                }
             }
 
 
@@ -101,22 +156,56 @@ class CreatePartyViewModel @Inject constructor(
             if (uiState.value.quiteTag) roomTag.add(RoomTag.QUIET.text)
             _event.emit(CreatePartyEvent.ShowLoading)
 
-            repository.createTaxiPot(
-                spotId.value,
-                roomTag,
-                departureLongitude.value,
-                departureLatitude.value,
-                departureTime.value,
-                departureName.value,
-                wishHeadCount.value.count
-            ).onSuccess {
-                _uiState.value = CreatePartyUiState()
-                _event.emit(CreatePartyEvent.DismissLoading)
-                _event.emit(CreatePartyEvent.NavigateToMatchDetail(it.roomId))
-            }.onFailure {
-                _event.emit(CreatePartyEvent.DismissLoading)
-                _event.emit(CreatePartyEvent.ShowToast(it.message.toString()))
+            if (roomId == -1L) {
+                repository.createTaxiPot(
+                    spotId.value,
+                    roomTag,
+                    departureLongitude.value,
+                    departureLatitude.value,
+                    departureTime.value,
+                    departureName.value,
+                    wishHeadCount.value.count
+                ).onSuccess {
+                    _uiState.value = CreatePartyUiState()
+                    _event.emit(CreatePartyEvent.DismissLoading)
+                    _event.emit(CreatePartyEvent.NavigateToMatchDetail(it.roomId))
+                }.onFailure { th ->
+                    when (th) {
+                        is retrofit2.HttpException -> {
+                            val message =
+                                extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                            _event.emit(CreatePartyEvent.ShowToast(message))
+                        }
+                    }
+                    _event.emit(CreatePartyEvent.DismissLoading)
+                }
+            } else {
+                repository.patchRoom(
+                    roomId,
+                    spotId.value,
+                    roomTag,
+                    departureLongitude.value,
+                    departureLatitude.value,
+                    departureTime.value,
+                    departureName.value,
+                    wishHeadCount.value.count
+                ).onSuccess {
+                    _uiState.value = CreatePartyUiState()
+                    _event.emit(CreatePartyEvent.ShowToast("방 정보 수정 성공"))
+                    _event.emit(CreatePartyEvent.DismissLoading)
+                    _event.emit(CreatePartyEvent.NavigateBack)
+                }.onFailure { th ->
+                    when (th) {
+                        is retrofit2.HttpException -> {
+                            val message =
+                                extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                            _event.emit(CreatePartyEvent.ShowToast(message))
+                        }
+                    }
+                    _event.emit(CreatePartyEvent.DismissLoading)
+                }
             }
+
 
         }
     }
@@ -185,7 +274,7 @@ class CreatePartyViewModel @Inject constructor(
         }
     }
 
-    fun navigateToBack(){
+    fun navigateToBack() {
         viewModelScope.launch {
             _event.emit(CreatePartyEvent.NavigateBack)
         }
@@ -201,7 +290,7 @@ class CreatePartyViewModel @Inject constructor(
                 state.copy(studentCertificationRoomTag = !uiState.value.studentCertificationRoomTag)
             }
 
-            RoomTag.QUIET-> _uiState.update { state ->
+            RoomTag.QUIET -> _uiState.update { state ->
                 state.copy(quiteTag = !uiState.value.quiteTag)
             }
 
@@ -221,10 +310,10 @@ enum class WishHeadCount(val count: Int) {
 }
 
 enum class RoomTag(val text: String, val uiText: String) {
-    EMPTY("",""),
-    ONLY_WOMAN("ONLY_WOMAN","여자만"),
-    ONLY_MAN("ONLY_MAN","남자만"),
-    MANNER("MANNER","매너탑승"),
-    QUIET("QUIET","조용히"),
-    STUDENT_CERTIFICATION("STUDENT_CERTIFICATION","학생인증")
+    EMPTY("", ""),
+    ONLY_WOMAN("ONLY_WOMAN", "여자만"),
+    ONLY_MAN("ONLY_MAN", "남자만"),
+    MANNER("MANNER", "매너탑승"),
+    QUIET("QUIET", "조용히"),
+    STUDENT_CERTIFICATION("STUDENT_CERTIFICATION", "학생인증")
 }

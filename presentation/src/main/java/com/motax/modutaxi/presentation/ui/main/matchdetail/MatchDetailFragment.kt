@@ -221,7 +221,7 @@ class MatchDetailFragment :
     }
 
     private fun editRoom() {
-
+        findNavController().toEditRoom(roomId)
     }
 
     private fun deleteRoom() {
@@ -230,6 +230,11 @@ class MatchDetailFragment :
 
     private fun NavController.toChatRoom(id: Long) {
         val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToChatRoomFragment(id)
+        navigate(action)
+    }
+
+    private fun NavController.toEditRoom(id: Long){
+        val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToCreatePartyFragment(id)
         navigate(action)
     }
 }

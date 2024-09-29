@@ -15,6 +15,7 @@ import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
 import com.motax.modutaxi.presentation.util.Constants.HTTP_400
 import com.motax.modutaxi.presentation.util.Constants.HTTP_500
 import com.motax.modutaxi.presentation.util.Constants.TAG
+import com.motax.modutaxi.presentation.util.extractMessageFromErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -86,8 +87,13 @@ class OnboardingPhoneAuthViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
-
-                
+                when(it){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        _event.emit(PhoneAuthEvent.ShowToastMessage(message))
+                        _event.emit(PhoneAuthEvent.GoBackToInit)
+                    }
+                }
             }
 
         }
