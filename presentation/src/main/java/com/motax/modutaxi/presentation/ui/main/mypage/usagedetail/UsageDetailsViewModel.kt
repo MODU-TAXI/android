@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
+import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
 import com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickEvent
 import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UiUsageParticipantItem
 import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UiUsageDetailData
@@ -42,10 +43,12 @@ class UsageDetailsViewModel @Inject constructor(
 
     fun loadUsageDetail(id: Long) {
         viewModelScope.launch {
+
             mainRepository.getUsageDetail(id)
                 .onSuccess { response ->
                     val participantsList = response.paymentMemberListData.participantList
                     val owner = participantsList[0]
+
                     val participants =
                         if (participantsList.size > 1) {
                             participantsList.drop(1).map {
@@ -54,9 +57,8 @@ class UsageDetailsViewModel @Inject constructor(
                                     nickname = it.nickName,
                                     name = it.name,
                                     imageUrl = it.imageUrl ?: "",
-                                    status = it.status,
+                                    status = if (it.status == "COMPLETE") "완료" else "미완료",
                                     me = it.me,
-                                    portionCharge = it.portionCharge
                                 )
                             }
                         } else {
@@ -69,8 +71,8 @@ class UsageDetailsViewModel @Inject constructor(
                         departureTime = response.departureTime,
                         departureName = response.departureName.shortenAddress(),
                         arrivalName = response.arrivalName,
-                        totalCharge = response.totalCharge,
-                        portionCharge = response.portionCharge,
+                        totalCharge = response.totalCharge.formatNumberWithCommas(),
+                        portionCharge = response.portionCharge.formatNumberWithCommas(),
                     )
 
                     val uiOwner = owner.let { ownerParticipant ->
@@ -81,7 +83,6 @@ class UsageDetailsViewModel @Inject constructor(
                             imageUrl = ownerParticipant.imageUrl ?: "",
                             status = ownerParticipant.status,
                             me = ownerParticipant.me,
-                            portionCharge = response.portionCharge
                         )
                     }
 

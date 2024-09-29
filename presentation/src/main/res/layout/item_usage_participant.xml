@@ -52,16 +52,16 @@
             app:layout_constraintTop_toTopOf="@id/tv_room_manager_nickname" />
 
         <TextView
-            android:id="@+id/tv_portion_charge"
+            android:id="@+id/tv_status"
             style="@style/TextLargeRegular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/mx_gray500"
-            android:text='@{item.portionCharge + "원" }'
+            android:text="@{item.status}"
+            android:textColor='@{item.status == "완료" ? @color/mx_sub500 : @color/mx_gray500}'
             app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_room_manager"
-            tools:text="3,600원" />
+            tools:text="완료" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

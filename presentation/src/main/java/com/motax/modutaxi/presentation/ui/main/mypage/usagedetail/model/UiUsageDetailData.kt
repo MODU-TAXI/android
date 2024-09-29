@@ -6,6 +6,6 @@ data class UiUsageDetailData(
     val departureTime: String = "",
     val departureName: String = "",
     val arrivalName: String = "",
-    val totalCharge: Int = 0,
-    val portionCharge: Int = 0,
+    val totalCharge: String = "",
+    val portionCharge: String = "",
 )

@@ -405,7 +405,6 @@ fun UsageParticipantResponse.toDomain(): UsageParticipantData {
         imageUrl = imageUrl ?: "",
         status = status,
         me = me,
-        portionCharge = portionCharge
     )
 }
 

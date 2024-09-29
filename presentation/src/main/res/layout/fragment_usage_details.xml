@@ -161,12 +161,12 @@
                 style="@style/TextLargeRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/mx_gray500"
-                android:text="@{String.valueOf(vm.uiState.owner.portionCharge)}"
+                android:textColor="@color/mx_sub500"
+                android:text="완료"
                 app:layout_constraintBottom_toBottomOf="@id/iv_room_manager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/iv_room_manager"
-                tools:text="8,900" />
+                tools:text="완료" />
 
             <TextView
                 android:id="@+id/tv_participant_label"
@@ -215,16 +215,16 @@
 
             <TextView
                 android:id="@+id/total_price"
-                style="@style/TextLargeMedium"
+                style="@style/TextRegularMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:textColor="@color/mx_gray900"
-                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.totalCharge)}"
+                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.totalCharge) + '원'}"
                 app:layout_constraintBottom_toBottomOf="@id/total_price_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/total_price_label"
-                tools:text="14,450" />
+                tools:text="14,450원" />
 
             <TextView
                 android:id="@+id/matching_price_label"
@@ -239,16 +239,16 @@
 
             <TextView
                 android:id="@+id/matching_price"
-                style="@style/TextLargeMedium"
+                style="@style/TextRegularMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.portionCharge)}"
+                android:text="@{String.valueOf(vm.uiState.usageDetailUiData.portionCharge) + '원'}"
                 android:textColor="@color/mx_gray900"
                 app:layout_constraintBottom_toBottomOf="@id/matching_price_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/matching_price_label"
-                tools:text="3,613" />
+                tools:text="3,613원" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -269,6 +269,7 @@
             android:id="@+id/btn_participate"
             style="@style/TextLargeSemibold"
             android:layout_width="0dp"
+            android:textColor="@color/mx_sub500"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:background="@drawable/rect_nofill_sub500stroke_61radius"
