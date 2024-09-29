@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
+import com.motax.modutaxi.presentation.ui.main.chat.ChatRoomEvent
 import com.motax.modutaxi.presentation.ui.main.matchdetail.mapper.toUiMatchDetailData
 import com.motax.modutaxi.presentation.ui.main.matchdetail.mapper.toUiParticipantItem
 import com.motax.modutaxi.presentation.ui.main.matchdetail.mapper.toUiWaitingMemberItem
@@ -29,9 +30,13 @@ data class MatchDetailUiState(
     val roomState: RoomState = RoomState.EMPTY
 )
 
-sealed class MatchDetailEvent{
-    data object ShowLoading: MatchDetailEvent()
-    data object DismissLoading: MatchDetailEvent()
+sealed class MatchDetailEvent {
+    data object ShowLoading : MatchDetailEvent()
+    data object DismissLoading : MatchDetailEvent()
+    data object ShowPopUp : MatchDetailEvent()
+    data object ShowParticipantPopUp : MatchDetailEvent()
+    data class ShowToastMessage(val msg: String) : MatchDetailEvent()
+    data object NavigateToBack : MatchDetailEvent()
 }
 
 enum class RoomState() {
@@ -55,16 +60,27 @@ class MatchDetailViewModel @Inject constructor(
     val event: SharedFlow<MatchDetailEvent> = _event.asSharedFlow()
 
     private var roomId: Long = 0
-    private var memberId: Long = 0
+    private var myId: Long = 0
 
     fun getTaxiPotData(id: Long) {
         roomId = id
         viewModelScope.launch {
-            authRepository.getMemberId()?.let{
-                 memberId = it
+            authRepository.getMemberId()?.let {
+                myId = it
             }
         }
         getTaxiPotDetail(roomId)
+    }
+
+    fun showPopUp() {
+        viewModelScope.launch {
+            if (myId == uiState.value.matchDetailUiData.managerId) {
+                _event.emit(MatchDetailEvent.ShowPopUp)
+            } else {
+                _event.emit(MatchDetailEvent.ShowParticipantPopUp)
+            }
+
+        }
     }
 
     private fun getTaxiPotDetail(roomId: Long) {
@@ -148,14 +164,14 @@ class MatchDetailViewModel @Inject constructor(
         }
     }
 
-    fun cancelWaitingMember(roomId: Long){
+    fun cancelWaitingMember(roomId: Long) {
         viewModelScope.launch {
             _event.emit(MatchDetailEvent.ShowLoading)
             repository.cancelWaitingMembers(roomId).onSuccess {
                 _uiState.update { state ->
                     state.copy(
                         waitingMembers = uiState.value.waitingMembers.filter {
-                            it.memberId != memberId
+                            it.memberId != myId
                         },
                         roomState = RoomState.NOTHING
                     )
@@ -190,6 +206,32 @@ class MatchDetailViewModel @Inject constructor(
             repository.approveEnterTaxiPot(roomId, memberId).onSuccess {
                 getWaitingMembers(roomId)
                 getParticipants(roomId)
+                _event.emit(MatchDetailEvent.DismissLoading)
+            }.onFailure {
+                _event.emit(MatchDetailEvent.DismissLoading)
+            }
+        }
+    }
+
+    fun deleteRoom(roomId: Long) {
+        viewModelScope.launch {
+            _event.emit(MatchDetailEvent.ShowLoading)
+            repository.deleteRoom(roomId).onSuccess {
+                _event.emit(MatchDetailEvent.ShowToastMessage("방이 삭제 되었습니다"))
+                _event.emit(MatchDetailEvent.NavigateToBack)
+                _event.emit(MatchDetailEvent.DismissLoading)
+            }.onFailure {
+                _event.emit(MatchDetailEvent.DismissLoading)
+            }
+        }
+    }
+
+    fun exitRoom() {
+        viewModelScope.launch {
+            _event.emit(MatchDetailEvent.ShowLoading)
+            repository.exitRoom().onSuccess {
+                _event.emit(MatchDetailEvent.ShowToastMessage("방을 나갔습니다"))
+                _event.emit(MatchDetailEvent.NavigateToBack)
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
                 _event.emit(MatchDetailEvent.DismissLoading)

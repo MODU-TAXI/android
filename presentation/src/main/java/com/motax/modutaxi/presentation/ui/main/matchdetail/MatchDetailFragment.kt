@@ -13,6 +13,8 @@ import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
+import com.motax.modutaxi.presentation.customview.EditDeletePopUpMenu
+import com.motax.modutaxi.presentation.customview.ExitPopUpMenu
 import com.motax.modutaxi.presentation.databinding.FragmentMatchDetailBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.ParticipantAdapter
@@ -37,6 +39,7 @@ class MatchDetailFragment :
     private val args: MatchDetailFragmentArgs by navArgs()
     private val pathList = mutableListOf<PathOverlay>()
     private val roomId by lazy { args.id }
+    private val popupLocation = IntArray(2)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -129,6 +132,10 @@ class MatchDetailFragment :
                 when(it){
                     is MatchDetailEvent.ShowLoading -> showLoading(requireContext())
                     is MatchDetailEvent.DismissLoading -> dismissLoading()
+                    is MatchDetailEvent.ShowPopUp -> showPopup()
+                    is MatchDetailEvent.ShowParticipantPopUp -> showParticipantPopup()
+                    is MatchDetailEvent.ShowToastMessage -> showToastMessage(it.msg)
+                    is MatchDetailEvent.NavigateToBack -> findNavController().navigateUp()
                 }
             }
         }
@@ -187,6 +194,39 @@ class MatchDetailFragment :
         naverMap.moveCamera(cameraUpdate)
     }
 
+    private fun showPopup() {
+        val moreBtn = binding.btnMore
+        moreBtn.getLocationOnScreen(popupLocation)
+        val left = popupLocation[0] + moreBtn.left.toFloat()
+        val top = popupLocation[1] + moreBtn.bottom.toFloat()
+        EditDeletePopUpMenu(requireContext(), ::editRoom, ::deleteRoom).show(
+            left.toInt(),
+            top.toInt()
+        )
+    }
+
+    private fun showParticipantPopup() {
+        val moreBtn = binding.btnMore
+        moreBtn.getLocationOnScreen(popupLocation)
+        val left = popupLocation[0] + moreBtn.left.toFloat()
+        val top = popupLocation[1] + moreBtn.bottom.toFloat()
+        ExitPopUpMenu(requireContext(), ::exitRoom).show(
+            left.toInt(),
+            top.toInt()
+        )
+    }
+
+    private fun exitRoom() {
+        viewModel.exitRoom()
+    }
+
+    private fun editRoom() {
+
+    }
+
+    private fun deleteRoom() {
+        viewModel.deleteRoom(roomId)
+    }
 
     private fun NavController.toChatRoom(id: Long) {
         val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToChatRoomFragment(id)

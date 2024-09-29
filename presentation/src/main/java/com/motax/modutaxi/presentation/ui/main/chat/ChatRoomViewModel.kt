@@ -265,7 +265,7 @@ class ChatRoomViewModel @Inject constructor(
 
     fun exitRoom(){
         viewModelScope.launch {
-            _event.emit(ChatRoomEvent.NavigateToHome)
+            _event.emit(ChatRoomEvent.ShowLoading)
             repository.exitRoom().onSuccess {
                 _event.emit(ChatRoomEvent.ShowToastMessage("방을 나갔습니다"))
                 _event.emit(ChatRoomEvent.NavigateToHome)
