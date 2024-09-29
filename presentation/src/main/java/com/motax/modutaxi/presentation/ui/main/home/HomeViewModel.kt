@@ -77,6 +77,8 @@ class HomeViewModel @Inject constructor(
                 repository.getMemberProfile(it).onSuccess {
                     _uiState.update { state ->
                         state.copy(
+                            nickname = it.nickname,
+                            matchingCount = it.matchingCount.toString() + "회",
                             isCertified = it.certified
                         )
                     }

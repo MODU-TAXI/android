@@ -128,7 +128,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 // 로그인 성공 부분
                 else if (token != null) {
                     Log.d(TAG, "앱 로그인 성공 ${token.accessToken}")
-                    viewModel.login("KAKAO",token.accessToken)
+                    viewModel.login(token.accessToken, "KAKAO")
                 }
             }
         } else {

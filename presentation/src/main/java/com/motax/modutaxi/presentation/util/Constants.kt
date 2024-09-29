@@ -18,4 +18,7 @@ object Constants {
     const val ONE_POPUP_HEIGHT_DP = 45
     const val THREE_POPUP_HEIGHT_DP = 135
     const val FILTER_POPUP_WIDTH_DP = 90
+
+    const val HTTP_400 = "HTTP 400"
+    const val HTTP_500 = "HTTP 500"
 }
