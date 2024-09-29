@@ -97,7 +97,7 @@ class UsageHistoryViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             savedMoney = response.accumulatePortionCharge.formatNumberWithCommas(),
-                            beforeProgress = calculateProgress(response.totalCharge, response.accumulatePortionCharge),
+                            beforeProgress = calculateProgress(response.totalCharge, response.totalCharge),
                             beforeMoney = response.totalCharge.formatNumberWithCommas(),
                             afterProgress = calculateProgress(response.totalCharge, response.accumulatePortionCharge),
                             afterMoney = response.accumulatePortionCharge.formatNumberWithCommas(),
