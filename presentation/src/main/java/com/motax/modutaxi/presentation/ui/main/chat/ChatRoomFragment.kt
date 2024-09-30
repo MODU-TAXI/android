@@ -17,6 +17,7 @@ import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageAdapter
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageInterface
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
+import com.motax.modutaxi.presentation.ui.toProfileBottomSheet
 import com.motax.modutaxi.presentation.util.ChatState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -141,13 +142,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
     }
 
     override fun showProfile(id: Long) {
-        findNavController().toProfile(id)
-    }
-
-    private fun NavController.toProfile(id: Long) {
-        val action =
-            ChatRoomFragmentDirections.actionChatRoomFragmentToProfileBottomSheetFragment(id)
-        navigate(action)
+        findNavController().toProfileBottomSheet(id)
     }
 
     private fun NavController.toCalculateSplash() {

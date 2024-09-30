@@ -36,8 +36,16 @@ class ParticipantViewHolder(private val binding: ItemParticipantBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: UiParticipantItem) {
         binding.item = item
-        if(item.isEmpty){
-            binding.tvRoomManagerNickname.setTextColor(ContextCompat.getColor(binding.root.context, R.color.mx_gray500))
+        binding.root.setOnClickListener {
+            if (!item.thisIsMe) item.showProfile(item.memberId)
+        }
+        if (item.isEmpty) {
+            binding.tvRoomManagerNickname.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.mx_gray500
+                )
+            )
         }
     }
 }

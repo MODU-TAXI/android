@@ -1,13 +1,11 @@
 package com.motax.modutaxi.presentation.ui.main.mypage.usagedetail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
-import com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickEvent
-import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UiUsageParticipantItem
 import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UiUsageDetailData
+import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.model.UiUsageParticipantItem
 import com.motax.modutaxi.presentation.ui.shortenAddress
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,13 +20,16 @@ import javax.inject.Inject
 
 data class UsageDetailUiState(
     val usageDetailUiData: UiUsageDetailData = UiUsageDetailData(),
-    val owner: UiUsageParticipantItem? = null,
+    val owner: UiUsageParticipantItem = UiUsageParticipantItem(onClickListener = ::empty),
     val participants: List<UiUsageParticipantItem> = emptyList()
 )
 
 sealed class UsageDetailEvent {
     data object NavigateToMyPage : UsageDetailEvent()
+    data class NavigateToProfile(val id: Long): UsageDetailEvent()
 }
+
+fun empty(id: Long){}
 
 @HiltViewModel
 class UsageDetailsViewModel @Inject constructor(
@@ -59,6 +60,7 @@ class UsageDetailsViewModel @Inject constructor(
                                     imageUrl = it.imageUrl ?: "",
                                     status = if (it.status == "COMPLETE") "완료" else "미완료",
                                     me = it.me,
+                                    onClickListener = ::navigateToParticipantProfile
                                 )
                             }
                         } else {
@@ -83,6 +85,7 @@ class UsageDetailsViewModel @Inject constructor(
                             imageUrl = ownerParticipant.imageUrl ?: "",
                             status = ownerParticipant.status,
                             me = ownerParticipant.me,
+                            onClickListener = ::empty
                         )
                     }
 
@@ -101,6 +104,18 @@ class UsageDetailsViewModel @Inject constructor(
     fun navigateToMyPage() {
         viewModelScope.launch {
             _event.emit(UsageDetailEvent.NavigateToMyPage)
+        }
+    }
+
+    fun navigateToOwnerProfile(){
+        viewModelScope.launch {
+            _event.emit(UsageDetailEvent.NavigateToProfile(uiState.value.owner.id))
+        }
+    }
+
+    private fun navigateToParticipantProfile(id: Long){
+        viewModelScope.launch {
+            _event.emit(UsageDetailEvent.NavigateToProfile(id))
         }
     }
 }

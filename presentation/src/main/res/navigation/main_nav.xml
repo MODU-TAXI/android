@@ -239,9 +239,6 @@
             android:id="@+id/action_chatRoomFragment_to_imageEnlargeFragment"
             app:destination="@id/imageEnlargeFragment" />
         <action
-            android:id="@+id/action_chatRoomFragment_to_profileBottomSheetFragment"
-            app:destination="@id/profileBottomSheetFragment" />
-        <action
             android:id="@+id/action_chatRoomFragment_to_manageTaxiPotFragment"
             app:destination="@id/manageTaxiPotFragment" />
 
@@ -401,5 +398,9 @@
             app:argType="long" />
 
     </dialog>
+
+    <action
+        android:id="@+id/gloabl_action_to_profile_bottomsheet"
+        app:destination="@id/profileBottomSheetFragment"/>
 
 </navigation>

@@ -18,6 +18,7 @@ import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.ParticipantAdapter
 import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.WaitingMemberAdapter
 import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.WaitingMemberParticipantAdapter
+import com.motax.modutaxi.presentation.ui.toProfileBottomSheet
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.CameraUpdate
@@ -124,16 +125,17 @@ class MatchDetailFragment :
         }
     }
 
-    private fun initEventObserve(){
+    private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect{
-                when(it){
+            viewModel.event.collect {
+                when (it) {
                     is MatchDetailEvent.ShowLoading -> showLoading(requireContext())
                     is MatchDetailEvent.DismissLoading -> dismissLoading()
                     is MatchDetailEvent.ShowPopUp -> showPopup()
                     is MatchDetailEvent.ShowParticipantPopUp -> showParticipantPopup()
                     is MatchDetailEvent.ShowToastMessage -> showToastMessage(it.msg)
                     is MatchDetailEvent.NavigateToBack -> findNavController().navigateUp()
+                    is MatchDetailEvent.ShowProfile -> findNavController().toProfileBottomSheet(it.id)
                 }
             }
         }
@@ -170,8 +172,8 @@ class MatchDetailFragment :
         path.coords = list
 
         path.width = 20
-        path.outlineColor = ContextCompat.getColor(requireContext(),R.color.mx_sub500)
-        path.color = ContextCompat.getColor(requireContext(),R.color.mx_sub500)
+        path.outlineColor = ContextCompat.getColor(requireContext(), R.color.mx_sub500)
+        path.color = ContextCompat.getColor(requireContext(), R.color.mx_sub500)
         path.map = naverMap
 
         moveCamera(
@@ -231,8 +233,9 @@ class MatchDetailFragment :
         navigate(action)
     }
 
-    private fun NavController.toEditRoom(id: Long){
-        val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToManageTaxiPotFragment(id)
+    private fun NavController.toEditRoom(id: Long) {
+        val action =
+            MatchDetailFragmentDirections.actionMatchDetailFragmentToManageTaxiPotFragment(id)
         navigate(action)
     }
 }

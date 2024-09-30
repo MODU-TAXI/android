@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 data class MatchDetailUiState(
     val matchDetailUiData: UiMatchDetailData = UiMatchDetailData(),
-    val owner: UiParticipantItem = UiParticipantItem(),
+    val owner: UiParticipantItem = UiParticipantItem(showProfile = ::empty),
     val participants: List<UiParticipantItem> = emptyList(),
     val waitingMembers: List<UiWaitingMemberItem> = emptyList(),
     val roomState: RoomState = RoomState.EMPTY
@@ -39,7 +39,10 @@ sealed class MatchDetailEvent {
     data object ShowParticipantPopUp : MatchDetailEvent()
     data class ShowToastMessage(val msg: String) : MatchDetailEvent()
     data object NavigateToBack : MatchDetailEvent()
+    data class ShowProfile(val id: Long) : MatchDetailEvent()
 }
+
+fun empty(id: Long) {}
 
 enum class RoomState() {
     OWNER,
@@ -101,9 +104,10 @@ class MatchDetailViewModel @Inject constructor(
                 getParticipants(roomId)
                 getWaitingMembers(roomId)
             }.onFailure {
-                when(it){
+                when (it) {
                     is retrofit2.HttpException -> {
-                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        val message =
+                            extractMessageFromErrorBody(it.response()?.errorBody()?.string())
                         _event.emit(MatchDetailEvent.ShowToastMessage(message))
                         _event.emit(MatchDetailEvent.NavigateToBack)
                     }
@@ -116,8 +120,8 @@ class MatchDetailViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getTaxiPotParticipants(roomId).onSuccess {
                 _uiState.update { state ->
-                    val members = it.inList.map { data -> data.toUiParticipantItem() }
-                    var owner = UiParticipantItem()
+                    val members = it.inList.map { data -> data.toUiParticipantItem(::showProfile) }
+                    var owner = UiParticipantItem(showProfile = ::empty)
                     members.forEach {
                         if (it.memberId == uiState.value.matchDetailUiData.managerId) {
                             owner = it
@@ -136,16 +140,21 @@ class MatchDetailViewModel @Inject constructor(
                     _uiState.update { state ->
                         state.copy(
                             participants = listOf(
-                                UiParticipantItem(nickname = "현재 참여 멤버가 없어요", isEmpty = true)
+                                UiParticipantItem(
+                                    nickname = "현재 참여 멤버가 없어요",
+                                    isEmpty = true,
+                                    showProfile = ::empty
+                                )
                             )
                         )
                     }
                 }
 
             }.onFailure {
-                when(it){
+                when (it) {
                     is retrofit2.HttpException -> {
-                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        val message =
+                            extractMessageFromErrorBody(it.response()?.errorBody()?.string())
                         _event.emit(MatchDetailEvent.ShowToastMessage(message))
 
                     }
@@ -159,7 +168,12 @@ class MatchDetailViewModel @Inject constructor(
             repository.getTaxiPotWaitingMembers(roomId).onSuccess {
                 _uiState.update { state ->
                     state.copy(
-                        waitingMembers = it.waitingList.map { data -> data.toUiWaitingMemberItem(::approveEnterTaxiPot) }
+                        waitingMembers = it.waitingList.map { data ->
+                            data.toUiWaitingMemberItem(
+                                ::approveEnterTaxiPot,
+                                ::showProfile
+                            )
+                        }
                     )
                 }
 
@@ -169,16 +183,19 @@ class MatchDetailViewModel @Inject constructor(
                             waitingMembers = listOf(
                                 UiWaitingMemberItem(
                                     nickname = "현재 대기 멤버가 없어요",
-                                    isEmpty = true
-                                ) {}
+                                    isEmpty = true,
+                                    acceptParticipant = ::empty,
+                                    showProfile = ::empty
+                                )
                             )
                         )
                     }
                 }
             }.onFailure {
-                when(it){
+                when (it) {
                     is retrofit2.HttpException -> {
-                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        val message =
+                            extractMessageFromErrorBody(it.response()?.errorBody()?.string())
                         _event.emit(MatchDetailEvent.ShowToastMessage(message))
                     }
                 }
@@ -200,15 +217,17 @@ class MatchDetailViewModel @Inject constructor(
                 }
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
-                when(it){
+                when (it) {
                     is retrofit2.HttpException -> {
-                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        val message =
+                            extractMessageFromErrorBody(it.response()?.errorBody()?.string())
                         _event.emit(MatchDetailEvent.ShowToastMessage(message))
-                        when(it.code()){
+                        when (it.code()) {
                             400 -> {
                                 getParticipants(roomId)
                                 getWaitingMembers(roomId)
                             }
+
                             409 -> _event.emit(MatchDetailEvent.NavigateToBack)
                         }
                     }
@@ -230,9 +249,10 @@ class MatchDetailViewModel @Inject constructor(
                 }
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
-                when(it){
+                when (it) {
                     is retrofit2.HttpException -> {
-                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        val message =
+                            extractMessageFromErrorBody(it.response()?.errorBody()?.string())
                         _event.emit(MatchDetailEvent.ShowToastMessage(message))
                         getParticipants(roomId)
                         getWaitingMembers(roomId)
@@ -251,9 +271,10 @@ class MatchDetailViewModel @Inject constructor(
                 getParticipants(roomId)
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
-                when(it){
+                when (it) {
                     is retrofit2.HttpException -> {
-                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        val message =
+                            extractMessageFromErrorBody(it.response()?.errorBody()?.string())
                         _event.emit(MatchDetailEvent.ShowToastMessage(message))
 
                         getWaitingMembers(roomId)
@@ -272,9 +293,10 @@ class MatchDetailViewModel @Inject constructor(
                 _event.emit(MatchDetailEvent.NavigateToBack)
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
-                when(it){
+                when (it) {
                     is retrofit2.HttpException -> {
-                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        val message =
+                            extractMessageFromErrorBody(it.response()?.errorBody()?.string())
                         _event.emit(MatchDetailEvent.ShowToastMessage(message))
                     }
                 }
@@ -291,13 +313,28 @@ class MatchDetailViewModel @Inject constructor(
                 _event.emit(MatchDetailEvent.NavigateToBack)
                 _event.emit(MatchDetailEvent.DismissLoading)
             }.onFailure {
-                when(it){
+                when (it) {
                     is retrofit2.HttpException -> {
-                        val message = extractMessageFromErrorBody(it.response()?.errorBody()?.string())
+                        val message =
+                            extractMessageFromErrorBody(it.response()?.errorBody()?.string())
                         _event.emit(MatchDetailEvent.ShowToastMessage(message))
                     }
                 }
                 _event.emit(MatchDetailEvent.DismissLoading)
+            }
+        }
+    }
+
+    fun showProfile(id: Long) {
+        viewModelScope.launch {
+            _event.emit(MatchDetailEvent.ShowProfile(id))
+        }
+    }
+
+    fun showOwnerProfile() {
+        viewModelScope.launch {
+            if (!uiState.value.owner.thisIsMe) {
+                _event.emit(MatchDetailEvent.ShowProfile(uiState.value.owner.memberId))
             }
         }
     }

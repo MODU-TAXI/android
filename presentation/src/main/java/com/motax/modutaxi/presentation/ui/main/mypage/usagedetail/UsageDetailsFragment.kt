@@ -10,6 +10,7 @@ import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentUsageDetailsBinding
 import com.motax.modutaxi.presentation.ui.main.mypage.usagedetail.adapter.UsageParticipantAdapter
 import com.motax.modutaxi.presentation.ui.main.mypage.usagehistory.UsageHistoryEvent
+import com.motax.modutaxi.presentation.ui.toProfileBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,6 +39,7 @@ class UsageDetailsFragment : BaseFragment<FragmentUsageDetailsBinding>(R.layout.
             viewModel.event.collect {
                 when (it) {
                     is UsageDetailEvent.NavigateToMyPage -> findNavController().navigateUp()
+                    is UsageDetailEvent.NavigateToProfile -> findNavController().toProfileBottomSheet(it.id)
                 }
             }
         }

@@ -7,4 +7,5 @@ data class UiUsageParticipantItem(
     val imageUrl: String = "",
     val status: String = "",
     val me: Boolean = false,
+    val onClickListener: (Long) -> Unit
 )

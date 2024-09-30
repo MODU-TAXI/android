@@ -37,11 +37,20 @@ class WaitingMemberViewHolder(private val binding: ItemWaitingMemberBinding) :
 
         binding.item = item
 
-        if(item.isEmpty){
-            binding.tvRoomManagerNickname.setTextColor(ContextCompat.getColor(binding.root.context, R.color.mx_gray500))
+        binding.root.setOnClickListener {
+            if (!item.thisIsMe) item.showProfile(item.memberId)
+        }
+
+        if (item.isEmpty) {
+            binding.tvRoomManagerNickname.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.mx_gray500
+                )
+            )
             binding.btnAcceptEnter.visibility = View.GONE
         } else {
-            binding.tvMatchingCount.text =  "(${item.matchingCount})"
+            binding.tvMatchingCount.text = "(${item.matchingCount})"
             binding.btnAcceptEnter.visibility = View.VISIBLE
             binding.btnAcceptEnter.setOnClickListener {
                 item.acceptParticipant(item.memberId)

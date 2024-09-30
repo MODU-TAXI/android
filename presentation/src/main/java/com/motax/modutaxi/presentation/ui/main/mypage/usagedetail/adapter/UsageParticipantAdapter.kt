@@ -30,5 +30,8 @@ class UsageParticipantViewHolder(private val binding: ItemUsageParticipantBindin
 
     fun bind(item: UiUsageParticipantItem) {
         binding.item = item
+        binding.root.setOnClickListener {
+            if(!item.me) item.onClickListener(item.id)
+        }
     }
 }

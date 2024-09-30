@@ -232,6 +232,7 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_marginTop="16dp"
+                        android:onClick="@{() -> vm.showOwnerProfile()}"
                         app:layout_constraintStart_toEndOf="@id/guide_04_vertical"
                         app:layout_constraintTop_toBottomOf="@id/tv_room_manager_label"
                         app:profileImgUrl="@{vm.uiState.owner.profileImage}" />
