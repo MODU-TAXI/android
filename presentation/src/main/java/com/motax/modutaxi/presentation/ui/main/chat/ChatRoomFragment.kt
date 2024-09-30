@@ -142,7 +142,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
     }
 
     override fun showProfile(id: Long) {
-        findNavController().toProfileBottomSheet(id)
+        findNavController().toProfileBottomSheet(id, roomId)
     }
 
     private fun NavController.toCalculateSplash() {

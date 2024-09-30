@@ -9,7 +9,7 @@ internal fun NavController.toMatchDetail(id: Long){
     navigate(action)
 }
 
-internal fun NavController.toProfileBottomSheet(id: Long){
-    val action = MainNavDirections.gloablActionToProfileBottomsheet(id)
+internal fun NavController.toProfileBottomSheet(id: Long, roomId: Long){
+    val action = MainNavDirections.gloablActionToProfileBottomsheet(id, roomId)
     navigate(action)
 }

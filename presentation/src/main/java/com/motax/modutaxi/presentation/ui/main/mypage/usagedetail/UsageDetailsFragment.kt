@@ -14,10 +14,12 @@ import com.motax.modutaxi.presentation.ui.toProfileBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UsageDetailsFragment : BaseFragment<FragmentUsageDetailsBinding>(R.layout.fragment_usage_details){
+class UsageDetailsFragment :
+    BaseFragment<FragmentUsageDetailsBinding>(R.layout.fragment_usage_details) {
 
     private val viewModel: UsageDetailsViewModel by viewModels()
     private val args: UsageDetailsFragmentArgs by navArgs()
+    private val roomId by lazy { args.id }
     private var adapter: UsageParticipantAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +30,7 @@ class UsageDetailsFragment : BaseFragment<FragmentUsageDetailsBinding>(R.layout.
         adapter = UsageParticipantAdapter()
         binding.rvParticipants.adapter = adapter
 
-        viewModel.loadUsageDetail(args.id)
+        viewModel.loadUsageDetail(roomId)
 
         initEventObserve()
 
@@ -39,7 +41,10 @@ class UsageDetailsFragment : BaseFragment<FragmentUsageDetailsBinding>(R.layout.
             viewModel.event.collect {
                 when (it) {
                     is UsageDetailEvent.NavigateToMyPage -> findNavController().navigateUp()
-                    is UsageDetailEvent.NavigateToProfile -> findNavController().toProfileBottomSheet(it.id)
+                    is UsageDetailEvent.NavigateToProfile -> findNavController().toProfileBottomSheet(
+                        it.id,
+                        roomId
+                    )
                 }
             }
         }

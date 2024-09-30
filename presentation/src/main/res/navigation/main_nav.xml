@@ -297,7 +297,7 @@
 
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.report.ReportFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.profile.ReportFragment"
         android:label="report">
         <argument
             android:name="targetId"
@@ -396,24 +396,18 @@
         <argument
             android:name="id"
             app:argType="long" />
+
+        <argument
+            android:name="roomId"
+            app:argType="long" />
         <action
-            android:id="@+id/action_profileBottomSheetFragment_to_accusationUserFragment"
-            app:destination="@id/accusationUserFragment" />
+            android:id="@+id/action_profileBottomSheetFragment_to_reportFragment"
+            app:destination="@id/reportFragment" />
 
     </dialog>
 
     <action
         android:id="@+id/gloabl_action_to_profile_bottomsheet"
         app:destination="@id/profileBottomSheetFragment"/>
-    <fragment
-        android:id="@+id/accusationUserFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.profile.AccusationUserFragment"
-        android:label="AccusationUserFragment" >
-
-        <argument
-            android:name="id"
-            app:argType="long"/>
-
-    </fragment>
 
 </navigation>

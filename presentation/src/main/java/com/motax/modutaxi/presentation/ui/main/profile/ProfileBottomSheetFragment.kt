@@ -33,6 +33,7 @@ class ProfileBottomSheetFragment : BottomSheetDialogFragment() {
 
     private val args: ProfileBottomSheetFragmentArgs by navArgs()
     private val id by lazy { args.id }
+    private val roomId by lazy {args.roomId}
 
     private val viewModel: ProfileBottomSheetViewModel by viewModels()
 
@@ -103,8 +104,9 @@ class ProfileBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun NavController.toAccusation(id: Long) {
         val action =
-            ProfileBottomSheetFragmentDirections.actionProfileBottomSheetFragmentToAccusationUserFragment(
-                id
+            ProfileBottomSheetFragmentDirections.actionProfileBottomSheetFragmentToReportFragment(
+                id,
+                roomId,
             )
         navigate(action)
     }

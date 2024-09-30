@@ -39,7 +39,7 @@ sealed class MatchDetailEvent {
     data object ShowParticipantPopUp : MatchDetailEvent()
     data class ShowToastMessage(val msg: String) : MatchDetailEvent()
     data object NavigateToBack : MatchDetailEvent()
-    data class ShowProfile(val id: Long) : MatchDetailEvent()
+    data class ShowProfile(val id: Long, val roomId: Long) : MatchDetailEvent()
 }
 
 fun empty(id: Long) {}
@@ -327,14 +327,14 @@ class MatchDetailViewModel @Inject constructor(
 
     fun showProfile(id: Long) {
         viewModelScope.launch {
-            _event.emit(MatchDetailEvent.ShowProfile(id))
+            _event.emit(MatchDetailEvent.ShowProfile(id, roomId))
         }
     }
 
     fun showOwnerProfile() {
         viewModelScope.launch {
             if (!uiState.value.owner.thisIsMe) {
-                _event.emit(MatchDetailEvent.ShowProfile(uiState.value.owner.memberId))
+                _event.emit(MatchDetailEvent.ShowProfile(uiState.value.owner.memberId, roomId))
             }
         }
     }

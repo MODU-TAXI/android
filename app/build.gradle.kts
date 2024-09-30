@@ -22,8 +22,8 @@ android {
         applicationId = "com.motax.modutaxi"
         minSdk = 26
         targetSdk = 34
-        versionCode = 13
-        versionName = "0.0.13"
+        versionCode = 14
+        versionName = "0.0.14"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "NAVER_MAP_BASE_URL", getProperty("naverMapBaseUrl"))

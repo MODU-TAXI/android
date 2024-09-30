@@ -135,7 +135,7 @@ class MatchDetailFragment :
                     is MatchDetailEvent.ShowParticipantPopUp -> showParticipantPopup()
                     is MatchDetailEvent.ShowToastMessage -> showToastMessage(it.msg)
                     is MatchDetailEvent.NavigateToBack -> findNavController().navigateUp()
-                    is MatchDetailEvent.ShowProfile -> findNavController().toProfileBottomSheet(it.id)
+                    is MatchDetailEvent.ShowProfile -> findNavController().toProfileBottomSheet(it.id, it.roomId)
                 }
             }
         }
