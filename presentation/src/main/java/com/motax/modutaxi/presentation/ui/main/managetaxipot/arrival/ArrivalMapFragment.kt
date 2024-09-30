@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.arrival
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.arrival
 
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +12,8 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentArrivalMapBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.ManageTaxiPotViewModel
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiMarkerItem
 import com.motax.modutaxi.presentation.util.Constants.TAG
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
@@ -35,7 +35,7 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
     private lateinit var naverMap: NaverMap
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: ArrivalMapViewModel by viewModels()
-    private val createPartyViewModel: CreatePartyViewModel by activityViewModels()
+    private val manageTaxiPotViewModel: ManageTaxiPotViewModel by activityViewModels()
     private val args: ArrivalMapFragmentArgs by navArgs()
 
     private val selectedLocation by lazy { args.selectLocation }
@@ -84,7 +84,7 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
                         }
                     }
                     is ArrivalMapEvent.SelectArrival -> {
-                        createPartyViewModel.setArrivalInfo(
+                        manageTaxiPotViewModel.setArrivalInfo(
                             it.spotId,
                             it.name
                         )
@@ -137,7 +137,7 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
     }
 
     private fun NavController.toCreateParty() {
-        val action = ArrivalMapFragmentDirections.actionArrivalMapFragmentToCreatePartyFragment()
+        val action = ArrivalMapFragmentDirections.actionArrivalMapFragmentToManageTaxiPotFragment()
         navigate(action)
     }
 }

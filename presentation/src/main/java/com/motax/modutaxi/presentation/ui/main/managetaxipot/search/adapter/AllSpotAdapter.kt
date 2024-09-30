@@ -1,11 +1,11 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.search.adapter
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.databinding.ItemArrivalSpotBinding
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiArrivalSpotItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiArrivalSpotItem
 import com.motax.modutaxi.presentation.util.DefaultDiffUtil
 
 class AllSpotAdapter :

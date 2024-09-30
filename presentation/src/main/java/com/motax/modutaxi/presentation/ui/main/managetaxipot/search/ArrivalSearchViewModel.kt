@@ -1,15 +1,13 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.search
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.domain.repository.NaverRepository
-import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiArrivalSpotItem
-import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiSearchResultItem
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiArrivalSpotItem
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiSearchResultItem
-import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiSpotListItem
-import com.motax.modutaxi.presentation.ui.main.showparty.model.UiSpotListItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.mapper.toUiArrivalSpotItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.mapper.toUiSearchResultItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiArrivalSpotItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiSearchResultItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

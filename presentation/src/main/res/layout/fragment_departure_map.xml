@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.createparty.departure.DepartureMapViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.managetaxipot.departure.DepartureMapViewModel" />
 
     </data>
 

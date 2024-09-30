@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.search.adapter
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.databinding.ItemSearchResultBinding
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiSearchResultItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiSearchResultItem
 import com.motax.modutaxi.presentation.ui.toDistanceString
 
 class AddressSearchResultAdapter :

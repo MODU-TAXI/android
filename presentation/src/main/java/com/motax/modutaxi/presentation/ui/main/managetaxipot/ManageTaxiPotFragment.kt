@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty
+package com.motax.modutaxi.presentation.ui.main.managetaxipot
 
 import android.os.Bundle
 import android.util.Log
@@ -11,32 +11,31 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
-import com.motax.modutaxi.presentation.databinding.FragmentCreatePartyBinding
+import com.motax.modutaxi.presentation.databinding.FragmentManageTaxipotBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.toMatchDetail
 import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreatePartyFragment :
-    BaseFragment<FragmentCreatePartyBinding>(R.layout.fragment_create_party) {
+class ManageTaxiPotFragment :
+    BaseFragment<FragmentManageTaxipotBinding>(R.layout.fragment_manage_taxipot) {
 
     private val parentViewModel: MainViewModel by activityViewModels()
-    private val viewModel: CreatePartyViewModel by activityViewModels()
-    private val args: CreatePartyFragmentArgs by navArgs()
+    private val viewModel: ManageTaxiPotViewModel by activityViewModels()
+    private val args: ManageTaxiPotFragmentArgs by navArgs()
     private val roomId by lazy { args.roomId }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(TAG,roomId.toString())
+        Log.d(TAG, roomId.toString())
 
         binding.vm = viewModel
         parentViewModel.setNotFullScreenMode()
         viewModel.getMemberSource()
-        if(roomId != -1L){
+        if (roomId != -1L) {
             viewModel.getRoomInfo(roomId)
-            binding.btnCreatePot.text = "매칭팟 수정하기"
+            binding.btnCreatePot.text = "수정완료"
         }
         initEventObserve()
     }
@@ -45,19 +44,19 @@ class CreatePartyFragment :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is CreatePartyEvent.NavigateToArrivalSearch -> findNavController().toArrivalSearch()
-                    is CreatePartyEvent.NavigateToDepartureMap -> findNavController().toDepartureMap()
-                    is CreatePartyEvent.ShowTimePicker -> showTimePicker(it.hour, it.minute)
-                    is CreatePartyEvent.NavigateToMatchDetail -> {
+                    is ManageTaxiPotEvent.NavigateToArrivalSearch -> findNavController().toArrivalSearch()
+                    is ManageTaxiPotEvent.NavigateToDepartureMap -> findNavController().toDepartureMap()
+                    is ManageTaxiPotEvent.ShowTimePicker -> showTimePicker(it.hour, it.minute)
+                    is ManageTaxiPotEvent.NavigateToMatchDetail -> {
                         findNavController().toMatchDetails(
                             it.id
                         )
                     }
 
-                    is CreatePartyEvent.ShowToast -> showToastMessage(it.msg)
-                    is CreatePartyEvent.NavigateBack -> findNavController().navigateUp()
-                    is CreatePartyEvent.ShowLoading -> showLoading(requireContext())
-                    is CreatePartyEvent.DismissLoading -> dismissLoading()
+                    is ManageTaxiPotEvent.ShowToast -> showToastMessage(it.msg)
+                    is ManageTaxiPotEvent.NavigateBack -> findNavController().navigateUp()
+                    is ManageTaxiPotEvent.ShowLoading -> showLoading(requireContext())
+                    is ManageTaxiPotEvent.DismissLoading -> dismissLoading()
                 }
             }
         }
@@ -79,18 +78,19 @@ class CreatePartyFragment :
 
     private fun NavController.toMatchDetails(id: Long) {
         val action =
-            CreatePartyFragmentDirections.actionCreatePartyFragmentToMatchDetailFragment(id)
+            ManageTaxiPotFragmentDirections.actionManageTaxiPotFragmentToMatchDetailFragment(id)
         navigate(action)
     }
 
     private fun NavController.toDepartureMap() {
-        val action = CreatePartyFragmentDirections.actionCreatePartyFragmentToDepartureMapFragment()
+        val action =
+            ManageTaxiPotFragmentDirections.actionManageTaxiPotFragmentToDepartureMapFragment()
         navigate(action)
     }
 
     private fun NavController.toArrivalSearch() {
         val action =
-            CreatePartyFragmentDirections.actionCreatePartyFragmentToArrivalSearchFragment()
+            ManageTaxiPotFragmentDirections.actionManageTaxiPotFragmentToArrivalSearchFragment()
         navigate(action)
     }
 }

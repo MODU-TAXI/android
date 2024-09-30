@@ -10,9 +10,6 @@
         android:name="com.motax.modutaxi.presentation.ui.main.home.HomeFragment"
         android:label="HomeFragment">
         <action
-            android:id="@+id/action_homeFragment_to_createPartyFragment"
-            app:destination="@id/createPartyFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_showPartyFragment"
             app:destination="@id/showPartyFragment" />
         <action
@@ -24,12 +21,15 @@
         <action
             android:id="@+id/action_homeFragment_to_showPartySearchFragment"
             app:destination="@id/showPartySearchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_manageTaxiPotFragment"
+            app:destination="@id/manageTaxiPotFragment" />
 
     </fragment>
 
     <fragment
         android:id="@+id/departureMapFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.departure.DepartureMapFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.managetaxipot.departure.DepartureMapFragment"
         android:label="MapFragment">
         <action
             android:id="@+id/action_departureMapFragment_to_departureSearchFragment"
@@ -38,8 +38,8 @@
 
 
     <fragment
-        android:id="@+id/createPartyFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyFragment"
+        android:id="@+id/manageTaxiPotFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.managetaxipot.ManageTaxiPotFragment"
         android:label="CreatePartyFragment">
 
         <argument
@@ -48,15 +48,14 @@
             app:argType="long"/>
 
         <action
-            android:id="@+id/action_createPartyFragment_to_departureMapFragment"
+            android:id="@+id/action_manageTaxiPotFragment_to_departureMapFragment"
             app:destination="@id/departureMapFragment" />
         <action
-            android:id="@+id/action_createPartyFragment_to_arrivalSearchFragment"
+            android:id="@+id/action_manageTaxiPotFragment_to_arrivalSearchFragment"
             app:destination="@id/arrivalSearchFragment" />
         <action
-            android:id="@+id/action_createPartyFragment_to_matchDetailFragment"
-            app:destination="@id/matchDetailFragment"
-            app:popUpTo="@id/homeFragment"/>
+            android:id="@+id/action_manageTaxiPotFragment_to_matchDetailFragment"
+            app:destination="@id/matchDetailFragment" />
     </fragment>
 
     <fragment
@@ -67,36 +66,34 @@
             android:id="@+id/action_showPartyFragment_to_showPartySearchFragment"
             app:destination="@id/showPartySearchFragment" />
         <action
-            android:id="@+id/action_showPartyFragment_to_createPartyFragment"
-            app:destination="@id/createPartyFragment" />
-        <action
             android:id="@+id/action_showPartyFragment_to_selectSpotFilterBottomSheetFragment"
             app:destination="@id/selectSpotFilterBottomSheetFragment" />
+        <action
+            android:id="@+id/action_showPartyFragment_to_manageTaxiPotFragment"
+            app:destination="@id/manageTaxiPotFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/arrivalMapFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.arrival.ArrivalMapFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.managetaxipot.arrival.ArrivalMapFragment"
         android:label="ArrivalMapFragment">
 
         <argument
             android:name="selectLocation"
             app:argType="com.motax.modutaxi.presentation.ui.MtLocation" />
-
         <action
-            android:id="@+id/action_arrivalMapFragment_to_createPartyFragment"
-            app:destination="@id/createPartyFragment"
-            app:popUpTo="@id/createPartyFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_arrivalMapFragment_to_manageTaxiPotFragment"
+            app:destination="@id/manageTaxiPotFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/departureSearchFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.DepartureSearchFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.managetaxipot.search.DepartureSearchFragment"
         android:label="DepartureSearchFragment" />
     <fragment
         android:id="@+id/arrivalSearchFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.createparty.search.ArrivalSearchFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.managetaxipot.search.ArrivalSearchFragment"
         android:label="ArrivalSearchFragment">
         <action
             android:id="@+id/action_arrivalSearchFragment_to_arrivalMapFragment"
@@ -200,8 +197,8 @@
             android:id="@+id/action_matchDetailFragment_to_chatRoomFragment"
             app:destination="@id/chatRoomFragment" />
         <action
-            android:id="@+id/action_matchDetailFragment_to_createPartyFragment"
-            app:destination="@id/createPartyFragment" />
+            android:id="@+id/action_matchDetailFragment_to_manageTaxiPotFragment"
+            app:destination="@id/manageTaxiPotFragment" />
     </fragment>
 
     <action
@@ -244,8 +241,8 @@
             android:id="@+id/action_chatRoomFragment_to_profileBottomSheetFragment"
             app:destination="@id/profileBottomSheetFragment" />
         <action
-            android:id="@+id/action_chatRoomFragment_to_createPartyFragment"
-            app:destination="@id/createPartyFragment" />
+            android:id="@+id/action_chatRoomFragment_to_manageTaxiPotFragment"
+            app:destination="@id/manageTaxiPotFragment" />
 
     </fragment>
     <dialog

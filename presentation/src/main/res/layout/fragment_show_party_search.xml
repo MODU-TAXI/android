@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchViewModel" />
@@ -87,12 +89,39 @@
             app:layout_constraintStart_toEndOf="@id/layout_search"
             app:layout_constraintTop_toTopOf="@id/layout_search" />
 
+        <ImageView
+            android:id="@+id/iv_taxi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_gray_taxi"
+            android:visibility="@{vm.keyword.blank ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/tv_where_to_go"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_search"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_where_to_go"
+            style="@style/TextTitle3Semibold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘은 어디로 떠나볼까요?"
+            android:textColor="@color/mx_gray200"
+            android:textSize="18dp"
+            android:visibility="@{vm.keyword.blank ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_taxi" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_result"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="vertical"
+            android:visibility="@{vm.keyword.blank ? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toStartOf="@id/guide_96_vertical"
             app:layout_constraintStart_toEndOf="@id/guide_04_vertical"

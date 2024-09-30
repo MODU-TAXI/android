@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="60dp">
+        android:paddingBottom="30dp">
 
 
         <ImageView
@@ -101,15 +101,29 @@
 
         <TextView
             android:id="@+id/tv_matchingcount"
+            style="@style/TextRegularMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:textColor="@color/mx_gray700"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_matchingCount_label"
             app:layout_constraintStart_toEndOf="@id/tv_matchingCount_label"
             app:layout_constraintTop_toTopOf="@id/tv_matchingCount_label"
             tools:text="80%" />
 
+        <TextView
+            android:id="@+id/btn_navigate_to_accusation"
+            style="@style/TextRegularRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="신고하기"
+            android:textColor="@color/mx_gray700"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_matchingCount_label" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

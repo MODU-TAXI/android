@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
-import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.RoomTag
 import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiTaxiPotListItem
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListFilterItem
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem

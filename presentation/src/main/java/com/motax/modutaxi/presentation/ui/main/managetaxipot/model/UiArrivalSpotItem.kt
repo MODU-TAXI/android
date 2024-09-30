@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.model
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.model
 
 data class UiArrivalSpotItem(
     val spotId: Long = 0,

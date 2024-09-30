@@ -1,6 +1,7 @@
 package com.motax.modutaxi.presentation.ui.main.chat.bottomsheet
 
 import android.app.Dialog
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,6 +59,7 @@ class ProfileBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnNavigateToAccusation.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         viewModel.getMemberProfile(id)
         initStateObserve()
     }

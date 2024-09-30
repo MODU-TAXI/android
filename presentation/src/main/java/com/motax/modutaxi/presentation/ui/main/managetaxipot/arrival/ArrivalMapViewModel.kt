@@ -1,10 +1,10 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.arrival
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.arrival
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
-import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiMarkerItem
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiMarkerItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.mapper.toUiMarkerItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiMarkerItem
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

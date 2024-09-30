@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty
+package com.motax.modutaxi.presentation.ui.main.managetaxipot
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,6 @@ import com.motax.modutaxi.presentation.ui.getCurHour
 import com.motax.modutaxi.presentation.ui.getCurMinute
 import com.motax.modutaxi.presentation.ui.getTodayDate
 import com.motax.modutaxi.presentation.ui.getUTCTime
-import com.motax.modutaxi.presentation.ui.main.matchdetail.MatchDetailEvent
 import com.motax.modutaxi.presentation.util.extractMessageFromErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,7 +25,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-data class CreatePartyUiState(
+data class ManageTaxiPotUiState(
     val departureName: String = "",
     val arrivalName: String = "",
     val departureTime: String = "",
@@ -38,28 +37,28 @@ data class CreatePartyUiState(
     val isCertified: Boolean = false
 )
 
-sealed class CreatePartyEvent {
-    data class ShowTimePicker(val hour: Int, val minute: Int) : CreatePartyEvent()
-    data object NavigateToDepartureMap : CreatePartyEvent()
-    data object NavigateToArrivalSearch : CreatePartyEvent()
-    data class NavigateToMatchDetail(val id: Long) : CreatePartyEvent()
-    data class ShowToast(val msg: String) : CreatePartyEvent()
-    data object NavigateBack : CreatePartyEvent()
-    data object ShowLoading : CreatePartyEvent()
-    data object DismissLoading : CreatePartyEvent()
+sealed class ManageTaxiPotEvent {
+    data class ShowTimePicker(val hour: Int, val minute: Int) : ManageTaxiPotEvent()
+    data object NavigateToDepartureMap : ManageTaxiPotEvent()
+    data object NavigateToArrivalSearch : ManageTaxiPotEvent()
+    data class NavigateToMatchDetail(val id: Long) : ManageTaxiPotEvent()
+    data class ShowToast(val msg: String) : ManageTaxiPotEvent()
+    data object NavigateBack : ManageTaxiPotEvent()
+    data object ShowLoading : ManageTaxiPotEvent()
+    data object DismissLoading : ManageTaxiPotEvent()
 }
 
 @HiltViewModel
-class CreatePartyViewModel @Inject constructor(
+class ManageTaxiPotViewModel @Inject constructor(
     private val repository: MainRepository,
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(CreatePartyUiState())
-    val uiState: StateFlow<CreatePartyUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(ManageTaxiPotUiState())
+    val uiState: StateFlow<ManageTaxiPotUiState> = _uiState.asStateFlow()
 
-    private val _event = MutableSharedFlow<CreatePartyEvent>()
-    val event: SharedFlow<CreatePartyEvent> = _event.asSharedFlow()
+    private val _event = MutableSharedFlow<ManageTaxiPotEvent>()
+    val event: SharedFlow<ManageTaxiPotEvent> = _event.asSharedFlow()
 
     val spotId = MutableStateFlow(0L)
     val roomTagBitMask = MutableStateFlow<List<String>>(emptyList())
@@ -139,7 +138,7 @@ class CreatePartyViewModel @Inject constructor(
                         is retrofit2.HttpException -> {
                             val message =
                                 extractMessageFromErrorBody(th.response()?.errorBody()?.string())
-                            _event.emit(CreatePartyEvent.ShowToast(message))
+                            _event.emit(ManageTaxiPotEvent.ShowToast(message))
                         }
                     }
                 }
@@ -154,7 +153,7 @@ class CreatePartyViewModel @Inject constructor(
             val roomTag = mutableListOf<String>()
             if (uiState.value.studentCertificationRoomTag) roomTag.add(RoomTag.STUDENT_CERTIFICATION.text)
             if (uiState.value.quiteTag) roomTag.add(RoomTag.QUIET.text)
-            _event.emit(CreatePartyEvent.ShowLoading)
+            _event.emit(ManageTaxiPotEvent.ShowLoading)
 
             if (roomId == -1L) {
                 repository.createTaxiPot(
@@ -166,18 +165,18 @@ class CreatePartyViewModel @Inject constructor(
                     departureName.value,
                     wishHeadCount.value.count
                 ).onSuccess {
-                    _uiState.value = CreatePartyUiState()
-                    _event.emit(CreatePartyEvent.DismissLoading)
-                    _event.emit(CreatePartyEvent.NavigateToMatchDetail(it.roomId))
+                    _uiState.value = ManageTaxiPotUiState()
+                    _event.emit(ManageTaxiPotEvent.DismissLoading)
+                    _event.emit(ManageTaxiPotEvent.NavigateToMatchDetail(it.roomId))
                 }.onFailure { th ->
                     when (th) {
                         is retrofit2.HttpException -> {
                             val message =
                                 extractMessageFromErrorBody(th.response()?.errorBody()?.string())
-                            _event.emit(CreatePartyEvent.ShowToast(message))
+                            _event.emit(ManageTaxiPotEvent.ShowToast(message))
                         }
                     }
-                    _event.emit(CreatePartyEvent.DismissLoading)
+                    _event.emit(ManageTaxiPotEvent.DismissLoading)
                 }
             } else {
                 repository.patchRoom(
@@ -190,19 +189,19 @@ class CreatePartyViewModel @Inject constructor(
                     departureName.value,
                     wishHeadCount.value.count
                 ).onSuccess {
-                    _uiState.value = CreatePartyUiState()
-                    _event.emit(CreatePartyEvent.ShowToast("방 정보 수정 성공"))
-                    _event.emit(CreatePartyEvent.DismissLoading)
-                    _event.emit(CreatePartyEvent.NavigateBack)
+                    _uiState.value = ManageTaxiPotUiState()
+                    _event.emit(ManageTaxiPotEvent.ShowToast("방 정보 수정 성공"))
+                    _event.emit(ManageTaxiPotEvent.DismissLoading)
+                    _event.emit(ManageTaxiPotEvent.NavigateBack)
                 }.onFailure { th ->
                     when (th) {
                         is retrofit2.HttpException -> {
                             val message =
                                 extractMessageFromErrorBody(th.response()?.errorBody()?.string())
-                            _event.emit(CreatePartyEvent.ShowToast(message))
+                            _event.emit(ManageTaxiPotEvent.ShowToast(message))
                         }
                     }
-                    _event.emit(CreatePartyEvent.DismissLoading)
+                    _event.emit(ManageTaxiPotEvent.DismissLoading)
                 }
             }
 
@@ -242,7 +241,7 @@ class CreatePartyViewModel @Inject constructor(
     fun showTimePicker() {
         viewModelScope.launch {
             _event.emit(
-                CreatePartyEvent.ShowTimePicker(
+                ManageTaxiPotEvent.ShowTimePicker(
                     uiState.value.departureHour,
                     uiState.value.departureMinute
                 )
@@ -264,19 +263,19 @@ class CreatePartyViewModel @Inject constructor(
 
     fun navigateToDepartureMap() {
         viewModelScope.launch {
-            _event.emit(CreatePartyEvent.NavigateToDepartureMap)
+            _event.emit(ManageTaxiPotEvent.NavigateToDepartureMap)
         }
     }
 
     fun navigateToArrivalSearch() {
         viewModelScope.launch {
-            _event.emit(CreatePartyEvent.NavigateToArrivalSearch)
+            _event.emit(ManageTaxiPotEvent.NavigateToArrivalSearch)
         }
     }
 
     fun navigateToBack() {
         viewModelScope.launch {
-            _event.emit(CreatePartyEvent.NavigateBack)
+            _event.emit(ManageTaxiPotEvent.NavigateBack)
         }
     }
 

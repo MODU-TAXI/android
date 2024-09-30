@@ -1,8 +1,7 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.mapper
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.mapper
 
-import com.motax.modutaxi.domain.model.NearSpotData
 import com.motax.modutaxi.domain.model.NearSpotItemData
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiArrivalSpotItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiArrivalSpotItem
 
 
 fun NearSpotItemData.toUiArrivalSpotItem(

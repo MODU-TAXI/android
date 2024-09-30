@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.search
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.search
 
 import android.Manifest
 import android.content.Context
@@ -20,9 +20,8 @@ import com.motax.modutaxi.presentation.ui.MtLocation
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.departure.DepartureMapViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AddressSearchResultAdapter
-import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AllSpotAdapter
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.search.adapter.AddressSearchResultAdapter
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.search.adapter.AllSpotAdapter
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import dagger.hilt.android.AndroidEntryPoint
 

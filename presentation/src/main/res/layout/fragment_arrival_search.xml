@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.createparty.search.ArrivalSearchViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.managetaxipot.search.ArrivalSearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,6 +1,5 @@
 package com.motax.modutaxi.presentation.ui.main.matchdetail
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -10,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.gson.Gson
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.customview.EditDeletePopUpMenu
@@ -234,7 +232,7 @@ class MatchDetailFragment :
     }
 
     private fun NavController.toEditRoom(id: Long){
-        val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToCreatePartyFragment(id)
+        val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToManageTaxiPotFragment(id)
         navigate(action)
     }
 }

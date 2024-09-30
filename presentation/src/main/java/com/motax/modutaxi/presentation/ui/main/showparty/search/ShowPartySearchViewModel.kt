@@ -3,10 +3,8 @@ package com.motax.modutaxi.presentation.ui.main.showparty.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.NaverRepository
-import com.motax.modutaxi.presentation.ui.main.createparty.mapper.toUiSearchResultItem
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiSearchResultItem
-import com.motax.modutaxi.presentation.ui.main.createparty.search.DepartureSearchEvent
-import com.motax.modutaxi.presentation.ui.main.createparty.search.DepartureSearchUiState
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.mapper.toUiSearchResultItem
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiSearchResultItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

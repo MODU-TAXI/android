@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.motax.modutaxi.presentation.ui.main.createparty.model.UiArrivalSpotItem" />
+            type="com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiArrivalSpotItem" />
 
     </data>
 

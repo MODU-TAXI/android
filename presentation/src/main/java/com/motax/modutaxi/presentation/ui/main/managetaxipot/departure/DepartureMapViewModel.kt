@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.departure
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.departure
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

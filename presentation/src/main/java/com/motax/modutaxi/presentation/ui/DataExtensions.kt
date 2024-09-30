@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import com.motax.modutaxi.domain.model.AddressFromGeoItemData
-import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.RoomTag
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -16,7 +16,6 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import java.util.TimeZone
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos

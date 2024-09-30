@@ -1,10 +1,8 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.mapper
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.mapper
 
 import com.motax.modutaxi.domain.model.SearchResultData
 import com.motax.modutaxi.presentation.ui.calculateDistance
-import com.motax.modutaxi.presentation.ui.main.createparty.model.UiSearchResultItem
-import com.motax.modutaxi.presentation.ui.toDistanceString
-
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.model.UiSearchResultItem
 
 
 fun SearchResultData.toUiSearchResultItem(

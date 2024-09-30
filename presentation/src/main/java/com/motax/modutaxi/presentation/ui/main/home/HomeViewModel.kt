@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
-import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
 import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem

@@ -5,7 +5,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.google.android.material.chip.ChipGroup
 import com.motax.modutaxi.presentation.R
-import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.RoomTag
 
 
 @BindingAdapter("taxiPotFilterChips")

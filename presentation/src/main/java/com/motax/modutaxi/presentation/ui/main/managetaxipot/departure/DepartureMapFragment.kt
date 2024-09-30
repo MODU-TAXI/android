@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.createparty.departure
+package com.motax.modutaxi.presentation.ui.main.managetaxipot.departure
 
 import android.Manifest
 import android.location.Location
@@ -16,7 +16,7 @@ import com.motax.modutaxi.presentation.databinding.FragmentDepartureMapBinding
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyViewModel
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.ManageTaxiPotViewModel
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import com.motax.modutaxi.presentation.ui.to8Round
 import com.motax.modutaxi.presentation.util.Constants.TAG
@@ -42,7 +42,7 @@ class DepartureMapFragment :
 
     private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: DepartureMapViewModel by activityViewModels()
-    private val createPartyViewModel: CreatePartyViewModel by activityViewModels()
+    private val manageTaxiPotViewModel: ManageTaxiPotViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +59,7 @@ class DepartureMapFragment :
                 when (it) {
                     is DepartureMapEvent.NavigateToSearch -> findNavController().toDepartureSearch()
                     is DepartureMapEvent.SelectDeparture -> {
-                        createPartyViewModel.setDepartureInfo(
+                        manageTaxiPotViewModel.setDepartureInfo(
                             it.latitude,
                             it.longitude,
                             it.name.ifBlank { it.address }

@@ -9,7 +9,6 @@ import com.motax.modutaxi.presentation.chatmanager.model.ChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessage
 import com.motax.modutaxi.presentation.ui.main.chat.mapper.toUiChatMessageList
 import com.motax.modutaxi.presentation.ui.main.chat.model.UiChatMessage
-import com.motax.modutaxi.presentation.ui.main.createparty.CreatePartyEvent
 import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.util.Constants.TAG
