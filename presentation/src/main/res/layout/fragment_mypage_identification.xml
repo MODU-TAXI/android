@@ -73,6 +73,7 @@
                 android:onClick="@{() -> vm.navigateToMyPage()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:src="@drawable/ic_backward"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

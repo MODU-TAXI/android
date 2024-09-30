@@ -60,6 +60,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
 
         binding.vm = viewModel
         parentViewModel.setFullScreenMode()
+        viewModel.getUserInfo()
         initEventObserve()
         initStateObserve()
         initMapView()
@@ -243,7 +244,7 @@ class ShowPartyFragment : BaseFragment<FragmentShowPartyBinding>(R.layout.fragme
     }
 
     private fun NavController.toCreateParty() {
-        val action = ShowPartyFragmentDirections.actionShowPartyFragmentToCreatePartyFragment()
+        val action = ShowPartyFragmentDirections.actionShowPartyFragmentToManageTaxiPotFragment()
         navigate(action)
     }
 

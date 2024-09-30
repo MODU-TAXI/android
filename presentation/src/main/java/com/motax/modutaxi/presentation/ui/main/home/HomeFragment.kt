@@ -33,9 +33,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.rvRealtimeTaxipotList.adapter = adapter
 
         viewModel.getIsParticipating()
-        viewModel.getRealtimeTaxiPots()
         viewModel.getNotificationCount()
         initEventObserve()
+        scrollLiveTaxiPots()
         onRefresh()
     }
 
@@ -48,11 +48,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     is HomeEvent.NavigateToMatchDetail -> findNavController().toMatchDetail(it.id)
                     is HomeEvent.NavigateToNotification -> findNavController().toNotification()
                     is HomeEvent.NavigateToShowPartySearch -> findNavController().toShowPartySearch()
+                    is HomeEvent.ScrollLiveTaxiPot -> scrollLiveTaxiPots()
                 }
             }
         }
     }
 
+    private fun scrollLiveTaxiPots() {
+        binding.rvRealtimeTaxipotList.smoothScrollToPosition(0)
+    }
 
 
     private fun onRefresh() {
@@ -64,7 +68,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
     }
 
-    private fun NavController.toShowPartySearch(){
+    private fun NavController.toShowPartySearch() {
         val action = HomeFragmentDirections.actionHomeFragmentToShowPartySearchFragment()
         navigate(action)
     }
@@ -75,7 +79,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun NavController.toCreateParty() {
-        val action = HomeFragmentDirections.actionHomeFragmentToCreatePartyFragment()
+        val action = HomeFragmentDirections.actionHomeFragmentToManageTaxiPotFragment()
         navigate(action)
     }
 

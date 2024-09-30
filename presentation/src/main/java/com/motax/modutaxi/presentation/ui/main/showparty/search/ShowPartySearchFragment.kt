@@ -19,7 +19,7 @@ import com.motax.modutaxi.presentation.databinding.FragmentShowPartySearchBindin
 import com.motax.modutaxi.presentation.ui.checkLocationIsOn
 import com.motax.modutaxi.presentation.ui.main.MainActivity
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
-import com.motax.modutaxi.presentation.ui.main.createparty.search.adapter.AddressSearchResultAdapter
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.search.adapter.AddressSearchResultAdapter
 import com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyViewModel
 import com.motax.modutaxi.presentation.ui.requestLocationPermission
 import dagger.hilt.android.AndroidEntryPoint

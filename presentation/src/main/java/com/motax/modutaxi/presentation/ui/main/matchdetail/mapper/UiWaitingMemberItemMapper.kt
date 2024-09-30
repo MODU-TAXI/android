@@ -4,7 +4,8 @@ import com.motax.modutaxi.domain.model.TaxiPotMemberData
 import com.motax.modutaxi.presentation.ui.main.matchdetail.model.UiWaitingMemberItem
 
 fun TaxiPotMemberData.toUiWaitingMemberItem(
-    acceptParticipant: (Long) -> Unit
+    acceptParticipant: (Long) -> Unit,
+    showProfile: (Long) -> Unit
 ) = UiWaitingMemberItem(
     memberId = memberId,
     profileImage = imageUrl,
@@ -12,5 +13,6 @@ fun TaxiPotMemberData.toUiWaitingMemberItem(
     matchingCount = "${matchingCount}회",
     certified = certified,
     thisIsMe = thisIsMe,
-    acceptParticipant = acceptParticipant
+    acceptParticipant = acceptParticipant,
+    showProfile = showProfile
 )

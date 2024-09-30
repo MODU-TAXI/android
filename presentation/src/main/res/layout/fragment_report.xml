@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.report.ReportViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.profile.ReportViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,236 +15,242 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="20dp">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_48_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.48" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_toolbar"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:paddingVertical="8dp"
+            android:clipToPadding="false"
+            android:paddingBottom="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_backward"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_header"
-                style="@style/TextTitle3Semibold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="신고"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/iv_report"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:src="@drawable/ic_report"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_toolbar" />
-
-
-        <TextView
-            android:id="@+id/tv_reported_nickname"
-            style="@style/TextLargeSemibold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@{vm.uiState.nickName}"
-            android:textColor="@color/mx_gray800"
-            app:layout_constraintEnd_toStartOf="@id/guide_48_vertical"
-            app:layout_constraintTop_toBottomOf="@id/iv_report"
-            tools:text="헤일/이하연" />
-
-        <TextView
-            android:id="@+id/tv_report"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="님을 신고합니다."
-            app:layout_constraintBottom_toBottomOf="@id/tv_reported_nickname"
-            app:layout_constraintStart_toEndOf="@id/guide_48_vertical"
-            app:layout_constraintTop_toTopOf="@id/tv_reported_nickname" />
-
-        <TextView
-            android:id="@+id/tv_usage_label"
-            style="@style/TextRegularSemibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="이용 내역"
-            android:textColor="@color/mx_gray700"
-            app:layout_constraintStart_toStartOf="@id/layout_toolbar"
-            app:layout_constraintTop_toBottomOf="@id/tv_reported_nickname" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_usage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rect_gray_f5f5f5fill_blackstroke_12radius"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="@id/layout_toolbar"
-            app:layout_constraintStart_toStartOf="@id/tv_usage_label"
-            app:layout_constraintTop_toBottomOf="@id/tv_usage_label">
-
-            <TextView
-                android:id="@+id/tv_departure_arrival"
-                style="@style/TextRegularMedium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text='@{vm.uiState.departureName + " -> " + vm.uiState.arrivalName  }'
-                android:textColor="@color/mx_gray700"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="인하대학교 -> 주안역" />
-
-            <TextView
-                android:id="@+id/tv_portion_charge"
-                style="@style/TextRegularRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text='@{"-" + vm.uiState.expectedChargePerPerson}'
-                android:textColor="@color/mx_gray700"
-                app:layout_constraintBottom_toBottomOf="@id/tv_departure_arrival"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                tools:text="-4,500원" />
-
-            <TextView
-                style="@style/TextSmallRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@{vm.uiState.departureTime}"
-                android:textColor="@color/mx_gray400"
-                app:layout_constraintStart_toStartOf="@id/tv_departure_arrival"
-                app:layout_constraintTop_toBottomOf="@id/tv_departure_arrival"
-                tools:text="2024.04.30 18:50" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tv_report_type_label"
-            style="@style/TextRegularSemibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="신고 유형"
-            android:textColor="@color/mx_gray700"
-            app:layout_constraintStart_toStartOf="@id/layout_toolbar"
-            app:layout_constraintTop_toBottomOf="@id/layout_usage" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dropdown_type"
-            style="@style/CustomTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/changeBackgroundColor"
-            app:layout_constraintTop_toBottomOf="@id/tv_report_type_label">
-
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:text="신고 유형을 선택해주세요"
-                android:textColor="@color/mx_gray400" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_report_content_label"
-            style="@style/TextRegularSemibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="신고 내용"
-            android:textColor="@color/mx_gray700"
-            app:layout_constraintStart_toStartOf="@id/layout_toolbar"
-            app:layout_constraintTop_toBottomOf="@id/dropdown_type" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_48_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.48" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_content"
-            android:layout_width="0dp"
-            android:layout_height="172dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rect_nofill_gray400stroke_12radius"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp"
-            app:layout_constraintEnd_toEndOf="@id/layout_toolbar"
-            app:layout_constraintStart_toStartOf="@id/layout_toolbar"
-            app:layout_constraintTop_toBottomOf="@id/tv_report_content_label">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_toolbar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:paddingVertical="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/et_content"
-                style="@style/TextRegularRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:backgroundTint="@android:color/transparent"
-                android:gravity="top"
-                android:hint="신고 내용을 입력해주세요"
-                android:inputType="textMultiLine"
-                android:maxLines="7"
-                android:textColor="@color/mx_gray900"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/btn_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_backward"
+                        android:onClick="@{() -> vm.navigateBack()}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_information"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_information"
-            app:layout_constraintStart_toStartOf="@id/tv_report_content_label"
-            app:layout_constraintTop_toBottomOf="@id/layout_content" />
+                    <TextView
+                        android:id="@+id/tv_header"
+                        style="@style/TextTitle3Semibold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="신고"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            style="@style/TextSmallRegular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:text="신고 접수 후 패널티 조치까지 3-5일정도 소요될 수 있어요!"
-            android:textColor="@color/mx_gray400"
-            app:layout_constraintBottom_toBottomOf="@id/iv_information"
-            app:layout_constraintStart_toEndOf="@id/iv_information"
-            app:layout_constraintTop_toTopOf="@id/iv_information" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/iv_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/ic_report"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_toolbar" />
+
+
+                <TextView
+                    android:id="@+id/tv_reported_nickname"
+                    style="@style/TextLargeSemibold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@{vm.uiState.nickName}"
+                    android:textColor="@color/mx_gray800"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toStartOf="@id/tv_report"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_report"
+                    tools:text="헤일/이하연" />
+
+                <TextView
+                    android:id="@+id/tv_report"
+                    style="@style/TextLargeSemibold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="님을 신고합니다."
+                    android:textColor="@color/mx_gray600"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_reported_nickname"
+                    app:layout_constraintTop_toTopOf="@id/tv_reported_nickname" />
+
+                <TextView
+                    android:id="@+id/tv_usage_label"
+                    style="@style/TextRegularSemibold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="이용 내역"
+                    android:textColor="@color/mx_gray700"
+                    app:layout_constraintStart_toStartOf="@id/layout_toolbar"
+                    app:layout_constraintTop_toBottomOf="@id/tv_reported_nickname" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_usage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rect_gray_f5f5f5fill_nostroke_12radius"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="@id/layout_toolbar"
+                    app:layout_constraintStart_toStartOf="@id/tv_usage_label"
+                    app:layout_constraintTop_toBottomOf="@id/tv_usage_label">
+
+                    <TextView
+                        android:id="@+id/tv_departure_arrival"
+                        style="@style/TextRegularMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text='@{vm.uiState.departureName + " -> " + vm.uiState.arrivalName  }'
+                        android:textColor="@color/mx_gray700"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="인하대학교 -> 주안역" />
+
+                    <TextView
+                        style="@style/TextSmallRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@{vm.uiState.departureTime}"
+                        android:textColor="@color/mx_gray400"
+                        app:layout_constraintStart_toStartOf="@id/tv_departure_arrival"
+                        app:layout_constraintTop_toBottomOf="@id/tv_departure_arrival"
+                        tools:text="2024.04.30 18:50" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_report_type_label"
+                    style="@style/TextRegularSemibold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="신고 유형"
+                    android:textColor="@color/mx_gray700"
+                    app:layout_constraintStart_toStartOf="@id/layout_toolbar"
+                    app:layout_constraintTop_toBottomOf="@id/layout_usage" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dropdown_type"
+                    style="@style/CustomTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/changeBackgroundColor"
+                    app:layout_constraintTop_toBottomOf="@id/tv_report_type_label">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="신고 유형을 선택해주세요"
+                        android:inputType="none"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/mx_gray400"
+                        android:textSize="14dp"
+                        app:simpleItems="@array/report_type_array" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_report_content_label"
+                    style="@style/TextRegularSemibold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="신고 내용"
+                    android:textColor="@color/mx_gray700"
+                    app:layout_constraintStart_toStartOf="@id/layout_toolbar"
+                    app:layout_constraintTop_toBottomOf="@id/dropdown_type" />
+
+                <EditText
+                    android:id="@+id/et_content"
+                    style="@style/TextRegularRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rect_nofill_gray400stroke_8radius"
+                    android:gravity="top"
+                    android:hint="신고 내용을 입력해주세요"
+                    android:maxLength="200"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="10dp"
+                    android:text="@={vm.content}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/mx_gray400"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_report_content_label" />
+
+
+                <ImageView
+                    android:id="@+id/iv_information"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/ic_information"
+                    app:layout_constraintStart_toStartOf="@id/tv_report_content_label"
+                    app:layout_constraintTop_toBottomOf="@id/et_content" />
+
+                <TextView
+                    style="@style/TextSmallRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="신고 접수 후 패널티 조치까지 3-5일정도 소요될 수 있어요!"
+                    android:textColor="@color/mx_gray400"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_information"
+                    app:layout_constraintStart_toEndOf="@id/iv_information"
+                    app:layout_constraintTop_toTopOf="@id/iv_information" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_check"
             style="@style/TextLargeSemibold"
-            reportBtnState="@{vm.uiState.buttonEnabled}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="34dp"
             android:layout_marginRight="34dp"
             android:layout_marginBottom="34dp"
             android:background="@drawable/selector_next_btn"
+            android:enabled="@{vm.isDataReady() ? true : false}"
             android:gravity="center"
             android:onClick="@{() -> vm.postReport()}"
             android:paddingHorizontal="96dp"

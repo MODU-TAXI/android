@@ -15,12 +15,15 @@ import com.motax.modutaxi.presentation.customview.ExitPopUpMenu
 import com.motax.modutaxi.presentation.databinding.FragmentChatRoomBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageAdapter
+import com.motax.modutaxi.presentation.ui.main.chat.adapter.ChatMessageInterface
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
+import com.motax.modutaxi.presentation.ui.toProfileBottomSheet
 import com.motax.modutaxi.presentation.util.ChatState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment_chat_room) {
+class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment_chat_room),
+    ChatMessageInterface {
 
     private val chatManager: ChatManager by activityViewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
@@ -36,6 +39,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         CalculateForm.roomId = roomId
         ChatState.inChat = true
         binding.vm = viewModel
+        adapter.setInterface(this)
         binding.rvChat.adapter = adapter
         binding.rvChat.itemAnimator = null
         chatManager.connectChat(roomId)
@@ -74,6 +78,8 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
                     is ChatRoomEvent.ShowToastMessage -> showToastMessage(it.msg)
                     is ChatRoomEvent.NavigateToHome -> findNavController().toHome()
                     is ChatRoomEvent.ShowParticipantPopUp -> showParticipantPopup()
+                    is ChatRoomEvent.ShowLoading -> showLoading(requireContext())
+                    is ChatRoomEvent.DismissLoading -> dismissLoading()
                 }
             }
         }
@@ -109,7 +115,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         )
     }
 
-    private fun exitRoom(){
+    private fun exitRoom() {
         viewModel.exitRoom()
     }
 
@@ -129,6 +135,14 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         super.onDestroyView()
         ChatState.inChat = false
         chatManager.disconnectChat()
+    }
+
+    override fun enlargeImage(url: String) {
+        findNavController().toImageEnLarge(url)
+    }
+
+    override fun showProfile(id: Long) {
+        findNavController().toProfileBottomSheet(id, roomId)
     }
 
     private fun NavController.toCalculateSplash() {
@@ -151,9 +165,15 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
         navigate(action)
     }
 
-    private fun NavController.toEditRoom(){
-        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToEditRoomFragment(roomId)
+    private fun NavController.toEditRoom() {
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToManageTaxiPotFragment(roomId)
         navigate(action)
     }
+
+    private fun NavController.toImageEnLarge(url: String) {
+        val action = ChatRoomFragmentDirections.actionChatRoomFragmentToImageEnlargeFragment(url)
+        navigate(action)
+    }
+
 
 }

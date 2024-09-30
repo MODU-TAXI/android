@@ -2,9 +2,7 @@ package com.motax.modutaxi.presentation.ui.main.showparty.bottomsheet
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -17,11 +15,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.motax.modutaxi.presentation.R
+import com.motax.modutaxi.presentation.customview.FilterPopUpMenu
 import com.motax.modutaxi.presentation.databinding.FragmentTaxipotListBottomSheetBinding
 import com.motax.modutaxi.presentation.ui.main.showparty.ShowPartyViewModel
+import com.motax.modutaxi.presentation.ui.main.showparty.TaxiPotSortType
 import com.motax.modutaxi.presentation.ui.main.showparty.adapter.TaxiPotFilterAdapter
 import com.motax.modutaxi.presentation.ui.main.showparty.adapter.TaxiPotListAdapter
-import com.motax.modutaxi.presentation.util.Constants.TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,6 +33,7 @@ class TaxiPotListBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var taxiPotAdapter: TaxiPotListAdapter? = null
     private var taxiPotFilterAdapter: TaxiPotFilterAdapter? = null
+    private val popupLocation = IntArray(2)
 
     fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -64,9 +64,25 @@ class TaxiPotListBottomSheetFragment : BottomSheetDialogFragment() {
         binding.rvFilter.adapter = taxiPotFilterAdapter
         binding.rvTaxipotList.adapter = taxiPotAdapter
         binding.rvFilter.itemAnimator = null
+        binding.tvSortingOption.setOnClickListener {
+            showPopup()
+        }
 
         setBottomSheetState()
         initStateObserve()
+    }
+
+    private fun showPopup() {
+        val sortType = binding.tvSortingOption
+        sortType.getLocationOnScreen(popupLocation)
+        val left = popupLocation[0] + sortType.left.toFloat()
+        val top = popupLocation[1] + sortType.bottom.toFloat()
+        FilterPopUpMenu(requireContext(), viewModel.bottomSheetUiState.value.sortType, ::setFilter).show(left.toInt(),top.toInt())
+    }
+
+    private fun setFilter(sortType: TaxiPotSortType) {
+        viewModel.setFilter(sortType)
+        binding.tvSortingOption.text = sortType.uiText
     }
 
     private fun initStateObserve() {
@@ -111,8 +127,8 @@ class TaxiPotListBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         repeatOnStarted {
-            viewModel.bottomSheetUiState.collect{
-                if(it.isImminent){
+            viewModel.bottomSheetUiState.collect {
+                if (it.isImminent) {
                     binding.btnDeadlineImminent.setImageResource(R.drawable.ic_eclipse_fill)
                 } else {
                     binding.btnDeadlineImminent.setImageResource(R.drawable.ic_eclipse_no_fill)

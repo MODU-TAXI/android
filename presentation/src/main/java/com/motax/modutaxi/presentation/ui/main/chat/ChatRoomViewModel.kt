@@ -12,6 +12,7 @@ import com.motax.modutaxi.presentation.ui.main.chat.model.UiChatMessage
 import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.util.Constants.TAG
+import com.motax.modutaxi.presentation.util.extractMessageFromErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -45,6 +46,8 @@ sealed class ChatRoomEvent {
     data object ShowParticipantPopUp: ChatRoomEvent()
     data object NavigateToHome: ChatRoomEvent()
     data class ShowToastMessage(val msg: String): ChatRoomEvent()
+    data object ShowLoading: ChatRoomEvent()
+    data object DismissLoading: ChatRoomEvent()
 }
 
 @HiltViewModel
@@ -85,10 +88,10 @@ class ChatRoomViewModel @Inject constructor(
                         roomStatus = it.roomStatus
                     )
                 }
-
             }.onFailure {
                 viewModelScope.launch {
-                    _event.emit(ChatRoomEvent.NavigateToBack)
+                    _event.emit(ChatRoomEvent.ShowToastMessage("정산이 완료되어 방이 삭제되었습니다"))
+                    _event.emit(ChatRoomEvent.NavigateToHome)
                 }
             }
         }
@@ -109,7 +112,8 @@ class ChatRoomViewModel @Inject constructor(
 
             }.onFailure {
                 viewModelScope.launch {
-                    _event.emit(ChatRoomEvent.NavigateToBack)
+                    _event.emit(ChatRoomEvent.ShowToastMessage("정산이 완료되어 방이 삭제되었습니다"))
+                    _event.emit(ChatRoomEvent.NavigateToHome)
                 }
             }
         }
@@ -160,6 +164,11 @@ class ChatRoomViewModel @Inject constructor(
                         roomStatus = "AFTER_PAYMENT"
                     )
                 }
+                viewModelScope.launch {
+                    _event.emit(ChatRoomEvent.ShowToastMessage("정산이 완료되어 방이 삭제되었습니다"))
+                    _event.emit(ChatRoomEvent.NavigateToHome)
+                }
+
             }
         }
 
@@ -188,7 +197,13 @@ class ChatRoomViewModel @Inject constructor(
                             )
                         }
                     }.onFailure {
-
+                            th ->
+                        when(th){
+                            is retrofit2.HttpException -> {
+                                val message = extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                                _event.emit(ChatRoomEvent.ShowToastMessage(message))
+                            }
+                        }
                     }
                 }
             }
@@ -244,23 +259,47 @@ class ChatRoomViewModel @Inject constructor(
 
     fun deleteRoom(roomId: Long){
         viewModelScope.launch {
+            _event.emit(ChatRoomEvent.ShowLoading)
             repository.deleteRoom(roomId).onSuccess {
                 _event.emit(ChatRoomEvent.ShowToastMessage("방이 삭제 되었습니다"))
                 _event.emit(ChatRoomEvent.NavigateToHome)
+                _event.emit(ChatRoomEvent.DismissLoading)
             }.onFailure {
-
+                    th ->
+                when(th){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                        _event.emit(ChatRoomEvent.ShowToastMessage(message))
+                    }
+                }
+                _event.emit(ChatRoomEvent.DismissLoading)
             }
         }
     }
 
     fun exitRoom(){
         viewModelScope.launch {
+            _event.emit(ChatRoomEvent.ShowLoading)
             repository.exitRoom().onSuccess {
                 _event.emit(ChatRoomEvent.ShowToastMessage("방을 나갔습니다"))
                 _event.emit(ChatRoomEvent.NavigateToHome)
+                _event.emit(ChatRoomEvent.DismissLoading)
             }.onFailure {
-
+                    th ->
+                when(th){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                        _event.emit(ChatRoomEvent.ShowToastMessage(message))
+                    }
+                }
+                _event.emit(ChatRoomEvent.DismissLoading)
             }
+        }
+    }
+
+    fun navigateToBack(){
+        viewModelScope.launch {
+            _event.emit(ChatRoomEvent.NavigateToBack)
         }
     }
 }

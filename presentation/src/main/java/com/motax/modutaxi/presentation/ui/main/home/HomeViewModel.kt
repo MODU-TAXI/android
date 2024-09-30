@@ -10,6 +10,7 @@ import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxi
 import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -33,6 +34,7 @@ data class HomeUiState(
     val name: String = "",
     val matchingCount: String = "",
     val savePrice: String = "",
+    val isCertified: Boolean = true,
     val currentMonth: String = LocalDate.now().monthValue.toString()
 )
 
@@ -42,6 +44,7 @@ sealed class HomeEvent {
     data class NavigateToMatchDetail(val id: Long) : HomeEvent()
     data object NavigateToNotification : HomeEvent()
     data object NavigateToShowPartySearch : HomeEvent()
+    data object ScrollLiveTaxiPot: HomeEvent()
 }
 
 @HiltViewModel
@@ -57,18 +60,34 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     init{
-        getNameAndMatchingCount()
+        getUserInfo()
         getMonthData()
     }
 
-    private fun getNameAndMatchingCount(){
+    private fun getUserInfo() {
         viewModelScope.launch {
+
             _uiState.update { state ->
                 state.copy(
                     name = authRepository.getMemberName().toString(),
                     matchingCount = authRepository.getMatchingCount().toString() + "회",
                     nickname = authRepository.getMemberNickName().toString()
                 )
+            }
+            authRepository.getMemberId()?.let {
+                repository.getMemberProfile(it).onSuccess {
+                    _uiState.update { state ->
+                        state.copy(
+                            nickname = it.nickname,
+                            matchingCount = it.matchingCount.toString() + "회",
+                            isCertified = it.certified
+                        )
+                    }
+
+                    getRealtimeTaxiPots()
+                }.onFailure {
+
+                }
             }
         }
     }
@@ -113,9 +132,16 @@ class HomeViewModel @Inject constructor(
                                 departureSpot = responseItem.departureName,
                                 arrivalSpot = responseItem.arrivalName,
                                 departTime = responseItem.departureTime,
-                                navigateToMatchDetail = ::navigateToMatchDetail
+                                navigateToMatchDetail = ::navigateToMatchDetail,
+                                roomTags = responseItem.roomTagBitMaskList
                             )
-                        },
+                        }.filter {
+                            if (!uiState.value.isCertified) {
+                                !it.roomTags.contains("STUDENT_CERTIFICATION")
+                            } else {
+                                true
+                            }
+                        }
                     )
                 }
 
@@ -123,6 +149,10 @@ class HomeViewModel @Inject constructor(
                 .onFailure { throwable ->
                     Log.e("debugging", "$throwable")
                 }
+
+            delay(100)
+            _event.emit(HomeEvent.ScrollLiveTaxiPot)
+
         }
     }
 

@@ -8,5 +8,6 @@ data class UiRealtimeTaxiPotItem(
     val departureSpot: String = "",
     val arrivalSpot: String = "",
     val departTime: String = "",
-    val navigateToMatchDetail: (Long) -> Unit
+    val navigateToMatchDetail: (Long) -> Unit,
+    val roomTags: List<String> = emptyList()
 )

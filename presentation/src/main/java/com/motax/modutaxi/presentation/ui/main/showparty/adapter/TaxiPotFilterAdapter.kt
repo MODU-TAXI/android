@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.showparty.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.databinding.ItemTaxipotFilterBinding
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListFilterItem
+import com.motax.modutaxi.presentation.util.Constants.TAG
 
 class TaxiPotFilterAdapter :
     ListAdapter<UiTaxiPotListFilterItem, TaxiPotFilterViewHolder>(diffCallback) {

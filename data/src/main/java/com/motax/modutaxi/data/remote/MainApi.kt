@@ -118,6 +118,11 @@ interface MainApi {
         @Path("roomId") roomId: Long
     ): TaxiPotWaitingMembers
 
+    @DELETE("/api/rooms/{roomId}/waiting")
+    suspend fun cancelWaitingMembers(
+        @Path("roomId") roomId: Long
+    ): Unit
+
     @POST("/api/rooms/{roomId}/apply")
     suspend fun enterTaxiPot(
         @Path("roomId") roomId: Long
@@ -175,7 +180,7 @@ interface MainApi {
     @DELETE("api/members")
     suspend fun deleteMember()
 
-    @POST("api/logout")
+    @POST("api/members/logout")
     suspend fun logout()
 
     @POST("api/reports")
@@ -245,4 +250,11 @@ interface MainApi {
     suspend fun paymentComplete(
         @Query("roomId") roomId : Long
     ): Unit
+
+    @GET("/api/spots/map")
+    suspend fun getRadiusSpot(
+        @Query("count") count: Int,
+        @Query("searchLongitude") longitude: Double,
+        @Query("searchLatitude") latitude: Double
+    ): GetNearSpotResponse
 }

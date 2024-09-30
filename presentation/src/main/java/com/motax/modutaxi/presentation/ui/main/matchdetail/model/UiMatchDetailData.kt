@@ -1,6 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.matchdetail.model
 
-import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.RoomTag
 import com.naver.maps.geometry.LatLng
 
 data class UiMatchDetailData(

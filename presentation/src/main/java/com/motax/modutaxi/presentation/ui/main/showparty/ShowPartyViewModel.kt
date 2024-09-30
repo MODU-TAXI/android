@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.AuthRepository
 import com.motax.modutaxi.domain.repository.MainRepository
-import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.RoomTag
 import com.motax.modutaxi.presentation.ui.main.showparty.mapper.toUiTaxiPotListItem
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListFilterItem
 import com.motax.modutaxi.presentation.ui.main.showparty.model.UiTaxiPotListItem
@@ -29,8 +29,9 @@ data class ShowPartyUiState(
     val curZoomLevel: Double = 0.0,
     val isFromSearch: Boolean = false,
     val searchKeyword: String = "",
+    val isCertified: Boolean = true,
     val taxiPotList: List<UiTaxiPotListItem> = emptyList(),
-    val selectedTaxiPotData: UiTaxiPotListItem = UiTaxiPotListItem() {}
+    val selectedTaxiPotData: UiTaxiPotListItem = UiTaxiPotListItem() {},
 )
 
 data class ShowPartyBottomSheetUiState(
@@ -39,7 +40,8 @@ data class ShowPartyBottomSheetUiState(
     val spotFilter: String = "",
     val isImminent: Boolean = false,
     val roomTagFilter: List<RoomTag> = emptyList(),
-    val showBottomSheet: Boolean = true
+    val showBottomSheet: Boolean = true,
+    val isCertified: Boolean = true
 )
 
 sealed class ShowPartyEvent {
@@ -88,7 +90,6 @@ class ShowPartyViewModel @Inject constructor(
 
     init {
         setBottomSheetFilter()
-        getNickName()
     }
 
     fun changeBottomSheetState(state: Int) {
@@ -99,24 +100,47 @@ class ShowPartyViewModel @Inject constructor(
         bottomSheetHeight.value = height
     }
 
-    private fun getNickName(){
+    fun setFilter(sortType: TaxiPotSortType) {
+        _bottomSheetUiState.update { state ->
+            state.copy(
+                sortType = sortType
+            )
+        }
+        getTaxiPotData()
+    }
+
+    fun getUserInfo() {
         viewModelScope.launch {
             nickName.value = authRepository.getMemberNickName().toString()
+            authRepository.getMemberId()?.let {
+                repository.getMemberProfile(it).onSuccess {
+                    _uiState.update { state ->
+                        state.copy(
+                            isCertified = it.certified
+                        )
+                    }
+
+                    setBottomSheetFilter()
+                }.onFailure {
+
+                }
+            }
         }
     }
 
     private fun setBottomSheetFilter() {
         _bottomSheetUiState.update { state ->
             state.copy(
-                filterList = listOf(
+                filterList = if (uiState.value.isCertified) listOf(
                     UiTaxiPotListFilterItem(
-                        RoomTag.STUDENT_CERTIFICATION, false,::setFilter
+                        RoomTag.STUDENT_CERTIFICATION, false, ::setFilter
                     ),
                     UiTaxiPotListFilterItem(
-                        RoomTag.ONLY_WOMAN, false,::setFilter
+                        RoomTag.QUIET, false, ::setFilter
                     ),
+                ) else listOf(
                     UiTaxiPotListFilterItem(
-                        RoomTag.MANNER, false,::setFilter
+                        RoomTag.QUIET, false, ::setFilter
                     ),
                 )
             )
@@ -156,7 +180,7 @@ class ShowPartyViewModel @Inject constructor(
         }
     }
 
-    fun setIsImminent(){
+    fun setIsImminent() {
         _bottomSheetUiState.update { state ->
             state.copy(
                 isImminent = !bottomSheetUiState.value.isImminent
@@ -166,7 +190,7 @@ class ShowPartyViewModel @Inject constructor(
         getTaxiPotData()
     }
 
-    fun setSpotFilter(id: Long, name: String){
+    fun setSpotFilter(id: Long, name: String) {
         spotFilterId = id
         _bottomSheetUiState.update { state ->
             state.copy(
@@ -177,7 +201,7 @@ class ShowPartyViewModel @Inject constructor(
         getTaxiPotData()
     }
 
-    fun cancelSpotFilter(){
+    fun cancelSpotFilter() {
         spotFilterId = 0
         _bottomSheetUiState.update { state ->
             state.copy(
@@ -229,10 +253,15 @@ class ShowPartyViewModel @Inject constructor(
                             data.toUiTaxiPotListItem(
                                 ::navigateToMatchDetail
                             )
+                        }.filter {
+                            if (!uiState.value.isCertified) {
+                                !it.roomTags.contains(RoomTag.STUDENT_CERTIFICATION)
+                            } else {
+                                true
+                            }
                         }
                     )
                 }
-
                 _event.emit(ShowPartyEvent.SetMarkers(uiState.value.taxiPotList))
             }.onFailure {
                 Log.d(TAG, it.message.toString())
@@ -305,5 +334,5 @@ class ShowPartyViewModel @Inject constructor(
 enum class TaxiPotSortType(val text: String, val uiText: String) {
     NEW("NEW", "최신순"),
     DISTANCE("DISTANCE", "거리순"),
-    ENDTIME("ENDTIME", "시간순")
+    ENDTIME("ENDTIME", "최근대화")
 }

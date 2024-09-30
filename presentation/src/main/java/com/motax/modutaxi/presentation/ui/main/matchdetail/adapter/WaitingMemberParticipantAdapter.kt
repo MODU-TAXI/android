@@ -37,6 +37,10 @@ class WaitingMemberParticipantViewHolder(private val binding: ItemWaitingMemberP
 
         binding.item = item
 
+        binding.root.setOnClickListener {
+            if (!item.thisIsMe) item.showProfile(item.memberId)
+        }
+
         if (item.isEmpty) {
             binding.tvRoomManagerNickname.setTextColor(
                 ContextCompat.getColor(

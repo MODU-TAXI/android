@@ -5,7 +5,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.google.android.material.chip.ChipGroup
 import com.motax.modutaxi.presentation.R
-import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.RoomTag
 
 
 @BindingAdapter("taxiPotFilterChips")
@@ -25,6 +25,13 @@ fun setTaxiPotFilterChips(chipGroup: ChipGroup, items: List<RoomTag>) {
                     setTextColor(ContextCompat.getColor(chipGroup.context, R.color.mx_sub500))
                     setPadding(20, 10, 20, 10)
                 }
+
+                chip.text = it.uiText
+                chipGroup.addView(chip)
+            }
+
+            RoomTag.EMPTY -> {
+
             }
 
             else -> {
@@ -35,9 +42,9 @@ fun setTaxiPotFilterChips(chipGroup: ChipGroup, items: List<RoomTag>) {
                     setPadding(20, 10, 20, 10)
                 }
 
+                chip.text = it.uiText
+                chipGroup.addView(chip)
             }
         }
-        chip.text = it.uiText
-        chipGroup.addView(chip)
     }
 }

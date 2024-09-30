@@ -105,6 +105,12 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
+    fun navigateToBack(){
+        viewModelScope.launch {
+            _event.emit(PaymentEvent.NavigateBack)
+        }
+    }
+
     fun copyClipBoard() {
         viewModelScope.launch {
             _event.emit(PaymentEvent.CopyClipBoard(uiState.value.accountString))

@@ -8,3 +8,8 @@ internal fun NavController.toMatchDetail(id: Long){
     val action = MainNavDirections.globalActionToMatchDetailFragment(id)
     navigate(action)
 }
+
+internal fun NavController.toProfileBottomSheet(id: Long, roomId: Long){
+    val action = MainNavDirections.gloablActionToProfileBottomsheet(id, roomId)
+    navigate(action)
+}

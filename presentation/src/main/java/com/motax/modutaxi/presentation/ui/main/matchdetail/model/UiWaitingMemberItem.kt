@@ -9,4 +9,5 @@ data class UiWaitingMemberItem (
     val thisIsMe: Boolean = false,
     val isEmpty: Boolean = false,
     val acceptParticipant: (Long) -> Unit,
+    val showProfile: (Long) -> Unit
 )

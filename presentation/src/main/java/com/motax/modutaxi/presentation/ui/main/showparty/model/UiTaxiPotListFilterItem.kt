@@ -1,6 +1,6 @@
 package com.motax.modutaxi.presentation.ui.main.showparty.model
 
-import com.motax.modutaxi.presentation.ui.main.createparty.RoomTag
+import com.motax.modutaxi.presentation.ui.main.managetaxipot.RoomTag
 
 data class UiTaxiPotListFilterItem(
     val filter: RoomTag = RoomTag.EMPTY,

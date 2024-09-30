@@ -7,5 +7,6 @@ data class UiParticipantItem(
     val matchingCount: String = "",
     val certified: Boolean = false,
     val thisIsMe: Boolean = false,
-    val isEmpty: Boolean = false
+    val isEmpty: Boolean = false,
+    val showProfile: (Long) -> Unit
 )

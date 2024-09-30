@@ -1,6 +1,5 @@
 package com.motax.modutaxi.presentation.ui.main.matchdetail
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -10,14 +9,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.gson.Gson
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
+import com.motax.modutaxi.presentation.customview.EditDeletePopUpMenu
+import com.motax.modutaxi.presentation.customview.ExitPopUpMenu
 import com.motax.modutaxi.presentation.databinding.FragmentMatchDetailBinding
 import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.ParticipantAdapter
 import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.WaitingMemberAdapter
 import com.motax.modutaxi.presentation.ui.main.matchdetail.adapter.WaitingMemberParticipantAdapter
+import com.motax.modutaxi.presentation.ui.toProfileBottomSheet
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.CameraUpdate
@@ -37,6 +38,7 @@ class MatchDetailFragment :
     private val args: MatchDetailFragmentArgs by navArgs()
     private val pathList = mutableListOf<PathOverlay>()
     private val roomId by lazy { args.id }
+    private val popupLocation = IntArray(2)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,6 +83,7 @@ class MatchDetailFragment :
         }
         viewModel.getTaxiPotData(roomId)
         initStateObserve()
+        initEventObserve()
         setBtnClickListener()
     }
 
@@ -122,6 +125,22 @@ class MatchDetailFragment :
         }
     }
 
+    private fun initEventObserve() {
+        repeatOnStarted {
+            viewModel.event.collect {
+                when (it) {
+                    is MatchDetailEvent.ShowLoading -> showLoading(requireContext())
+                    is MatchDetailEvent.DismissLoading -> dismissLoading()
+                    is MatchDetailEvent.ShowPopUp -> showPopup()
+                    is MatchDetailEvent.ShowParticipantPopUp -> showParticipantPopup()
+                    is MatchDetailEvent.ShowToastMessage -> showToastMessage(it.msg)
+                    is MatchDetailEvent.NavigateToBack -> findNavController().navigateUp()
+                    is MatchDetailEvent.ShowProfile -> findNavController().toProfileBottomSheet(it.id, it.roomId)
+                }
+            }
+        }
+    }
+
     private fun setBtnClickListener() {
         binding.btnParticipate.setOnClickListener {
             when (viewModel.uiState.value.roomState) {
@@ -132,6 +151,10 @@ class MatchDetailFragment :
 
                 RoomState.NOTHING -> {
                     viewModel.enterTaxiPot()
+                }
+
+                RoomState.WAITING -> {
+                    viewModel.cancelWaitingMember(roomId)
                 }
 
                 else -> {}
@@ -149,8 +172,8 @@ class MatchDetailFragment :
         path.coords = list
 
         path.width = 20
-        path.outlineColor = ContextCompat.getColor(requireContext(),R.color.mx_sub500)
-        path.color = ContextCompat.getColor(requireContext(),R.color.mx_sub500)
+        path.outlineColor = ContextCompat.getColor(requireContext(), R.color.mx_sub500)
+        path.color = ContextCompat.getColor(requireContext(), R.color.mx_sub500)
         path.map = naverMap
 
         moveCamera(
@@ -171,9 +194,48 @@ class MatchDetailFragment :
         naverMap.moveCamera(cameraUpdate)
     }
 
+    private fun showPopup() {
+        val moreBtn = binding.btnMore
+        moreBtn.getLocationOnScreen(popupLocation)
+        val left = popupLocation[0] + moreBtn.left.toFloat()
+        val top = popupLocation[1] + moreBtn.bottom.toFloat()
+        EditDeletePopUpMenu(requireContext(), ::editRoom, ::deleteRoom).show(
+            left.toInt(),
+            top.toInt()
+        )
+    }
+
+    private fun showParticipantPopup() {
+        val moreBtn = binding.btnMore
+        moreBtn.getLocationOnScreen(popupLocation)
+        val left = popupLocation[0] + moreBtn.left.toFloat()
+        val top = popupLocation[1] + moreBtn.bottom.toFloat()
+        ExitPopUpMenu(requireContext(), ::exitRoom).show(
+            left.toInt(),
+            top.toInt()
+        )
+    }
+
+    private fun exitRoom() {
+        viewModel.exitRoom()
+    }
+
+    private fun editRoom() {
+        findNavController().toEditRoom(roomId)
+    }
+
+    private fun deleteRoom() {
+        viewModel.deleteRoom(roomId)
+    }
 
     private fun NavController.toChatRoom(id: Long) {
         val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToChatRoomFragment(id)
+        navigate(action)
+    }
+
+    private fun NavController.toEditRoom(id: Long) {
+        val action =
+            MatchDetailFragmentDirections.actionMatchDetailFragmentToManageTaxiPotFragment(id)
         navigate(action)
     }
 }

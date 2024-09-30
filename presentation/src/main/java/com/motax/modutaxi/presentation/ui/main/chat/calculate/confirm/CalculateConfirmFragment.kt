@@ -49,6 +49,7 @@ class CalculateConfirmFragment :
 
                     is CalculateConfirmEvent.NavigateToCalculateComplete -> findNavController().toCalculateComplete()
                     is CalculateConfirmEvent.NavigateBack -> findNavController().navigateUp()
+                    is CalculateConfirmEvent.ShowToastMessage -> showToastMessage(it.msg)
                 }
             }
         }
