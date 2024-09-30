@@ -43,6 +43,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(R.layout.fragment_p
                     is PaymentEvent.NavigateBack -> findNavController().navigateUp()
                     is PaymentEvent.CopyClipBoard -> parentViewModel.copyClipBoard(it.accountString)
                     is PaymentEvent.MoveToToss -> moveToToss()
+                    is PaymentEvent.ShowLoading -> showLoading(requireContext())
+                    is PaymentEvent.DismissLoading -> dismissLoading()
+                    is PaymentEvent.ShowToastMessage -> showToastMessage(it.msg)
                 }
             }
         }

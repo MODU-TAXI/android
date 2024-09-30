@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.motax.modutaxi.domain.repository.MainRepository
 import com.motax.modutaxi.presentation.ui.formatNumberWithCommas
+import com.motax.modutaxi.presentation.ui.main.chat.ChatRoomEvent
 import com.motax.modutaxi.presentation.ui.main.chat.model.CalculateForm
 import com.motax.modutaxi.presentation.util.Bank
+import com.motax.modutaxi.presentation.util.extractMessageFromErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +31,9 @@ sealed class PaymentEvent {
     data object NavigateBack : PaymentEvent()
     data class CopyClipBoard(val accountString: String) : PaymentEvent()
     data object MoveToToss : PaymentEvent()
+    data object ShowLoading: PaymentEvent()
+    data object DismissLoading: PaymentEvent()
+    data class ShowToastMessage(val msg: String): PaymentEvent()
 }
 
 @HiltViewModel
@@ -97,10 +102,19 @@ class PaymentViewModel @Inject constructor(
 
     fun paymentComplete() {
         viewModelScope.launch {
+            _event.emit(PaymentEvent.ShowLoading)
             repository.paymentComplete(CalculateForm.roomId).onSuccess {
                 _event.emit(PaymentEvent.NavigateBack)
+                _event.emit(PaymentEvent.DismissLoading)
             }.onFailure {
-
+                    th ->
+                when(th){
+                    is retrofit2.HttpException -> {
+                        val message = extractMessageFromErrorBody(th.response()?.errorBody()?.string())
+                        _event.emit(PaymentEvent.ShowToastMessage(message))
+                    }
+                }
+                _event.emit(PaymentEvent.DismissLoading)
             }
         }
     }

@@ -112,7 +112,6 @@ class HomeViewModel @Inject constructor(
 
     fun getRealtimeTaxiPots() {
         viewModelScope.launch {
-            _event.emit(HomeEvent.ShowLoading)
             repository.getTaxiPotList(
                 filter = mapOf<String, Long>(),
                 page = 0,
