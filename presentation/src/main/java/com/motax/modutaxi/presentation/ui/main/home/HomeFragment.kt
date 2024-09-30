@@ -6,6 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentHomeBinding
@@ -49,6 +50,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     is HomeEvent.NavigateToNotification -> findNavController().toNotification()
                     is HomeEvent.NavigateToShowPartySearch -> findNavController().toShowPartySearch()
                     is HomeEvent.ScrollLiveTaxiPot -> scrollLiveTaxiPots()
+                    is HomeEvent.ShowLoading -> showLoading(requireContext())
+                    is HomeEvent.DismissLoading -> dismissLoading()
                 }
             }
         }

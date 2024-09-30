@@ -37,6 +37,8 @@ sealed class CalculateConfirmEvent {
     data object NavigateToCalculateComplete : CalculateConfirmEvent()
     data object NavigateBack: CalculateConfirmEvent()
     data class ShowToastMessage(val msg: String): CalculateConfirmEvent()
+    data object ShowLoading: CalculateConfirmEvent()
+    data object DismissLoading: CalculateConfirmEvent()
 }
 
 @HiltViewModel
@@ -183,6 +185,7 @@ class CalculateConfirmViewModel @Inject constructor(
 
     fun requestCalculate() {
         viewModelScope.launch {
+            _events.emit(CalculateConfirmEvent.ShowLoading)
             repository.requestCalculate(
                 CalculateForm.roomId,
                 CalculateForm.accountId,
@@ -191,6 +194,7 @@ class CalculateConfirmViewModel @Inject constructor(
                 uiState.value.nonCalculateMembers.map { it.memberId }
             ).onSuccess {
                 _events.emit(CalculateConfirmEvent.NavigateToCalculateComplete)
+                _events.emit(CalculateConfirmEvent.DismissLoading)
             }.onFailure {
                     th ->
                 when(th){
@@ -200,6 +204,7 @@ class CalculateConfirmViewModel @Inject constructor(
                         getParticipants()
                     }
                 }
+                _events.emit(CalculateConfirmEvent.DismissLoading)
             }
         }
     }

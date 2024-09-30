@@ -45,6 +45,8 @@ sealed class HomeEvent {
     data object NavigateToNotification : HomeEvent()
     data object NavigateToShowPartySearch : HomeEvent()
     data object ScrollLiveTaxiPot: HomeEvent()
+    data object ShowLoading: HomeEvent()
+    data object DismissLoading: HomeEvent()
 }
 
 @HiltViewModel
@@ -66,7 +68,6 @@ class HomeViewModel @Inject constructor(
 
     private fun getUserInfo() {
         viewModelScope.launch {
-
             _uiState.update { state ->
                 state.copy(
                     name = authRepository.getMemberName().toString(),
@@ -111,6 +112,7 @@ class HomeViewModel @Inject constructor(
 
     fun getRealtimeTaxiPots() {
         viewModelScope.launch {
+            _event.emit(HomeEvent.ShowLoading)
             repository.getTaxiPotList(
                 filter = mapOf<String, Long>(),
                 page = 0,

@@ -1,5 +1,6 @@
 package com.motax.modutaxi.presentation.ui.splash
 
+import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -18,10 +19,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        repeatOnStarted {
-            delay(2000)
-            viewModel.checkLoginType()
-        }
+        binding.splash.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationCancel(animation: Animator) {}
+            override fun onAnimationEnd(animation: Animator) {
+                viewModel.checkLoginType()
+            }
+
+            override fun onAnimationRepeat(animation: Animator) {}
+            override fun onAnimationStart(animation: Animator) {}
+        })
+
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {

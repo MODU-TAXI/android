@@ -5,6 +5,8 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Window
+import com.bumptech.glide.Glide
+import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.databinding.DialogLoadingBinding
 
 class LoadingDialog(context : Context) : Dialog(context) {
@@ -15,6 +17,10 @@ class LoadingDialog(context : Context) : Dialog(context) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DialogLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Glide.with(context)
+            .load(R.raw.loading)
+            .into(binding.loading)
         setCanceledOnTouchOutside(false)
         setCancelable(false)
         window!!.setBackgroundDrawable(ColorDrawable())
@@ -22,7 +28,10 @@ class LoadingDialog(context : Context) : Dialog(context) {
     }
 
     override fun show() {
-        if(!this.isShowing) super.show()
+        if(!this.isShowing) {
+            super.show()
+
+        }
     }
 
 }

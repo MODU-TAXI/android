@@ -9,6 +9,7 @@ import com.motax.modutaxi.domain.usecase.LoginUseCase
 import com.motax.modutaxi.domain.usecase.MemberCheckUseCase
 import com.motax.modutaxi.presentation.service.MyFirebaseMessagingService
 import com.motax.modutaxi.presentation.ui.intro.signup.SignUpData
+import com.motax.modutaxi.presentation.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -53,7 +54,7 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is BaseState.Error -> {
-                        if(it.code == "400"){
+                        if(it.code == "MEMBER_004"){
                             SignUpData.setSignUpKey(it.message)
                             _event.emit(LoginEvent.NavigateToOnBoard)
                         } else {
