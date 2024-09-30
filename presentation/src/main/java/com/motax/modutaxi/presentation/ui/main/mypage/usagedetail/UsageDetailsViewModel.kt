@@ -109,7 +109,9 @@ class UsageDetailsViewModel @Inject constructor(
 
     fun navigateToOwnerProfile(){
         viewModelScope.launch {
-            _event.emit(UsageDetailEvent.NavigateToProfile(uiState.value.owner.id))
+            if(!uiState.value.owner.me){
+                _event.emit(UsageDetailEvent.NavigateToProfile(uiState.value.owner.id))
+            }
         }
     }
 

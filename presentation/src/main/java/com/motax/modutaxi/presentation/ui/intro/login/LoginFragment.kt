@@ -63,6 +63,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         binding.btnLoginKakao.setOnClickListener {
             kakaoLogin()
         }
+
+        binding.btnLoginGoogle.setOnClickListener {
+            googleLogin()
+        }
     }
 
     private fun initEventObserve() {
@@ -152,7 +156,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     fun googleLogin() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("172127911640-d623o9op12s7gevmdp5v0n5138g90non.apps.googleusercontent.com")
+            .requestServerAuthCode("172127911640-do76efuepfirgolsj7kubhgi0kkm7bf0.apps.googleusercontent.com")
+            .requestIdToken("172127911640-do76efuepfirgolsj7kubhgi0kkm7bf0.apps.googleusercontent.com")
             .requestEmail()
             .build()
         val googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
@@ -167,7 +172,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             try {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 val account = task.getResult(ApiException::class.java)
-                Log.d(TAG, account.email.toString())
+                Log.d(TAG, account.idToken.toString())
                 viewModel.login(account.idToken.toString(),"GOOGLE")
             } catch (e: ApiException) {
                 Log.d(TAG, e.message.toString())
