@@ -10,6 +10,7 @@ import com.motax.modutaxi.presentation.ui.main.home.mapper.toUiParticipatingTaxi
 import com.motax.modutaxi.presentation.ui.main.home.model.UiParticipatingTaxiPot
 import com.motax.modutaxi.presentation.ui.main.home.model.UiRealtimeTaxiPotItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -43,6 +44,7 @@ sealed class HomeEvent {
     data class NavigateToMatchDetail(val id: Long) : HomeEvent()
     data object NavigateToNotification : HomeEvent()
     data object NavigateToShowPartySearch : HomeEvent()
+    data object ScrollLiveTaxiPot: HomeEvent()
 }
 
 @HiltViewModel
@@ -147,6 +149,10 @@ class HomeViewModel @Inject constructor(
                 .onFailure { throwable ->
                     Log.e("debugging", "$throwable")
                 }
+
+            delay(100)
+            _event.emit(HomeEvent.ScrollLiveTaxiPot)
+
         }
     }
 

@@ -43,9 +43,9 @@
         android:label="CreatePartyFragment">
 
         <argument
-            android:defaultValue="-1L"
             android:name="roomId"
-            app:argType="long"/>
+            android:defaultValue="-1L"
+            app:argType="long" />
 
         <action
             android:id="@+id/action_manageTaxiPotFragment_to_departureMapFragment"
@@ -55,7 +55,9 @@
             app:destination="@id/arrivalSearchFragment" />
         <action
             android:id="@+id/action_manageTaxiPotFragment_to_matchDetailFragment"
-            app:destination="@id/matchDetailFragment" />
+            app:destination="@id/matchDetailFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
@@ -106,25 +108,25 @@
         <action
             android:id="@+id/action_mypage_to_edit_nick"
             app:destination="@id/fragment_mypage_edit_nickname"
-            app:popUpTo="@id/myPageFragment"/>
+            app:popUpTo="@id/myPageFragment" />
         <action
             android:id="@+id/action_myPage_to_update_profile"
             app:destination="@id/myPageIdentificationFragment" />
         <action
             android:id="@+id/action_myPage_to_authorize_school"
-            app:destination="@id/myPageEnterEmailFragment"/>
+            app:destination="@id/myPageEnterEmailFragment" />
         <action
             android:id="@+id/action_myPage_to_usage_history"
-            app:destination="@id/usageHistoryFragment"/>
+            app:destination="@id/usageHistoryFragment" />
         <action
             android:id="@+id/action_myPage_to_inquiry"
-            app:destination="@id/inquiryFragment"/>
+            app:destination="@id/inquiryFragment" />
         <action
             android:id="@+id/action_myPage_to_withdrawal"
-            app:destination="@id/withdrawalExplanationFragment"/>
+            app:destination="@id/withdrawalExplanationFragment" />
         <action
             android:id="@+id/action_myPage_to_account"
-            app:destination="@id/accountFragment"/>
+            app:destination="@id/accountFragment" />
     </fragment>
 
     <fragment
@@ -138,8 +140,7 @@
 
         <action
             android:id="@+id/action_details_to_history"
-            app:destination="@id/usageHistoryFragment">
-        </action>
+            app:destination="@id/usageHistoryFragment"></action>
 
     </fragment>
 
@@ -149,14 +150,14 @@
         android:label="UsageHistoryFragment">
         <action
             android:id="@+id/action_history_to_detail"
-            app:destination="@id/usageDetailsFragment"/>
+            app:destination="@id/usageDetailsFragment" />
     </fragment>
 
 
     <fragment
         android:id="@+id/inquiryFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.inquiry.InquiryFragment"
-        android:label="InquiryFragment"/>
+        android:label="InquiryFragment" />
 
     <fragment
         android:id="@+id/myPageEnterEmailFragment"
@@ -164,7 +165,7 @@
         android:label="EditEmailFragment">
         <action
             android:id="@+id/action_emailAuthFragment_to_emailAuthFragment"
-            app:destination="@id/myPageEmailAuthFragment"/>
+            app:destination="@id/myPageEmailAuthFragment" />
     </fragment>
 
     <fragment
@@ -180,7 +181,7 @@
     <fragment
         android:id="@+id/fragment_mypage_edit_nickname"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.editnick.MyPageEditNickFragment"
-        android:label="EditNicknameFragment"/>
+        android:label="EditNicknameFragment" />
     <fragment
         android:id="@+id/matchDetailFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.matchdetail.MatchDetailFragment"
@@ -203,11 +204,11 @@
 
     <action
         android:id="@+id/global_action_to_matchDetailFragment"
-        app:destination="@id/matchDetailFragment"/>
+        app:destination="@id/matchDetailFragment" />
     <fragment
         android:id="@+id/showPartySearchFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.showparty.search.ShowPartySearchFragment"
-        android:label="ShowPartySearchFragment" >
+        android:label="ShowPartySearchFragment">
         <action
             android:id="@+id/action_showPartySearchFragment_to_showPartyFragment"
             app:destination="@id/showPartyFragment" />
@@ -233,7 +234,7 @@
             android:id="@+id/action_chatRoomFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="false"/>
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_chatRoomFragment_to_imageEnlargeFragment"
             app:destination="@id/imageEnlargeFragment" />
@@ -253,7 +254,7 @@
     <fragment
         android:id="@+id/myPagePhoneAuthFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.phoneauth.MyPagePhoneAuthorization"
-        android:label="myPagePhoneAuthorization"/>
+        android:label="myPagePhoneAuthorization" />
 
     <fragment
         android:id="@+id/myPageIdentificationFragment"
@@ -270,7 +271,7 @@
         android:label="explanation">
         <action
             android:id="@+id/action_explanation_to_reason"
-            app:destination="@id/withdrawalReasonFragment"/>
+            app:destination="@id/withdrawalReasonFragment" />
 
     </fragment>
 
@@ -280,7 +281,7 @@
         android:label="reason">
         <action
             android:id="@+id/action_reason_to_confirm"
-            app:destination="@id/withdrawalConfirmFragment"/>
+            app:destination="@id/withdrawalConfirmFragment" />
     </fragment>
 
     <fragment
@@ -289,14 +290,13 @@
         android:label="confirm">
         <action
             android:id="@+id/action_confirm_to_complete"
-            app:destination="@id/withdrawalCompleteFragment"/>
+            app:destination="@id/withdrawalCompleteFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/withdrawalCompleteFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.withdrawal.complete.CompleteFragment"
-        android:label="complete">
-    </fragment>
+        android:label="complete"></fragment>
 
     <fragment
         android:id="@+id/reportFragment"
@@ -304,17 +304,16 @@
         android:label="report">
         <argument
             android:name="targetId"
-            app:argType="long"/>
+            app:argType="long" />
         <argument
             android:name="roomId"
-            app:argType="long"/>
+            app:argType="long" />
     </fragment>
 
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.mypage.account.AccountFragment"
-        android:label="account">
-    </fragment>
+        android:label="account"></fragment>
 
     <fragment
         android:id="@+id/notificationFragment"
@@ -323,13 +322,13 @@
 
         <action
             android:id="@+id/action_notification_to_matchdetail"
-            app:destination="@id/matchDetailFragment"/>
+            app:destination="@id/matchDetailFragment" />
 
     </fragment>
     <fragment
         android:id="@+id/calculateSplashFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.CalculateSplashFragment"
-        android:label="CalculateSplashFragment" >
+        android:label="CalculateSplashFragment">
         <action
             android:id="@+id/action_calculateSplashFragment_to_calculateEditAmountFragment"
             app:destination="@id/calculateEditAmountFragment" />
@@ -345,7 +344,7 @@
     <fragment
         android:id="@+id/calculateEditAmountFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.editamount.CalculateEditAmountFragment"
-        android:label="CalculateEditAmountFragment" >
+        android:label="CalculateEditAmountFragment">
         <action
             android:id="@+id/action_calculateEditAmountFragment_to_calculateEditAccountFragment"
             app:destination="@id/calculateEditAccountFragment" />
@@ -353,7 +352,7 @@
     <fragment
         android:id="@+id/calculateEditAccountFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.editaccount.CalculateEditAccountFragment"
-        android:label="CalculateEditAccountFragment" >
+        android:label="CalculateEditAccountFragment">
         <action
             android:id="@+id/action_calculateEditAccountFragment_to_calculateEditAccountOwnerFragment"
             app:destination="@id/calculateEditAccountOwnerFragment" />
@@ -361,7 +360,7 @@
     <fragment
         android:id="@+id/calculateConfirmFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.confirm.CalculateConfirmFragment"
-        android:label="CalculateConfirmFragment" >
+        android:label="CalculateConfirmFragment">
         <action
             android:id="@+id/action_calculateConfirmFragment_to_calculateCompleteFragment"
             app:destination="@id/calculateCompleteFragment" />
@@ -369,16 +368,16 @@
     <fragment
         android:id="@+id/calculateCompleteFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.complete.CalculateCompleteFragment"
-        android:label="CalculateCompleteFragment" >
+        android:label="CalculateCompleteFragment">
         <action
             android:id="@+id/action_calculateCompleteFragment_to_chatRoomFragment"
             app:destination="@id/chatRoomFragment"
-            app:popUpTo="@id/matchDetailFragment"/>
+            app:popUpTo="@id/matchDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/calculateEditAccountOwnerFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.calculate.accountowner.CalculateEditAccountOwnerFragment"
-        android:label="CalculateEditAccountOwnerFragment" >
+        android:label="CalculateEditAccountOwnerFragment">
         <action
             android:id="@+id/action_calculateEditAccountOwnerFragment_to_calculateConfirmFragment"
             app:destination="@id/calculateConfirmFragment" />
@@ -386,20 +385,20 @@
     <fragment
         android:id="@+id/imageEnlargeFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.image.ImageEnlargeFragment"
-        android:label="ImageEnlargeFragment" >
+        android:label="ImageEnlargeFragment">
 
         <argument
-            app:argType="string"
-            android:name="imageUrl"/>
+            android:name="imageUrl"
+            app:argType="string" />
 
     </fragment>
     <dialog
         android:id="@+id/profileBottomSheetFragment"
         android:name="com.motax.modutaxi.presentation.ui.main.chat.bottomsheet.ProfileBottomSheetFragment"
-        android:label="ProfileBottomSheetFragment" >
+        android:label="ProfileBottomSheetFragment">
         <argument
-            app:argType="long"
-            android:name="id"/>
+            android:name="id"
+            app:argType="long" />
 
     </dialog>
 
