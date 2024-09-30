@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.chat.bottomsheet
+package com.motax.modutaxi.presentation.ui.main.profile
 
 import android.app.Dialog
 import android.graphics.Paint
@@ -12,6 +12,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -21,7 +23,6 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.databinding.FragmentProfileBottomSheetBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -62,6 +63,9 @@ class ProfileBottomSheetFragment : BottomSheetDialogFragment() {
         binding.btnNavigateToAccusation.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         viewModel.getMemberProfile(id)
         initStateObserve()
+        binding.btnNavigateToAccusation.setOnClickListener {
+            findNavController().toAccusation(id)
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -82,9 +86,9 @@ class ProfileBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun initStateObserve() {
         repeatOnStarted {
-            viewModel.uiState.collect{
+            viewModel.uiState.collect {
                 binding.tvNick.text = it.nick
-                if(!it.certified) {
+                if (!it.certified) {
                     binding.ivMark.visibility = View.GONE
                     binding.tvStudentCertification.visibility = View.GONE
                 }
@@ -95,6 +99,14 @@ class ProfileBottomSheetFragment : BottomSheetDialogFragment() {
                     .into(binding.ivProfile)
             }
         }
+    }
+
+    private fun NavController.toAccusation(id: Long) {
+        val action =
+            ProfileBottomSheetFragmentDirections.actionProfileBottomSheetFragmentToAccusationUserFragment(
+                id
+            )
+        navigate(action)
     }
 
 }

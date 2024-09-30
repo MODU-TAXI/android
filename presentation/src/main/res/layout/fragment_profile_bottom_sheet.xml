@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.motax.modutaxi.presentation.ui.main.chat.bottomsheet.ProfileBottomSheetViewModel" />
+            type="com.motax.modutaxi.presentation.ui.main.profile.ProfileBottomSheetViewModel" />
 
     </data>
 

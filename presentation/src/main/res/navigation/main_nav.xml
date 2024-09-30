@@ -391,16 +391,29 @@
     </fragment>
     <dialog
         android:id="@+id/profileBottomSheetFragment"
-        android:name="com.motax.modutaxi.presentation.ui.main.chat.bottomsheet.ProfileBottomSheetFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.profile.ProfileBottomSheetFragment"
         android:label="ProfileBottomSheetFragment">
         <argument
             android:name="id"
             app:argType="long" />
+        <action
+            android:id="@+id/action_profileBottomSheetFragment_to_accusationUserFragment"
+            app:destination="@id/accusationUserFragment" />
 
     </dialog>
 
     <action
         android:id="@+id/gloabl_action_to_profile_bottomsheet"
         app:destination="@id/profileBottomSheetFragment"/>
+    <fragment
+        android:id="@+id/accusationUserFragment"
+        android:name="com.motax.modutaxi.presentation.ui.main.profile.AccusationUserFragment"
+        android:label="AccusationUserFragment" >
+
+        <argument
+            android:name="id"
+            app:argType="long"/>
+
+    </fragment>
 
 </navigation>

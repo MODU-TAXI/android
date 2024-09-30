@@ -1,4 +1,4 @@
-package com.motax.modutaxi.presentation.ui.main.chat.bottomsheet
+package com.motax.modutaxi.presentation.ui.main.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
