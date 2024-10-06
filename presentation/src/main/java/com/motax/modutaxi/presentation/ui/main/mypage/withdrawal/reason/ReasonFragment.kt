@@ -21,10 +21,7 @@ class ReasonFragment : BaseFragment<FragmentWithdrawalReasonBinding>(R.layout.fr
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
         initEventObserve()
-
         viewModel.loadMemberData()
 
         binding.rgReason.setOnCheckedChangeListener { group, checkedId ->

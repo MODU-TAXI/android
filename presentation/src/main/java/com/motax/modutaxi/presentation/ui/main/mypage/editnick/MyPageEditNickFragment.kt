@@ -22,7 +22,6 @@ class MyPageEditNickFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         initEventObserve()
     }
 

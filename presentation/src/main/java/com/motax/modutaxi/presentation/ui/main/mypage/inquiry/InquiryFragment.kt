@@ -20,7 +20,6 @@ class InquiryFragment : BaseFragment<FragmentInquiryBinding>(R.layout.fragment_i
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         initEventObserve()
     }
 

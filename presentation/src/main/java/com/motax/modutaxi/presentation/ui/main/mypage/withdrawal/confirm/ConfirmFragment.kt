@@ -19,8 +19,6 @@ class ConfirmFragment : BaseFragment<FragmentWithdrawalConfirmBinding>(R.layout.
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
         initEventObserve()
         viewModel.loadNickname()
 

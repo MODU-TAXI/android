@@ -26,9 +26,9 @@ class UsageDetailsFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         adapter = UsageParticipantAdapter()
         binding.rvParticipants.adapter = adapter
+        binding.rvParticipants.itemAnimator = null
 
         viewModel.loadUsageDetail(roomId)
 

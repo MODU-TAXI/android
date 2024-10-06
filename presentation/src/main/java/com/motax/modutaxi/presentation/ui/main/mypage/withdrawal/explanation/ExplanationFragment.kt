@@ -19,8 +19,6 @@ class ExplanationFragment :BaseFragment<FragmentWithdrawalExplanationBinding>(R.
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
         initEventObserve()
         viewModel.loadNickname()
     }

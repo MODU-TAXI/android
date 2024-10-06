@@ -21,9 +21,9 @@ class AccountFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         adapter = AccountAdapter(viewModel)
         binding.rvAccount.adapter = adapter
+        binding.rvAccount.itemAnimator = null
 
         viewModel.loadAccounts()
         initEventObserve()

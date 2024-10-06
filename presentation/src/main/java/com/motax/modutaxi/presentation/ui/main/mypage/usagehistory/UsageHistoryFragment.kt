@@ -33,9 +33,9 @@ class UsageHistoryFragment : BaseFragment<FragmentUsageHistoryBinding>(R.layout.
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         adapter = UsageHistoryAdapter()
         binding.rvUsageHistory.adapter = adapter
+        binding.rvUsageHistory.itemAnimator = null
 
         initEventObserve()
 
