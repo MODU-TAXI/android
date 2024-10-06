@@ -43,10 +43,10 @@ class ArrivalMapFragment : BaseFragment<FragmentArrivalMapBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        parentViewModel.setFullScreenMode()
         binding.vm = viewModel
         viewModel.setSearchKeyWord(selectedLocation.landMark.toString())
         initEventObserve()
-        parentViewModel.setFullScreenMode()
         initMapView()
     }
 

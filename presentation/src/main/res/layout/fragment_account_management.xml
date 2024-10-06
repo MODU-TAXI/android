@@ -31,7 +31,6 @@
             app:layout_constraintGuide_percent="0.94" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_marginTop="24dp"
             android:id="@+id/layout_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

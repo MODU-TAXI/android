@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -16,11 +17,14 @@ import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentMypageBinding
 import com.motax.modutaxi.presentation.ui.intro.IntroActivity
+import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage){
 
+
+    private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: MyPageViewModel by viewModels()
 
     private var galleryLauncher: ActivityResultLauncher<Intent>? = null
@@ -28,6 +32,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        parentViewModel.setNotFullScreenMode()
         binding.vm = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         initEventObserve()

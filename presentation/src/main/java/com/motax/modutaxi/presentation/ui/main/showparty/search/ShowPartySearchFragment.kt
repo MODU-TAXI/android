@@ -43,7 +43,6 @@ class ShowPartySearchFragment :
         binding.vm = viewModel
 
         parentViewModel.setNotFullScreenMode()
-
         binding.rvSearchResult.adapter = AddressSearchResultAdapter()
         binding.rvSearchResult.itemAnimator = null
         binding.etSearch.requestFocus()

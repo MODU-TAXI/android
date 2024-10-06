@@ -126,6 +126,10 @@ fun String.toDateTime() : String{
     }
 }
 
+fun dpToPx(dp: Int, context: Context): Int {
+    return (dp * context.resources.displayMetrics.density).toInt()
+}
+
 fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
     val R = 6371e3 // 지구 반지름 (미터)
     val phi1 = lat1 * (PI / 180)

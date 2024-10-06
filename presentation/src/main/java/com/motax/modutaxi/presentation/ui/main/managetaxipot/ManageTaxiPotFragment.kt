@@ -28,10 +28,8 @@ class ManageTaxiPotFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(TAG, roomId.toString())
-
-        binding.vm = viewModel
         parentViewModel.setNotFullScreenMode()
+        binding.vm = viewModel
         viewModel.getMemberSource()
         if (roomId != -1L) {
             viewModel.getRoomInfo(roomId)

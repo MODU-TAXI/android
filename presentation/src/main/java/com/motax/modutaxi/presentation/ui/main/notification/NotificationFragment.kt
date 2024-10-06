@@ -3,6 +3,7 @@ package com.motax.modutaxi.presentation.ui.main.notification
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.motax.modutaxi.presentation.R
 import com.motax.modutaxi.presentation.base.BaseFragment
 import com.motax.modutaxi.presentation.databinding.FragmentNotificationBinding
+import com.motax.modutaxi.presentation.ui.main.MainViewModel
 import com.motax.modutaxi.presentation.ui.main.notification.adapter.NotificationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,12 +20,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class NotificationFragment :
     BaseFragment<FragmentNotificationBinding>(R.layout.fragment_notification) {
 
+    private val parentViewModel: MainViewModel by activityViewModels()
     private val viewModel: NotificationViewModel by viewModels()
     private var adapter: NotificationAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        parentViewModel.setNotFullScreenMode()
         binding.vm = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         adapter = NotificationAdapter(viewModel)

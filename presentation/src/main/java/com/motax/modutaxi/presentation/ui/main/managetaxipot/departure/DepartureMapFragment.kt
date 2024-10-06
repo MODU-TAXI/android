@@ -47,8 +47,8 @@ class DepartureMapFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.vm = viewModel
         parentViewModel.setFullScreenMode()
+        binding.vm = viewModel
         initEventObserve()
         initMapView()
     }
