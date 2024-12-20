@@ -1,5 +1,6 @@
 package com.motax.modutaxi.domain.model
 
+// github test
 data class TaxiPotParticipantsData(
     val inList: List<TaxiPotMemberData>
 )
